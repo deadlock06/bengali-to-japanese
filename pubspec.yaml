@@ -1,0 +1,40 @@
+name: sensei_app
+description: >-
+  Bhasago — offline Bengali/English/Japanese-UI Japanese tutor for Bangladeshi
+  workers preparing for JFT-Basic (A2) / JLPT N4 and life in Japan.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.19.0
+  flutter_riverpod: ^2.5.1
+  sqflite_sqlcipher: ^3.4.0   # SQLCipher AES-256 (encrypted at rest — T-101/06)
+  flutter_secure_storage: ^9.2.4  # Keystore-backed DB passphrase store
+  shared_preferences: ^2.2.3
+  path: ^1.9.0
+  record: ^5.1.2       # mic capture for shadowing
+  just_audio: ^0.9.40  # native reference-audio playback
+  fftea: ^1.5.0        # on-device pitch (F0) extraction for accent scoring
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true        # enable gen-l10n from lib/l10n/*.arb
+  assets:
+    - assets/content/
+    - assets/stroke/
+
+# Native model integration (llama.cpp / whisper.cpp / Kokoro) is wired through
+# a Kotlin MethodChannel on the Android side — see README.

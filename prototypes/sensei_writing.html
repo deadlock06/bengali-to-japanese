@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="bn"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>SENSEI · Writing</title>
+<style>
+ *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+ :root{--bg:#0a0a12;--txt:#f4f5fb;--dim:#9aa0b4;--faint:#666b80;--line:rgba(255,255,255,.09);
+  --card:rgba(255,255,255,.05);--g1:#ff5a3c;--g2:#ff2d78;--g3:#8b5cff;--cyan:#3fd0e0;--green:#37e0a6;
+  --grad:linear-gradient(135deg,#ff5a3c,#ff2d78 55%,#8b5cff);--paper:#fbfbfd;--ink:#14141f}
+ body{background:radial-gradient(120% 60% at 50% -10%,rgba(139,92,255,.18),transparent 60%),var(--bg);
+  color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Bengali","Noto Sans JP",sans-serif;
+  display:flex;justify-content:center;min-height:100vh}
+ .wrap{width:100%;max-width:440px;padding:16px 16px 24px;display:flex;flex-direction:column;min-height:100vh}
+ header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+ .brand{font-weight:800;font-size:20px}.brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+ .lang{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
+ .lang button{background:none;border:0;color:var(--dim);font-weight:700;font-size:11px;padding:5px 9px;border-radius:99px;cursor:pointer}
+ .lang button.on{background:var(--grad);color:#fff}
+ .title{font-size:22px;font-weight:800;letter-spacing:-.3px}
+ .sub{color:var(--dim);font-size:13px;margin-bottom:14px}
+ .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;margin-bottom:12px}
+ .seg button{flex:1;background:none;border:0;color:var(--dim);font-weight:700;font-size:13px;padding:9px;border-radius:10px;cursor:pointer;transition:.2s}
+ .seg button.on{background:var(--grad);color:#fff}
+ .strip{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px;scrollbar-width:none}
+ .strip::-webkit-scrollbar{display:none}
+ .chip{flex:none;width:46px;height:46px;border-radius:13px;background:var(--card);border:1px solid var(--line);
+  display:grid;place-items:center;font-size:22px;cursor:pointer;color:var(--txt);transition:.15s;position:relative}
+ .chip small{position:absolute;bottom:2px;font-size:8px;color:var(--faint)}
+ .chip.on{background:var(--grad);border-color:transparent;transform:scale(1.06)}
+ .paperwrap{position:relative;width:100%;aspect-ratio:1;border-radius:22px;overflow:hidden;
+  box-shadow:0 20px 50px -18px rgba(255,45,120,.35);background:var(--paper)}
+ canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block}
+ .curchar{position:absolute;top:10px;left:14px;font-size:13px;font-weight:800;color:#c0c4d0;z-index:2}
+ .curchar b{color:#8a8fa0;font-weight:800}
+ .hintbadge{position:absolute;top:10px;right:14px;font-size:11px;color:#b9bdc9;z-index:2}
+ .tools{display:flex;gap:9px;margin-top:14px}
+ .tbtn{flex:1;height:52px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--txt);
+  font-size:20px;cursor:pointer;display:grid;place-items:center;transition:.12s;position:relative}
+ .tbtn:active{transform:scale(.92)}
+ .tbtn.grad{background:var(--grad);border-color:transparent}
+ .tbtn small{position:absolute;bottom:5px;font-size:8.5px;color:var(--dim)}
+ .tbtn.grad small{color:rgba(255,255,255,.8)}
+ .brushrow{display:flex;align-items:center;gap:12px;margin-top:14px;padding:12px 16px;background:var(--card);border:1px solid var(--line);border-radius:16px}
+ .brushrow label{font-size:12px;color:var(--dim);font-weight:700;flex:none}
+ input[type=range]{flex:1;accent-color:var(--g2)}
+ .navrow{display:flex;gap:10px;margin-top:14px}
+ .navbtn{flex:1;height:50px;border-radius:16px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-weight:700;font-size:14px;cursor:pointer;transition:.12s}
+ .navbtn:active{transform:scale(.96)}.navbtn.p{background:var(--grad);border-color:transparent;color:#fff}
+ .praise{position:fixed;left:50%;top:38%;transform:translateX(-50%);z-index:9;font-size:20px;font-weight:800;
+  background:var(--grad);color:#fff;padding:14px 26px;border-radius:99px;box-shadow:0 14px 40px -8px rgba(255,45,120,.6);
+  opacity:0;pointer-events:none;transition:.3s}
+ .praise.show{opacity:1;animation:pp .5s}
+ @keyframes pp{0%{transform:translateX(-50%) scale(.7)}60%{transform:translateX(-50%) scale(1.08)}100%{transform:translateX(-50%) scale(1)}}
+ .tip{color:var(--faint);font-size:11.5px;text-align:center;margin-top:14px;line-height:1.5}
+.anim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0;transition:opacity .25s}
+ .anim.show{opacity:1}
+ .nib{filter:drop-shadow(0 0 7px rgba(255,45,120,.9))}
+ .watch{width:100%;margin-top:14px;border:0;border-radius:18px;padding:15px;font-weight:800;font-size:15px;color:#fff;
+  background:var(--grad);cursor:pointer;transition:transform .12s;display:flex;align-items:center;justify-content:center;gap:9px;
+  box-shadow:0 10px 30px -10px rgba(255,45,120,.5)}
+ .watch:active{transform:scale(.97)}
+</style></head><body>
+<div class="wrap">
+ <header>
+  <div class="brand">SEN<b>SEI</b></div>
+  <div class="lang">
+   <button id="L-en" onclick="setLang('en')">EN</button>
+   <button id="L-bn" class="on" onclick="setLang('bn')">বাংলা</button>
+   <button id="L-ja" onclick="setLang('ja')">日本語</button>
+  </div>
+ </header>
+ <div class="title" id="ttl"></div>
+ <div class="sub" id="sttl"></div>
+ <div class="seg">
+  <button class="on" id="sg-h" onclick="setScript('h')">ひらがな Hiragana</button>
+  <button id="sg-k" onclick="setScript('k')">カタカナ Katakana</button>
+ </div>
+ <div class="strip" id="strip"></div>
+ <div class="paperwrap">
+  <div class="curchar"><b id="cc-char"></b> <span id="cc-rom"></span></div>
+  <div class="hintbadge" id="hintbadge"></div>
+  <canvas id="cv"></canvas>
+  <svg id="anim" class="anim" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet"></svg>
+ </div>
+ <button class="watch" id="watchBtn" onclick="animateChar()"></button>
+ <div class="tools">
+  <button class="tbtn" onclick="playChar()">🔊<small id="t-sound"></small></button>
+  <button class="tbtn" id="guideBtn" onclick="toggleGuide()">👁️<small id="t-guide"></small></button>
+  <button class="tbtn" onclick="undo()">↶<small id="t-undo"></small></button>
+  <button class="tbtn" onclick="clearBoard()">🗑️<small id="t-clear"></small></button>
+  <button class="tbtn grad" onclick="doneChar()">✓<small id="t-done"></small></button>
+ </div>
+ <div class="brushrow">
+  <label id="t-brush"></label>
+  <input type="range" id="brush" min="6" max="26" step="1" value="14">
+ </div>
+ <div class="navrow">
+  <button class="navbtn" onclick="prevChar()" id="t-prev"></button>
+  <button class="navbtn p" onclick="nextChar()" id="t-next"></button>
+ </div>
+ <div class="tip" id="tip"></div>
+</div>
+<div class="praise" id="praise"></div>
+<script>
+const L={
+ en:{title:"Writing practice",sub:"Trace the light letter, then write it yourself",
+  tSound:"sound",tGuide:"guide",tUndo:"undo",tClear:"clear",tDone:"done",tBrush:"Brush",
+  prev:"‹ Back",next:"Next ›",tip:"Tip: follow the faint letter, then hide the guide and write from memory.",
+  hint:"trace me",praise:"Nice writing! ✍️",watch:"▶ Watch how to write",noNet:"Needs internet the first time"},
+ bn:{title:"লেখা practice",sub:"হালকা letter-টা trace করো, তারপর নিজে লেখো",
+  tSound:"sound",tGuide:"guide",tUndo:"undo",tClear:"clear",tDone:"done",tBrush:"Brush",
+  prev:"‹ আগের",next:"পরের ›",tip:"Tip: হালকা letter follow করো, তারপর guide off করে মুখস্থ লেখো।",
+  hint:"trace করো",praise:"সুন্দর হয়েছে! ✍️",watch:"▶ কিভাবে লেখে দেখো",noNet:"প্রথমবার internet লাগবে"},
+ ja:{title:"書く練習",sub:"薄い文字をなぞって、自分で書こう",
+  tSound:"音",tGuide:"ガイド",tUndo:"戻す",tClear:"消す",tDone:"完了",tBrush:"太さ",
+  prev:"‹ 前へ",next:"次へ ›",tip:"ヒント：薄い文字をなぞってから、ガイドを消して書こう。",
+  hint:"なぞる",praise:"上手！✍️",watch:"▶ 書き方を見る",noNet:"初回はネット接続が必要"}
+};
+let lang='bn';
+function t(k){return (L[lang]&&L[lang][k])||L.en[k]||k;}
+const $=id=>document.getElementById(id);
+
+const HIRA="あ,a い,i う,u え,e お,o か,ka き,ki く,ku け,ke こ,ko さ,sa し,shi す,su せ,se そ,so た,ta ち,chi つ,tsu て,te と,to な,na に,ni ぬ,nu ね,ne の,no は,ha ひ,hi ふ,fu へ,he ほ,ho ま,ma み,mi む,mu め,me も,mo や,ya ゆ,yu よ,yo ら,ra り,ri る,ru れ,re ろ,ro わ,wa を,wo ん,n".split(" ").map(x=>x.split(","));
+const KATA="ア,a イ,i ウ,u エ,e オ,o カ,ka キ,ki ク,ku ケ,ke コ,ko サ,sa シ,shi ス,su セ,se ソ,so タ,ta チ,chi ツ,tsu テ,te ト,to ナ,na ニ,ni ヌ,nu ネ,ne ノ,no ハ,ha ヒ,hi フ,fu ヘ,he ホ,ho マ,ma ミ,mi ム,mu メ,me モ,mo ヤ,ya ユ,yu ヨ,yo ラ,ra リ,ri ル,ru レ,re ロ,ro ワ,wa ヲ,wo ン,n".split(" ").map(x=>x.split(","));
+
+let script='h',idx=0,guideOn=true;
+function kana(){return script==='h'?HIRA:KATA;}
+function cur(){return kana()[idx];}
+
+/* ---------- CANVAS ENGINE ---------- */
+const cv=$('cv'),ctx=cv.getContext('2d');
+let W=0,H=0,dpr=1,strokes=[],drawing=false,curStroke=null,last=null;
+function setup(){
+ dpr=window.devicePixelRatio||1;
+ const r=cv.getBoundingClientRect();W=r.width;H=r.height;
+ cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ redraw();
+}
+function grid(){
+ ctx.clearRect(0,0,W,H);
+ ctx.fillStyle='#fbfbfd';ctx.fillRect(0,0,W,H);
+ const pad=W*0.06;
+ ctx.strokeStyle='#e6e7ee';ctx.lineWidth=1.5;
+ ctx.strokeRect(pad,pad,W-2*pad,H-2*pad);
+ ctx.strokeStyle='#eceef4';ctx.lineWidth=1;ctx.setLineDash([6,7]);
+ ctx.beginPath();ctx.moveTo(W/2,pad);ctx.lineTo(W/2,H-pad);
+ ctx.moveTo(pad,H/2);ctx.lineTo(W-pad,H/2);ctx.stroke();
+ ctx.setLineDash([]);
+}
+function guide(){
+ if(!guideOn)return;
+ ctx.fillStyle='#e3e4ec';
+ ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.font='600 '+(H*0.66)+'px "Noto Sans JP",-apple-system,sans-serif';
+ ctx.fillText(cur()[0],W/2,H/2+H*0.02);
+}
+function drawStroke(pts){
+ if(pts.length<2){if(pts.length===1){ctx.fillStyle='#14141f';ctx.beginPath();ctx.arc(pts[0].x,pts[0].y,pts[0].w/2,0,7);ctx.fill();}return;}
+ ctx.strokeStyle='#14141f';ctx.lineCap='round';ctx.lineJoin='round';
+ for(let i=1;i<pts.length;i++){
+  const a=pts[i-1],b=pts[i];
+  ctx.lineWidth=(a.w+b.w)/2;
+  ctx.beginPath();ctx.moveTo(a.x,a.y);
+  const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+  ctx.quadraticCurveTo(a.x,a.y,mx,my);ctx.lineTo(b.x,b.y);ctx.stroke();
+ }
+}
+function redraw(){grid();guide();strokes.forEach(drawStroke);}
+function pos(e){const r=cv.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top};}
+function widthFor(p){
+ const base=+$('brush').value;
+ if(!last)return base;
+ const d=Math.hypot(p.x-last.x,p.y-last.y);
+ return Math.max(base*0.42,Math.min(base,base*(1-d/48)));
+}
+function down(e){e.preventDefault();hideAnim();drawing=true;const p=pos(e);const w=+$('brush').value;
+ curStroke=[{x:p.x,y:p.y,w}];strokes.push(curStroke);last=p;drawStroke(curStroke);}
+function move(e){if(!drawing)return;e.preventDefault();
+ const ev=(e.getCoalescedEvents?e.getCoalescedEvents():[e]);
+ for(const c of ev){const p=pos(c);const w=widthFor(p);curStroke.push({x:p.x,y:p.y,w});
+  const a=curStroke[curStroke.length-2],b=curStroke[curStroke.length-1];
+  ctx.strokeStyle='#14141f';ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=(a.w+b.w)/2;
+  ctx.beginPath();ctx.moveTo(a.x,a.y);const mx=(a.x+b.x)/2,my=(a.y+b.y)/2;ctx.quadraticCurveTo(a.x,a.y,mx,my);ctx.lineTo(b.x,b.y);ctx.stroke();
+  last=p;}}
+function up(e){drawing=false;curStroke=null;last=null;}
+cv.addEventListener('pointerdown',down);
+cv.addEventListener('pointermove',move);
+window.addEventListener('pointerup',up);
+cv.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});
+cv.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
+
+/* ---------- CONTROLS ---------- */
+function undo(){strokes.pop();redraw();}
+function clearBoard(){strokes=[];redraw();}
+function toggleGuide(){guideOn=!guideOn;$('guideBtn').classList.toggle('grad',guideOn);redraw();}
+function playChar(){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(cur()[0]);u.lang='ja-JP';u.rate=.7;speechSynthesis.speak(u);}
+function doneChar(){const p=$('praise');p.textContent=t('praise');p.classList.add('show');setTimeout(()=>p.classList.remove('show'),1100);setTimeout(()=>{if(idx<kana().length-1){idx++;loadChar();}},700);}
+function nextChar(){idx=(idx+1)%kana().length;loadChar();}
+function prevChar(){idx=(idx-1+kana().length)%kana().length;loadChar();}
+function setScript(s){script=s;idx=0;$('sg-h').classList.toggle('on',s==='h');$('sg-k').classList.toggle('on',s==='k');renderStrip();loadChar();}
+
+function renderStrip(){
+ $('strip').innerHTML=kana().map((k,i)=>`<div class="chip ${i===idx?'on':''}" id="chip-${i}" onclick="pick(${i})">${k[0]}<small>${k[1]}</small></div>`).join('');
+}
+function pick(i){idx=i;loadChar();}
+function loadChar(){
+ strokes=[];hideAnim();
+ document.querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i===idx));
+ const ch=$('chip-'+idx);if(ch)ch.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+ $('cc-char').textContent=cur()[0];$('cc-rom').textContent=cur()[1];
+ redraw();
+}
+
+/* ---------- I18N ---------- */
+function setLang(l){lang=l;['en','bn','ja'].forEach(x=>$('L-'+x).classList.toggle('on',x===l));
+ $('ttl').textContent=t('title');$('sttl').textContent=t('sub');
+ $('t-sound').textContent=t('tSound');$('t-guide').textContent=t('tGuide');$('t-undo').textContent=t('tUndo');
+ $('t-clear').textContent=t('tClear');$('t-done').textContent=t('tDone');$('t-brush').textContent=t('tBrush');
+ $('t-prev').textContent=t('prev');$('t-next').textContent=t('next');$('tip').textContent=t('tip');
+ $('hintbadge').textContent='✎ '+t('hint');$('watchBtn').textContent=t('watch');}
+
+/* ---------- INIT ---------- */
+$('guideBtn').classList.add('grad');
+renderStrip();loadChar();setLang('bn');
+setup();
+window.addEventListener('resize',()=>{const s=strokes;setup();strokes=s;redraw();});
+
+/* ---------- STROKE-ORDER ANIMATION (kana-svg-data, free CDN) ---------- */
+let animating=false,strokeCache={};
+function hideAnim(){const a=$('anim');if(a){a.classList.remove('show');}animating=false;}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+async function getData(ch,scr){
+ const key=scr+ch;if(strokeCache[key])return strokeCache[key];
+ const folder=scr==='h'?'hiragana':'katakana';
+ const url='https://cdn.jsdelivr.net/npm/kana-svg-data/dist/'+folder+'/'+encodeURIComponent(ch)+'.json';
+ try{const r=await fetch(url);if(!r.ok)throw 0;const d=await r.json();strokeCache[key]=d;return d;}catch(e){return null;}
+}
+function medPath(points){return 'M '+points.map(p=>p[0]+','+p[1]).join(' L ');}
+function animStroke(mp,nib,dur){return new Promise(res=>{
+ const Ln=mp.getTotalLength();nib.style.opacity='1';const t0=performance.now();
+ (function f(t){if(!animating){res();return;}let p=Math.min(1,(t-t0)/dur);
+  mp.style.strokeDashoffset=Ln*(1-p);const pt=mp.getPointAtLength(Ln*p);nib.setAttribute('cx',pt.x);nib.setAttribute('cy',pt.y);
+  if(p<1)requestAnimationFrame(f);else res();})(performance.now());
+});}
+async function animateChar(){
+ if(animating)return;
+ const d=await getData(cur()[0],script);
+ if(!d){const pr=$('praise');pr.textContent=t('noNet');pr.classList.add('show');setTimeout(()=>pr.classList.remove('show'),1500);return;}
+ const NS='http://www.w3.org/2000/svg',svg=$('anim');svg.innerHTML='';const masks=[];
+ d.strokes.forEach((st,i)=>{
+  const pts=(d.medians[i]&&d.medians[i].value)||[];
+  const mask=document.createElementNS(NS,'mask');mask.setAttribute('id','mk'+i);
+  const mp=document.createElementNS(NS,'path');mp.setAttribute('d',pts.length?medPath(pts):st.value);
+  mp.setAttribute('fill','none');mp.setAttribute('stroke','#fff');mp.setAttribute('stroke-width','130');
+  mp.setAttribute('stroke-linecap','round');mp.setAttribute('stroke-linejoin','round');
+  mask.appendChild(mp);svg.appendChild(mask);
+  const vis=document.createElementNS(NS,'path');vis.setAttribute('d',st.value);vis.setAttribute('fill','#14141f');
+  vis.setAttribute('mask','url(#mk'+i+')');svg.appendChild(vis);masks.push(mp);
+ });
+ const nib=document.createElementNS(NS,'circle');nib.setAttribute('r','15');nib.setAttribute('fill','#ff2d78');nib.setAttribute('class','nib');nib.style.opacity='0';svg.appendChild(nib);
+ masks.forEach(mp=>{const L=mp.getTotalLength();mp.style.strokeDasharray=L;mp.style.strokeDashoffset=L;});
+ strokes=[];redraw();svg.classList.add('show');animating=true;
+ for(let i=0;i<masks.length&&animating;i++){await animStroke(masks[i],nib,650);await sleep(150);}
+nib.style.opacity='0';animating=false;
+}
+$('watchBtn').textContent=t('watch');
+</script></body></html>

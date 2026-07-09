@@ -1,0 +1,176 @@
+{
+  "type": "lesson",
+  "id": "konbini_01",
+  "can_do": {
+    "en": "Buy something at a convenience store: pay, decline a bag, ask the price, understand the clerk.",
+    "bn": "কনভিনিয়েন্স স্টোরে কেনাকাটা করা: দাম জিজ্ঞেস করা, ব্যাগ না নেওয়া, টাকা দেওয়া, কর্মীর কথা বোঝা।",
+    "ja": "コンビニで買い物ができる：支払い、袋を断る、値段を聞く、店員の言葉が分かる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A1/A2",
+  "verified": true,
+  "source": "Aligned to Irodori Elementary Can-do (shopping / convenience store)",
+  "items": [
+    {
+      "id": "kb_01",
+      "jp": "いらっしゃいませ",
+      "kana": "いらっしゃいませ",
+      "romaji": "irasshaimase",
+      "meaning": {
+        "en": "Welcome (staff greeting)",
+        "bn": "স্বাগতম (দোকানের কর্মী বলে)",
+        "ja": "いらっしゃいませ（店員のあいさつ）"
+      },
+      "note": {
+        "en": "The clerk says this — you don't need to reply, just understand it.",
+        "bn": "এটা কর্মী বলে — উত্তর দিতে হয় না, শুধু বুঝলেই হবে।",
+        "ja": "店員が言う。返事は不要、聞いて分かればよい。"
+      },
+      "srs_words": [
+        "いらっしゃいませ"
+      ]
+    },
+    {
+      "id": "kb_02",
+      "jp": "これをください",
+      "kana": "これをください",
+      "romaji": "kore o kudasai",
+      "meaning": {
+        "en": "This one, please.",
+        "bn": "এটা দিন / এটা চাই।",
+        "ja": "これをください。"
+      },
+      "note": {
+        "en": "を marks the thing you want; ください = please give.",
+        "bn": "を দিয়ে বোঝায় তুমি কী চাও; ください = দয়া করে দিন।",
+        "ja": "をは対象を示す。くださいは「ください」。"
+      },
+      "srs_words": [
+        "これ",
+        "ください"
+      ]
+    },
+    {
+      "id": "kb_03",
+      "jp": "ふくろはいりません",
+      "kana": "ふくろはいりません",
+      "romaji": "fukuro wa irimasen",
+      "meaning": {
+        "en": "I don't need a bag.",
+        "bn": "ব্যাগ লাগবে না।",
+        "ja": "袋は要りません。"
+      },
+      "note": {
+        "en": "いりません = don't need. Useful — bags often cost extra in Japan.",
+        "bn": "いりません = দরকার নেই। কাজের কথা — জাপানে ব্যাগের জন্য আলাদা টাকা লাগে।",
+        "ja": "要りません＝不要。日本では袋は有料のことが多い。"
+      },
+      "srs_words": [
+        "ふくろ",
+        "いりません"
+      ]
+    },
+    {
+      "id": "kb_04",
+      "jp": "カードでおねがいします",
+      "kana": "カードでおねがいします",
+      "romaji": "kādo de onegai shimasu",
+      "meaning": {
+        "en": "By card, please.",
+        "bn": "কার্ডে দিতে চাই।",
+        "ja": "カードでお願いします。"
+      },
+      "note": {
+        "en": "で marks the method (card/cash). Say げんきん de for cash.",
+        "bn": "で দিয়ে বোঝায় উপায় (কার্ড/নগদ)। নগদের জন্য げんきん de বলবে।",
+        "ja": "では手段を示す。現金なら「げんきんで」。"
+      },
+      "srs_words": [
+        "カード",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "kb_05",
+      "jp": "いくらですか",
+      "kana": "いくらですか",
+      "romaji": "ikura desu ka",
+      "meaning": {
+        "en": "How much is it?",
+        "bn": "এটার দাম কত?",
+        "ja": "いくらですか。"
+      },
+      "note": {
+        "en": "いくら = how much. Add か at the end to make a question.",
+        "bn": "いくら = কত। শেষে か যোগ করলে প্রশ্ন হয়।",
+        "ja": "いくら＝金額。最後のかで疑問文。"
+      },
+      "srs_words": [
+        "いくら",
+        "ですか"
+      ]
+    },
+    {
+      "id": "kb_06",
+      "jp": "あたためますか",
+      "kana": "あたためますか",
+      "romaji": "atatamemasu ka",
+      "meaning": {
+        "en": "Shall I heat it up? (staff asks)",
+        "bn": "গরম করে দেব? (কর্মী জিজ্ঞেস করে)",
+        "ja": "温めますか。（店員が聞く）"
+      },
+      "note": {
+        "en": "The clerk asks this about bento/food. Answer はい or いいえ.",
+        "bn": "বেন্তো/খাবার নিয়ে কর্মী এটা জিজ্ঞেস করে। উত্তর দাও はい বা いいえ।",
+        "ja": "弁当などで店員が聞く。はい／いいえで答える。"
+      },
+      "srs_words": [
+        "あたためます"
+      ]
+    },
+    {
+      "id": "kb_07",
+      "jp": "はい、おねがいします",
+      "kana": "はい、おねがいします",
+      "romaji": "hai, onegai shimasu",
+      "meaning": {
+        "en": "Yes, please.",
+        "bn": "হ্যাঁ, দয়া করে।",
+        "ja": "はい、お願いします。"
+      },
+      "note": {
+        "en": "A polite yes to an offer (e.g. heating, a bag).",
+        "bn": "কোনো প্রস্তাবে ভদ্রভাবে হ্যাঁ (যেমন গরম করা, ব্যাগ)।",
+        "ja": "申し出への丁寧な「はい」。"
+      },
+      "srs_words": [
+        "はい",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "kb_08",
+      "jp": "レシートをください",
+      "kana": "レシートをください",
+      "romaji": "reshīto o kudasai",
+      "meaning": {
+        "en": "Receipt, please.",
+        "bn": "রসিদ দিন।",
+        "ja": "レシートをください。"
+      },
+      "note": {
+        "en": "レシート is a katakana loanword from English 'receipt'.",
+        "bn": "レシート হলো ইংরেজি 'receipt' থেকে আসা কাতাকানা শব্দ।",
+        "ja": "レシートは英語receiptの外来語（カタカナ）。"
+      },
+      "srs_words": [
+        "レシート",
+        "ください"
+      ]
+    }
+  ],
+  "pack_id": "pack_daily",
+  "depends_on": [
+    "pack_basics"
+  ]
+}

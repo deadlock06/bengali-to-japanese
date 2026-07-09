@@ -1,0 +1,39 @@
+{
+  "type": "pitch",
+  "id": "pitch_minimal_pairs_01",
+  "verified": true,
+  "dialect": "Tokyo (標準語)",
+  "source": "Standard Tokyo pitch-accent minimal pairs (NHK Nihongo Hatsuon Accent reference)",
+  "items": [
+    {
+      "id":"p_hashi_chopsticks","word":"はし","kanji":"箸","romaji":"hashi","pattern":[1,0],
+      "meaning":{"en":"chopsticks","bn":"চপস্টিক","ja":"箸（食器）"},
+      "accent_type":{"en":"atamadaka (head-high: HL)","bn":"atamadaka (মাথা-উঁচু: উঁচু-নিচু)","ja":"頭高型（高低）"}
+    },
+    {
+      "id":"p_hashi_bridge","word":"はし","kanji":"橋","romaji":"hashi","pattern":[0,1],
+      "meaning":{"en":"bridge","bn":"সেতু","ja":"橋"},
+      "accent_type":{"en":"odaka (tail-high: LH, drops on particle)","bn":"odaka (শেষ-উঁচু: নিচু-উঁচু)","ja":"尾高型（低高）"}
+    },
+    {
+      "id":"p_ame_rain","word":"あめ","kanji":"雨","romaji":"ame","pattern":[1,0],
+      "meaning":{"en":"rain","bn":"বৃষ্টি","ja":"雨"},
+      "accent_type":{"en":"atamadaka (HL)","bn":"atamadaka (উঁচু-নিচু)","ja":"頭高型"}
+    },
+    {
+      "id":"p_ame_candy","word":"あめ","kanji":"飴","romaji":"ame","pattern":[0,1],
+      "meaning":{"en":"candy","bn":"ক্যান্ডি / মিষ্টি","ja":"飴"},
+      "accent_type":{"en":"heiban (flat: LH, stays high)","bn":"heiban (সমতল: নিচু-উঁচু)","ja":"平板型（低高）"}
+    },
+    {
+      "id":"p_kaki_oyster","word":"かき","kanji":"牡蠣","romaji":"kaki","pattern":[1,0],
+      "meaning":{"en":"oyster","bn":"ঝিনুক (অয়েস্টার)","ja":"牡蠣"},
+      "accent_type":{"en":"atamadaka (HL)","bn":"atamadaka (উঁচু-নিচু)","ja":"頭高型"}
+    },
+    {
+      "id":"p_kaki_persimmon","word":"かき","kanji":"柿","romaji":"kaki","pattern":[0,1],
+      "meaning":{"en":"persimmon","bn":"পার্সিমন (এক ধরনের ফল)","ja":"柿"},
+      "accent_type":{"en":"heiban (flat: LH)","bn":"heiban (সমতল: নিচু-উঁচু)","ja":"平板型"}
+    }
+  ]
+}

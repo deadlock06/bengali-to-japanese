@@ -1,0 +1,195 @@
+{
+  "type": "lesson",
+  "id": "work_intro_01",
+  "can_do": {
+    "en": "Greet colleagues and introduce yourself on your first day at work.",
+    "bn": "কর্মস্থলে প্রথম দিনে সহকর্মীদের অভিবাদন ও নিজের পরিচয় দিতে পারা।",
+    "ja": "職場の初日に同僚にあいさつし、自己紹介ができる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A1/A2",
+  "verified": true,
+  "source": "Aligned to Irodori Starter Can-do (self-introduction / greetings)",
+  "items": [
+    {
+      "id": "wi_01",
+      "jp": "おはようございます",
+      "kana": "おはようございます",
+      "romaji": "ohayō gozaimasu",
+      "meaning": {
+        "en": "Good morning (polite)",
+        "bn": "সুপ্রভাত (ভদ্রভাবে)",
+        "ja": "おはよう（丁寧）"
+      },
+      "note": {
+        "en": "Say it as you arrive at work. ございます makes it polite.",
+        "bn": "সকালে কর্মস্থলে ঢুকেই বলবে। শেষে ございます থাকায় এটি ভদ্র রূপ।",
+        "ja": "出勤時に言う。ございますで丁寧になる。"
+      },
+      "srs_words": [
+        "おはよう",
+        "ございます"
+      ]
+    },
+    {
+      "id": "wi_02",
+      "jp": "こんにちは",
+      "kana": "こんにちは",
+      "romaji": "konnichiwa",
+      "meaning": {
+        "en": "Hello / good afternoon",
+        "bn": "নমস্কার / হ্যালো (দুপুরে)",
+        "ja": "こんにちは（昼のあいさつ）"
+      },
+      "note": {
+        "en": "は is pronounced 'wa' here, not 'ha'.",
+        "bn": "は এখানে \"wa\" উচ্চারণ হয়, \"ha\" নয়।",
+        "ja": "ここでのはは「わ」と読む。"
+      },
+      "srs_words": [
+        "こんにちは"
+      ]
+    },
+    {
+      "id": "wi_03",
+      "jp": "はじめまして",
+      "kana": "はじめまして",
+      "romaji": "hajimemashite",
+      "meaning": {
+        "en": "Nice to meet you (first time)",
+        "bn": "প্রথম সাক্ষাতে — পরিচিত হয়ে ভালো লাগল",
+        "ja": "はじめまして（初対面）"
+      },
+      "note": {
+        "en": "Use it the first time you meet someone.",
+        "bn": "নতুন কাউকে প্রথমবার দেখা হলেই বলবে।",
+        "ja": "初めて会うときに使う。"
+      },
+      "srs_words": [
+        "はじめまして"
+      ]
+    },
+    {
+      "id": "wi_04",
+      "jp": "わたしはラーマンです",
+      "kana": "わたしはラーマンです",
+      "romaji": "watashi wa Rāman desu",
+      "meaning": {
+        "en": "I am Rahman.",
+        "bn": "আমি রহমান।",
+        "ja": "私はラーマンです。"
+      },
+      "note": {
+        "en": "Pattern: わたしは ＿ です = 'I am ＿'. は = wa (topic marker).",
+        "bn": "গঠন: わたしは ＿ です = \"আমি ＿\"। は = wa (বিষয় নির্দেশক)।",
+        "ja": "型：わたしは＿です。はは「わ」（主題）。"
+      },
+      "srs_words": [
+        "わたし",
+        "です"
+      ]
+    },
+    {
+      "id": "wi_05",
+      "jp": "よろしくおねがいします",
+      "kana": "よろしくおねがいします",
+      "romaji": "yoroshiku onegai shimasu",
+      "meaning": {
+        "en": "I look forward to working with you (courtesy)",
+        "bn": "আপনার সাথে কাজ করতে পেরে ভালো লাগবে (সৌজন্য)",
+        "ja": "よろしくお願いします（締めのあいさつ）"
+      },
+      "note": {
+        "en": "Said at the end of an introduction — very important politeness in Japan.",
+        "bn": "পরিচয়ের শেষে বলা হয় — জাপানে খুব গুরুত্বপূর্ণ ভদ্রতা।",
+        "ja": "自己紹介の最後に言う大切な表現。"
+      },
+      "srs_words": [
+        "よろしく",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "wi_06",
+      "jp": "すみません",
+      "kana": "すみません",
+      "romaji": "sumimasen",
+      "meaning": {
+        "en": "Excuse me / sorry",
+        "bn": "মাফ করবেন / এক্সকিউজ মি",
+        "ja": "すみません（呼びかけ・軽い謝罪）"
+      },
+      "note": {
+        "en": "To get attention or apologize for a small thing.",
+        "bn": "কারো দৃষ্টি আকর্ষণ করতে বা ছোট ভুলে ক্ষমা চাইতে।",
+        "ja": "呼びかけや軽い謝罪に。"
+      },
+      "srs_words": [
+        "すみません"
+      ]
+    },
+    {
+      "id": "wi_07",
+      "jp": "ありがとうございます",
+      "kana": "ありがとうございます",
+      "romaji": "arigatō gozaimasu",
+      "meaning": {
+        "en": "Thank you (polite)",
+        "bn": "ধন্যবাদ (ভদ্রভাবে)",
+        "ja": "ありがとうございます（丁寧）"
+      },
+      "note": {
+        "en": "ございます makes it more polite — use this at work.",
+        "bn": "ございます যোগ করায় বেশি ভদ্র — কর্মস্থলে এটাই ব্যবহার করবে।",
+        "ja": "ございますでより丁寧。職場で使う。"
+      },
+      "srs_words": [
+        "ありがとう"
+      ]
+    },
+    {
+      "id": "wi_08",
+      "jp": "わかりません",
+      "kana": "わかりません",
+      "romaji": "wakarimasen",
+      "meaning": {
+        "en": "I don't understand",
+        "bn": "আমি বুঝতে পারিনি",
+        "ja": "わかりません"
+      },
+      "note": {
+        "en": "Don't stay silent if you don't get it — saying this is useful, not shameful.",
+        "bn": "না বুঝলে চুপ থেকো না — এটি বলা দোষের নয়, বরং কাজে দরকারি।",
+        "ja": "分からないときは黙らず言おう。"
+      },
+      "srs_words": [
+        "わかりません"
+      ]
+    },
+    {
+      "id": "wi_09",
+      "jp": "もういちどおねがいします",
+      "kana": "もういちどおねがいします",
+      "romaji": "mō ichido onegai shimasu",
+      "meaning": {
+        "en": "Please say it once more",
+        "bn": "অনুগ্রহ করে আরেকবার বলুন",
+        "ja": "もう一度お願いします"
+      },
+      "note": {
+        "en": "If someone speaks fast, say this to hear it again.",
+        "bn": "কেউ দ্রুত বললে এটি বলে আবার শুনে নাও।",
+        "ja": "速いときはこれでもう一度聞く。"
+      },
+      "srs_words": [
+        "もういちど"
+      ]
+    }
+  ],
+  "pack_id": "pack_work",
+  "depends_on": [
+    "pack_daily"
+  ],
+  "prerequisites": [
+    "kana_hiragana"
+  ]
+}

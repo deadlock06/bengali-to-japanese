@@ -1,0 +1,263 @@
+{
+  "type": "lesson",
+  "id": "numbers_01",
+  "can_do": {
+    "en": "Say numbers 1–10, hundreds and thousands, and understand prices in yen.",
+    "bn": "১–১০, শত ও হাজার বলা, এবং ইয়েনে দাম বোঝা।",
+    "ja": "1〜10、百・千を言い、円の値段が分かる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A1",
+  "verified": true,
+  "source": "Standard Japanese numerals (Sino-Japanese readings)",
+  "items": [
+    {
+      "id": "nm_1",
+      "jp": "いち",
+      "kana": "いち",
+      "romaji": "ichi",
+      "meaning": {
+        "en": "1 (one)",
+        "bn": "১ (এক)",
+        "ja": "1（いち）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "いち"
+      ]
+    },
+    {
+      "id": "nm_2",
+      "jp": "に",
+      "kana": "に",
+      "romaji": "ni",
+      "meaning": {
+        "en": "2 (two)",
+        "bn": "২ (দুই)",
+        "ja": "2（に）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "に"
+      ]
+    },
+    {
+      "id": "nm_3",
+      "jp": "さん",
+      "kana": "さん",
+      "romaji": "san",
+      "meaning": {
+        "en": "3 (three)",
+        "bn": "৩ (তিন)",
+        "ja": "3（さん）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "さん"
+      ]
+    },
+    {
+      "id": "nm_4",
+      "jp": "よん",
+      "kana": "よん",
+      "romaji": "yon",
+      "meaning": {
+        "en": "4 (four)",
+        "bn": "৪ (চার)",
+        "ja": "4（よん／し）"
+      },
+      "note": {
+        "en": "Also 'shi', but 'yon' is safer and more common.",
+        "bn": "'শি'ও হয়, তবে 'ইয়োন' নিরাপদ ও বেশি প্রচলিত।",
+        "ja": "「し」とも言うが「よん」が安全。"
+      },
+      "srs_words": [
+        "よん"
+      ]
+    },
+    {
+      "id": "nm_5",
+      "jp": "ご",
+      "kana": "ご",
+      "romaji": "go",
+      "meaning": {
+        "en": "5 (five)",
+        "bn": "৫ (পাঁচ)",
+        "ja": "5（ご）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "ご"
+      ]
+    },
+    {
+      "id": "nm_6",
+      "jp": "ろく",
+      "kana": "ろく",
+      "romaji": "roku",
+      "meaning": {
+        "en": "6 (six)",
+        "bn": "৬ (ছয়)",
+        "ja": "6（ろく）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "ろく"
+      ]
+    },
+    {
+      "id": "nm_7",
+      "jp": "なな",
+      "kana": "なな",
+      "romaji": "nana",
+      "meaning": {
+        "en": "7 (seven)",
+        "bn": "৭ (সাত)",
+        "ja": "7（なな／しち）"
+      },
+      "note": {
+        "en": "Also 'shichi'; 'nana' is clearer.",
+        "bn": "'শিচি'ও হয়; 'নানা' বেশি স্পষ্ট।",
+        "ja": "「しち」とも。「なな」が明瞭。"
+      },
+      "srs_words": [
+        "なな"
+      ]
+    },
+    {
+      "id": "nm_8",
+      "jp": "はち",
+      "kana": "はち",
+      "romaji": "hachi",
+      "meaning": {
+        "en": "8 (eight)",
+        "bn": "৮ (আট)",
+        "ja": "8（はち）"
+      },
+      "note": {
+        "en": "Basic counting number.",
+        "bn": "মৌলিক গণনার সংখ্যা।",
+        "ja": "基本の数。"
+      },
+      "srs_words": [
+        "はち"
+      ]
+    },
+    {
+      "id": "nm_9",
+      "jp": "きゅう",
+      "kana": "きゅう",
+      "romaji": "kyū",
+      "meaning": {
+        "en": "9 (nine)",
+        "bn": "৯ (নয়)",
+        "ja": "9（きゅう／く）"
+      },
+      "note": {
+        "en": "Also 'ku'; 'kyū' is safer.",
+        "bn": "'কু'ও হয়; 'কিয়ু' নিরাপদ।",
+        "ja": "「く」とも。「きゅう」が安全。"
+      },
+      "srs_words": [
+        "きゅう"
+      ]
+    },
+    {
+      "id": "nm_10",
+      "jp": "じゅう",
+      "kana": "じゅう",
+      "romaji": "jū",
+      "meaning": {
+        "en": "10 (ten)",
+        "bn": "১০ (দশ)",
+        "ja": "10（じゅう）"
+      },
+      "note": {
+        "en": "11 = jū-ichi, 20 = ni-jū, and so on.",
+        "bn": "১১ = জুু-ইচি, ২০ = নি-জুু — এভাবে চলে।",
+        "ja": "11＝じゅういち、20＝にじゅう。"
+      },
+      "srs_words": [
+        "じゅう"
+      ]
+    },
+    {
+      "id": "nm_100",
+      "jp": "ひゃく",
+      "kana": "ひゃく",
+      "romaji": "hyaku",
+      "meaning": {
+        "en": "100 (hundred)",
+        "bn": "১০০ (একশ)",
+        "ja": "100（ひゃく）"
+      },
+      "note": {
+        "en": "300 = san-byaku (sound changes a little).",
+        "bn": "৩০০ = সান-বিয়াকু (উচ্চারণ একটু বদলায়)।",
+        "ja": "300＝さんびゃく（音変化あり）。"
+      },
+      "srs_words": [
+        "ひゃく"
+      ]
+    },
+    {
+      "id": "nm_1000",
+      "jp": "せん",
+      "kana": "せん",
+      "romaji": "sen",
+      "meaning": {
+        "en": "1000 (thousand)",
+        "bn": "১০০০ (এক হাজার)",
+        "ja": "1000（せん）"
+      },
+      "note": {
+        "en": "A typical konbini lunch is ~500–1000 yen.",
+        "bn": "সাধারণ কনবিনি লাঞ্চ ~৫০০–১০০০ ইয়েন।",
+        "ja": "コンビニ昼食は約500〜1000円。"
+      },
+      "srs_words": [
+        "せん"
+      ]
+    },
+    {
+      "id": "nm_yen",
+      "jp": "えん",
+      "kana": "えん",
+      "romaji": "en",
+      "meaning": {
+        "en": "yen (¥, the money)",
+        "bn": "ইয়েন (¥, জাপানি মুদ্রা)",
+        "ja": "円（お金の単位）"
+      },
+      "note": {
+        "en": "500 yen = go-hyaku en. Prices are said number + えん.",
+        "bn": "৫০০ ইয়েন = গো-হিয়াকু এন। দাম বলা হয় সংখ্যা + えん।",
+        "ja": "500円＝ごひゃくえん。数＋えん。"
+      },
+      "srs_words": [
+        "えん"
+      ]
+    }
+  ],
+  "pack_id": "pack_basics",
+  "depends_on": []
+}

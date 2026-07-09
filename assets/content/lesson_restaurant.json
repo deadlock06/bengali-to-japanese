@@ -1,0 +1,175 @@
+{
+  "type": "lesson",
+  "id": "restaurant_01",
+  "can_do": {
+    "en": "Order food and drink at a restaurant, ask for water and the bill, and be polite about the meal.",
+    "bn": "রেস্তোরাঁয় খাবার-পানীয় অর্ডার করা, পানি ও বিল চাওয়া, এবং খাবার নিয়ে ভদ্রতা করা।",
+    "ja": "レストランで注文し、水や会計を頼み、食事のあいさつができる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A1/A2",
+  "verified": true,
+  "source": "Aligned to Irodori Elementary Can-do (eating out)",
+  "items": [
+    {
+      "id": "rs_menu",
+      "jp": "メニューをおねがいします",
+      "kana": "メニューをおねがいします",
+      "romaji": "menyū o onegai shimasu",
+      "meaning": {
+        "en": "The menu, please.",
+        "bn": "মেনু দিন।",
+        "ja": "メニューをお願いします。"
+      },
+      "note": {
+        "en": "メニュー is a katakana loanword (menu).",
+        "bn": "メニュー ইংরেজি 'menu' থেকে আসা কাতাকানা শব্দ।",
+        "ja": "メニューは外来語。"
+      },
+      "srs_words": [
+        "メニュー",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "rs_this",
+      "jp": "これをおねがいします",
+      "kana": "これをおねがいします",
+      "romaji": "kore o onegai shimasu",
+      "meaning": {
+        "en": "This one, please.",
+        "bn": "এটা দিন।",
+        "ja": "これをお願いします。"
+      },
+      "note": {
+        "en": "Point at the menu and say this to order.",
+        "bn": "মেনুতে দেখিয়ে অর্ডার করতে এটা বলো।",
+        "ja": "メニューを指して注文。"
+      },
+      "srs_words": [
+        "これ",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "rs_water",
+      "jp": "みずをください",
+      "kana": "みずをください",
+      "romaji": "mizu o kudasai",
+      "meaning": {
+        "en": "Water, please.",
+        "bn": "পানি দিন।",
+        "ja": "水をください。"
+      },
+      "note": {
+        "en": "みず = water. Water is usually free in Japan.",
+        "bn": "みず = পানি। জাপানে সাধারণত পানি ফ্রি।",
+        "ja": "水は無料のことが多い。"
+      },
+      "srs_words": [
+        "みず",
+        "ください"
+      ]
+    },
+    {
+      "id": "rs_recommend",
+      "jp": "おすすめは なんですか",
+      "kana": "おすすめは なんですか",
+      "romaji": "osusume wa nan desu ka",
+      "meaning": {
+        "en": "What do you recommend?",
+        "bn": "আপনি কী রেকমেন্ড করেন?",
+        "ja": "おすすめは何ですか。"
+      },
+      "note": {
+        "en": "おすすめ = recommendation. Handy when the menu is hard.",
+        "bn": "おすすめ = সুপারিশ। মেনু কঠিন হলে কাজে লাগে।",
+        "ja": "おすすめ＝推薦。"
+      },
+      "srs_words": [
+        "おすすめ",
+        "なん"
+      ]
+    },
+    {
+      "id": "rs_delicious",
+      "jp": "おいしいです",
+      "kana": "おいしいです",
+      "romaji": "oishii desu",
+      "meaning": {
+        "en": "It's delicious.",
+        "bn": "এটা সুস্বাদু।",
+        "ja": "おいしいです。"
+      },
+      "note": {
+        "en": "A nice thing to say to staff or hosts.",
+        "bn": "কর্মী বা আপ্যায়নকারীকে বলার সুন্দর কথা।",
+        "ja": "店員や相手に言うと良い。"
+      },
+      "srs_words": [
+        "おいしい"
+      ]
+    },
+    {
+      "id": "rs_bill",
+      "jp": "おかいけいを おねがいします",
+      "kana": "おかいけいを おねがいします",
+      "romaji": "o-kaikei o onegai shimasu",
+      "meaning": {
+        "en": "The bill, please.",
+        "bn": "বিল দিন।",
+        "ja": "お会計をお願いします。"
+      },
+      "note": {
+        "en": "かいけい = the bill/check. Often you pay at the counter.",
+        "bn": "かいけい = বিল। প্রায়ই কাউন্টারে দাম দিতে হয়।",
+        "ja": "会計＝支払い。レジで払うことが多い。"
+      },
+      "srs_words": [
+        "おかいけい",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "rs_itadakimasu",
+      "jp": "いただきます",
+      "kana": "いただきます",
+      "romaji": "itadakimasu",
+      "meaning": {
+        "en": "(said gratefully before eating)",
+        "bn": "(খাওয়ার আগে কৃতজ্ঞতাভরে বলা হয়)",
+        "ja": "いただきます（食べる前）"
+      },
+      "note": {
+        "en": "Cultural: said just before you start eating.",
+        "bn": "সংস্কৃতি: খাওয়া শুরুর ঠিক আগে বলা হয়।",
+        "ja": "食べる直前に言う習慣。"
+      },
+      "srs_words": [
+        "いただきます"
+      ]
+    },
+    {
+      "id": "rs_gochisosama",
+      "jp": "ごちそうさまでした",
+      "kana": "ごちそうさまでした",
+      "romaji": "gochisōsama deshita",
+      "meaning": {
+        "en": "Thank you for the meal (after eating)",
+        "bn": "খাবারের জন্য ধন্যবাদ (খাওয়ার পরে)",
+        "ja": "ごちそうさまでした（食後）"
+      },
+      "note": {
+        "en": "Said after finishing — polite and expected.",
+        "bn": "খাওয়া শেষে বলা হয় — ভদ্র ও প্রত্যাশিত।",
+        "ja": "食後に言う。丁寧で自然。"
+      },
+      "srs_words": [
+        "ごちそうさまでした"
+      ]
+    }
+  ],
+  "pack_id": "pack_daily",
+  "depends_on": [
+    "pack_basics"
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "type": "lesson",
+  "id": "time_01",
+  "can_do": {
+    "en": "Ask and tell the time, and talk about today, tomorrow, and the days of the week.",
+    "bn": "সময় জিজ্ঞেস ও বলা, এবং আজ/আগামীকাল ও সপ্তাহের দিন নিয়ে কথা বলা।",
+    "ja": "時間を聞いて答え、今日・明日・曜日が言える。"
+  },
+  "jlpt_or_jft": "JFT-Basic A1/A2",
+  "verified": true,
+  "source": "Aligned to Irodori Starter Can-do (time and days)",
+  "items": [
+    {
+      "id": "tm_now",
+      "jp": "いま なんじですか",
+      "kana": "いま なんじですか",
+      "romaji": "ima nanji desu ka",
+      "meaning": {
+        "en": "What time is it now?",
+        "bn": "এখন কয়টা বাজে?",
+        "ja": "今 何時ですか。"
+      },
+      "note": {
+        "en": "なんじ = what time. Answer with number + じ.",
+        "bn": "なんじ = কয়টা। উত্তরে সংখ্যা + じ বসাও।",
+        "ja": "なんじ＝何時。数＋じで答える。"
+      },
+      "srs_words": [
+        "いま",
+        "なんじ"
+      ]
+    },
+    {
+      "id": "tm_oclock",
+      "jp": "さんじ",
+      "kana": "さんじ",
+      "romaji": "san-ji",
+      "meaning": {
+        "en": "3 o'clock",
+        "bn": "৩টা",
+        "ja": "3時（さんじ）"
+      },
+      "note": {
+        "en": "Number + じ = o'clock. 7 o'clock = しちじ.",
+        "bn": "সংখ্যা + じ = টা। ৭টা = শিচিজি।",
+        "ja": "数＋じ＝〜時。7時＝しちじ。"
+      },
+      "srs_words": [
+        "さんじ",
+        "じ"
+      ]
+    },
+    {
+      "id": "tm_half",
+      "jp": "はん",
+      "kana": "はん",
+      "romaji": "han",
+      "meaning": {
+        "en": "half past",
+        "bn": "সাড়ে / আধা ঘণ্টা",
+        "ja": "半（〜時半）"
+      },
+      "note": {
+        "en": "3:30 = さんじはん (san-ji han).",
+        "bn": "৩:৩০ = সানজি হান।",
+        "ja": "3時半＝さんじはん。"
+      },
+      "srs_words": [
+        "はん"
+      ]
+    },
+    {
+      "id": "tm_today",
+      "jp": "きょう",
+      "kana": "きょう",
+      "romaji": "kyō",
+      "meaning": {
+        "en": "today",
+        "bn": "আজ",
+        "ja": "今日（きょう）"
+      },
+      "note": {
+        "en": "Very common time word.",
+        "bn": "খুব প্রচলিত সময়-শব্দ।",
+        "ja": "よく使う時の言葉。"
+      },
+      "srs_words": [
+        "きょう"
+      ]
+    },
+    {
+      "id": "tm_tomorrow",
+      "jp": "あした",
+      "kana": "あした",
+      "romaji": "ashita",
+      "meaning": {
+        "en": "tomorrow",
+        "bn": "আগামীকাল",
+        "ja": "明日（あした）"
+      },
+      "note": {
+        "en": "Used for shifts and appointments.",
+        "bn": "শিফট ও অ্যাপয়েন্টমেন্টে ব্যবহৃত।",
+        "ja": "シフトや予定に使う。"
+      },
+      "srs_words": [
+        "あした"
+      ]
+    },
+    {
+      "id": "tm_yesterday",
+      "jp": "きのう",
+      "kana": "きのう",
+      "romaji": "kinō",
+      "meaning": {
+        "en": "yesterday",
+        "bn": "গতকাল",
+        "ja": "昨日（きのう）"
+      },
+      "note": {
+        "en": "きょう today, あした tomorrow, きのう yesterday.",
+        "bn": "きょう আজ, あした আগামীকাল, きのう গতকাল।",
+        "ja": "今日・明日・昨日。"
+      },
+      "srs_words": [
+        "きのう"
+      ]
+    },
+    {
+      "id": "tm_whatday",
+      "jp": "きょうは なんようびですか",
+      "kana": "きょうは なんようびですか",
+      "romaji": "kyō wa nan-yōbi desu ka",
+      "meaning": {
+        "en": "What day (of the week) is it today?",
+        "bn": "আজ সপ্তাহের কোন দিন?",
+        "ja": "今日は何曜日ですか。"
+      },
+      "note": {
+        "en": "ようび = day of the week.",
+        "bn": "ようび = সপ্তাহের দিন।",
+        "ja": "ようび＝曜日。"
+      },
+      "srs_words": [
+        "なんようび"
+      ]
+    },
+    {
+      "id": "tm_mon",
+      "jp": "げつようび",
+      "kana": "げつようび",
+      "romaji": "getsu-yōbi",
+      "meaning": {
+        "en": "Monday",
+        "bn": "সোমবার",
+        "ja": "月曜日（げつようび）"
+      },
+      "note": {
+        "en": "Mon–Sun: げつ・か・すい・もく・きん・ど・にち + ようび.",
+        "bn": "সোম–রবি: げつ・か・すい・もく・きん・ど・にち + ようび।",
+        "ja": "月火水木金土日＋ようび。"
+      },
+      "srs_words": [
+        "げつようび"
+      ]
+    },
+    {
+      "id": "tm_sat",
+      "jp": "どようび",
+      "kana": "どようび",
+      "romaji": "do-yōbi",
+      "meaning": {
+        "en": "Saturday",
+        "bn": "শনিবার",
+        "ja": "土曜日（どようび）"
+      },
+      "note": {
+        "en": "Many factories work Saturdays too — check your shift.",
+        "bn": "অনেক কারখানা শনিবারও চলে — শিফট দেখে নাও।",
+        "ja": "土曜も稼働の工場が多い。"
+      },
+      "srs_words": [
+        "どようび"
+      ]
+    },
+    {
+      "id": "tm_sun",
+      "jp": "にちようび",
+      "kana": "にちようび",
+      "romaji": "nichi-yōbi",
+      "meaning": {
+        "en": "Sunday",
+        "bn": "রবিবার",
+        "ja": "日曜日（にちようび）"
+      },
+      "note": {
+        "en": "Often the day off (やすみ).",
+        "bn": "সাধারণত ছুটির দিন (やすみ)।",
+        "ja": "休みのことが多い。"
+      },
+      "srs_words": [
+        "にちようび"
+      ]
+    }
+  ],
+  "pack_id": "pack_basics",
+  "depends_on": []
+}

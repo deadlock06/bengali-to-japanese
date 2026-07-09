@@ -1,0 +1,175 @@
+{
+  "type": "lesson",
+  "id": "workplace_01",
+  "can_do": {
+    "en": "Handle daily workplace needs: greet coworkers, ask for time off, report being late, ask for a break.",
+    "bn": "কর্মস্থলের দৈনন্দিন প্রয়োজন সামলানো: সহকর্মীকে অভিবাদন, ছুটি চাওয়া, দেরি জানানো, বিরতি চাওয়া।",
+    "ja": "職場の日常：あいさつ、休みの申し出、遅刻の連絡、休憩の依頼ができる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "verified": true,
+  "source": "Aligned to Irodori Elementary Can-do (workplace communication)",
+  "items": [
+    {
+      "id": "wp_otsukare",
+      "jp": "おつかれさまです",
+      "kana": "おつかれさまです",
+      "romaji": "otsukaresama desu",
+      "meaning": {
+        "en": "Thanks for your hard work (workplace greeting)",
+        "bn": "আপনার পরিশ্রমের জন্য ধন্যবাদ (কর্মস্থলের অভিবাদন)",
+        "ja": "お疲れさまです（職場のあいさつ）"
+      },
+      "note": {
+        "en": "Said to coworkers during/after work — extremely common.",
+        "bn": "কাজের সময়/পরে সহকর্মীদের বলা হয় — খুবই প্রচলিত।",
+        "ja": "仕事中・後に同僚へ。非常によく使う。"
+      },
+      "srs_words": [
+        "おつかれさまです"
+      ]
+    },
+    {
+      "id": "wp_dayoff",
+      "jp": "やすみを とりたいです",
+      "kana": "やすみを とりたいです",
+      "romaji": "yasumi o toritai desu",
+      "meaning": {
+        "en": "I'd like to take a day off.",
+        "bn": "আমি একদিন ছুটি নিতে চাই।",
+        "ja": "休みを取りたいです。"
+      },
+      "note": {
+        "en": "〜たいです = I want to. やすみ = rest/day off.",
+        "bn": "〜たいです = আমি চাই। やすみ = ছুটি।",
+        "ja": "〜たいです＝希望。休み＝休暇。"
+      },
+      "srs_words": [
+        "やすみ",
+        "とりたい"
+      ]
+    },
+    {
+      "id": "wp_maytomorrow",
+      "jp": "あした やすんでも いいですか",
+      "kana": "あした やすんでも いいですか",
+      "romaji": "ashita yasunde mo ii desu ka",
+      "meaning": {
+        "en": "May I take tomorrow off?",
+        "bn": "আমি কি আগামীকাল ছুটি নিতে পারি?",
+        "ja": "明日 休んでもいいですか。"
+      },
+      "note": {
+        "en": "〜てもいいですか = may I ...? A polite way to ask permission.",
+        "bn": "〜てもいいですか = আমি কি ... পারি? অনুমতি চাওয়ার ভদ্র উপায়।",
+        "ja": "〜てもいいですか＝許可を求める丁寧表現。"
+      },
+      "srs_words": [
+        "やすんでも",
+        "いいですか"
+      ]
+    },
+    {
+      "id": "wp_late",
+      "jp": "すみません、おくれます",
+      "kana": "すみません、おくれます",
+      "romaji": "sumimasen, okuremasu",
+      "meaning": {
+        "en": "Sorry, I'll be late.",
+        "bn": "দুঃখিত, আমার দেরি হবে।",
+        "ja": "すみません、遅れます。"
+      },
+      "note": {
+        "en": "Call early. おくれます = I'll be late.",
+        "bn": "আগেভাগে ফোন করো। おくれます = দেরি হবে।",
+        "ja": "早めに連絡を。遅れます＝遅刻する。"
+      },
+      "srs_words": [
+        "おくれます"
+      ]
+    },
+    {
+      "id": "wp_early",
+      "jp": "はやく かえっても いいですか",
+      "kana": "はやく かえっても いいですか",
+      "romaji": "hayaku kaette mo ii desu ka",
+      "meaning": {
+        "en": "May I leave early?",
+        "bn": "আমি কি তাড়াতাড়ি যেতে পারি?",
+        "ja": "早く帰ってもいいですか。"
+      },
+      "note": {
+        "en": "かえる = to go home. Same 〜てもいいですか permission pattern.",
+        "bn": "かえる = বাড়ি যাওয়া। একই 〜てもいいですか অনুমতি গঠন।",
+        "ja": "帰る＝帰宅。許可の型。"
+      },
+      "srs_words": [
+        "はやく",
+        "かえっても"
+      ]
+    },
+    {
+      "id": "wp_toilet",
+      "jp": "トイレに いっても いいですか",
+      "kana": "トイレに いっても いいですか",
+      "romaji": "toire ni itte mo ii desu ka",
+      "meaning": {
+        "en": "May I go to the toilet?",
+        "bn": "আমি কি টয়লেটে যেতে পারি?",
+        "ja": "トイレに行ってもいいですか。"
+      },
+      "note": {
+        "en": "トイレ is katakana (toilet). に marks the destination.",
+        "bn": "トイレ কাতাকানা (toilet)। に দিয়ে গন্তব্য বোঝায়।",
+        "ja": "トイレは外来語。にで行き先。"
+      },
+      "srs_words": [
+        "トイレ",
+        "いっても"
+      ]
+    },
+    {
+      "id": "wp_break",
+      "jp": "きゅうけいは いつですか",
+      "kana": "きゅうけいは いつですか",
+      "romaji": "kyūkei wa itsu desu ka",
+      "meaning": {
+        "en": "When is the break?",
+        "bn": "বিরতি কখন?",
+        "ja": "休憩はいつですか。"
+      },
+      "note": {
+        "en": "きゅうけい = break/rest. いつ = when.",
+        "bn": "きゅうけい = বিরতি। いつ = কখন।",
+        "ja": "休憩＝break。いつ＝when。"
+      },
+      "srs_words": [
+        "きゅうけい",
+        "いつ"
+      ]
+    },
+    {
+      "id": "wp_understood",
+      "jp": "わかりました",
+      "kana": "わかりました",
+      "romaji": "wakarimashita",
+      "meaning": {
+        "en": "Understood. / Got it.",
+        "bn": "বুঝেছি। / ঠিক আছে।",
+        "ja": "わかりました。"
+      },
+      "note": {
+        "en": "Past of わかります — say it when given an instruction.",
+        "bn": "わかります-এর অতীত রূপ — নির্দেশ পেলে বলবে।",
+        "ja": "わかりますの過去。指示を受けたとき言う。"
+      },
+      "srs_words": [
+        "わかりました"
+      ]
+    }
+  ],
+  "pack_id": "pack_work",
+  "depends_on": [
+    "pack_daily"
+  ]
+}

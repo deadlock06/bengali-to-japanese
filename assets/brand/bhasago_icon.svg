@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-label="Bhasago app icon">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B2350"/>
+      <stop offset="0.55" stop-color="#2A3A8F"/>
+      <stop offset="1" stop-color="#3D5AFE"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FFC24B" stop-opacity="0.95"/>
+      <stop offset="0.6" stop-color="#FF8A5B" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#FF6F86" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="torii" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#FFE3E9"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tile -->
+  <rect x="0" y="0" width="1024" height="1024" rx="232" fill="url(#bg)"/>
+
+  <!-- rising sun -->
+  <circle cx="512" cy="452" r="238" fill="url(#sun)"/>
+
+  <!-- torii gate (gateway to Japan / Bengal-Japan bridge) -->
+  <g fill="url(#torii)">
+    <!-- top beam (kasagi) with upswept ends -->
+    <path d="M266 356
+             C 320 330, 704 330, 758 356
+             L 742 410
+             C 700 392, 324 392, 282 410 Z"/>
+    <!-- second beam (nuki) -->
+    <rect x="322" y="446" width="380" height="46" rx="8"/>
+    <!-- pillars, slightly splayed -->
+    <path d="M372 470 h58 l14 250 h-86 Z"/>
+    <path d="M652 470 h58 l14 250 h-86 Z"/>
+  </g>
+
+  <!-- bridge / river brushstroke under the gate -->
+  <path d="M300 792 C 430 748, 594 748, 724 792"
+        fill="none" stroke="#FF6F86" stroke-width="30" stroke-linecap="round"/>
+  <circle cx="512" cy="772" r="15" fill="#FFC24B"/>
+</svg>

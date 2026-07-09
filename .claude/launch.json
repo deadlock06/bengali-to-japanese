@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "sensei-preview", "runtimeExecutable": "node", "runtimeArgs": ["tools/preview_server.mjs"], "port": 5599 }
+  ]
+}

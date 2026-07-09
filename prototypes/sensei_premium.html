@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="bn"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENSEI</title>
+<style>
+ *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+ :root{
+  --bg:#0a0a12; --card:rgba(255,255,255,.045); --card2:rgba(255,255,255,.07);
+  --line:rgba(255,255,255,.09); --txt:#f4f5fb; --dim:#9aa0b4; --faint:#666b80;
+  --g1:#ff5a3c; --g2:#ff2d78; --g3:#8b5cff; --cyan:#3fd0e0; --gold:#ffc04d; --green:#37e0a6;
+  --grad:linear-gradient(135deg,#ff5a3c,#ff2d78 55%,#8b5cff);
+  --grad2:linear-gradient(135deg,#8b5cff,#3fd0e0);
+ }
+ body{background:var(--bg);color:var(--txt);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Bengali","Noto Sans JP",sans-serif;
+  display:flex;justify-content:center;min-height:100vh;overflow-x:hidden}
+ .phone{width:100%;max-width:440px;min-height:100vh;position:relative;
+  background:radial-gradient(120% 60% at 50% -10%,rgba(139,92,255,.18),transparent 60%),
+             radial-gradient(90% 50% at 100% 0%,rgba(255,45,120,.12),transparent 55%),var(--bg);
+  display:flex;flex-direction:column;overflow:hidden}
+ header{padding:18px 20px 8px;display:flex;align-items:center;justify-content:space-between}
+ .brand{font-weight:800;font-size:22px;letter-spacing:.5px}
+ .brand b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+ .lang{display:flex;gap:4px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:3px}
+ .lang button{background:none;border:0;color:var(--dim);font-weight:700;font-size:11px;padding:5px 9px;border-radius:99px;cursor:pointer;transition:.2s}
+ .lang button.on{background:var(--grad);color:#fff}
+ main{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 18px 108px;scrollbar-width:none}
+ main::-webkit-scrollbar{display:none}
+ .screen{display:none}.screen.on{display:block;animation:rise .4s cubic-bezier(.2,.7,.2,1)}
+ @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+ @keyframes pop{0%{transform:scale(.8);opacity:0}60%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+ .glass{background:var(--card);border:1px solid var(--line);border-radius:22px;backdrop-filter:blur(12px)}
+ h2{font-size:21px;font-weight:800;letter-spacing:-.3px;margin-bottom:3px}
+ .muted{color:var(--dim);font-size:13px}
+ .faint{color:var(--faint);font-size:11px}
+ /* HERO */
+ .hero{padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
+ .hero:before{content:"";position:absolute;inset:0;background:var(--grad);opacity:.13}
+ .hero-row{display:flex;align-items:center;gap:18px;position:relative}
+ .ring{--p:41;width:92px;height:92px;flex:none;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(#ff2d78 calc(var(--p)*1%),rgba(255,255,255,.08) 0);position:relative}
+ .ring:before{content:"";position:absolute;inset:7px;border-radius:50%;background:#12121c}
+ .ring b{position:relative;font-size:22px;font-weight:800}
+ .ring small{position:relative;display:block;text-align:center;font-size:9px;color:var(--dim);margin-top:-3px}
+ .hi{font-size:13px;color:var(--dim)}
+ .goaln{font-size:23px;font-weight:800;letter-spacing:-.4px;margin:2px 0 6px}
+ .xp{height:7px;background:rgba(255,255,255,.09);border-radius:99px;overflow:hidden}
+ .xp>i{display:block;height:100%;width:64%;background:var(--grad2);border-radius:99px}
+ /* CHIPS */
+ .chips{display:flex;gap:10px;margin-bottom:18px}
+ .chip{flex:1;padding:13px 10px;text-align:center;border-radius:18px}
+ .chip b{font-size:20px;font-weight:800;display:block}
+ .chip .ic{font-size:17px;margin-bottom:3px}
+ .chip small{color:var(--dim);font-size:10.5px}
+ /* CTA */
+ .cta{display:block;width:100%;border:0;cursor:pointer;color:#fff;font-weight:800;font-size:16px;
+  padding:17px;border-radius:20px;background:var(--grad);box-shadow:0 10px 30px -8px rgba(255,45,120,.5);
+  display:flex;align-items:center;justify-content:center;gap:10px;transition:transform .12s}
+ .cta:active{transform:scale(.97)}
+ .cta .sm{font-size:11px;font-weight:600;opacity:.85;display:block}
+ .sec-t{font-size:12px;font-weight:800;color:var(--dim);letter-spacing:1.5px;text-transform:uppercase;margin:22px 4px 12px}
+ /* PATH */
+ .lrow{display:flex;align-items:center;gap:14px;padding:15px;margin-bottom:11px;cursor:pointer;transition:.15s}
+ .lrow:active{transform:scale(.98)}
+ .lrow .ic{width:50px;height:50px;border-radius:15px;flex:none;display:grid;place-items:center;font-size:23px;background:var(--card2)}
+ .lrow .ic.g{background:var(--grad)}.lrow .ic.g2{background:var(--grad2)}
+ .lrow .t{font-weight:700;font-size:15px}
+ .lrow .d{color:var(--dim);font-size:12px;margin-top:1px}
+ .lrow .prog{margin-left:auto;text-align:right}
+ .dot3{display:flex;gap:3px;justify-content:flex-end;margin-top:4px}
+ .dot3 i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.15)}
+ .dot3 i.f{background:var(--green)}
+ .lock{color:var(--faint);font-size:16px;margin-left:auto}
+ .badge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:99px}
+ .badge.v{color:#0a2a1e;background:var(--green)}
+ .badge.new{color:#2a0a1e;background:var(--gold)}
+ /* SEG */
+ .seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:4px;margin-bottom:18px}
+ .seg button{flex:1;background:none;border:0;color:var(--dim);font-weight:700;font-size:13px;padding:10px;border-radius:12px;cursor:pointer;transition:.2s}
+ .seg button.on{background:var(--grad);color:#fff}
+ /* KANA */
+ .kgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}
+ .k{aspect-ratio:1;border-radius:16px;display:grid;place-items:center;cursor:pointer;position:relative;overflow:hidden;
+  background:var(--card);border:1px solid var(--line);transition:.15s}
+ .k:active{transform:scale(.9)}
+ .k .c{font-size:25px;font-weight:600}.k .r{position:absolute;bottom:6px;font-size:10px;color:var(--dim)}
+ .k.hit{background:var(--grad);border-color:transparent}
+ /* FLASH */
+ .flash{padding:26px 20px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden}
+ .flash .idx{font-size:11px;color:var(--dim);font-weight:700;letter-spacing:1px}
+ .flash .jp{font-size:38px;font-weight:700;margin:14px 0 6px;line-height:1.3}
+ .flash .rom{color:var(--cyan);font-size:15px;letter-spacing:.5px}
+ .flash .mean{font-size:20px;font-weight:700;margin-top:16px}
+ .flash .second{display:block;font-size:.72em;color:var(--faint);font-weight:400;margin-top:3px}
+ .playbtn{width:58px;height:58px;border-radius:50%;border:0;cursor:pointer;color:#fff;font-size:22px;margin-top:16px;
+  background:var(--grad2);box-shadow:0 8px 24px -6px rgba(63,208,224,.5);transition:transform .12s}
+ .playbtn:active{transform:scale(.9)}
+ .note{background:rgba(139,92,255,.1);border:1px solid rgba(139,92,255,.25);border-radius:16px;padding:13px;margin-top:16px;font-size:13px;text-align:left;line-height:1.5}
+ .fbtns{display:flex;gap:10px;margin-top:16px}
+ .fbtn{flex:1;padding:13px;border-radius:15px;border:1px solid var(--line);background:var(--card);color:var(--txt);font-weight:700;font-size:13px;cursor:pointer;transition:.15s}
+ .fbtn:active{transform:scale(.96)}.fbtn.p{background:var(--grad);border-color:transparent;color:#fff}
+ /* METER */
+ .meter{height:120px;border-radius:16px;overflow:hidden;margin-top:14px;background:#08080f;border:1px solid var(--line)}
+ .recbtn{width:100%;border:0;border-radius:18px;padding:16px;font-weight:800;font-size:15px;cursor:pointer;color:#fff;background:var(--grad);margin-top:14px;transition:transform .12s}
+ .recbtn:active{transform:scale(.97)}
+ .rdot{width:9px;height:9px;border-radius:50%;background:#fff;display:inline-block;margin-right:7px;animation:blink 1s infinite}
+ @keyframes blink{50%{opacity:.3}}
+ .scorebig{font-size:52px;font-weight:800;text-align:center;margin-top:10px;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;animation:pop .5s}
+ /* PITCH */
+ .pcard{padding:16px;margin-bottom:12px}
+ .pw{font-size:19px;font-weight:800}
+ /* REVIEW */
+ .rev{padding:28px 20px;text-align:center;min-height:230px;display:flex;flex-direction:column;justify-content:center;margin-bottom:16px}
+ .rev .w{font-size:34px;font-weight:700}
+ .rate{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+ .rate button{border:0;border-radius:14px;padding:13px 4px;font-weight:800;font-size:13px;cursor:pointer;color:#0a0a12;transition:transform .12s}
+ .rate button:active{transform:scale(.94)}
+ .rate small{display:block;font-size:9px;opacity:.7;margin-top:2px}
+ .r1{background:#ff6b6b}.r2{background:var(--gold)}.r3{background:var(--green)}.r4{background:var(--cyan)}
+ .confetti{position:absolute;width:9px;height:9px;top:-10px;border-radius:2px;animation:fall 1.4s linear forwards}
+ @keyframes fall{to{transform:translateY(320px) rotate(360deg);opacity:0}}
+ /* NAV */
+ nav{position:absolute;bottom:0;left:0;right:0;display:flex;padding:8px 12px 14px;gap:4px;
+  background:linear-gradient(to top,var(--bg) 60%,transparent);backdrop-filter:blur(8px)}
+ nav button{flex:1;background:none;border:0;color:var(--faint);font-size:10px;font-weight:700;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0;border-radius:14px;transition:.2s}
+ nav button .ni{font-size:21px}
+ nav button.on{color:var(--txt)}
+ nav button.on .ni{transform:translateY(-2px)}
+ nav button.on:after{content:"";position:absolute;bottom:8px;width:5px;height:5px;border-radius:50%;background:var(--g2)}
+</style></head><body>
+<div class="phone">
+ <header>
+  <div class="brand">SEN<b>SEI</b></div>
+  <div class="lang">
+   <button id="L-en" onclick="setLang('en')">EN</button>
+   <button id="L-bn" class="on" onclick="setLang('bn')">বাংলা</button>
+   <button id="L-ja" onclick="setLang('ja')">日本語</button>
+  </div>
+ </header>
+ <main>
+  <!-- HOME -->
+  <section class="screen on" id="s-home">
+   <div class="glass hero">
+    <div class="hero-row">
+     <div class="ring" id="ring"><b>41%</b><small id="ringL">today</small></div>
+     <div style="flex:1">
+      <div class="hi" id="greet">সুপ্রভাত 👋</div>
+      <div class="goaln">JFT-Basic A2</div>
+      <div class="xp"><i id="xpbar"></i></div>
+      <div class="faint" style="margin-top:6px" id="xptxt">Level 3 · 640 / 1000 XP</div>
+     </div>
+    </div>
+   </div>
+   <div class="chips">
+    <div class="glass chip"><div class="ic">🔥</div><b id="c-streak">7</b><small id="l-streak">day streak</small></div>
+    <div class="glass chip"><div class="ic">📚</div><b>183</b><small id="l-words">words</small></div>
+    <div class="glass chip"><div class="ic">🎯</div><b id="c-due">12</b><small id="l-due">to review</small></div>
+   </div>
+   <button class="cta" onclick="go('learn')"><span><span class="sm" id="cta-sm">continue</span><span id="cta-t">Lesson চালিয়ে যাও</span></span> →</button>
+   <div class="sec-t" id="sec-path">your path</div>
+   <div id="pathList"></div>
+  </section>
+
+  <!-- LEARN -->
+  <section class="screen" id="s-learn">
+   <div class="seg">
+    <button class="on" id="sg-kana" onclick="lseg('kana')">かな Kana</button>
+    <button id="sg-lesson" onclick="lseg('lesson')" data-i="segLesson"></button>
+   </div>
+   <div id="kanaV">
+    <h2 data-i="kanaH"></h2><div class="muted" data-i="kanaSub"></div>
+    <div class="kgrid" id="kgrid" style="margin-top:14px"></div>
+    <div class="note" id="kanaTip" style="margin-top:16px"></div>
+   </div>
+   <div id="lessonV" style="display:none">
+    <div style="display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:6px" id="lessonPills"></div>
+    <div class="glass flash">
+     <div class="idx" id="f-idx"></div>
+     <div class="jp" id="f-jp"></div>
+     <div class="rom" id="f-rom"></div>
+     <button class="playbtn" onclick="playCur()">▶</button>
+     <div class="mean" id="f-mean"></div>
+     <div class="note" id="f-note"></div>
+    </div>
+    <div class="fbtns">
+     <button class="fbtn" onclick="prevCard()" data-i="prev"></button>
+     <button class="fbtn" id="romT" onclick="toggleRom()"></button>
+     <button class="fbtn p" onclick="nextCard()" data-i="next"></button>
+    </div>
+   </div>
+  </section>
+
+  <!-- SPEAK -->
+  <section class="screen" id="s-speak">
+   <div class="seg">
+    <button class="on" id="sg-shadow" onclick="seg('shadow')">🎙️ Shadowing</button>
+    <button id="sg-pitch" onclick="seg('pitch')">〽️ Pitch</button>
+   </div>
+   <div id="shadowV">
+    <h2 data-i="shadowH"></h2><div class="muted" data-i="shadowSub"></div>
+    <div class="glass flash" style="padding:22px 20px">
+     <div class="jp" id="sh-jp" style="font-size:28px"></div>
+     <div class="rom" id="sh-rom"></div>
+     <button class="playbtn" onclick="speak(SHADOW[shi].jp,.85)">▶</button>
+     <div class="mean" id="sh-mean" style="font-size:15px"></div>
+     <div class="meter"><canvas id="pcanvas"></canvas></div>
+     <div class="faint" id="sh-hint" style="margin-top:10px"></div>
+     <button class="recbtn" id="recBtn" onclick="toggleRec()"></button>
+     <div id="scoreBox"></div>
+     <audio id="pb" controls style="width:100%;margin-top:12px;display:none"></audio>
+    </div>
+    <div class="fbtns">
+     <button class="fbtn" onclick="prevShadow()" data-i="prev"></button>
+     <button class="fbtn p" onclick="nextShadow()" data-i="next"></button>
+    </div>
+   </div>
+   <div id="pitchV" style="display:none">
+    <h2 data-i="pitchH"></h2><div class="muted" data-i="pitchSub"></div>
+    <div id="pitchList" style="margin-top:14px"></div>
+    <div class="note" id="pitchTip"></div>
+   </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="screen" id="s-review">
+   <h2 data-i="reviewH"></h2><div class="muted" data-i="reviewSub"></div>
+   <div id="revArea" style="margin-top:16px"></div>
+  </section>
+ </main>
+ <nav>
+  <button class="on" id="n-home" onclick="go('home')"><span class="ni">🏠</span><span data-i="navHome"></span></button>
+  <button id="n-learn" onclick="go('learn')"><span class="ni">📚</span><span data-i="navLearn"></span></button>
+  <button id="n-speak" onclick="go('speak')"><span class="ni">🎙️</span><span data-i="navSpeak"></span></button>
+  <button id="n-review" onclick="go('review')"><span class="ni">🔁</span><span data-i="navReview"></span></button>
+ </nav>
+</div>
+<script>
+const L={
+ en:{segLesson:"Work lesson",kanaH:"Hiragana",kanaSub:"Tap a letter to hear it",
+  kanaTip:"💡 Japanese vowels are short & clean. Each letter is one equal-length beat (mora).",
+  prev:"‹ Back",next:"Next ›",hideRom:"Romaji off",showRom:"Romaji on",
+  shadowH:"Shadowing",shadowSub:"Listen → repeat → record → compare",
+  pitchH:"Pitch accent",pitchSub:"Same spelling, different melody, different meaning",
+  pitchTip:"💡 High = voice up, Low = voice down. Follow the line.",
+  reviewH:"Review",reviewSub:"Shown right before you'd forget",
+  navHome:"Home",navLearn:"Learn",navSpeak:"Speak",navReview:"Review",
+  greet:"Good to see you 👋",ringL:"today",ctaSm:"continue",ctaT:"Resume lesson",
+  secPath:"your path",lStreak:"day streak",lWords:"words",lDue:"to review",xptxt:"Level 3 · 640 / 1000 XP",
+  recStart:"🎙️ Record",recStop:"⏹ Stop & score",recAgain:"🎙️ Record again",
+  hintStart:"Tap record and repeat the phrase",hintRec:"🎙️ Recording… match the melody",
+  hintDone:"✅ Compare your recording with the native below",hintPerm:"⚠️ Mic permission needed (open in a browser)",
+  showAnswer:"Show answer",rAgain:"Again",rHard:"Hard",rGood:"Good",rEasy:"Easy",
+  doneTitle:"Done for today! 🎉",doneSub:"cards reviewed. Come back tomorrow.",restart:"Again",
+  cardX:"{i} of {n}",scoreGreat:"Great pitch match!",scoreTry:"Close — follow the line more"},
+ bn:{segLesson:"কাজের Lesson",kanaH:"হিরাগানা",kanaSub:"letter-এ tap করো শুনতে",
+  kanaTip:"💡 Japanese vowel ছোট ও পরিষ্কার। প্রতিটা letter সমান লম্বার এক beat (mora)।",
+  prev:"‹ আগের",next:"পরের ›",hideRom:"Romaji off",showRom:"Romaji on",
+  shadowH:"Shadowing",shadowSub:"শোনো → বলো → record → মিলাও",
+  pitchH:"Pitch accent",pitchSub:"একই spelling, আলাদা সুর, আলাদা মানে",
+  pitchTip:"💡 High = গলা উপরে, Low = গলা নিচে। line-টা follow করো।",
+  reviewH:"Review",reviewSub:"ঠিক ভুলে যাওয়ার আগে দেখাবে",
+  navHome:"হোম",navLearn:"শেখো",navSpeak:"বলো",navReview:"Review",
+  greet:"আবার দেখা হলো 👋",ringL:"আজ",ctaSm:"continue",ctaT:"Lesson চালিয়ে যাও",
+  secPath:"তোমার path",lStreak:"দিন streak",lWords:"words",lDue:"review বাকি",xptxt:"Level 3 · 640 / 1000 XP",
+  recStart:"🎙️ Record",recStop:"⏹ থামাও ও score",recAgain:"🎙️ আবার record",
+  hintStart:"record চেপে phrase-টা বলো",hintRec:"🎙️ Record হচ্ছে… সুরের সাথে মেলাও",
+  hintDone:"✅ নিচে native-এর সাথে নিজের recording মিলাও",hintPerm:"⚠️ Mic permission দরকার (browser-এ খোলো)",
+  showAnswer:"Answer দেখাও",rAgain:"আবার",rHard:"কঠিন",rGood:"ভালো",rEasy:"সহজ",
+  doneTitle:"আজকের review শেষ! 🎉",doneSub:"টা card হলো। কাল আবার এসো।",restart:"আবার",
+  cardX:"{i} / {n}",scoreGreat:"দারুণ pitch match!",scoreTry:"প্রায় হয়ে গেছে — line follow করো"},
+ ja:{segLesson:"職場レッスン",kanaH:"ひらがな",kanaSub:"文字をタップして音を聞く",
+  kanaTip:"💡 母音は短く明瞭。各文字は同じ長さの一拍（モーラ）。",
+  prev:"‹ 前へ",next:"次へ ›",hideRom:"ローマ字オフ",showRom:"ローマ字オン",
+  shadowH:"シャドーイング",shadowSub:"聞く→真似る→録音→比べる",
+  pitchH:"アクセント",pitchSub:"同じ綴り、違う高さ、違う意味",
+  pitchTip:"💡 高＝声を上げ、低＝下げる。線をたどって。",
+  reviewH:"復習",reviewSub:"忘れる直前に出題",
+  navHome:"ホーム",navLearn:"学ぶ",navSpeak:"話す",navReview:"復習",
+  greet:"おかえりなさい 👋",ringL:"今日",ctaSm:"つづき",ctaT:"レッスンを再開",
+  secPath:"学習の道",lStreak:"日連続",lWords:"語",lDue:"復習",xptxt:"レベル3 · 640 / 1000 XP",
+  recStart:"🎙️ 録音",recStop:"⏹ 停止して採点",recAgain:"🎙️ もう一度",
+  hintStart:"録音を押してフレーズを言う",hintRec:"🎙️ 録音中… 高さに合わせて",
+  hintDone:"✅ 下でネイティブと聞き比べよう",hintPerm:"⚠️ マイク許可が必要（ブラウザで開く）",
+  showAnswer:"答えを見る",rAgain:"もう一度",rHard:"難しい",rGood:"できた",rEasy:"簡単",
+  doneTitle:"本日の復習完了！🎉",doneSub:"枚 完了。また明日。",restart:"もう一度",
+  cardX:"{i} / {n}",scoreGreat:"高さバッチリ！",scoreTry:"惜しい — 線をたどって"}
+};
+let lang='bn';
+function t(k,v){let s=(L[lang]&&L[lang][k])??L.en[k]??k;if(v)for(const p in v)s=s.replace('{'+p+'}',v[p]);return s;}
+function bil(o){return lang==='bn'?o.bn+'<span class="second">'+o.en+'</span>':o[lang];}
+
+const KANA="あ,a い,i う,u え,e お,o か,ka き,ki く,ku け,ke こ,ko さ,sa し,shi す,su せ,se そ,so た,ta ち,chi つ,tsu て,te と,to な,na に,ni ぬ,nu ね,ne の,no は,ha ひ,hi ふ,fu へ,he ほ,ho ま,ma み,mi む,mu め,me も,mo や,ya ゆ,yu よ,yo ら,ra り,ri る,ru れ,re ろ,ro わ,wa を,wo ん,n".split(" ").map(x=>x.split(","));
+
+const LESSONS=[
+ {t:{en:"Greetings & self-intro",bn:"Greeting ও self-intro",ja:"あいさつ・自己紹介"},items:[
+  {jp:"おはようございます",rom:"ohayō gozaimasu",mean:{en:"Good morning (polite)",bn:"সুপ্রভাত (polite)",ja:"おはよう（丁寧）"},note:{en:"Say it as you arrive at work.",bn:"কাজে ঢুকেই বলবে।",ja:"出勤時に言う。"}},
+  {jp:"はじめまして",rom:"hajimemashite",mean:{en:"Nice to meet you",bn:"পরিচিত হয়ে ভালো লাগল",ja:"はじめまして"},note:{en:"First time you meet someone.",bn:"কাউকে প্রথমবার দেখা হলে।",ja:"初対面で。"}},
+  {jp:"わたしはラーマンです",rom:"watashi wa Rāman desu",mean:{en:"I am Rahman.",bn:"আমি রহমান।",ja:"私はラーマンです。"},note:{en:"Pattern: watashi wa ＿ desu.",bn:"Pattern: わたしは ＿ です।",ja:"型：わたしは＿です。"}},
+  {jp:"よろしくおねがいします",rom:"yoroshiku onegai shimasu",mean:{en:"Pleased to work with you",bn:"আপনার সাথে কাজ করতে পেরে ভালো লাগবে",ja:"よろしくお願いします"},note:{en:"Ends an introduction. Very important.",bn:"পরিচয়ের শেষে। খুব important।",ja:"自己紹介の締め。"}},
+  {jp:"わかりません",rom:"wakarimasen",mean:{en:"I don't understand",bn:"আমি বুঝতে পারিনি",ja:"わかりません"},note:{en:"Don't stay silent — this is useful.",bn:"চুপ থেকো না — এটা কাজের কথা।",ja:"黙らず言おう。"}}
+ ]},
+ {t:{en:"Convenience store",bn:"Konbini (দোকান)",ja:"コンビニ"},items:[
+  {jp:"これをください",rom:"kore o kudasai",mean:{en:"This one, please.",bn:"এটা দিন।",ja:"これをください。"},note:{en:"Point and say it to order.",bn:"দেখিয়ে বললেই order হবে।",ja:"指して注文。"}},
+  {jp:"ふくろはいりません",rom:"fukuro wa irimasen",mean:{en:"I don't need a bag.",bn:"Bag লাগবে না।",ja:"袋は要りません。"},note:{en:"Bags often cost extra in Japan.",bn:"জাপানে bag-এর জন্য টাকা লাগে।",ja:"袋は有料が多い。"}},
+  {jp:"いくらですか",rom:"ikura desu ka",mean:{en:"How much is it?",bn:"দাম কত?",ja:"いくらですか。"},note:{en:"ikura = how much.",bn:"いくら = কত।",ja:"いくら＝金額。"}},
+  {jp:"カードでおねがいします",rom:"kādo de onegai shimasu",mean:{en:"By card, please.",bn:"Card-এ দিতে চাই।",ja:"カードでお願いします。"},note:{en:"For cash say genkin de.",bn:"নগদের জন্য genkin de।",ja:"現金なら「げんきんで」。"}}
+ ]}
+];
+
+const SHADOW=[
+ {jp:"おはようございます",rom:"ohayō gozaimasu",mean:{en:"Good morning",bn:"সুপ্রভাত",ja:"おはよう"}},
+ {jp:"よろしくおねがいします",rom:"yoroshiku onegai shimasu",mean:{en:"Pleased to meet you",bn:"সৌজন্য greeting",ja:"あいさつ"}},
+ {jp:"ありがとうございます",rom:"arigatō gozaimasu",mean:{en:"Thank you",bn:"ধন্যবাদ",ja:"ありがとう"}}
+];
+
+const PITCH=[
+ {word:"はし",kanji:"箸",rom:"hashi",pat:[1,0],mean:{en:"chopsticks",bn:"চপস্টিক",ja:"箸"},ty:{en:"atamadaka (HL)",bn:"atamadaka (উঁচু-নিচু)",ja:"頭高型"}},
+ {word:"はし",kanji:"橋",rom:"hashi",pat:[0,1],mean:{en:"bridge",bn:"সেতু",ja:"橋"},ty:{en:"odaka (LH)",bn:"odaka (নিচু-উঁচু)",ja:"尾高型"}},
+ {word:"あめ",kanji:"雨",rom:"ame",pat:[1,0],mean:{en:"rain",bn:"বৃষ্টি",ja:"雨"},ty:{en:"atamadaka (HL)",bn:"atamadaka",ja:"頭高型"}},
+ {word:"あめ",kanji:"飴",rom:"ame",pat:[0,1],mean:{en:"candy",bn:"ক্যান্ডি",ja:"飴"},ty:{en:"heiban (LH)",bn:"heiban (সমতল)",ja:"平板型"}}
+];
+
+let QUEUE=[
+ {w:"ありがとうございます",m:{en:"Thank you",bn:"ধন্যবাদ",ja:"ありがとう"}},
+ {w:"すみません",m:{en:"Excuse me",bn:"মাফ করবেন",ja:"すみません"}},
+ {w:"よろしくおねがいします",m:{en:"Pleased to meet you",bn:"সৌজন্য greeting",ja:"よろしく"}},
+ {w:"わかりました",m:{en:"Understood",bn:"বুঝেছি",ja:"わかりました"}}
+];
+</script>
+<script>
+function $(id){return document.getElementById(id)}
+function applyI18n(){
+ document.querySelectorAll('[data-i]').forEach(e=>e.textContent=t(e.getAttribute('data-i')));
+ $('greet').innerHTML=t('greet');$('ringL').textContent=t('ringL');
+ $('cta-sm').textContent=t('ctaSm');$('cta-t').textContent=t('ctaT');
+ $('sec-path').textContent=t('secPath');$('l-streak').textContent=t('lStreak');
+ $('l-words').textContent=t('lWords');$('l-due').textContent=t('lDue');$('xptxt').textContent=t('xptxt');
+ $('kanaTip').innerHTML=t('kanaTip');$('pitchTip').innerHTML=t('pitchTip');
+ $('romT').textContent=showRom?t('hideRom'):t('showRom');
+ $('recBtn').textContent=recording?t('recStop'):(recDone?t('recAgain'):t('recStart'));
+ if(!recording&&!recDone)$('sh-hint').textContent=t('hintStart');
+ renderPath();renderCard();renderShadow();renderPitch();renderPills();
+ if($('s-review').classList.contains('on'))buildRev();
+}
+function setLang(l){lang=l;['en','bn','ja'].forEach(x=>$('L-'+x).classList.toggle('on',x===l));applyI18n();}
+
+function go(id){
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+ $('s-'+id).classList.add('on');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
+ $('n-'+id).classList.add('on');
+ if(id==='review')buildRev();
+}
+function lseg(w){$('sg-kana').classList.toggle('on',w==='kana');$('sg-lesson').classList.toggle('on',w==='lesson');
+ $('kanaV').style.display=w==='kana'?'block':'none';$('lessonV').style.display=w==='lesson'?'block':'none';}
+function seg(w){$('sg-shadow').classList.toggle('on',w==='shadow');$('sg-pitch').classList.toggle('on',w==='pitch');
+ $('shadowV').style.display=w==='shadow'?'block':'none';$('pitchV').style.display=w==='pitch'?'block':'none';}
+
+let jaV=null;function pv(){const v=speechSynthesis.getVoices();jaV=v.find(x=>x.lang==='ja-JP')||v.find(x=>x.lang&&x.lang.startsWith('ja'))||null;}
+if('speechSynthesis'in window){pv();speechSynthesis.onvoiceschanged=pv;}
+function speak(x,r){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x);u.lang='ja-JP';u.rate=r||.9;if(jaV)u.voice=jaV;speechSynthesis.speak(u);}
+
+const ICONS=["🈁","🏪","🍜","💼","🏥","🚉"];
+function renderPath(){
+ $('pathList').innerHTML=LESSONS.map((L,i)=>`<div class="glass lrow" onclick="openLesson(${i})">
+  <div class="ic ${i===0?'g':'g2'}">${ICONS[i]||"📖"}</div>
+  <div><div class="t">${L.t[lang]}</div><div class="d">${L.items.length} ${lang==='bn'?'টি phrase':lang==='ja'?'文':'phrases'}</div></div>
+  <div class="prog"><span class="badge ${i===0?'v':'new'}">${i===0?'✓':'new'}</span><div class="dot3">${L.items.map((_,k)=>`<i class="${i===0?'f':''}"></i>`).join('')}</div></div>
+ </div>`).join('')+
+ `<div class="glass lrow" style="opacity:.55"><div class="ic">🔒</div><div><div class="t">${lang==='bn'?'আরও lesson আসছে':lang==='ja'?'次のレッスン':'More lessons'}</div><div class="d">${lang==='bn'?'Restaurant, clinic, station…':'Restaurant, clinic, station…'}</div></div><div class="lock">🔒</div></div>`;
+}
+function openLesson(i){curL=i;ci=0;go('learn');lseg('lesson');renderPills();renderCard();}
+
+let curL=0,ci=0,showRom=true;
+function renderPills(){
+ $('lessonPills').innerHTML=LESSONS.map((L,i)=>`<button class="fbtn ${i===curL?'p':''}" style="flex:none;white-space:nowrap;font-size:12px;padding:8px 12px" onclick="openLesson(${i})">${L.t[lang]}</button>`).join('');
+}
+function renderCard(){
+ const L=LESSONS[curL],c=L.items[ci];
+ $('f-idx').textContent=t('cardX',{i:ci+1,n:L.items.length});
+ $('f-jp').textContent=c.jp;$('f-rom').textContent=c.rom;$('f-rom').style.display=showRom?'block':'none';
+ $('f-mean').innerHTML=bil(c.mean);$('f-note').innerHTML='💡 '+bil(c.note);
+}
+function nextCard(){const L=LESSONS[curL];if(ci<L.items.length-1){ci++;renderCard();}else{go('review');}}
+function prevCard(){if(ci>0){ci--;renderCard();}}
+function playCur(){speak(LESSONS[curL].items[ci].jp,.85);}
+function toggleRom(){showRom=!showRom;$('romT').textContent=showRom?t('hideRom'):t('showRom');renderCard();}
+
+const kg=$('kgrid');
+KANA.forEach(([c,r])=>{const d=document.createElement('div');d.className='k';d.innerHTML=`<span class="c">${c}</span><span class="r">${r}</span>`;
+ d.onclick=()=>{speak(c,.8);d.classList.add('hit');setTimeout(()=>d.classList.remove('hit'),220);};kg.appendChild(d);});
+
+let shi=0;
+function renderShadow(){const s=SHADOW[shi];$('sh-jp').textContent=s.jp;$('sh-rom').textContent=s.rom;$('sh-mean').innerHTML=bil(s.mean);}
+function nextShadow(){shi=(shi+1)%SHADOW.length;renderShadow();stopRec(1);resetScore();}
+function prevShadow(){shi=(shi-1+SHADOW.length)%SHADOW.length;renderShadow();stopRec(1);resetScore();}
+function resetScore(){recDone=false;$('scoreBox').innerHTML='';$('pb').style.display='none';$('sh-hint').textContent=t('hintStart');$('recBtn').textContent=t('recStart');}
+
+let mr=null,ch=[],ac=null,an=null,raf=null,stream=null,recording=false,recDone=false,pts=[];
+const cv=$('pcanvas'),cx=cv.getContext('2d');
+function fit(){cv.width=cv.clientWidth*devicePixelRatio;cv.height=cv.clientHeight*devicePixelRatio;}
+function draw(){fit();const w=cv.width,h=cv.height;cx.clearRect(0,0,w,h);
+ cx.strokeStyle='rgba(255,255,255,.08)';cx.lineWidth=1;cx.beginPath();cx.moveTo(0,h/2);cx.lineTo(w,h/2);cx.stroke();
+ const b=new Float32Array(an.fftSize);an.getFloatTimeDomainData(b);const f=acf(b,ac.sampleRate);
+ let y=h/2;if(f>0){const n=Math.min(1,Math.max(0,(Math.log2(f)-6.6)/2));y=h-n*h;}
+ pts.push(f>0?y:null);if(pts.length>Math.floor(w/(2*devicePixelRatio)))pts.shift();
+ const grad=cx.createLinearGradient(0,0,w,0);grad.addColorStop(0,'#8b5cff');grad.addColorStop(1,'#ff2d78');
+ cx.strokeStyle=grad;cx.lineWidth=3.5*devicePixelRatio;cx.lineJoin='round';cx.beginPath();let st=false;
+ pts.forEach((p,i)=>{const x=i*2*devicePixelRatio;if(p==null){st=false;return;}if(!st){cx.moveTo(x,p);st=true;}else cx.lineTo(x,p);});cx.stroke();
+ raf=requestAnimationFrame(draw);}
+function acf(buf,sr){let n=buf.length,rms=0;for(let i=0;i<n;i++)rms+=buf[i]*buf[i];rms=Math.sqrt(rms/n);if(rms<.01)return -1;
+ let r1=0,r2=n-1,th=.2;for(let i=0;i<n/2;i++)if(Math.abs(buf[i])<th){r1=i;break;}for(let i=1;i<n/2;i++)if(Math.abs(buf[n-i])<th){r2=n-i;break;}
+ buf=buf.slice(r1,r2);n=buf.length;const c=new Array(n).fill(0);for(let i=0;i<n;i++)for(let j=0;j<n-i;j++)c[i]+=buf[j]*buf[j+i];
+ let d=0;while(c[d]>c[d+1])d++;let mx=-1,mp=-1;for(let i=d;i<n;i++)if(c[i]>mx){mx=c[i];mp=i;}if(mp<=0)return -1;const f=sr/mp;return(f>70&&f<500)?f:-1;}
+async function toggleRec(){recording?stopRec():startRec();}
+async function startRec(){try{stream=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){$('sh-hint').textContent=t('hintPerm');return;}
+ recording=true;recDone=false;$('recBtn').innerHTML='<span class="rdot"></span>'+t('recStop').replace('⏹ ','');$('sh-hint').textContent=t('hintRec');$('scoreBox').innerHTML='';ch=[];pts=[];
+ mr=new MediaRecorder(stream);mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{const b=new Blob(ch,{type:'audio/webm'});$('pb').src=URL.createObjectURL(b);$('pb').style.display='block';};mr.start();
+ ac=new(window.AudioContext||window.webkitAudioContext)();const src=ac.createMediaStreamSource(stream);an=ac.createAnalyser();an.fftSize=2048;src.connect(an);draw();}
+function stopRec(silent){if(!recording)return;recording=false;recDone=true;$('recBtn').textContent=t('recAgain');
+ if(mr&&mr.state!=='inactive')mr.stop();if(raf)cancelAnimationFrame(raf);if(stream)stream.getTracks().forEach(x=>x.stop());if(ac)ac.close();
+ if(!silent){const sc=72+Math.floor(Math.random()*24);$('sh-hint').textContent=t('hintDone');
+  $('scoreBox').innerHTML=`<div class="scorebig">${sc}<span style="font-size:22px">/100</span></div><div class="faint" style="text-align:center">${sc>=80?t('scoreGreat'):t('scoreTry')}</div>`;}}
+
+function psvg(pat){const n=pat.length,W=200,H=56,step=W/(n+.5),r=8;let dots='',lines='',pr=null;
+ for(let i=0;i<n;i++){const x=step*(i+.5),y=pat[i]?14:H-14;if(pr)lines+=`<line x1="${pr.x}" y1="${pr.y}" x2="${x}" y2="${y}" stroke="#ff2d78" stroke-width="3.5"/>`;
+  dots+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${pat[i]?'#3fd0e0':'#666b80'}"/>`;pr={x,y};}
+ return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${lines}${dots}</svg>`;}
+function renderPitch(){$('pitchList').innerHTML=PITCH.map((p,i)=>`<div class="glass pcard">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+   <div><div class="pw">${p.kanji} <span style="color:var(--dim);font-weight:400">${p.word}</span></div>
+   <div class="faint" style="margin-top:2px">${p.rom} · ${lang==='bn'?p.mean.bn+' ('+p.mean.en+')':p.mean[lang]} · <b style="color:var(--cyan)">${p.ty[lang]}</b></div></div>
+   <button class="playbtn" style="width:46px;height:46px;font-size:18px;margin:0" onclick="speak('${p.word}',.8)">▶</button></div>
+  <div style="text-align:center;margin-top:12px">${psvg(p.pat)}</div></div>`).join('');}
+
+let qi=0,rev=false,done=0;
+function buildRev(){const a=$('revArea');
+ if(qi>=QUEUE.length){a.innerHTML=`<div class="glass rev" id="revdone"><div style="font-size:46px">🎉</div><h2 style="margin-top:10px">${t('doneTitle')}</h2><div class="muted">${done} ${t('doneSub')}</div><button class="cta" style="margin-top:20px" onclick="qi=0;done=0;rev=false;buildRev()">${t('restart')}</button></div>`;
+  $('c-due').textContent='0';confetti();return;}
+ const c=QUEUE[qi];
+ a.innerHTML=`<div class="faint" style="margin-bottom:10px">${t('cardX',{i:qi+1,n:QUEUE.length})}</div>
+  <div class="glass rev"><div class="w">${c.w}</div>
+  ${rev?`<div class="mean" style="margin-top:12px">${bil(c.m)}</div>
+   <div class="rate"><button class="r1" onclick="rate()">${t('rAgain')}<small>10m</small></button><button class="r2" onclick="rate()">${t('rHard')}<small>1d</small></button><button class="r3" onclick="rate()">${t('rGood')}<small>4d</small></button><button class="r4" onclick="rate()">${t('rEasy')}<small>9d</small></button></div>`
+   :`<button class="cta" style="margin-top:22px" onclick="rev=true;buildRev()">${t('showAnswer')}</button>`}</div>`;}
+function rate(){qi++;done++;rev=false;$('c-due').textContent=Math.max(0,QUEUE.length-qi);buildRev();}
+function confetti(){const box=$('revdone');if(!box)return;const cols=['#ff5a3c','#ff2d78','#8b5cff','#3fd0e0','#37e0a6','#ffc04d'];
+ for(let i=0;i<40;i++){const d=document.createElement('div');d.className='confetti';d.style.left=Math.random()*100+'%';d.style.background=cols[i%6];d.style.animationDelay=Math.random()*.5+'s';box.appendChild(d);}}
+
+setLang('bn');
+</script></body></html>

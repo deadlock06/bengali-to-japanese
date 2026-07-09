@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SENSEI — Prototype</title>
+<style>
+  :root{
+    --bg:#0e1116; --card:#1a1f28; --card2:#232a35; --line:#2d3540;
+    --txt:#e8edf3; --dim:#96a0ad; --accent:#ff5a3c; --accent2:#38bdf8;
+    --good:#34d399; --warn:#fbbf24; --verified:#22c55e; --jp:#ffffff;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:#05070a;color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans Bengali","Noto Sans JP",sans-serif;
+    display:flex;justify-content:center;min-height:100vh}
+  .phone{width:100%;max-width:430px;background:var(--bg);min-height:100vh;
+    display:flex;flex-direction:column;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(0,0,0,.6)}
+  header{padding:14px 16px 10px;border-bottom:1px solid var(--line);
+    background:linear-gradient(180deg,#141a22,#0e1116)}
+  .htop{display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:800;letter-spacing:.5px;font-size:20px}
+  .brand span{color:var(--accent)}
+  .streak{font-size:13px;color:var(--warn);background:#2a2113;padding:5px 10px;border-radius:20px;font-weight:700}
+  .langsw{display:flex;gap:6px;margin-top:10px}
+  .langsw button{flex:1;background:var(--card2);border:1px solid var(--line);color:var(--dim);
+    padding:6px;border-radius:9px;font-weight:700;cursor:pointer;font-size:12px}
+  .langsw button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  main{flex:1;overflow-y:auto;padding:16px 16px 90px}
+  .screen{display:none;animation:fade .25s ease}
+  .screen.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h2{font-size:19px;margin:4px 0 2px}
+  .sub{color:var(--dim);font-size:13px;margin-bottom:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px}
+  .goal{background:linear-gradient(135deg,#1c2530,#161b22);border:1px solid #2b3949}
+  .goal .lvl{font-size:28px;font-weight:800;color:var(--accent2)}
+  .bar{height:10px;background:#0c1017;border-radius:8px;overflow:hidden;margin:10px 0 6px}
+  .bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#ff8a3c);border-radius:8px}
+  .row{display:flex;gap:10px}
+  .stat{flex:1;background:var(--card2);border-radius:12px;padding:12px;text-align:center}
+  .stat b{display:block;font-size:22px}
+  .stat small{color:var(--dim);font-size:11px}
+  .tile{display:flex;align-items:center;gap:14px;cursor:pointer}
+  .tile .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;flex:none}
+  .tile .t{font-weight:700}
+  .tile .d{color:var(--dim);font-size:12px}
+  .chev{margin-left:auto;color:var(--dim)}
+  .verified{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--verified);
+    background:#0f2417;border:1px solid #1c5232;padding:2px 8px;border-radius:20px;font-weight:700}
+  .kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+  .kana{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;transition:.15s}
+  .kana:active{transform:scale(.94);background:var(--accent)}
+  .kana .c{font-size:26px}
+  .kana .r{font-size:11px;color:var(--dim)}
+  .flash{text-align:center;padding:26px 16px}
+  .jp{font-size:34px;font-weight:700;color:var(--jp);line-height:1.5}
+  .furi{font-size:14px;color:var(--accent2);display:block;margin-bottom:2px}
+  .rom{color:var(--dim);font-size:15px;margin-top:8px}
+  .bn{font-size:19px;margin-top:14px;color:#dfe7ef}
+  .second{display:block;font-size:.8em;color:#7c8794;margin-top:3px;font-weight:400}
+  .note{background:#161d16;border:1px solid #2a3a2a;border-radius:12px;padding:12px;margin-top:14px;font-size:13px;color:#cfe0cf;text-align:left}
+  button.btn{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:13px 18px;font-size:15px;font-weight:700;cursor:pointer;width:100%}
+  button.ghost{background:var(--card2);color:var(--txt);border:1px solid var(--line)}
+  button.mini{width:auto;padding:9px 14px;font-size:13px;border-radius:20px}
+  .btnrow{display:flex;gap:10px;margin-top:14px}
+  .play{width:52px;height:52px;border-radius:50%;background:var(--accent2);border:0;color:#05070a;font-size:22px;cursor:pointer;flex:none}
+  .seg{display:flex;background:var(--card2);border-radius:12px;padding:4px;margin-bottom:14px}
+  .seg button{flex:1;background:none;border:0;color:var(--dim);padding:9px;border-radius:9px;font-weight:700;cursor:pointer;font-size:13px}
+  .seg button.on{background:var(--accent);color:#fff}
+  .pitch-wrap{background:#0a0e13;border:1px solid var(--line);border-radius:12px;padding:18px 10px}
+  .pitchword{font-size:15px;font-weight:700;margin-bottom:2px}
+  .rating{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+  .rating button{border:0;border-radius:12px;padding:12px 4px;font-weight:700;cursor:pointer;color:#05070a;font-size:13px}
+  .r1{background:#f87171}.r2{background:#fbbf24}.r3{background:#34d399}.r4{background:#38bdf8}
+  .rating small{display:block;font-size:10px;opacity:.75;font-weight:600}
+  nav{position:absolute;bottom:0;left:0;right:0;display:flex;background:#0b0f15;border-top:1px solid var(--line)}
+  nav button{flex:1;background:none;border:0;color:var(--dim);padding:10px 0 14px;font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+  nav button.on{color:var(--accent)}
+  nav .ni{font-size:20px}
+  .meter{height:120px;background:#0a0e13;border:1px solid var(--line);border-radius:12px;position:relative;overflow:hidden;margin-top:12px}
+  .meter canvas{width:100%;height:100%;display:block}
+  .rec-dot{width:10px;height:10px;border-radius:50%;background:#f87171;display:inline-block;margin-right:6px;animation:pulse 1s infinite}
+  @keyframes pulse{50%{opacity:.3}}
+  .tag{font-size:11px;color:var(--dim);margin-top:4px}
+  audio{width:100%;margin-top:10px}
+  .hint{font-size:12px;color:var(--dim);text-align:center;margin-top:10px}
+  .pill{font-size:11px;padding:3px 9px;border-radius:20px;background:var(--card2);border:1px solid var(--line);color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="phone">
+  <header>
+    <div class="htop">
+      <div class="brand">SEN<span>SEI</span></div>
+      <div class="streak">🔥 <span id="streak">7</span> <span data-i18n="days"></span></div>
+    </div>
+    <div class="langsw">
+      <button id="lang-en" onclick="setLang('en')">English</button>
+      <button id="lang-bn" class="on" onclick="setLang('bn')">বাংলা</button>
+      <button id="lang-ja" onclick="setLang('ja')">日本語</button>
+    </div>
+  </header>
+  <main>
+    <!-- HOME -->
+    <section class="screen active" id="home">
+      <div class="card goal">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div class="sub" style="margin:0" data-i18n="yourGoal"></div>
+            <div class="lvl">JFT-Basic A2</div>
+            <div class="tag" data-i18n="goalCaption"></div>
+          </div>
+          <div class="pill" data-i18n="onPath"></div>
+        </div>
+        <div class="bar"><i style="width:41%"></i></div>
+        <div class="tag" data-i18n="progressCaption"></div>
+      </div>
+      <div class="row" style="margin-bottom:14px">
+        <div class="stat"><b>183</b><small data-i18n="wordsLearned"></small></div>
+        <div class="stat"><b id="due">12</b><small data-i18n="dueToday"></small></div>
+        <div class="stat"><b>A1</b><small data-i18n="level"></small></div>
+      </div>
+      <div class="card tile" onclick="go('learn')">
+        <div class="ic" style="background:#1c2c1c">あ</div>
+        <div><div class="t" data-i18n="tileKanaT"></div><div class="d" data-i18n="tileKanaD"></div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="card tile" onclick="go('speak')">
+        <div class="ic" style="background:#0d2733">🎙️</div>
+        <div><div class="t" data-i18n="tileSpeakT"></div><div class="d" data-i18n="tileSpeakD"></div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="card tile" onclick="go('review')">
+        <div class="ic" style="background:#2a2113">🔁</div>
+        <div><div class="t" data-i18n="tileReviewT"></div><div class="d" id="tileReviewD"></div></div>
+        <div class="chev">›</div>
+      </div>
+      <div class="card tile" onclick="go('speak');seg('pitch')">
+        <div class="ic" style="background:#241c2c">〽️</div>
+        <div><div class="t" data-i18n="tilePitchT"></div><div class="d" data-i18n="tilePitchD"></div></div>
+        <div class="chev">›</div>
+      </div>
+    </section>
+
+    <!-- LEARN -->
+    <section class="screen" id="learn">
+      <div class="seg">
+        <button class="on" id="seg-kana" onclick="lseg('kana')" data-i18n="segKana"></button>
+        <button id="seg-lesson" onclick="lseg('lesson')" data-i18n="segLesson"></button>
+      </div>
+      <div id="kana-view">
+        <h2 data-i18n="kanaH"></h2>
+        <div class="sub"><span data-i18n="kanaSub"></span> <span class="verified" data-i18n="verified"></span></div>
+        <div class="kana-grid" id="kanaGrid"></div>
+        <div class="note" id="kanaTip" style="margin-top:16px"></div>
+      </div>
+      <div id="lesson-view" style="display:none">
+        <h2 data-i18n="lessonH"></h2>
+        <div class="sub"><span data-i18n="lessonSub"></span> <span class="verified" data-i18n="verified"></span></div>
+        <div class="card flash">
+          <div id="lIdx" class="tag" style="margin-bottom:8px"></div>
+          <span class="furi" id="lFuri"></span>
+          <div class="jp" id="lJp"></div>
+          <div class="rom" id="lRom"></div>
+          <button class="play" onclick="playCur()" style="margin-top:14px">▶</button>
+          <div class="bn" id="lBn"></div>
+          <div class="note" id="lNote"></div>
+          <div class="btnrow">
+            <button class="btn ghost mini" style="flex:1" onclick="prevCard()" data-i18n="prev"></button>
+            <button class="btn ghost mini" style="flex:1" id="romToggle" onclick="toggleRom()"></button>
+            <button class="btn mini" style="flex:1" onclick="nextCard()" data-i18n="next"></button>
+          </div>
+        </div>
+        <div class="hint" data-i18n="lessonHint"></div>
+      </div>
+    </section>
+
+    <!-- SPEAK -->
+    <section class="screen" id="speak">
+      <div class="seg">
+        <button class="on" id="seg-shadow" onclick="seg('shadow')" data-i18n="segShadow"></button>
+        <button id="seg-pitch" onclick="seg('pitch')" data-i18n="segPitch"></button>
+      </div>
+      <div id="shadow-view">
+        <h2 data-i18n="shadowH"></h2>
+        <div class="sub" data-i18n="shadowSub"></div>
+        <div class="card">
+          <div style="display:flex;align-items:center;gap:14px">
+            <button class="play" onclick="speak(SHADOW[shadowI].jp,0.85)">▶</button>
+            <div>
+              <div class="jp" style="font-size:24px" id="shJp"></div>
+              <div class="rom" id="shRom"></div>
+            </div>
+          </div>
+          <div class="bn" style="font-size:16px" id="shBn"></div>
+          <div class="tag" data-i18n="demoAudio"></div>
+          <div class="meter"><canvas id="pcanvas"></canvas></div>
+          <div class="hint" id="recHint"></div>
+          <div class="btnrow"><button class="btn" id="recBtn" onclick="toggleRec()"></button></div>
+          <audio id="playback" controls style="display:none"></audio>
+          <div class="btnrow">
+            <button class="btn ghost mini" style="flex:1" onclick="prevShadow()" data-i18n="prev"></button>
+            <button class="btn ghost mini" style="flex:1" onclick="nextShadow()" data-i18n="next"></button>
+          </div>
+        </div>
+      </div>
+      <div id="pitch-view" style="display:none">
+        <h2 data-i18n="pitchH"></h2>
+        <div class="sub"><span data-i18n="pitchSub"></span> <span class="verified" data-i18n="verifiedTokyo"></span></div>
+        <div id="pitchList"></div>
+        <div class="note" id="pitchTip"></div>
+      </div>
+    </section>
+
+    <!-- REVIEW -->
+    <section class="screen" id="review">
+      <h2 data-i18n="reviewH"></h2>
+      <div class="sub" data-i18n="reviewSub"></div>
+      <div id="reviewArea"></div>
+    </section>
+  </main>
+
+  <nav>
+    <button class="on" id="nav-home" onclick="go('home')"><span class="ni">🏠</span><span data-i18n="navHome"></span></button>
+    <button id="nav-learn" onclick="go('learn')"><span class="ni">📚</span><span data-i18n="navLearn"></span></button>
+    <button id="nav-speak" onclick="go('speak')"><span class="ni">🎙️</span><span data-i18n="navSpeak"></span></button>
+    <button id="nav-review" onclick="go('review')"><span class="ni">🔁</span><span data-i18n="navReview"></span></button>
+  </nav>
+</div>
+
+<script>
+/* ================= i18n UI STRINGS ================= */
+const L={
+ en:{days:"days",yourGoal:"Your goal",goalCaption:"Japan work visa (SSW) — pass mark 200",onPath:"On track to A2",
+   progressCaption:"183 / 450 words & Can-dos — 41%",wordsLearned:"words learned",dueToday:"due today",level:"current level",
+   tileKanaT:"Kana & Lessons",tileKanaD:"Hiragana + workplace Japanese Can-do",
+   tileSpeakT:"Pronunciation & Shadowing",tileSpeakD:"Match the accent, record yourself",
+   tileReviewT:"Today's review",tileReviewD:"{n} cards — before you forget",
+   tilePitchT:"Pitch accent",tilePitchD:"hashi vs hashi — the melody differs",
+   segKana:"かな Kana",segLesson:"Work lesson",
+   kanaH:"Hiragana — core vowels",kanaSub:"Tap any character to hear it",verified:"✓ Verified",
+   kanaTip:"💡 Tip for learners: Japanese vowels are short and clean. う = 'u' without rounding your lips, お = a short 'o'. Every character is one equal-length 'mora'.",
+   lessonH:"First day at work — greetings & self-intro",lessonSub:"Can-do: introduce yourself at work",
+   prev:"‹ Prev",next:"Next ›",hideRom:"Hide romaji",showRomBtn:"Show romaji",
+   lessonHint:"Memorize these 9 lines and you can handle real workplace greetings.",
+   segShadow:"🎙️ Shadowing",segPitch:"〽️ Pitch",
+   shadowH:"Shadowing practice",shadowSub:"Listen → repeat at once → record → compare",
+   demoAudio:"🔊 Demo audio — production uses native voice recordings (Irodori)",
+   recStart:"🎙️ Start recording",recStop:"⏹ Stop & listen",recAgain:"🎙️ Record again",
+   recHintStart:"Press below to record your voice — a live pitch line will show",
+   recHintRec:"🎙️ Recording... match the native melody",
+   recHintDone:"✅ Play your recording below and compare with the native",
+   recHintPerm:"⚠️ Microphone permission needed (open the file in a browser)",
+   pitchH:"Pitch accent (高低)",pitchSub:"Same spelling, different melody — meaning changes",verifiedTokyo:"✓ Verified (Tokyo)",
+   pitchTip:"💡 For learners: in many languages the melody of a word doesn't change its meaning, so this feels new. High = voice slightly up, Low = down. Follow the line.",
+   reviewH:"Review (FSRS)",reviewSub:"The algorithm picks when — right as you're about to forget",
+   showAnswer:"Show answer",rAgain:"Again",rHard:"Hard",rGood:"Good",rEasy:"Easy",
+   doneTitle:"Review done for today!",doneSub:"{n} cards done. FSRS scheduled the next times.",restart:"Start again",
+   cardX:"Card {i} / {n}",navHome:"Home",navLearn:"Learn",navSpeak:"Speak",navReview:"Review",
+   uMin:"{n} min",uHr:"{n} hr",uDay:"{n} d",uMo:"{n} mo"},
+ bn:{days:"দিন",yourGoal:"তোমার goal",goalCaption:"জাপানে কাজের visa (SSW) — pass mark ২০০",onPath:"A2-এর পথে",progressCaption:"১৮৩ / ৪৫০ words ও Can-do — ৪১%",wordsLearned:"শেখা words",dueToday:"আজকের review",level:"তোমার level",tileKanaT:"Kana ও Lesson",tileKanaD:"হিরাগানা + কাজের Japanese Can-do",tileSpeakT:"উচ্চারণ ও Shadowing",tileSpeakD:"Accent মেলাও, নিজের voice record করো",tileReviewT:"আজকের Review",tileReviewD:"{n}টি card — ভুলে যাওয়ার আগেই",tilePitchT:"Pitch accent",tilePitchD:"箸 vs 橋 — সুরের পার্থক্য",segKana:"かな Kana",segLesson:"কাজের Lesson",kanaH:"হিরাগানা — basic vowel",kanaSub:"যেকোনো character-এ tap করো শুনতে",verified:"✓ Verified",kanaTip:"💡 Tip: Japanese vowel ছোট ও পরিষ্কার। う = u ঠোঁট গোল না করে, お = ছোট o. প্রতিটা character সমান লম্বার এক mora।",lessonH:"প্রথম দিন কাজে — greeting ও self-intro",lessonSub:"Can-do: workplace-এ নিজের পরিচয় দিতে পারা",prev:"‹ আগের",next:"পরের ›",hideRom:"Romaji hide",showRomBtn:"Romaji show",lessonHint:"এই ৯টা sentence মুখস্থ হলে আসল workplace-এর greeting তুমি পারবে।",segShadow:"🎙️ Shadowing",segPitch:"〽️ Pitch",shadowH:"Shadowing practice",shadowSub:"শোনো → সাথে সাথে বলো → record করো → মিলিয়ে দেখো",demoAudio:"🔊 Demo audio — আসল app-এ native voice recording (Irodori)",recStart:"🎙️ Record শুরু",recStop:"⏹ থামাও ও শোনো",recAgain:"🎙️ আবার record",recHintStart:"নিচের button চেপে নিজের voice record করো — live pitch দেখাবে",recHintRec:"🎙️ Record হচ্ছে... native সুরের সাথে মেলাও",recHintDone:"✅ নিচে নিজের recording শুনে native-এর সাথে মেলাও",recHintPerm:"⚠️ Microphone permission দরকার (browser-এ খুলে try করো)",pitchH:"Pitch accent (高低)",pitchSub:"একই spelling, আলাদা সুর — মানে বদলে যায়",verifiedTokyo:"✓ Verified (Tokyo)",pitchTip:"💡 Tip: বাংলায় শব্দের সুরে মানে বদলায় না, তাই এটা নতুন লাগবে। High = গলা একটু উপরে, Low = নিচে। line-টা follow করো।",reviewH:"Review (FSRS)",reviewSub:"Algorithm ঠিক করে কখন দেখাবে — ঠিক ভুলে যাওয়ার মুহূর্তে",showAnswer:"Answer দেখাও",rAgain:"আবার",rHard:"কঠিন",rGood:"ভালো",rEasy:"সহজ",doneTitle:"আজকের review শেষ!",doneSub:"{n}টি card শেষ। FSRS পরের সময় ঠিক করেছে।",restart:"আবার শুরু",cardX:"Card {i} / {n}",navHome:"হোম",navLearn:"শেখো",navSpeak:"বলো",navReview:"Review",uMin:"{n} min",uHr:"{n} ঘণ্টা",uDay:"{n} দিন",uMo:"{n} মাস"},
+ ja:{days:"日",yourGoal:"あなたの目標",goalCaption:"日本の就労ビザ（特定技能）— 合格点200",onPath:"A2に向けて",
+   progressCaption:"183 / 450 語・Can-do — 41%",wordsLearned:"習得した語",dueToday:"本日の復習",level:"現在のレベル",
+   tileKanaT:"かな・レッスン",tileKanaD:"ひらがな＋職場の日本語Can-do",
+   tileSpeakT:"発音・シャドーイング",tileSpeakD:"アクセントを真似て録音",
+   tileReviewT:"本日の復習",tileReviewD:"{n}枚 — 忘れる前に",
+   tilePitchT:"アクセント（高低）",tilePitchD:"箸 vs 橋 — 音の高さの違い",
+   segKana:"かな Kana",segLesson:"職場レッスン",
+   kanaH:"ひらがな — 基本の母音",kanaSub:"文字をタップして音を聞く",verified:"✓ 確認済み",
+   kanaTip:"💡 ヒント：日本語の母音は短く明瞭。うは唇を丸めず、おは短く。各文字は同じ長さの「拍（モーラ）」です。",
+   lessonH:"職場の初日 — あいさつと自己紹介",lessonSub:"Can-do：職場で自己紹介ができる",
+   prev:"‹ 前へ",next:"次へ ›",hideRom:"ローマ字を隠す",showRomBtn:"ローマ字を表示",
+   lessonHint:"この9文を覚えれば、職場のあいさつができます。",
+   segShadow:"🎙️ シャドーイング",segPitch:"〽️ アクセント",
+   shadowH:"シャドーイング練習",shadowSub:"聞く→すぐ真似る→録音→比べる",
+   demoAudio:"🔊 デモ音声 — 製品版はネイティブ録音（いろどり）",
+   recStart:"🎙️ 録音開始",recStop:"⏹ 停止して聞く",recAgain:"🎙️ もう一度録音",
+   recHintStart:"下のボタンで録音 — リアルタイムで高さが表示されます",
+   recHintRec:"🎙️ 録音中... ネイティブの高さに合わせて",
+   recHintDone:"✅ 下で自分の録音を聞いて比べよう",
+   recHintPerm:"⚠️ マイクの許可が必要です（ブラウザで開いてください）",
+   pitchH:"アクセント（高低）",pitchSub:"同じ綴り、違う高さ — 意味が変わる",verifiedTokyo:"✓ 確認済み（東京）",
+   pitchTip:"💡 ヒント：単語の高さで意味が変わるのは新鮮かもしれません。高＝少し上げ、低＝下げ。線をたどりましょう。",
+   reviewH:"復習（FSRS）",reviewSub:"アルゴリズムが最適な時を選ぶ — 忘れる直前に",
+   showAnswer:"答えを見る",rAgain:"もう一度",rHard:"難しい",rGood:"できた",rEasy:"簡単",
+   doneTitle:"本日の復習完了！",doneSub:"{n}枚完了。FSRSが次回を設定しました。",restart:"もう一度",
+   cardX:"カード {i} / {n}",navHome:"ホーム",navLearn:"学ぶ",navSpeak:"話す",navReview:"復習",
+   uMin:"{n}分",uHr:"{n}時間",uDay:"{n}日",uMo:"{n}ヶ月"}
+};
+let lang='bn';
+function t(k,v){let s=(L[lang]&&L[lang][k])||L.en[k]||k;if(v)for(const p in v)s=s.replace('{'+p+'}',v[p]);return s;}
+/* Bilingual helpers: in Bengali mode show BN with an English gloss, since the
+   Bengali wording may not be a perfect fit for every learner. */
+function bil(o){return lang==='bn'?o.bn+'<span class="second">'+o.en+'</span>':o[lang];}
+function bilInline(o){return lang==='bn'?o.bn+' <span style="color:#6b7684">('+o.en+')</span>':o[lang];}
+function tipBil(k){return lang==='bn'?L.bn[k]+'<span class="second">'+L.en[k]+'</span>':t(k);}
+
+/* ================= VERIFIED CONTENT (checked correct) ================= */
+const KANA=[['あ','a'],['い','i'],['う','u'],['え','e'],['お','o'],
+ ['か','ka'],['き','ki'],['く','ku'],['け','ke'],['こ','ko'],
+ ['さ','sa'],['し','shi'],['す','su'],['せ','se'],['そ','so'],
+ ['た','ta'],['ち','chi'],['つ','tsu'],['て','te'],['と','to'],
+ ['な','na'],['に','ni'],['ぬ','nu'],['ね','ne'],['の','no']];
+
+const LESSON=[
+ {jp:'おはようございます',rom:'ohayō gozaimasu',
+   mean:{en:"Good morning (polite)",bn:"সুপ্রভাত (ভদ্রভাবে)",ja:"おはよう（丁寧）"},
+   note:{en:"Say it right as you arrive at work. ございます makes it polite.",bn:"সকালে কর্মস্থলে ঢুকেই বলবে। শেষে ございます থাকায় এটি ভদ্র রূপ।",ja:"出勤時に言う。ございますで丁寧になる。"}},
+ {jp:'こんにちは',rom:'konnichiwa',
+   mean:{en:"Hello / good afternoon",bn:"নমস্কার / হ্যালো (দুপুরে)",ja:"こんにちは（昼のあいさつ）"},
+   note:{en:"は is pronounced 'wa' here, not 'ha'.",bn:"は এখানে \"wa\" উচ্চারণ হয়, \"ha\" নয়।",ja:"ここでのはは「わ」と読む。"}},
+ {jp:'はじめまして',rom:'hajimemashite',
+   mean:{en:"Nice to meet you (first time)",bn:"প্রথম সাক্ষাতে — পরিচিত হয়ে ভালো লাগল",ja:"はじめまして（初対面）"},
+   note:{en:"Use it the first time you meet someone.",bn:"নতুন কাউকে প্রথমবার দেখা হলেই বলবে।",ja:"初めて会うときに使う。"}},
+ {jp:'わたしはラーマンです',rom:'watashi wa Rāman desu',
+   mean:{en:"I am Rahman.",bn:"আমি রহমান।",ja:"私はラーマンです。"},
+   note:{en:"Pattern: わたしは ＿ です = 'I am ＿'. は = wa (topic marker).",bn:"গঠন: わたしは ＿ です = \"আমি ＿\"। は = wa (বিষয় নির্দেশক)।",ja:"型：わたしは＿です。はは「わ」（主題）。"}},
+ {jp:'よろしくおねがいします',rom:'yoroshiku onegai shimasu',
+   mean:{en:"I look forward to working with you (courtesy)",bn:"আপনার সাথে কাজ করতে পেরে ভালো লাগবে (সৌজন্য)",ja:"よろしくお願いします（締めのあいさつ）"},
+   note:{en:"Said at the end of an introduction — very important politeness in Japan.",bn:"পরিচয়ের শেষে বলা হয় — জাপানে খুব গুরুত্বপূর্ণ ভদ্রতা।",ja:"自己紹介の最後に言う大切な表現。"}},
+ {jp:'すみません',rom:'sumimasen',
+   mean:{en:"Excuse me / sorry",bn:"মাফ করবেন / এক্সকিউজ মি",ja:"すみません（呼びかけ・軽い謝罪）"},
+   note:{en:"To get attention or apologize for a small thing.",bn:"কারো দৃষ্টি আকর্ষণ করতে বা ছোট ভুলে ক্ষমা চাইতে।",ja:"呼びかけや軽い謝罪に。"}},
+ {jp:'ありがとうございます',rom:'arigatō gozaimasu',
+   mean:{en:"Thank you (polite)",bn:"ধন্যবাদ (ভদ্রভাবে)",ja:"ありがとうございます（丁寧）"},
+   note:{en:"ございます makes it more polite — use this at work.",bn:"ございます যোগ করায় বেশি ভদ্র — কর্মস্থলে এটাই ব্যবহার করবে।",ja:"ございますでより丁寧。職場で使う。"}},
+ {jp:'わかりません',rom:'wakarimasen',
+   mean:{en:"I don't understand",bn:"আমি বুঝতে পারিনি",ja:"わかりません"},
+   note:{en:"Don't stay silent if you don't get it — saying this is useful, not shameful.",bn:"না বুঝলে চুপ থেকো না — এটি বলা দোষের নয়, বরং কাজে দরকারি।",ja:"分からないときは黙らず言おう。"}},
+ {jp:'もういちどおねがいします',rom:'mō ichido onegai shimasu',
+   mean:{en:"Please say it once more",bn:"অনুগ্রহ করে আরেকবার বলুন",ja:"もう一度お願いします"},
+   note:{en:"If someone speaks fast, say this to hear it again.",bn:"কেউ দ্রুত বললে এটি বলে আবার শুনে নাও।",ja:"速いときはこれでもう一度聞く。"}}
+];
+
+const SHADOW=[
+ {jp:'おはようございます',rom:'ohayō gozaimasu',mean:{en:"Good morning",bn:"সুপ্রভাত",ja:"おはよう"}},
+ {jp:'よろしくおねがいします',rom:'yoroshiku onegai shimasu',mean:{en:"Courtesy greeting",bn:"সৌজন্য অভিবাদন",ja:"あいさつ"}},
+ {jp:'ありがとうございます',rom:'arigatō gozaimasu',mean:{en:"Thank you",bn:"ধন্যবাদ",ja:"ありがとう"}}
+];
+
+const PITCH=[
+ {word:'はし',kanji:'箸',rom:'hashi',pat:[1,0],mean:{en:"chopsticks",bn:"চপস্টিক",ja:"箸（食器）"},type:{en:"atamadaka (head-high)",bn:"atamadaka (মাথা-উঁচু)",ja:"頭高型"}},
+ {word:'はし',kanji:'橋',rom:'hashi',pat:[0,1],mean:{en:"bridge",bn:"সেতু",ja:"橋"},type:{en:"odaka (tail-high)",bn:"odaka (শেষ-উঁচু)",ja:"尾高型"}},
+ {word:'あめ',kanji:'雨',rom:'ame',pat:[1,0],mean:{en:"rain",bn:"বৃষ্টি",ja:"雨"},type:{en:"atamadaka",bn:"atamadaka",ja:"頭高型"}},
+ {word:'あめ',kanji:'飴',rom:'ame',pat:[0,1],mean:{en:"candy",bn:"ক্যান্ডি",ja:"飴"},type:{en:"heiban (flat)",bn:"heiban (সমতল)",ja:"平板型"}}
+];
+
+let queue=[
+ {word:'ありがとうございます',rom:'arigatō gozaimasu',mean:{en:"Thank you",bn:"ধন্যবাদ",ja:"ありがとう"},stab:2.1},
+ {word:'すみません',rom:'sumimasen',mean:{en:"Excuse me",bn:"মাফ করবেন",ja:"すみません"},stab:1.4},
+ {word:'よろしくおねがいします',rom:'yoroshiku onegai shimasu',mean:{en:"Courtesy greeting",bn:"সৌজন্য অভিবাদন",ja:"よろしく"},stab:0.8},
+ {word:'わかりません',rom:'wakarimasen',mean:{en:"I don't understand",bn:"বুঝিনি",ja:"わかりません"},stab:3.2}
+];
+
+/* ================= LANGUAGE APPLY ================= */
+function setLang(l){
+  lang=l;
+  document.documentElement.lang=l;
+  ['en','bn','ja'].forEach(x=>document.getElementById('lang-'+x).classList.toggle('on',x===l));
+  document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.getAttribute('data-i18n')));
+  document.getElementById('kanaTip').innerHTML=tipBil('kanaTip');
+  document.getElementById('pitchTip').innerHTML=tipBil('pitchTip');
+  document.getElementById('romToggle').textContent=showRom?t('hideRom'):t('showRomBtn');
+  document.getElementById('recBtn').textContent=recording?t('recStop'):(recDone?t('recAgain'):t('recStart'));
+  document.getElementById('recHint').textContent=t(recHintKey);
+  const left=queue.length-qi;
+  document.getElementById('tileReviewD').textContent=t('tileReviewD',{n:left});
+  renderCard(); renderShadow(); renderPitch();
+  if(document.getElementById('review').classList.contains('active')) buildReview();
+}
+
+/* ================= NAV ================= */
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
+  const nb=document.getElementById('nav-'+id); if(nb) nb.classList.add('on');
+  if(id==='review') buildReview();
+}
+function lseg(w){
+  document.getElementById('seg-kana').classList.toggle('on',w==='kana');
+  document.getElementById('seg-lesson').classList.toggle('on',w==='lesson');
+  document.getElementById('kana-view').style.display=w==='kana'?'block':'none';
+  document.getElementById('lesson-view').style.display=w==='lesson'?'block':'none';
+}
+function seg(w){
+  document.getElementById('seg-shadow').classList.toggle('on',w==='shadow');
+  document.getElementById('seg-pitch').classList.toggle('on',w==='pitch');
+  document.getElementById('shadow-view').style.display=w==='shadow'?'block':'none';
+  document.getElementById('pitch-view').style.display=w==='pitch'?'block':'none';
+}
+
+/* ================= SPEECH ================= */
+let jaVoice=null;
+function pickVoice(){const vs=speechSynthesis.getVoices();jaVoice=vs.find(v=>v.lang==='ja-JP')||vs.find(v=>v.lang&&v.lang.startsWith('ja'))||null;}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function speak(txt,rate){if(!('speechSynthesis' in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(txt);u.lang='ja-JP';u.rate=rate||0.9;if(jaVoice)u.voice=jaVoice;speechSynthesis.speak(u);}
+
+/* ================= KANA ================= */
+const kg=document.getElementById('kanaGrid');
+KANA.forEach(([c,r])=>{const d=document.createElement('div');d.className='kana';d.innerHTML=`<div class="c">${c}</div><div class="r">${r}</div>`;d.onclick=()=>speak(c,0.8);kg.appendChild(d);});
+
+/* ================= LESSON ================= */
+let ci=0,showRom=true;
+function renderCard(){
+  const c=LESSON[ci];
+  document.getElementById('lIdx').textContent=t('cardX',{i:ci+1,n:LESSON.length});
+  document.getElementById('lJp').textContent=c.jp;
+  document.getElementById('lFuri').textContent=c.furi||'';
+  const rom=document.getElementById('lRom');rom.textContent=c.rom;rom.style.display=showRom?'block':'none';
+  document.getElementById('lBn').innerHTML=bil(c.mean);
+  document.getElementById('lNote').innerHTML='💡 '+bil(c.note);
+}
+function nextCard(){ci=(ci+1)%LESSON.length;renderCard();}
+function prevCard(){ci=(ci-1+LESSON.length)%LESSON.length;renderCard();}
+function playCur(){speak(LESSON[ci].jp,0.85);}
+function toggleRom(){showRom=!showRom;document.getElementById('romToggle').textContent=showRom?t('hideRom'):t('showRomBtn');renderCard();}
+
+/* ================= SHADOW ================= */
+let shadowI=0;
+function renderShadow(){const s=SHADOW[shadowI];document.getElementById('shJp').textContent=s.jp;document.getElementById('shRom').textContent=s.rom;document.getElementById('shBn').innerHTML=bil(s.mean);}
+function nextShadow(){shadowI=(shadowI+1)%SHADOW.length;renderShadow();stopRec(true);}
+function prevShadow(){shadowI=(shadowI-1+SHADOW.length)%SHADOW.length;renderShadow();stopRec(true);}
+
+/* ================= RECORD + LIVE PITCH ================= */
+let mediaRec=null,chunks=[],audioCtx=null,analyser=null,rafId=null,stream=null,recording=false,recDone=false,recHintKey='recHintStart';
+const canvas=document.getElementById('pcanvas'),ctx=canvas.getContext('2d');
+function fitCanvas(){canvas.width=canvas.clientWidth*devicePixelRatio;canvas.height=canvas.clientHeight*devicePixelRatio;}
+let pitchPts=[];
+function setHint(k){recHintKey=k;document.getElementById('recHint').textContent=t(k);}
+function drawLoop(){
+  fitCanvas();const w=canvas.width,h=canvas.height;ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle='#1e2732';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(0,h*0.5);ctx.lineTo(w,h*0.5);ctx.stroke();
+  const buf=new Float32Array(analyser.fftSize);analyser.getFloatTimeDomainData(buf);
+  const f=autoCorrelate(buf,audioCtx.sampleRate);
+  let y=h*0.5;if(f>0){const norm=Math.min(1,Math.max(0,(Math.log2(f)-6.6)/2));y=h-norm*h;}
+  pitchPts.push(f>0?y:null);
+  if(pitchPts.length>Math.floor(w/(2*devicePixelRatio)))pitchPts.shift();
+  ctx.strokeStyle='#ff5a3c';ctx.lineWidth=3*devicePixelRatio;ctx.beginPath();let started=false;
+  pitchPts.forEach((py,i)=>{const x=i*2*devicePixelRatio;if(py==null){started=false;return;}if(!started){ctx.moveTo(x,py);started=true;}else ctx.lineTo(x,py);});
+  ctx.stroke();rafId=requestAnimationFrame(drawLoop);
+}
+function autoCorrelate(buf,sr){
+  let size=buf.length,rms=0;for(let i=0;i<size;i++)rms+=buf[i]*buf[i];rms=Math.sqrt(rms/size);if(rms<0.01)return -1;
+  let r1=0,r2=size-1,thr=0.2;for(let i=0;i<size/2;i++){if(Math.abs(buf[i])<thr){r1=i;break;}}
+  for(let i=1;i<size/2;i++){if(Math.abs(buf[size-i])<thr){r2=size-i;break;}}
+  buf=buf.slice(r1,r2);size=buf.length;const c=new Array(size).fill(0);
+  for(let i=0;i<size;i++)for(let j=0;j<size-i;j++)c[i]+=buf[j]*buf[j+i];
+  let d=0;while(c[d]>c[d+1])d++;let maxv=-1,maxp=-1;
+  for(let i=d;i<size;i++){if(c[i]>maxv){maxv=c[i];maxp=i;}}
+  if(maxp<=0)return -1;const f=sr/maxp;return (f>70&&f<500)?f:-1;
+}
+async function toggleRec(){recording?stopRec():startRec();}
+async function startRec(){
+  try{stream=await navigator.mediaDevices.getUserMedia({audio:true});}
+  catch(e){setHint('recHintPerm');return;}
+  recording=true;recDone=false;
+  document.getElementById('recBtn').textContent=t('recStop');
+  setHint('recHintRec');chunks=[];pitchPts=[];
+  mediaRec=new MediaRecorder(stream);mediaRec.ondataavailable=e=>chunks.push(e.data);
+  mediaRec.onstop=()=>{const blob=new Blob(chunks,{type:'audio/webm'});const pb=document.getElementById('playback');pb.src=URL.createObjectURL(blob);pb.style.display='block';};
+  mediaRec.start();
+  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  const src=audioCtx.createMediaStreamSource(stream);analyser=audioCtx.createAnalyser();analyser.fftSize=2048;src.connect(analyser);drawLoop();
+}
+function stopRec(silent){
+  if(!recording)return;recording=false;recDone=true;
+  document.getElementById('recBtn').textContent=t('recAgain');
+  if(!silent)setHint('recHintDone');
+  if(mediaRec&&mediaRec.state!=='inactive')mediaRec.stop();
+  if(rafId)cancelAnimationFrame(rafId);
+  if(stream)stream.getTracks().forEach(x=>x.stop());
+  if(audioCtx)audioCtx.close();
+}
+
+/* ================= PITCH VISUALISER ================= */
+function pitchSVG(pat){
+  const n=pat.length,W=180,H=54,step=W/(n+0.5),r=7;let dots='',lines='',prev=null;
+  for(let i=0;i<n;i++){const x=step*(i+0.5),y=pat[i]?14:H-14;
+    if(prev)lines+=`<line x1="${prev.x}" y1="${prev.y}" x2="${x}" y2="${y}" stroke="#ff5a3c" stroke-width="3"/>`;
+    dots+=`<circle cx="${x}" cy="${y}" r="${r}" fill="${pat[i]?'#38bdf8':'#96a0ad'}"/>`;prev={x,y};}
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${lines}${dots}</svg>`;
+}
+function renderPitch(){
+  const pl=document.getElementById('pitchList');pl.innerHTML='';
+  PITCH.forEach(p=>{const d=document.createElement('div');d.className='card';
+    d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center">
+      <div><div class="pitchword">${p.kanji} <span style="color:#96a0ad;font-weight:400">(${p.word})</span></div>
+      <div class="tag">${p.rom} · ${bilInline(p.mean)} · <b style="color:#38bdf8">${bilInline(p.type)}</b></div></div>
+      <button class="play" onclick="speak('${p.word}',0.8)">▶</button></div>
+      <div class="pitch-wrap" style="margin-top:10px;text-align:center">${pitchSVG(p.pat)}</div>`;
+    pl.appendChild(d);});
+}
+
+/* ================= FSRS-LITE REVIEW ================= */
+let qi=0,revealed=false,done=0;
+function fmtInterval(days){
+  if(days<1/24)return t('uMin',{n:Math.round(days*1440)});
+  if(days<1)return t('uHr',{n:Math.round(days*24)});
+  if(days<30)return t('uDay',{n:Math.round(days)});
+  return t('uMo',{n:(days/30).toFixed(1)});
+}
+function nextInterval(stab,rating){
+  if(rating===1)return 10/1440;
+  if(rating===2)return Math.max(0.5,stab*0.5);
+  if(rating===3)return Math.max(1,stab*1.9);
+  return Math.max(2,stab*3.4);
+}
+function buildReview(){
+  const a=document.getElementById('reviewArea');
+  if(qi>=queue.length){
+    a.innerHTML=`<div class="card" style="text-align:center;padding:30px">
+      <div style="font-size:40px">🎉</div><h2 style="margin:10px 0 4px">${t('doneTitle')}</h2>
+      <div class="sub">${t('doneSub',{n:done})}</div>
+      <button class="btn" onclick="qi=0;done=0;revealed=false;buildReview()">${t('restart')}</button></div>`;
+    document.getElementById('due').textContent='0';document.getElementById('tileReviewD').textContent=t('tileReviewD',{n:0});return;
+  }
+  const c=queue[qi];
+  a.innerHTML=`<div class="tag" style="margin-bottom:8px">${t('cardX',{i:qi+1,n:queue.length})}</div>
+    <div class="card flash"><div class="jp">${c.word}</div>
+      <button class="play" onclick="speak('${c.word}',0.85)" style="margin-top:12px">▶</button>
+      <div style="display:${revealed?'block':'none'}"><div class="rom">${c.rom}</div><div class="bn">${bil(c.mean)}</div></div>
+      ${revealed?ratingHTML(c):`<button class="btn" style="margin-top:18px" onclick="revealed=true;buildReview()">${t('showAnswer')}</button>`}
+    </div>`;
+}
+function ratingHTML(c){
+  return `<div class="rating">
+    <button class="r1" onclick="rate(1)">${t('rAgain')}<small>${fmtInterval(nextInterval(c.stab,1))}</small></button>
+    <button class="r2" onclick="rate(2)">${t('rHard')}<small>${fmtInterval(nextInterval(c.stab,2))}</small></button>
+    <button class="r3" onclick="rate(3)">${t('rGood')}<small>${fmtInterval(nextInterval(c.stab,3))}</small></button>
+    <button class="r4" onclick="rate(4)">${t('rEasy')}<small>${fmtInterval(nextInterval(c.stab,4))}</small></button></div>`;
+}
+function rate(r){qi++;done++;revealed=false;const left=queue.length-qi;
+  document.getElementById('due').textContent=left;document.getElementById('tileReviewD').textContent=t('tileReviewD',{n:left});buildReview();}
+
+/* ================= INIT ================= */
+setLang('bn');
+</script>
+</body>
+</html>

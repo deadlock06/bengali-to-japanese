@@ -1,0 +1,40 @@
+# Banned user-facing copy — dark-pattern guilt / shame / FOMO phrases.
+# Enforced by tools/validate_content.mjs (05 rule #12) against all user-facing
+# content strings. Case-insensitive SUBSTRING match.
+#
+# RULE: entries must be MULTI-WORD manipulative phrases, never single words —
+# a lone word like "hurry" or "fail" can be legitimate vocabulary (急いで / 失敗),
+# so single words would false-positive on real lessons. Phrases below cannot.
+#
+# Governs 01 constitution + 99 D-001 (no streak-loss, FOMO, guilt, coercion).
+# Expand with a native Bengali reviewer (Bengali guilt phrases welcome).
+
+# --- streak / loss-aversion ---
+don't lose your streak
+dont lose your streak
+keep your streak alive
+your streak will reset
+lose your streak
+streak lost
+
+# --- urgency / FOMO ---
+last chance
+act now
+limited time
+don't miss out
+dont miss out
+offer ends
+before it's gone
+
+# --- shame / social comparison ---
+you're falling behind
+you are falling behind
+everyone else is ahead
+don't disappoint
+you failed again
+you'll regret
+
+# --- Bengali (starter — expand with a native reviewer) ---
+তোমার স্ট্রিক শেষ
+পিছিয়ে পড়ছ
+শেষ সুযোগ

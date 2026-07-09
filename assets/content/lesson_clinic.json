@@ -1,0 +1,176 @@
+{
+  "type": "lesson",
+  "id": "clinic_01",
+  "can_do": {
+    "en": "Explain a health problem and get help at a clinic or in an emergency.",
+    "bn": "ক্লিনিকে বা জরুরি অবস্থায় নিজের অসুস্থতা বোঝানো ও সাহায্য চাওয়া।",
+    "ja": "クリニックや緊急時に、体の不調を伝えて助けを求められる。"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "verified": true,
+  "source": "Aligned to Irodori Elementary Can-do (health / at the clinic)",
+  "items": [
+    {
+      "id": "cl_01",
+      "jp": "びょういんはどこですか",
+      "kana": "びょういんはどこですか",
+      "romaji": "byōin wa doko desu ka",
+      "meaning": {
+        "en": "Where is the hospital?",
+        "bn": "হাসপাতাল কোথায়?",
+        "ja": "病院はどこですか。"
+      },
+      "note": {
+        "en": "どこ = where. Swap びょういん for any place to ask its location.",
+        "bn": "どこ = কোথায়। びょういん-এর জায়গায় অন্য স্থান বসিয়ে যেকোনো জায়গার কথা জিজ্ঞেস করা যায়।",
+        "ja": "どこ＝場所を聞く。病院を他の場所に替えられる。"
+      },
+      "srs_words": [
+        "びょういん",
+        "どこ"
+      ]
+    },
+    {
+      "id": "cl_02",
+      "jp": "ここがいたいです",
+      "kana": "ここがいたいです",
+      "romaji": "koko ga itai desu",
+      "meaning": {
+        "en": "It hurts here.",
+        "bn": "এখানে ব্যথা করছে।",
+        "ja": "ここが痛いです。"
+      },
+      "note": {
+        "en": "Point to the spot and say this. いたい = painful.",
+        "bn": "যেখানে ব্যথা সেখানে দেখিয়ে এটা বলো। いたい = ব্যথা।",
+        "ja": "痛い所を指して言う。いたい＝痛い。"
+      },
+      "srs_words": [
+        "いたい",
+        "ここ"
+      ]
+    },
+    {
+      "id": "cl_03",
+      "jp": "ねつがあります",
+      "kana": "ねつがあります",
+      "romaji": "netsu ga arimasu",
+      "meaning": {
+        "en": "I have a fever.",
+        "bn": "আমার জ্বর আছে।",
+        "ja": "熱があります。"
+      },
+      "note": {
+        "en": "あります = there is / I have. ねつ = fever.",
+        "bn": "あります = আছে। ねつ = জ্বর।",
+        "ja": "あります＝ある。ねつ＝発熱。"
+      },
+      "srs_words": [
+        "ねつ",
+        "あります"
+      ]
+    },
+    {
+      "id": "cl_04",
+      "jp": "きぶんがわるいです",
+      "kana": "きぶんがわるいです",
+      "romaji": "kibun ga warui desu",
+      "meaning": {
+        "en": "I feel unwell.",
+        "bn": "শরীর খারাপ লাগছে।",
+        "ja": "気分が悪いです。"
+      },
+      "note": {
+        "en": "General 'I feel sick/unwell'. わるい = bad.",
+        "bn": "সাধারণভাবে 'শরীর খারাপ / অসুস্থ লাগছে'। わるい = খারাপ।",
+        "ja": "全体的な体調不良。わるい＝悪い。"
+      },
+      "srs_words": [
+        "きぶん",
+        "わるい"
+      ]
+    },
+    {
+      "id": "cl_05",
+      "jp": "くすりをください",
+      "kana": "くすりをください",
+      "romaji": "kusuri o kudasai",
+      "meaning": {
+        "en": "Medicine, please.",
+        "bn": "ওষুধ দিন।",
+        "ja": "薬をください。"
+      },
+      "note": {
+        "en": "くすり = medicine. Same をください pattern as shopping.",
+        "bn": "くすり = ওষুধ। কেনাকাটার মতোই をください গঠন।",
+        "ja": "くすり＝薬。買い物と同じ「をください」。"
+      },
+      "srs_words": [
+        "くすり",
+        "ください"
+      ]
+    },
+    {
+      "id": "cl_06",
+      "jp": "ほけんしょうです",
+      "kana": "ほけんしょうです",
+      "romaji": "hoken shō desu",
+      "meaning": {
+        "en": "(This) is my insurance card.",
+        "bn": "এটা আমার বীমা কার্ড।",
+        "ja": "保険証です。"
+      },
+      "note": {
+        "en": "Show it at reception. ほけんしょう = health-insurance card.",
+        "bn": "রিসেপশনে এটা দেখাও। ほけんしょう = স্বাস্থ্যবীমা কার্ড।",
+        "ja": "受付で見せる。保険証＝健康保険証。"
+      },
+      "srs_words": [
+        "ほけんしょう"
+      ]
+    },
+    {
+      "id": "cl_07",
+      "jp": "だいじょうぶですか",
+      "kana": "だいじょうぶですか",
+      "romaji": "daijōbu desu ka",
+      "meaning": {
+        "en": "Are you okay? (someone asks you)",
+        "bn": "আপনি কি ঠিক আছেন? (কেউ জিজ্ঞেস করে)",
+        "ja": "大丈夫ですか。（相手が聞く）"
+      },
+      "note": {
+        "en": "You'll hear this a lot. Reply だいじょうぶです (I'm okay) or いたいです.",
+        "bn": "এটা প্রায়ই শুনবে। উত্তর দাও だいじょうぶです (ঠিক আছি) বা いたいです।",
+        "ja": "よく聞かれる。だいじょうぶです／いたいですで答える。"
+      },
+      "srs_words": [
+        "だいじょうぶ"
+      ]
+    },
+    {
+      "id": "cl_08",
+      "jp": "きゅうきゅうしゃをよんでください",
+      "kana": "きゅうきゅうしゃをよんでください",
+      "romaji": "kyūkyūsha o yonde kudasai",
+      "meaning": {
+        "en": "Please call an ambulance.",
+        "bn": "অনুগ্রহ করে অ্যাম্বুলেন্স ডাকুন।",
+        "ja": "救急車を呼んでください。"
+      },
+      "note": {
+        "en": "Emergency phrase. In Japan you can also dial 119.",
+        "bn": "জরুরি বাক্য। জাপানে 119-এ ফোনও করা যায়।",
+        "ja": "緊急の表現。日本では119番も使える。"
+      },
+      "srs_words": [
+        "きゅうきゅうしゃ",
+        "よんでください"
+      ]
+    }
+  ],
+  "pack_id": "pack_daily",
+  "depends_on": [
+    "pack_basics"
+  ]
+}

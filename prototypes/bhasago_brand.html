@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Bhasago — brand & UI kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Noto+Sans+Bengali:wght@400;600;800&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1116; --surface:#171B22; --surface-hi:#212734; --outline:#2E3644;
+    --ai:#5B7CFA; --ai-bright:#8AA0FF; --ai-deep:#29347A;
+    --sakura:#FF6F86; --gold:#FFC24B;
+    --ink:#F3F5FA; --ink-dim:#AAB3C5;
+    --flow:#00C853; --struggle:#FF6D00; --burnout:#2979FF; --boredom:#AA00FF;
+    --r:16px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 700px at 70% -10%, #14204a 0%, var(--bg) 55%);
+    color:var(--ink);font-family:Inter,'Noto Sans Bengali',system-ui,sans-serif;line-height:1.5;
+    -webkit-font-smoothing:antialiased}
+  .bn{font-family:'Noto Sans Bengali',Inter,sans-serif}
+  .jp{font-family:'Noto Sans JP',sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 24px 80px}
+  h2{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);
+    margin:56px 0 18px;font-weight:600}
+  .muted{color:var(--ink-dim)}
+  .card{background:var(--surface);border:1px solid var(--outline);border-radius:var(--r);padding:20px}
+
+  /* ---------- hero ---------- */
+  .hero{display:flex;gap:32px;align-items:center;flex-wrap:wrap}
+  .logo{width:132px;height:132px;flex:0 0 auto;filter:drop-shadow(0 18px 40px rgba(61,90,254,.35))}
+  .brandname{font-size:56px;font-weight:800;letter-spacing:-.02em;margin:0;
+    background:linear-gradient(92deg,#fff,#cdd7ff 60%,var(--sakura));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{font-size:19px;margin:.35em 0 0}
+  .kicker{display:inline-block;margin-top:14px;font-size:12.5px;color:var(--ink-dim);
+    border:1px solid var(--outline);border-radius:999px;padding:5px 12px}
+
+  /* torii draw animation */
+  .torii-sun{transform-origin:512px 452px;animation:sun 2.4s ease-out both}
+  .torii-gate{transform-origin:512px 540px;animation:gate 1s ease-out .25s both}
+  .torii-bridge{stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1.1s ease-out .7s forwards}
+  .torii-dot{opacity:0;animation:pop .4s ease-out 1.5s forwards}
+  @keyframes sun{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes gate{from{transform:translateY(26px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes pop{from{opacity:0;transform:scale(.2)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .torii-sun,.torii-gate,.torii-bridge,.torii-dot{animation:none;opacity:1;stroke-dashoffset:0}
+  }
+
+  /* ---------- icon lab ---------- */
+  .iconrow{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .appicon{width:120px;height:120px;border-radius:27px;cursor:pointer;transition:transform .25s, box-shadow .25s;
+    box-shadow:0 14px 30px rgba(0,0,0,.45)}
+  .appicon:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 22px 46px rgba(91,124,250,.5)}
+  .sizes{display:flex;gap:16px;align-items:flex-end}
+  .sizes .appicon{cursor:default}
+  .s76{width:76px;height:76px;border-radius:18px}
+  .s52{width:52px;height:52px;border-radius:12px}
+  .s32{width:32px;height:32px;border-radius:8px}
+  .btn{background:var(--ai-deep);color:#dfe5ff;border:1px solid #38489a;border-radius:10px;
+    padding:9px 15px;font:inherit;font-size:14px;cursor:pointer;transition:background .2s}
+  .btn:hover{background:#324099}
+
+  /* ---------- tokens ---------- */
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+  .sw{border-radius:12px;border:1px solid var(--outline);overflow:hidden;background:var(--surface)}
+  .sw .chip{height:64px}
+  .sw .lab{padding:9px 11px;font-size:12.5px}
+  .sw .lab b{display:block;font-size:13px}
+  .sw .hex{color:var(--ink-dim);font-variant-numeric:tabular-nums}
+
+  /* ---------- type ---------- */
+  .type div{margin:6px 0}
+  .t24{font-size:24px;font-weight:800}.t20{font-size:20px;font-weight:600}
+  .t16{font-size:16px}.t14{font-size:14px}.t12{font-size:12px;color:var(--ink-dim)}
+
+  /* ---------- phone ---------- */
+  .stage{display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start}
+  .phone{width:300px;flex:0 0 auto;background:var(--bg);border:10px solid #05070c;border-radius:38px;
+    padding:0;overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.6)}
+  .status{height:26px;display:flex;justify-content:center;align-items:center}
+  .notch{width:110px;height:18px;background:#05070c;border-radius:0 0 14px 14px}
+  .topbar{display:flex;align-items:center;gap:9px;padding:6px 14px 12px}
+  .topbar .mk{width:26px;height:26px;border-radius:7px}
+  .topbar b{font-size:16px;flex:1}
+  .langs{display:flex;gap:5px}
+  .lang{font-size:11px;border:1px solid var(--outline);border-radius:999px;padding:3px 8px;color:var(--ink-dim);cursor:pointer}
+  .lang.active{background:var(--ai-deep);color:#dfe5ff;border-color:#38489a}
+  .screen{padding:6px 14px 14px;min-height:404px}
+  .hide{display:none}
+  .gcard{background:linear-gradient(135deg,var(--ai-deep),#1a2140);border:1px solid #33407e;
+    border-radius:var(--r);padding:15px}
+  .gcard .lbl{font-size:12px;color:#bcc7ff}
+  .gcard .goal{font-size:17px;font-weight:700;margin-top:2px}
+  .ring{display:flex;gap:14px;align-items:center;margin-top:14px}
+  .stats{display:flex;gap:10px;margin-top:14px}
+  .stat{flex:1;background:var(--surface);border:1px solid var(--outline);border-radius:12px;padding:10px}
+  .stat .n{font-size:20px;font-weight:800}.stat .k{font-size:11px;color:var(--ink-dim)}
+  .cta{margin-top:14px;background:var(--ai);color:#0a1230;border:none;border-radius:12px;
+    padding:13px;width:100%;font:inherit;font-weight:700;font-size:15px;cursor:pointer}
+  .nav{display:flex;border-top:1px solid var(--outline);background:var(--surface)}
+  .nav button{flex:1;background:none;border:none;color:var(--ink-dim);font:inherit;font-size:10.5px;
+    padding:9px 0 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}
+  .nav button .ic{width:22px;height:22px;border-radius:6px;border:2px solid currentColor;opacity:.75}
+  .nav button.on{color:var(--ai-bright)}
+  .nav button.on .ic{background:var(--ai-deep);opacity:1}
+
+  /* lesson micro-loop */
+  .lesson .word{font-size:40px;font-weight:700;text-align:center;margin:20px 0 2px}
+  .lesson .romaji{text-align:center;color:var(--ink-dim);font-size:14px}
+  .lesson .mean{text-align:center;margin:14px 0;font-size:16px}
+  .answer{background:var(--surface-hi);border:1px dashed #3a4560;border-radius:12px;padding:12px;text-align:center}
+  .invariant{display:flex;gap:8px;margin-top:16px}
+  .invariant button{flex:1;background:var(--surface-hi);border:1px solid var(--outline);color:var(--ink);
+    border-radius:10px;padding:11px 0;font:inherit;font-size:13px;cursor:pointer;min-height:44px}
+  .invariant button:hover{border-color:var(--ai)}
+  .pill{display:inline-block;background:rgba(0,200,83,.14);color:#5df2a0;border:1px solid #1e5e3e;
+    border-radius:999px;font-size:11px;padding:3px 9px}
+  .note{font-size:12.5px;color:var(--ink-dim)}
+  .foot{margin-top:60px;border-top:1px solid var(--outline);padding-top:20px;font-size:13px;color:var(--ink-dim)}
+  code{background:var(--surface-hi);padding:2px 6px;border-radius:6px;font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ===================== HERO ===================== -->
+  <div class="hero">
+    <svg class="logo" id="heroLogo" viewBox="0 0 1024 1024" aria-label="Bhasago logo">
+      <defs>
+        <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#1B2350"/><stop offset=".55" stop-color="#2A3A8F"/><stop offset="1" stop-color="#3D5AFE"/>
+        </linearGradient>
+        <radialGradient id="sun" cx=".5" cy=".5" r=".5">
+          <stop offset="0" stop-color="#FFC24B" stop-opacity=".95"/>
+          <stop offset=".6" stop-color="#FF8A5B" stop-opacity=".55"/>
+          <stop offset="1" stop-color="#FF6F86" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="torii" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#FFE3E9"/>
+        </linearGradient>
+      </defs>
+      <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+      <circle class="torii-sun" cx="512" cy="452" r="238" fill="url(#sun)"/>
+      <g class="torii-gate" fill="url(#torii)">
+        <path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/>
+        <rect x="322" y="446" width="380" height="46" rx="8"/>
+        <path d="M372 470 h58 l14 250 h-86 Z"/>
+        <path d="M652 470 h58 l14 250 h-86 Z"/>
+      </g>
+      <path class="torii-bridge" d="M300 792 C430 748,594 748,724 792" fill="none" stroke="#FF6F86" stroke-width="30" stroke-linecap="round"/>
+      <circle class="torii-dot" cx="512" cy="772" r="15" fill="#FFC24B"/>
+    </svg>
+    <div>
+      <h1 class="brandname">Bhasago</h1>
+      <div class="tag bn">বাংলায় জাপানি ভাষা শিখুন <span class="muted">· Learn Japanese in Bangla</span></div>
+      <span class="kicker">Ai&nbsp;indigo × Sakura vermilion · dark, calm, offline-first · internal codename SENSEI</span>
+    </div>
+  </div>
+
+  <!-- ===================== INTERACTIVE ICON ===================== -->
+  <h2>App icon — tap to replay</h2>
+  <div class="card iconrow">
+    <svg class="appicon" id="appIcon" viewBox="0 0 1024 1024" aria-label="Bhasago app icon">
+      <rect width="1024" height="1024" rx="232" fill="url(#bg)"/>
+      <circle class="i-sun" cx="512" cy="452" r="238" fill="url(#sun)"/>
+      <g class="i-gate" fill="url(#torii)">
+        <path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/>
+        <rect x="322" y="446" width="380" height="46" rx="8"/>
+        <path d="M372 470 h58 l14 250 h-86 Z"/><path d="M652 470 h58 l14 250 h-86 Z"/>
+      </g>
+      <path class="i-bridge" d="M300 792 C430 748,594 748,724 792" fill="none" stroke="#FF6F86" stroke-width="30" stroke-linecap="round"/>
+      <circle class="i-dot" cx="512" cy="772" r="15" fill="#FFC24B"/>
+    </svg>
+    <div>
+      <button class="btn" id="replay">▶ Replay animation</button>
+      <p class="note" style="margin:12px 0 0;max-width:360px">The torii is the gateway to Japan; the brushstroke beneath is the bridge from Bengal. Hover to lift, tap to redraw. Ships as <code>assets/brand/bhasago_icon.svg</code>.</p>
+      <div class="sizes" style="margin-top:16px">
+        <svg class="appicon s76" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="232" fill="url(#bg)"/><circle cx="512" cy="452" r="238" fill="url(#sun)"/><g fill="url(#torii)"><path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/><rect x="322" y="446" width="380" height="46" rx="8"/><path d="M372 470 h58 l14 250 h-86 Z"/><path d="M652 470 h58 l14 250 h-86 Z"/></g><path d="M300 792 C430 748,594 748,724 792" fill="none" stroke="#FF6F86" stroke-width="30" stroke-linecap="round"/></svg>
+        <svg class="appicon s52" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="232" fill="url(#bg)"/><circle cx="512" cy="452" r="238" fill="url(#sun)"/><g fill="url(#torii)"><path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/><rect x="322" y="446" width="380" height="46" rx="8"/><path d="M372 470 h58 l14 250 h-86 Z"/><path d="M652 470 h58 l14 250 h-86 Z"/></g></svg>
+        <svg class="appicon s32" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="232" fill="url(#bg)"/><circle cx="512" cy="452" r="238" fill="url(#sun)"/><g fill="url(#torii)"><path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/><rect x="322" y="446" width="380" height="46" rx="8"/><path d="M372 470 h58 l14 250 h-86 Z"/><path d="M652 470 h58 l14 250 h-86 Z"/></g></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== COLOR TOKENS ===================== -->
+  <h2>Color system</h2>
+  <div class="swatches" id="swatches"></div>
+
+  <!-- ===================== TYPE ===================== -->
+  <h2>Typography — Noto Sans Bengali · Noto Sans JP</h2>
+  <div class="card type">
+    <div class="t24 bn">দারুণ চলছে! <span class="jp">よくできました</span></div>
+    <div class="t20 bn">কনবিনিতে কেনাকাটা — Convenience store</div>
+    <div class="t16 bn">এই শব্দটা মনে রাখো: <span class="jp">みず</span> (mizu) — জল</div>
+    <div class="t14 muted">14px · secondary · captions & helper copy</div>
+    <div class="t12">12px · meta · scale 12 / 14 / 16 / 20 / 24</div>
+  </div>
+
+  <!-- ===================== LIVE APP ===================== -->
+  <h2>The app, rebranded — tap the nav</h2>
+  <div class="stage">
+    <div class="phone">
+      <div class="status"><div class="notch"></div></div>
+      <div class="topbar">
+        <svg class="mk" viewBox="0 0 1024 1024"><rect width="1024" height="1024" rx="232" fill="url(#bg)"/><circle cx="512" cy="452" r="238" fill="url(#sun)"/><g fill="url(#torii)"><path d="M266 356 C320 330,704 330,758 356 L742 410 C700 392,324 392,282 410 Z"/><rect x="322" y="446" width="380" height="46" rx="8"/><path d="M372 470 h58 l14 250 h-86 Z"/><path d="M652 470 h58 l14 250 h-86 Z"/></g></svg>
+        <b>Bhasago</b>
+        <div class="langs">
+          <span class="lang">EN</span><span class="lang active bn">বাংলা</span><span class="lang jp">日本語</span>
+        </div>
+      </div>
+
+      <!-- HOME -->
+      <div class="screen" data-screen="home">
+        <div class="gcard">
+          <div class="lbl bn">তোমার লক্ষ্য</div>
+          <div class="goal bn">জাপান ওয়ার্ক ভিসা (SSW) — পাস মার্ক ২০০</div>
+          <div class="ring">
+            <svg width="58" height="58" viewBox="0 0 58 58">
+              <circle cx="29" cy="29" r="24" fill="none" stroke="#2b3566" stroke-width="7"/>
+              <circle cx="29" cy="29" r="24" fill="none" stroke="#FFC24B" stroke-width="7" stroke-linecap="round"
+                stroke-dasharray="151" stroke-dashoffset="66" transform="rotate(-90 29 29)"/>
+            </svg>
+            <div><div style="font-size:20px;font-weight:800">১২৭<span style="font-size:12px;color:#bcc7ff">/200</span></div>
+            <div style="font-size:11px;color:#bcc7ff" class="bn">আনুমানিক স্কোর</div></div>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="n">৩১৮</div><div class="k bn">শব্দ শেখা</div></div>
+          <div class="stat"><div class="n">১৪</div><div class="k bn">আজ due</div></div>
+          <div class="stat"><div class="n">৭</div><div class="k bn">দিন ধারা</div></div>
+        </div>
+        <button class="cta bn">আরেকটা? →</button>
+        <p class="note bn" style="margin:10px 2px 0">ধারা শুধু হিসাব — কোনো সতর্কতা নেই, চাপ নেই।</p>
+      </div>
+
+      <!-- LEARN / LESSON -->
+      <div class="screen hide lesson" data-screen="learn">
+        <span class="pill bn">✓ যাচাই করা content</span>
+        <div class="word jp">みず</div>
+        <div class="romaji">mizu</div>
+        <div class="mean bn" id="meanRow">অর্থ লুকানো — চাপ ছাড়াই চেষ্টা করো</div>
+        <button class="btn" id="showAns" style="width:100%">উত্তর দেখাও</button>
+        <div class="invariant">
+          <button class="bn">এড়িয়ে যাও</button>
+          <button class="bn">হিন্ট</button>
+          <button class="bn">বন্ধ</button>
+        </div>
+        <p class="note bn" style="margin-top:12px">এড়িয়ে যাও · হিন্ট · বন্ধ — সব স্ক্রিনে, সবসময়, ১ ট্যাপে।</p>
+      </div>
+
+      <!-- SPEAK -->
+      <div class="screen hide" data-screen="speak">
+        <div class="mean bn" style="margin-top:22px">উচ্চারণ ও শ্যাডোয়িং</div>
+        <div class="card" style="text-align:center;margin-top:8px">
+          <div class="jp" style="font-size:22px">おはよう</div>
+          <svg width="220" height="46" style="margin-top:8px"><polyline points="0,30 30,24 60,10 90,16 120,8 150,20 180,14 220,26" fill="none" stroke="#8AA0FF" stroke-width="3"/></svg>
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--sakura);margin:10px auto 0;display:flex;align-items:center;justify-content:center;font-size:24px">●</div>
+          <div class="note bn" style="margin-top:8px">ধরে রাখো — রেকর্ড করো — নিজের সাথে মেলাও</div>
+        </div>
+      </div>
+
+      <!-- REVIEW -->
+      <div class="screen hide" data-screen="review">
+        <div class="mean bn" style="margin-top:22px">আজকের রিভিউ · ১৪টি কার্ড</div>
+        <div class="card"><div class="jp" style="font-size:26px;text-align:center">たべもの</div>
+          <div class="stats" style="margin-top:14px">
+            <div class="stat" style="background:rgba(255,109,0,.14);border-color:#5a3410"><div class="k bn">আবার</div></div>
+            <div class="stat" style="background:rgba(255,194,75,.14);border-color:#5c4200"><div class="k bn">কঠিন</div></div>
+            <div class="stat" style="background:rgba(0,200,83,.14);border-color:#1e5e3e"><div class="k bn">ভালো</div></div>
+            <div class="stat" style="background:rgba(91,124,250,.18);border-color:#33407e"><div class="k bn">সহজ</div></div>
+          </div>
+        </div>
+        <p class="note bn" style="margin-top:10px">FSRS-4.5 · ভুলে যাওয়ার আগে সঠিক সময়ে।</p>
+      </div>
+
+      <div class="nav">
+        <button class="on" data-go="home"><span class="ic"></span>হোম</button>
+        <button data-go="learn"><span class="ic"></span>শেখো</button>
+        <button data-go="speak"><span class="ic"></span>বলো</button>
+        <button data-go="review"><span class="ic"></span>রিভিউ</button>
+      </div>
+    </div>
+
+    <div style="flex:1;min-width:230px">
+      <div class="card">
+        <b>What changed in the rebrand</b>
+        <p class="note" style="margin:.6em 0 0">Display name → <b>Bhasago</b> across <code>app_en/bn/ja.arb</code>, <code>main.dart</code>, README. New <code>lib/app/theme.dart</code> (this palette) wired into <code>MaterialApp</code>. Package <code>sensei_app</code>, the <code>SenseiApp</code> class and <code>sensei.db</code> stay — renaming them would break the running build and existing user data.</p>
+      </div>
+      <div class="card" style="margin-top:14px">
+        <b>Guardrails kept</b>
+        <p class="note" style="margin:.6em 0 0">Streak is a plain number (no loss warnings). <b>Skip · Hint · Quit</b> present on every learning screen. Bengali-first copy with optional EN/JA. Dark + calm for budget AMOLED.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Bhasago brand & UI kit · dark theme · generated preview. Fonts: Noto Sans Bengali / Noto Sans JP.
+    Open in any browser — self-contained, no build step.
+  </div>
+</div>
+
+<script>
+  // color tokens
+  const tokens=[
+    ['Ai indigo','--ai','#5B7CFA'],['Ai bright','--ai-bright','#8AA0FF'],['Ai deep','--ai-deep','#29347A'],
+    ['Sakura','--sakura','#FF6F86'],['Gold','--gold','#FFC24B'],
+    ['Ink bg','--bg','#0E1116'],['Surface','--surface','#171B22'],['Surface hi','--surface-hi','#212734'],
+    ['Flow','--flow','#00C853'],['Struggle','--struggle','#FF6D00'],['Burnout','--burnout','#2979FF'],['Boredom','--boredom','#AA00FF']
+  ];
+  document.getElementById('swatches').innerHTML=tokens.map(function(t){
+    return '<div class="sw"><div class="chip" style="background:'+t[2]+'"></div>'+
+      '<div class="lab"><b>'+t[0]+'</b><span class="hex">'+t[2]+' · <code>'+t[1]+'</code></span></div></div>';
+  }).join('');
+
+  // replay icon animation
+  var icon=document.getElementById('appIcon');
+  function replay(el){
+    ['.i-sun','.i-gate','.i-bridge','.i-dot'].forEach(function(sel){
+      var n=el.querySelector(sel); if(!n)return;
+      n.style.animation='none'; void n.offsetWidth;  // reflow
+      n.style.animation='';
+    });
+    el.classList.remove('play'); void el.offsetWidth; el.classList.add('play');
+  }
+  // apply keyframes to icon parts when .play is set
+  var css=document.createElement('style');
+  css.textContent='.appicon.play .i-sun{animation:sun 1.4s ease-out both}'+
+    '.appicon.play .i-gate{animation:gate .9s ease-out .2s both}'+
+    '.appicon.play .i-bridge{stroke-dasharray:520;stroke-dashoffset:520;animation:draw 1s ease-out .55s forwards}'+
+    '.appicon.play .i-dot{opacity:0;animation:pop .4s ease-out 1.3s forwards}';
+  document.head.appendChild(css);
+  document.getElementById('replay').onclick=function(){replay(icon)};
+  icon.onclick=function(){replay(icon)};
+  replay(icon);
+
+  // phone nav
+  document.querySelectorAll('.nav button').forEach(function(b){
+    b.onclick=function(){
+      document.querySelectorAll('.nav button').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      var go=b.getAttribute('data-go');
+      document.querySelectorAll('.screen').forEach(function(s){
+        s.classList.toggle('hide', s.getAttribute('data-screen')!==go);
+      });
+    };
+  });
+
+  // lesson: show answer
+  var sa=document.getElementById('showAns');
+  if(sa){sa.onclick=function(){
+    document.getElementById('meanRow').textContent='জল  ·  water';
+    sa.style.display='none';
+  };}
+
+  // language chips (visual)
+  document.querySelectorAll('.lang').forEach(function(l){
+    l.onclick=function(){document.querySelectorAll('.lang').forEach(function(x){x.classList.remove('active')});l.classList.add('active')};
+  });
+</script>
+</body>
+</html>

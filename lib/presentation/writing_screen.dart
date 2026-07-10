@@ -7,8 +7,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-const _hira = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
-const _kata = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const _hiraChars = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
+const _kataChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
 class WritingScreen extends StatefulWidget {
   const WritingScreen({super.key});
@@ -27,9 +27,8 @@ class _WritingScreenState extends State<WritingScreen>
       AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
   bool _animating = false;
 
-  String get _script => _kata ? _kata_ : 'hiragana';
-  final String _kata_ = 'katakana';
-  String get _chars => _kata ? _kata : _hira;
+  String get _script => _kata ? 'katakana' : 'hiragana';
+  String get _chars => _kata ? _kataChars : _hiraChars;
   String get _cur => _chars[_idx];
 
   @override

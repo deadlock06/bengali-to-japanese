@@ -1,0 +1,96 @@
+SENSEI/
+├── .github
+│   └── workflows
+│       └── ci.yml
+├── CODEBASE_MAP.md
+├── NEXT_SESSION.md
+├── PROJECT_ROOT.md
+├── README.md
+├── SENSEI_Codebase_Export.zip
+├── assets
+│   ├── brand
+│   │   └── bhasago_icon.svg
+│   ├── content
+│   │   ├── hiragana.json
+│   │   ├── katakana.json
+│   │   ├── lesson_clinic.json
+│   │   ├── lesson_konbini.json
+│   │   ├── lesson_numbers.json
+│   │   ├── lesson_restaurant.json
+│   │   ├── lesson_time.json
+│   │   ├── lesson_work_intro.json
+│   │   ├── lesson_workplace.json
+│   │   └── pitch_accent.json
+│   └── stroke
+│       └── kana_strokes.json
+├── content_factory
+│   ├── banned_phrases.txt
+│   └── jft_a2_whitelist.txt
+├── docs
+│   ├── 00_START_HERE.md
+│   ├── 01_CONSTITUTION.md
+│   ├── 02_ARCHITECTURE.md
+│   ├── 03_DISTRIBUTION.md
+│   ├── 04_AGENTS.md
+│   ├── 05_CONTENT_SCHEMAS.md
+│   ├── 06_DATABASE.md
+│   ├── 07_API_SYNC.md
+│   ├── 08_OFFLINE_AI.md
+│   ├── 09_UI_STATES.md
+│   ├── 10_TESTING_QA.md
+│   ├── 11_ROADMAP_TASKS.md
+│   ├── 12_BUSINESS_GTM.md
+│   ├── 90_EXISTING_CODEBASE.md
+│   └── 99_DECISIONS.md
+├── l10n.yaml
+├── lib
+│   ├── app
+│   │   ├── providers.dart
+│   │   └── theme.dart
+│   ├── data
+│   │   ├── content_repository.dart
+│   │   └── srs_local.dart
+│   ├── db
+│   │   ├── db_key.dart
+│   │   └── migrations
+│   │       ├── m001_baseline.dart
+│   │       ├── migration.dart
+│   │       └── registry.dart
+│   ├── domain
+│   │   ├── fsrs.dart
+│   │   ├── models.dart
+│   │   └── pitch.dart
+│   ├── l10n
+│   │   ├── app_bn.arb
+│   │   ├── app_en.arb
+│   │   └── app_ja.arb
+│   ├── main.dart
+│   └── presentation
+│       ├── accent_screens.dart
+│       ├── screens.dart
+│       ├── widgets.dart
+│       └── writing_screen.dart
+├── preview
+│   ├── index.html
+│   └── sensei_body.html
+├── prototypes
+│   ├── SENSEI_Architecture_v1.1_Changes.md
+│   ├── SENSEI_Project_Status.md
+│   ├── bhasago_brand.html
+│   ├── sensei_lessons.html
+│   ├── sensei_premium.html
+│   ├── sensei_prototype.html
+│   └── sensei_writing.html
+├── pubspec.yaml
+├── test
+│   └── fsrs_test.dart
+└── tools
+    ├── build_preview.mjs
+    ├── export_for_llm.mjs
+    ├── fetch_stroke_data.mjs
+    ├── fsrs_reference.mjs
+    ├── lesson_flow_reference.mjs
+    ├── migrations_reference.mjs
+    ├── pitch_reference.mjs
+    ├── preview_server.mjs
+    └── validate_content.mjs

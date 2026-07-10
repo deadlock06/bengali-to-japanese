@@ -62,10 +62,10 @@ class ProgressScreenV4 extends ConsumerWidget {
         ),
         const SizedBox(height: 8),
         // level chips — active = ink-filled, goal = pink (styleguide chips)
-        Wrap(
+        const Wrap(
           spacing: 6,
           runSpacing: 6,
-          children: const [
+          children: [
             _LevelChip(label: 'N5 · 72%', style: _ChipStyle.active),
             _LevelChip(label: 'N4', style: _ChipStyle.idle),
             _LevelChip(label: 'JFT-A2 goal', style: _ChipStyle.goal),
@@ -105,7 +105,7 @@ class ProgressScreenV4 extends ConsumerWidget {
         ),
         const SizedBox(height: 10),
         // skill blocks — green + pink accent cards
-        Row(
+        const Row(
           children: [
             Expanded(
               child: _SkillBlock(
@@ -115,7 +115,7 @@ class ProgressScreenV4 extends ConsumerWidget {
                 sparkline: true,
               ),
             ),
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
             Expanded(
               child: _SkillBlock(
                 color: BhasagoColors.pink,
@@ -374,10 +374,10 @@ class _SkillBlock extends StatelessWidget {
             height: 26,
             width: double.infinity,
             child: sparkline
-                ? CustomPaint(
+                ? const CustomPaint(
                     painter: RetentionChartPainter(
-                        const [20, 16, 18, 10, 13, 6, 9],
-                        line: const Color(0xFF111111),
+                        [20, 16, 18, 10, 13, 6, 9],
+                        line: Color(0xFF111111),
                         thin: true))
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.end,

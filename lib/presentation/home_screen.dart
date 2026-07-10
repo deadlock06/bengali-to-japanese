@@ -78,7 +78,7 @@ class HomeScreen extends ConsumerWidget {
                       text.bodySmall?.copyWith(color: BhasagoColors.yellowDim)),
               const SizedBox(height: 12),
               // slider-style progress (design: black track, yellow fill, knob)
-              _SliderProgress(value: 0.64),
+              const _SliderProgress(value: 0.64),
               const SizedBox(height: 12),
               FilledButton.icon(
                 style: FilledButton.styleFrom(
@@ -121,10 +121,10 @@ class HomeScreen extends ConsumerWidget {
                                 style: text.bodySmall?.copyWith(
                                     color: BhasagoColors.blueDim)),
                             const Spacer(),
-                            Row(
+                            const Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(Icons.psychology,
+                                Icon(Icons.psychology,
                                     size: 20, color: Color(0xFF111111)),
                                 _Tag(label: 'A2'),
                               ],
@@ -149,10 +149,10 @@ class HomeScreen extends ConsumerWidget {
                                     color: BhasagoColors.greenDim)),
                             const Spacer(),
                             // TODO(T-108): sparkline from review_history
-                            CustomPaint(
-                              size: const Size(double.infinity, 26),
+                            const CustomPaint(
+                              size: Size(double.infinity, 26),
                               painter: _SparklinePainter(
-                                  const [58, 62, 60, 66, 65, 70, 72]),
+                                  [58, 62, 60, 66, 65, 70, 72]),
                             ),
                           ],
                         ),

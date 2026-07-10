@@ -94,7 +94,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         onDestinationSelected: (i) => setState(() => tab = i),
         destinations: [
           NavigationDestination(icon: const Icon(Icons.grid_view), label: s.kanaTitle),
-          NavigationDestination(icon: const Icon(Icons.draw), label: 'Write'),
+          const NavigationDestination(icon: Icon(Icons.draw), label: 'Write'),
           NavigationDestination(icon: const Icon(Icons.school), label: s.navLearn),
           NavigationDestination(icon: const Icon(Icons.mic), label: s.navSpeak),
           NavigationDestination(icon: const Icon(Icons.show_chart), label: s.pitchTitle),

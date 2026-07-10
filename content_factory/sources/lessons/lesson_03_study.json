@@ -1,0 +1,95 @@
+{
+  "id": "lsn_03_study",
+  "title_bengali": "পড়াশোনা এবং সংখ্যা",
+  "title_japanese": "勉強と数字",
+  "title_english": "Study and Numbers",
+  "jlpt_level": "N5",
+  "lesson_number": 3,
+  "prerequisite_lessons": [
+    "lsn_02_daily"
+  ],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 45,
+      "instructions_bengali": "এই পাঠে আমরা পড়াশোনার ক্রিয়াপদ এবং জাপানি সংখ্যা (১, ২, ৩) শিখব।",
+      "instructions_english": "In this lesson, we learn study verbs and Japanese numbers (1, 2, 3)."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_08_yomu",
+        "voc_09_kaku",
+        "voc_01_iku",
+        "voc_02_kuru"
+      ],
+      "duration_seconds": 150,
+      "instructions_bengali": "নতুন ক্রিয়াপদগুলো দেখুন: পড়া, লেখা, যাওয়া, আসা।",
+      "instructions_english": "Look at the new verbs: read, write, go, come."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "kan_01_ichi",
+        "kan_02_ni",
+        "kan_03_san"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "কানজি সংখ্যাগুলো দেখুন: 一 (এক), 二 (দুই), 三 (তিন)। প্রতিটির stroke order লক্ষ্য করুন।",
+      "instructions_english": "Look at the kanji numbers: 一 (one), 二 (two), 三 (three). Observe the stroke order of each."
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "kan_01_ichi",
+        "kan_02_ni",
+        "kan_03_san"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "সঠিক কানজি বেছে নিন। যেমন: 'দুই' এর কানজি কোনটি?",
+      "instructions_english": "Choose the correct kanji. Example: which kanji means 'two'?"
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_07_hanasu"
+      ],
+      "duration_seconds": 90,
+      "instructions_bengali": "বলুন: '日本語を話します'।",
+      "instructions_english": "Say: '日本語を話します'.",
+      "alignment_text": "日本語を話します。"
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 120,
+      "instructions_bengali": "সব পাঠের কার্ড রিভিউ করুন।",
+      "instructions_english": "Review cards from all lessons.",
+      "card_ids": [
+        "crd_voc_08_yomu_recognize",
+        "crd_voc_09_kaku_recall",
+        "crd_kan_01_ichi_meaning",
+        "crd_kan_02_ni_stroke"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 12,
+  "tags": [
+    "study",
+    "numbers",
+    "kanji"
+  ],
+  "new_vocab": [
+    "voc_08_yomu",
+    "voc_09_kaku",
+    "voc_01_iku",
+    "voc_02_kuru"
+  ],
+  "new_grammar": [],
+  "new_kanji": [
+    "kan_01_ichi",
+    "kan_02_ni",
+    "kan_03_san"
+  ]
+}

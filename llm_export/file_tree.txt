@@ -1,4 +1,5 @@
 SENSEI/
+├── .flutter-plugins-dependencies
 ├── .github
 │   └── workflows
 │       └── ci.yml
@@ -14,11 +15,19 @@ SENSEI/
 │   │   ├── hiragana.json
 │   │   ├── katakana.json
 │   │   ├── lesson_clinic.json
+│   │   ├── lesson_directions.json
+│   │   ├── lesson_emergency.json
+│   │   ├── lesson_greetings.json
 │   │   ├── lesson_konbini.json
 │   │   ├── lesson_numbers.json
 │   │   ├── lesson_restaurant.json
+│   │   ├── lesson_shopping.json
+│   │   ├── lesson_smalltalk.json
 │   │   ├── lesson_time.json
+│   │   ├── lesson_transport.json
 │   │   ├── lesson_work_intro.json
+│   │   ├── lesson_work_requests.json
+│   │   ├── lesson_work_safety.json
 │   │   ├── lesson_workplace.json
 │   │   └── pitch_accent.json
 │   └── stroke
@@ -44,30 +53,48 @@ SENSEI/
 │   └── 99_DECISIONS.md
 ├── l10n.yaml
 ├── lib
+│   ├── agents
+│   │   ├── agent_bus.dart
+│   │   ├── agent_state.dart
+│   │   ├── director.dart
+│   │   ├── feedback.dart
+│   │   ├── persona.dart
+│   │   └── scaffold_agent.dart
 │   ├── app
 │   │   ├── providers.dart
 │   │   └── theme.dart
 │   ├── data
 │   │   ├── content_repository.dart
+│   │   ├── export_service.dart
 │   │   └── srs_local.dart
 │   ├── db
 │   │   ├── db_key.dart
 │   │   └── migrations
 │   │       ├── m001_baseline.dart
+│   │       ├── m002_agents_meta.dart
 │   │       ├── migration.dart
 │   │       └── registry.dart
 │   ├── domain
 │   │   ├── fsrs.dart
 │   │   ├── models.dart
-│   │   └── pitch.dart
+│   │   ├── pitch.dart
+│   │   └── progress.dart
 │   ├── l10n
 │   │   ├── app_bn.arb
 │   │   ├── app_en.arb
-│   │   └── app_ja.arb
+│   │   ├── app_ja.arb
+│   │   ├── app_localizations.dart
+│   │   ├── app_localizations_bn.dart
+│   │   ├── app_localizations_en.dart
+│   │   └── app_localizations_ja.dart
 │   ├── main.dart
 │   └── presentation
 │       ├── accent_screens.dart
+│       ├── agent_panel.dart
+│       ├── lesson_list_screen.dart
+│       ├── progress_screen.dart
 │       ├── screens.dart
+│       ├── settings_screen.dart
 │       ├── widgets.dart
 │       └── writing_screen.dart
 ├── preview
@@ -81,10 +108,14 @@ SENSEI/
 │   ├── sensei_premium.html
 │   ├── sensei_prototype.html
 │   └── sensei_writing.html
+├── pubspec.lock
 ├── pubspec.yaml
 ├── test
-│   └── fsrs_test.dart
+│   ├── agents_test.dart
+│   ├── fsrs_test.dart
+│   └── progress_test.dart
 └── tools
+    ├── agents_reference.mjs
     ├── build_preview.mjs
     ├── export_for_llm.mjs
     ├── fetch_stroke_data.mjs

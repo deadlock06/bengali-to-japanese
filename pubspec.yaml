@@ -20,11 +20,13 @@ dependencies:
   flutter_secure_storage: ^9.2.4  # Keystore-backed DB passphrase store
   shared_preferences: ^2.2.3
   path: ^1.9.0
-  record: ^5.1.2       # mic capture for shadowing
-  just_audio: ^0.9.40  # native reference-audio playback
+  record: ^7.0.0       # mic capture for shadowing
+  just_audio: ^0.10.0  # native reference-audio playback
   fftea: ^1.5.0        # on-device pitch (F0) extraction for accent scoring
   archive: ^3.6.1      # pure-Dart ZIP for one-tap offline data export (01)
   path_provider: ^2.1.4 # documents dir for the export file
+  dio: ^5.7.0
+  crypto: ^3.0.5
 
 dev_dependencies:
   flutter_test:

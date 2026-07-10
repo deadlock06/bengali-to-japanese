@@ -1,0 +1,630 @@
+[
+  {
+    "id": "voc_01_iku",
+    "japanese": "行く",
+    "reading": "いく",
+    "meaning_bengali": "যাওয়া",
+    "meaning_english": "to go",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "学校に行く",
+      "駅へ行きます"
+    ],
+    "example_reading": [
+      "がっこうにいく",
+      "えきへいきます"
+    ],
+    "example_bengali": [
+      "স্কুলে যাওয়া",
+      "স্টেশনে যাওয়া"
+    ],
+    "example_english": [
+      "go to school",
+      "go to the station"
+    ],
+    "tags": [
+      "motion",
+      "directional"
+    ],
+    "frequency_rank": 50,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_02_kuru",
+    "japanese": "来る",
+    "reading": "くる",
+    "meaning_bengali": "আসা",
+    "meaning_english": "to come",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "友達が来る",
+      "ここに来てください"
+    ],
+    "example_reading": [
+      "ともだちがくる",
+      "ここにきてください"
+    ],
+    "example_bengali": [
+      "বন্ধু আসছে",
+      "এখানে আসুন"
+    ],
+    "example_english": [
+      "friend is coming",
+      "please come here"
+    ],
+    "tags": [
+      "motion",
+      "directional"
+    ],
+    "frequency_rank": 55,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_03_taberu",
+    "japanese": "食べる",
+    "reading": "たべる",
+    "meaning_bengali": "খাওয়া",
+    "meaning_english": "to eat",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "ご飯を食べる",
+      "何を食べますか"
+    ],
+    "example_reading": [
+      "ごはんをたべる",
+      "なにをたべますか"
+    ],
+    "example_bengali": [
+      "ভাত খাওয়া",
+      "কী খাবেন"
+    ],
+    "example_english": [
+      "eat rice",
+      "what will you eat"
+    ],
+    "tags": [
+      "daily",
+      "food"
+    ],
+    "frequency_rank": 80,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_04_nomu",
+    "japanese": "飲む",
+    "reading": "のむ",
+    "meaning_bengali": "পান করা",
+    "meaning_english": "to drink",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "水を飲む",
+      "お茶を飲みます"
+    ],
+    "example_reading": [
+      "みずをのむ",
+      "おちゃをのみます"
+    ],
+    "example_bengali": [
+      "জল পান করা",
+      "চা পান করা"
+    ],
+    "example_english": [
+      "drink water",
+      "drink tea"
+    ],
+    "tags": [
+      "daily",
+      "food"
+    ],
+    "frequency_rank": 120,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_05_miru",
+    "japanese": "見る",
+    "reading": "みる",
+    "meaning_bengali": "দেখা",
+    "meaning_english": "to see, to watch",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "映画を見る",
+      "テレビを見ます"
+    ],
+    "example_reading": [
+      "えいがをみる",
+      "てれびをみます"
+    ],
+    "example_bengali": [
+      "সিনেমা দেখা",
+      "টিভি দেখা"
+    ],
+    "example_english": [
+      "watch a movie",
+      "watch TV"
+    ],
+    "tags": [
+      "daily",
+      "entertainment"
+    ],
+    "frequency_rank": 65,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_06_kiku",
+    "japanese": "聞く",
+    "reading": "きく",
+    "meaning_bengali": "শোনা",
+    "meaning_english": "to hear, to listen",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "音楽を聞く",
+      "先生の話を聞きます"
+    ],
+    "example_reading": [
+      "おんがくをきく",
+      "せんせいのはなしをききます"
+    ],
+    "example_bengali": [
+      "গান শোনা",
+      "শিক্ষকের কথা শোনা"
+    ],
+    "example_english": [
+      "listen to music",
+      "listen to the teacher"
+    ],
+    "tags": [
+      "daily",
+      "communication"
+    ],
+    "frequency_rank": 90,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_07_hanasu",
+    "japanese": "話す",
+    "reading": "はなす",
+    "meaning_bengali": "কথা বলা",
+    "meaning_english": "to speak, to talk",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "日本語を話す",
+      "友達と話します"
+    ],
+    "example_reading": [
+      "にほんごをはなす",
+      "ともだちとはなします"
+    ],
+    "example_bengali": [
+      "জাপানি ভাষায় কথা বলা",
+      "বন্ধুর সাথে কথা বলা"
+    ],
+    "example_english": [
+      "speak Japanese",
+      "talk with a friend"
+    ],
+    "tags": [
+      "daily",
+      "communication"
+    ],
+    "frequency_rank": 70,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_08_yomu",
+    "japanese": "読む",
+    "reading": "よむ",
+    "meaning_bengali": "পড়া",
+    "meaning_english": "to read",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "本を読む",
+      "新聞を読みます"
+    ],
+    "example_reading": [
+      "ほんをよむ",
+      "しんぶんをよみます"
+    ],
+    "example_bengali": [
+      "বই পড়া",
+      "সংবাদপত্র পড়া"
+    ],
+    "example_english": [
+      "read a book",
+      "read a newspaper"
+    ],
+    "tags": [
+      "daily",
+      "study"
+    ],
+    "frequency_rank": 100,
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "voc_09_kaku",
+    "japanese": "書く",
+    "reading": "かく",
+    "meaning_bengali": "লেখা",
+    "meaning_english": "to write",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "手紙を書く",
+      "名前を書きます"
+    ],
+    "example_reading": [
+      "てがみをかく",
+      "なまえをかきます"
+    ],
+    "example_bengali": [
+      "চিঠি লেখা",
+      "নাম লেখা"
+    ],
+    "example_english": [
+      "write a letter",
+      "write a name"
+    ],
+    "tags": [
+      "daily",
+      "study"
+    ],
+    "frequency_rank": 110,
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "voc_10_neru",
+    "japanese": "寝る",
+    "reading": "ねる",
+    "meaning_bengali": "ঘুমানো",
+    "meaning_english": "to sleep",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "早く寝る",
+      "よく寝ました"
+    ],
+    "example_reading": [
+      "はやくねる",
+      "よくねました"
+    ],
+    "example_bengali": [
+      "তাড়াতাড়ি ঘুমানো",
+      "ভালো ঘুমিয়েছি"
+    ],
+    "example_english": [
+      "sleep early",
+      "slept well"
+    ],
+    "tags": [
+      "daily",
+      "body"
+    ],
+    "frequency_rank": 130,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_11_ohayo",
+    "japanese": "おはよう",
+    "reading": "おはよう",
+    "meaning_bengali": "সুপ্রভাত",
+    "meaning_english": "good morning",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "おはようございます"
+    ],
+    "example_reading": [
+      "おはようございます"
+    ],
+    "example_bengali": [
+      "সুপ্রভাত (সম্মানসূচক)"
+    ],
+    "example_english": [
+      "good morning (polite)"
+    ],
+    "tags": [
+      "greeting",
+      "morning"
+    ],
+    "frequency_rank": 40,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_12_konnichiwa",
+    "japanese": "こんにちは",
+    "reading": "こんにちは",
+    "meaning_bengali": "নমস্কার (দিনের বেলা)",
+    "meaning_english": "hello (daytime)",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "こんにちは、元気ですか"
+    ],
+    "example_reading": [
+      "こんにちは、げんきですか"
+    ],
+    "example_bengali": [
+      "নমস্কার, কেমন আছেন"
+    ],
+    "example_english": [
+      "hello, how are you"
+    ],
+    "tags": [
+      "greeting",
+      "daytime"
+    ],
+    "frequency_rank": 30,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_13_konbanwa",
+    "japanese": "こんばんは",
+    "reading": "こんばんは",
+    "meaning_bengali": "শুভ সন্ধ্যা",
+    "meaning_english": "good evening",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "こんばんは、お疲れ様です"
+    ],
+    "example_reading": [
+      "こんばんは、おつかれさまです"
+    ],
+    "example_bengali": [
+      "শুভ সন্ধ্যা, কষ্ট করেছেন"
+    ],
+    "example_english": [
+      "good evening, thank you for your hard work"
+    ],
+    "tags": [
+      "greeting",
+      "evening"
+    ],
+    "frequency_rank": 60,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_14_oyasumi",
+    "japanese": "おやすみなさい",
+    "reading": "おやすみなさい",
+    "meaning_bengali": "শুভ রাত্রি",
+    "meaning_english": "good night",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "おやすみなさい、良い夢を"
+    ],
+    "example_reading": [
+      "おやすみなさい、よいゆめを"
+    ],
+    "example_bengali": [
+      "শুভ রাত্রি, স্বপ্ন ভালো হোক"
+    ],
+    "example_english": [
+      "good night, sweet dreams"
+    ],
+    "tags": [
+      "greeting",
+      "night"
+    ],
+    "frequency_rank": 85,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_15_arigato",
+    "japanese": "ありがとう",
+    "reading": "ありがとう",
+    "meaning_bengali": "ধন্যবাদ",
+    "meaning_english": "thank you",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "ありがとうございます",
+      "どうもありがとう"
+    ],
+    "example_reading": [
+      "ありがとうございます",
+      "どうもありがとう"
+    ],
+    "example_bengali": [
+      "অনেক ধন্যবাদ (সম্মানসূচক)",
+      "অনেক অনেক ধন্যবাদ"
+    ],
+    "example_english": [
+      "thank you very much (polite)",
+      "thanks a lot"
+    ],
+    "tags": [
+      "gratitude",
+      "polite"
+    ],
+    "frequency_rank": 25,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_16_sumimasen",
+    "japanese": "すみません",
+    "reading": "すみません",
+    "meaning_bengali": "দুঃখিত / মাফ করবেন",
+    "meaning_english": "sorry / excuse me",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "すみません、道を教えてください"
+    ],
+    "example_reading": [
+      "すみません、みちをおしえてください"
+    ],
+    "example_bengali": [
+      "মাফ করবেন, রাস্তা বলুন"
+    ],
+    "example_english": [
+      "excuse me, please tell me the way"
+    ],
+    "tags": [
+      "apology",
+      "request"
+    ],
+    "frequency_rank": 35,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_17_ohisashi",
+    "japanese": "お久しぶり",
+    "reading": "おひさしぶり",
+    "meaning_bengali": "বহুদিন পর দেখা",
+    "meaning_english": "long time no see",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "お久しぶりです、元気でしたか"
+    ],
+    "example_reading": [
+      "おひさしぶりです、げんきでしたか"
+    ],
+    "example_bengali": [
+      "বহুদিন পর, কেমন ছিলেন"
+    ],
+    "example_english": [
+      "long time no see, how have you been"
+    ],
+    "tags": [
+      "greeting",
+      "reunion"
+    ],
+    "frequency_rank": 140,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_18_hai",
+    "japanese": "はい",
+    "reading": "はい",
+    "meaning_bengali": "হ্যাঁ",
+    "meaning_english": "yes",
+    "part_of_speech": "interjection",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "はい、分かりました"
+    ],
+    "example_reading": [
+      "はい、わかりました"
+    ],
+    "example_bengali": [
+      "হ্যাঁ, বুঝেছি"
+    ],
+    "example_english": [
+      "yes, I understand"
+    ],
+    "tags": [
+      "response",
+      "basic"
+    ],
+    "frequency_rank": 15,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_19_iie",
+    "japanese": "いいえ",
+    "reading": "いいえ",
+    "meaning_bengali": "না",
+    "meaning_english": "no",
+    "part_of_speech": "interjection",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "いいえ、違います"
+    ],
+    "example_reading": [
+      "いいえ、ちがいます"
+    ],
+    "example_bengali": [
+      "না, ভুল"
+    ],
+    "example_english": [
+      "no, that's wrong"
+    ],
+    "tags": [
+      "response",
+      "basic"
+    ],
+    "frequency_rank": 20,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_20_watashi",
+    "japanese": "私",
+    "reading": "わたし",
+    "meaning_bengali": "আমি",
+    "meaning_english": "I, me",
+    "part_of_speech": "pronoun",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "私は学生です",
+      "私の本です"
+    ],
+    "example_reading": [
+      "わたしはがくせいです",
+      "わたしのほんです"
+    ],
+    "example_bengali": [
+      "আমি একজন ছাত্র",
+      "আমার বই"
+    ],
+    "example_english": [
+      "I am a student",
+      "my book"
+    ],
+    "tags": [
+      "pronoun",
+      "basic"
+    ],
+    "frequency_rank": 10,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  }
+]

@@ -13,7 +13,9 @@ double estimateF0(List<double> buf, double sampleRate,
     {double minHz = 70, double maxHz = 500}) {
   final n = buf.length;
   double rms = 0;
-  for (final s in buf) rms += s * s;
+  for (final s in buf) {
+    rms += s * s;
+  }
   rms = math.sqrt(rms / n);
   if (rms < 0.01) return -1;
 
@@ -25,7 +27,9 @@ double estimateF0(List<double> buf, double sampleRate,
   int bestLag = -1;
   for (var lag = minLag; lag <= maxLag; lag++) {
     double sum = 0;
-    for (var i = 0; i < n - lag; i++) sum += buf[i] * buf[i + lag];
+    for (var i = 0; i < n - lag; i++) {
+      sum += buf[i] * buf[i + lag];
+    }
     c[lag] = sum;
     if (sum > best) {
       best = sum;

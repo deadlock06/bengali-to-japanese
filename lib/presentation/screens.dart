@@ -34,11 +34,17 @@ class KanaScreen extends ConsumerWidget {
           onTap: () {/* TODO: ttsService.speak(k.char) */},
           child: Card(
             child: Center(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Text(k.char, style: const TextStyle(fontSize: 26)),
-                Text(k.romaji,
-                    style: TextStyle(fontSize: 11, color: Colors.grey.shade500)),
-              ]),
+              // scaleDown: the glyph+romaji stack is a hair taller than a
+              // square 5-column cell on narrow phones — never overflow.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Text(k.char, style: const TextStyle(fontSize: 26)),
+                  Text(k.romaji,
+                      style:
+                          TextStyle(fontSize: 11, color: Colors.grey.shade500)),
+                ]),
+              ),
             ),
           ),
         );
@@ -914,8 +920,8 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: FilledButton(
                     onPressed: () => _rate(r),
-                    child: Text(_label(s, r) +
-                        '\n${fsrs.nextInterval(fsrs.review(entry.card, r).stability)}d',
+                    child: Text(
+                        '${_label(s, r)}\n${fsrs.nextInterval(fsrs.review(entry.card, r).stability)}d',
                         textAlign: TextAlign.center),
                   ),
                 ),

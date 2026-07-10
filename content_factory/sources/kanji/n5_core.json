@@ -1,0 +1,218 @@
+[
+  {
+    "id": "kan_01_ichi",
+    "character": "一",
+    "meanings_bengali": [
+      "এক",
+      "প্রথম"
+    ],
+    "meanings_english": [
+      "one",
+      "first"
+    ],
+    "onyomi": [
+      "いち",
+      "いつ"
+    ],
+    "kunyomi": [
+      "ひと",
+      "ひと-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 1,
+    "radical": "一",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [
+      "voc_01_iku"
+    ],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_02_ni",
+    "character": "二",
+    "meanings_bengali": [
+      "দুই",
+      "দ্বিতীয়"
+    ],
+    "meanings_english": [
+      "two",
+      "second"
+    ],
+    "onyomi": [
+      "に"
+    ],
+    "kunyomi": [
+      "ふた",
+      "ふた-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 2,
+    "radical": "二",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 35 L 70 35",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 65 L 70 65",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_03_san",
+    "character": "三",
+    "meanings_bengali": [
+      "তিন",
+      "তৃতীয়"
+    ],
+    "meanings_english": [
+      "three",
+      "third"
+    ],
+    "onyomi": [
+      "さん"
+    ],
+    "kunyomi": [
+      "み",
+      "み-つ",
+      "みっ-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 3,
+    "radical": "一",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 25 L 70 25",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 3,
+        "path": "M 30 75 L 70 75",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_04_hito",
+    "character": "人",
+    "meanings_bengali": [
+      "মানুষ",
+      "ব্যক্তি"
+    ],
+    "meanings_english": [
+      "person",
+      "human"
+    ],
+    "onyomi": [
+      "じん",
+      "にん"
+    ],
+    "kunyomi": [
+      "ひと",
+      "ひと-びと"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 2,
+    "radical": "人",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 50 20 L 35 80",
+        "stroke_type": "diagonal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 50 20 L 65 80",
+        "stroke_type": "diagonal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "kan_05_hi",
+    "character": "日",
+    "meanings_bengali": [
+      "দিন",
+      "সূর্য",
+      "জাপান"
+    ],
+    "meanings_english": [
+      "day",
+      "sun",
+      "Japan"
+    ],
+    "onyomi": [
+      "にち",
+      "じつ"
+    ],
+    "kunyomi": [
+      "ひ",
+      "か",
+      "-び"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 4,
+    "radical": "日",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 25 L 70 25",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 25 L 30 75",
+        "stroke_type": "vertical"
+      },
+      {
+        "stroke_number": 3,
+        "path": "M 70 25 L 70 75",
+        "stroke_type": "vertical"
+      },
+      {
+        "stroke_number": 4,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [
+      "voc_12_konnichiwa"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  }
+]

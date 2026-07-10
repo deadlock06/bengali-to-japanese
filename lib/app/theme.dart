@@ -153,9 +153,9 @@ abstract final class BhasagoTheme {
           side: const BorderSide(color: BhasagoColors.outline),
         ),
       ),
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: BhasagoColors.surface,
-        shape: const RoundedRectangleBorder(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
         ),
       ),

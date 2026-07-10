@@ -1,0 +1,93 @@
+{
+  "id": "lsn_02_daily",
+  "title_bengali": "দৈনন্দিন ক্রিয়াকলাপ",
+  "title_japanese": "日常の活動",
+  "title_english": "Daily Activities",
+  "jlpt_level": "N5",
+  "lesson_number": 2,
+  "prerequisite_lessons": [
+    "lsn_01_greetings"
+  ],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 45,
+      "instructions_bengali": "এই পাঠে আমরা দৈনন্দিন কাজের ক্রিয়াপদ শিখব — খাওয়া, পান করা, দেখা, শোনা, ঘুমানো।",
+      "instructions_english": "In this lesson, we learn daily activity verbs — eat, drink, see, hear, sleep."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu",
+        "voc_05_miru",
+        "voc_06_kiku",
+        "voc_10_neru"
+      ],
+      "duration_seconds": 150,
+      "instructions_bengali": "নতুন ক্রিয়াপদগুলো দেখুন। প্রতিটির উচ্চারণ এবং অর্থ মনে রাখুন।",
+      "instructions_english": "Look at the new verbs. Remember the pronunciation and meaning of each."
+    },
+    {
+      "block_type": "grammar_present",
+      "content_refs": [
+        "grm_03_wo"
+      ],
+      "duration_seconds": 180,
+      "instructions_bengali": "「を» কণিকা শিখুন। এটি transitive verb-এর object চিহ্নিত করে। যেমন: '本を読む' = বই পড়া।",
+      "instructions_english": "Learn the を particle. It marks the direct object of a transitive verb. Example: '本を読む' = read a book."
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu",
+        "voc_05_miru"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "সঠিক ক্রিয়াপদ বেছে নিন। ছবি দেখে বলুন কী করা হচ্ছে।",
+      "instructions_english": "Choose the correct verb. Look at the picture and say what is being done."
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu"
+      ],
+      "duration_seconds": 90,
+      "instructions_bengali": "বলুন: 'ご飯を食べます' এবং '水を飲みます'।",
+      "instructions_english": "Say: 'ご飯を食べます' and '水を飲みます'.",
+      "alignment_text": "ご飯を食べます。水を飲みます。"
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 120,
+      "instructions_bengali": "পূর্ববর্তী পাঠের কার্ডগুলো রিভিউ করুন।",
+      "instructions_english": "Review cards from previous lessons.",
+      "card_ids": [
+        "crd_voc_03_taberu_recognize",
+        "crd_voc_04_nomu_recall",
+        "crd_voc_05_miru_recognize"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 12,
+  "tags": [
+    "daily",
+    "verbs",
+    "food"
+  ],
+  "new_vocab": [
+    "voc_03_taberu",
+    "voc_04_nomu",
+    "voc_05_miru",
+    "voc_06_kiku",
+    "voc_10_neru"
+  ],
+  "new_grammar": [
+    "grm_03_wo"
+  ],
+  "new_kanji": []
+}

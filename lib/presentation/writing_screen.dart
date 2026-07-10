@@ -113,31 +113,36 @@ class _WritingScreenState extends State<WritingScreen>
           ),
         ),
       ),
-      // paper
-      Padding(
-        padding: const EdgeInsets.all(16),
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Listener(
-              onPointerDown: (e) {
-                if (_animating) return;
-                setState(() => _ink.add([e.localPosition]));
-              },
-              onPointerMove: (e) {
-                if (_animating || _ink.isEmpty) return;
-                setState(() => _ink.last.add(e.localPosition));
-              },
-              child: AnimatedBuilder(
-                animation: _anim,
-                builder: (_, __) => CustomPaint(
-                  size: Size.infinite,
-                  painter: _WritingPainter(
-                    ink: _ink,
-                    guideChar: _guide && !_animating ? _cur : null,
-                    animStrokes: _animating ? strokes : null,
-                    animT: _anim.value,
+      // paper — takes the leftover height, square sized by the shorter axis,
+      // so short/landscape viewports (split-screen, test surface) never overflow
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Listener(
+                  onPointerDown: (e) {
+                    if (_animating) return;
+                    setState(() => _ink.add([e.localPosition]));
+                  },
+                  onPointerMove: (e) {
+                    if (_animating || _ink.isEmpty) return;
+                    setState(() => _ink.last.add(e.localPosition));
+                  },
+                  child: AnimatedBuilder(
+                    animation: _anim,
+                    builder: (_, __) => CustomPaint(
+                      size: Size.infinite,
+                      painter: _WritingPainter(
+                        ink: _ink,
+                        guideChar: _guide && !_animating ? _cur : null,
+                        animStrokes: _animating ? strokes : null,
+                        animT: _anim.value,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -158,7 +163,6 @@ class _WritingScreenState extends State<WritingScreen>
               _ink.isEmpty ? null : () => setState(_ink.clear)),
         ]),
       ),
-      const Spacer(),
       // autonomy row: Skip always available
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -244,7 +248,9 @@ class _WritingPainter extends CustomPainter {
         continue;
       }
       final p = Path()..moveTo(st.first.dx, st.first.dy);
-      for (var i = 1; i < st.length; i++) p.lineTo(st[i].dx, st[i].dy);
+      for (var i = 1; i < st.length; i++) {
+        p.lineTo(st[i].dx, st[i].dy);
+      }
       canvas.drawPath(p, inkPaint);
     }
 
@@ -273,7 +279,9 @@ class _WritingPainter extends CustomPainter {
 
   double _len(List<Offset> p) {
     var s = 0.0;
-    for (var i = 1; i < p.length; i++) s += (p[i] - p[i - 1]).distance;
+    for (var i = 1; i < p.length; i++) {
+      s += (p[i] - p[i - 1]).distance;
+    }
     return s;
   }
 

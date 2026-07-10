@@ -1,0 +1,207 @@
+[
+  {
+    "id": "grm_01_wa",
+    "title_japanese": "〜は",
+    "title_bengali": "বিষয় চিহ্নিতকারী কণিকা は",
+    "structure_pattern": "[N] + は + [述語]",
+    "explanation_bengali": "「は」 একটি topic marker particle। এটি বাক্যের বিষয় (topic) চিহ্নিত করে। বাংলায় এটি সরাসরি অনুবাদ হয় না, কিন্তু এর কাজ হলো বলা: 'যে বিষয়ে আমি কথা বলছি, সেটি হলো...'। যেমন: '私は学生です' মানে 'আমি (বিষয়ে কথা বলছি) একজন ছাত্র'। এটি 「が» থেকে আলাদা — 「が» নতুন তথ্য দেয়, 「は» পুরনো বিষয়ে আরও কিছু বলে।",
+    "explanation_english": "The particle は marks the topic of a sentence. It identifies what the sentence is about.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [],
+    "unlocks_ids": [
+      "grm_02_ga"
+    ],
+    "examples": [
+      {
+        "japanese": "私は学生です",
+        "reading": "わたしはがくせいです",
+        "bengali": "আমি একজন ছাত্র",
+        "english": "I am a student",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ff6b6b"
+          }
+        ]
+      },
+      {
+        "japanese": "今日は暑いです",
+        "reading": "きょうはあついです",
+        "bengali": "আজ গরম",
+        "english": "Today is hot",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ff6b6b"
+          }
+        ]
+      },
+      {
+        "japanese": "日本語は難しいです",
+        "reading": "にほんごはむずかしいです",
+        "bengali": "জাপানি ভাষা কঠিন",
+        "english": "Japanese is difficult",
+        "highlights": [
+          {
+            "start": 4,
+            "end": 5,
+            "color": "#ff6b6b"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "私が学生です (as topic marker)",
+        "why_bengali": "বাংলা ভাষায় 'আমি ছাত্র' বলার সময় আমরা কোনো বিশেষ marker ব্যবহার করি না, তাই বাঙালি শিক্ষার্থীরা 「が» ব্যবহার করতে চায়। কিন্তু বিষয় চিহ্নিত করতে 「は» ব্যবহার করতে হবে, 「が» নতুন তথ্য দেয়।",
+        "correction": "বিষয় চিহ্নিত করতে は ব্যবহার করুন, নতুন তথ্য দিতে が"
+      }
+    ],
+    "related_vocab": [
+      "voc_20_watashi"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "grm_02_ga",
+    "title_japanese": "〜が",
+    "title_bengali": "নতুন তথ্য দেওয়ার কণিকা が",
+    "structure_pattern": "[N] + が + [述語]",
+    "explanation_bengali": "「が» একটি subject marker particle। এটি নতুন তথ্য বা গুরুত্বপূর্ণ বিষয় চিহ্নিত করে। বাংলায় এটি অনুবাদ হয় '...-ই' বা '...-ই হলো'। যেমন: '私がやります' মানে 'আমিই করব' (অন্য কেউ নয়)। প্রশ্নের উত্তরেও 「が» ব্যবহার হয়: '誰が来ましたか' → '田中が来ました'। এটি 「は» থেকে আলাদা — 「は» পুরনো বিষয়, 「が» নতুন তথ্য।",
+    "explanation_english": "The particle が marks the grammatical subject and introduces new information.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [
+      "grm_01_wa"
+    ],
+    "unlocks_ids": [
+      "grm_03_wo"
+    ],
+    "examples": [
+      {
+        "japanese": "私がやります",
+        "reading": "わたしがやります",
+        "bengali": "আমিই করব",
+        "english": "I will do it (emphasis: not someone else)",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      },
+      {
+        "japanese": "誰が来ましたか",
+        "reading": "だれがきましたか",
+        "bengali": "কে এসেছে",
+        "english": "Who came?",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      },
+      {
+        "japanese": "雨が降っています",
+        "reading": "あめがふっています",
+        "bengali": "বৃষ্টি হচ্ছে",
+        "english": "It is raining",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "Always using は instead of が",
+        "why_bengali": "বাংলায় 'আমি ছাত্র' বলার সময় আমরা কোনো বিশেষ marker ব্যবহার করি না, তাই শিক্ষার্থীরা সব জায়গায় は ব্যবহার করে। কিন্তু প্রশ্নের উত্তর, নতুন তথ্য, এবং প্রাকৃতিক ঘটনায় (বৃষ্টি, বাতাস) が ব্যবহার করতে হবে।",
+        "correction": "প্রশ্নের উত্তর, নতুন তথ্য, এবং প্রাকৃতিক ঘটনায় が ব্যবহার করুন"
+      }
+    ],
+    "related_vocab": [
+      "voc_20_watashi"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "grm_03_wo",
+    "title_japanese": "〜を",
+    "title_bengali": "অবজেক্ট চিহ্নিতকারী কণিকা を",
+    "structure_pattern": "[N] + を + [V]",
+    "explanation_bengali": "「を» একটি object marker particle। এটি transitive verb-এর direct object চিহ্নিত করে। বাংলায় এটি অনুবাদ হয় না, কিন্তু বোঝায় 'কী করা হচ্ছে'। যেমন: '本を読む' মানে 'বই পড়া' — এখানে 'বই' হলো object। মনে রাখবেন: を-র উচ্চারণ হলো 'ও' (ও-এর মতো), কিন্তু লেখা হয় を (wo)। কিছু কিছু ক্ষেত্রে (movement verbs যেমন 歩く, 泳ぐ) を ব্যবহার হয় যেখানে object নেই — এটা special usage।",
+    "explanation_english": "The particle を marks the direct object of a transitive verb.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [
+      "grm_02_ga"
+    ],
+    "unlocks_ids": [],
+    "examples": [
+      {
+        "japanese": "本を読む",
+        "reading": "ほんをよむ",
+        "bengali": "বই পড়া",
+        "english": "read a book",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ffe66d"
+          }
+        ]
+      },
+      {
+        "japanese": "ご飯を食べる",
+        "reading": "ごはんをたべる",
+        "bengali": "ভাত খাওয়া",
+        "english": "eat rice",
+        "highlights": [
+          {
+            "start": 3,
+            "end": 4,
+            "color": "#ffe66d"
+          }
+        ]
+      },
+      {
+        "japanese": "日本語を話す",
+        "reading": "にほんごをはなす",
+        "bengali": "জাপানি ভাষায় কথা বলা",
+        "english": "speak Japanese",
+        "highlights": [
+          {
+            "start": 4,
+            "end": 5,
+            "color": "#ffe66d"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "Using を with intransitive verbs",
+        "why_bengali": "বাংলায় 'আমি যাই' বলার সময় 'যাওয়া' intransitive, তাই কোনো object নেই। কিন্তু জাপানিতে কিছু movement verbs (যেমন 歩く 'হাঁটা')-এর সাথে を ব্যবহার হয় যেটা বাংলায় অদ্ভুত লাগে। এটা special usage, ভুল নয়।",
+        "correction": "সাধারণত transitive verb-এর object-এর আগে を ব্যবহার করুন। movement verbs-এ special usage আছে।"
+      }
+    ],
+    "related_vocab": [
+      "voc_08_yomu",
+      "voc_03_taberu",
+      "voc_07_hanasu"
+    ],
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  }
+]

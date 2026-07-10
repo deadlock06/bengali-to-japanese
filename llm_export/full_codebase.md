@@ -62,46 +62,46 @@
 ```md
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
-You are an AI continuing work on **SENSEI**. Read order:
-1. `docs/00_START_HERE.md` — the router + NON-NEGOTIABLES (never violate).
-2. `CODEBASE_MAP.md` (this repo root) — what actually exists vs the spec. Refresh it if >2 weeks old.
+You are an AI continuing work on **SENSEI/Bhasago**. Read order:
+1. `docs/00_START_HERE.md` — router + NON-NEGOTIABLES (never violate).
+2. `CODEBASE_MAP.md` — what exists vs spec (2026-07-09; still mostly accurate, see delta below).
 3. This file — what the last session did and what to do next.
 
-## Last session (2026-07-09, Claude Opus 4.8) — cleared all four prior DO-NEXT items
-1. **Stroke data (T-102 / FIX-B):** running the old fetch tool exposed a data-quality bug — `kana-svg-data` split looping strokes, so **16/92 kana had wrong stroke counts** (あ→4, ヲ→2…). Rewrote `tools/fetch_stroke_data.mjs` to source **KanjiVG** (canonical order, one `<path>`/stroke), flattening each stroke to sampled points scaled into the consumer's 0..1000 space. `assets/stroke/kana_strokes.json` regenerated → **0/92 mismatches**; `writing_screen.dart` unchanged. Logged **99 D-011** (incl. CC BY-SA attribution — human to confirm).
-2. **FIX-C — DB encryption (T-101):** swapped `sqflite`→`sqflite_sqlcipher` + added `flutter_secure_storage`. New `lib/db/migrations/` framework (immutable numbered migrations + registry + baseline `m001`), Keystore-backed key in `lib/db/db_key.dart`, `lib/data/srs_local.dart` opens with `password:` + `onCreate/onUpgrade` runner. Migration selection proven `10/10`.
-3. **FIX-D — lesson micro-loop (T-106):** rewrote `LessonScreen` as **Intro→Recognition→Production→Context→SRS**, with the **[Skip][Hint][Quit] autonomy invariant** visible+enabled every step, ≤1 tap, no penalty, no auto-advance (01/09). State machine proven `19/19`.
-4. **T-104 — validator + CI:** `tools/validate_content.mjs` now enforces rules **1,5,6,7 (half-width katakana), 12 (banned copy)** as blocking and scaffolds **3 (whitelist), 4 (prereqs), 11 (pack_id/acyclic)**; added `content_factory/banned_phrases.txt`. New **`.github/workflows/ci.yml`** runs the validator + all proofs (Node job) and `pub get→gen-l10n→analyze→test` (Flutter job).
-5. **SRS wired into the app (T-103/T-106):** added `fsrsProvider`/`srsProvider` (`lib/app/providers.dart`); the lesson SRS step now seeds the item as an FSRS card + logs the rating via `SrsLocal` (fire-and-forget, error-swallowed so the device-only DB never blocks the UI); `ReviewScreen` now reads **due cards from `SrsLocal.dueForReview()`** with a loading/empty/error state instead of the in-memory demo. New `SrsLocal.dueForReview()` + `seedCard()`.
-6. **Content:** added `pack_id` + a DAG `depends_on` (basics←daily←work) to all 7 lessons and a `prerequisites:[kana_hiragana]` on work_intro → validator now **0 warnings**, and rules 4/11 are exercised (cycle-detection verified).
-7. **Interactive preview (to see the app w/o a device):** `tools/build_preview.mjs` renders the real content + stroke data into `preview/index.html` (+ `sensei_body.html`), served via `.claude/launch.json` (`sensei-preview`). Published as an Artifact. Faithful to the Flutter UI incl. live KanjiVG stroke animation + the 5-step micro-loop.
+## Last session (2026-07-10, Claude Fable 5) — first real compile + agents + dashboard + autonomy UI + content ×5
+**Flutter 3.44.5 IS INSTALLED on this machine (`C:\flutter\bin\flutter.bat`, not on PATH).** All checks run for real now.
+1. **First-ever compile check (DO-NEXT #1 done):** fixed 12 analyzer issues — `nullable-getter: false` added to `l10n.yaml` (S.of non-null), kata-shadowing bug in `writing_screen.dart`, `List<double>` contour in `accent_screens.dart`. `flutter analyze` clean, `flutter test` 45/45.
+2. **Four-agent system built (T-401–405):** `lib/agents/` — `agent_state.dart` (contract), `director.dart` + `scaffold_agent.dart` (pure decision fns w/ named thresholds), `persona.dart` (4 voices, deterministic rotation, struggle-softening), `feedback.dart` (fixed rewards: 10 XP/lesson, milestone/10 lessons, level/50 retained words), `agent_bus.dart` (Riverpod StateNotifier, injectable clock, agent_log ring buffer). Wired into LessonScreen (grades recognition+context, hesitation timing, hint/skip signals) + `agent_panel.dart` (psych strip w/ 09 colors, dismissible advice, scaffold offers). Proofs: `test/agents_test.dart` + `tools/agents_reference.mjs` (17/17, added to CI).
+3. **Progress dashboard (T-108):** `lib/domain/progress.dart` (pure; buckets/weakness/forecast/retention, `test/progress_test.dart`) + `lib/presentation/progress_screen.dart` (memory map, weak list framed as "focus next", 7-day forecast, neutral activity count). AppBar → insights icon.
+4. **Settings + data autonomy (T-602/603 core):** `settings_screen.dart` (locale — moved out of AppBar; persona picker persisted to app_meta; KanjiVG attribution) + `export_service.dart` (ZIP: JSON+CSV+summary via new `archive`+`path_provider` deps) + deletion w/ 7-day grace (request/cancel/purge in SrsLocal; purge check on settings load). **PDF in export still TODO.**
+5. **DB migration m002** (`lesson_completions` + `app_meta`) + SrsLocal: srsContext/recentRatings/allCards/activityDays/retainedWordCount/lessonCompletionCount/meta/deletion/exportAll.
+6. **Content ×5 (12→76 items):** 8 new lessons (greetings, directions, shopping, transport, emergency, smalltalk, work_safety, work_requests; 8 items each, packs match basics←daily←work DAG) + `lesson_list_screen.dart` (Learn tab now lists ALL lessons grouped by pack; was hardcoded to one lesson). `Lesson.packId` added to models.
+7. **Repairs of export-roundtrip damage in working tree:** `tools/validate_content.mjs` was a broken CJS rewrite → restored from HEAD (broken copy in scratchpad); content JSONs had lost `"type"` and kana `verified/source` → restored. Whitelist: +65 A2 surface forms (te/masu/desu forms, loanwords) appended w/ marker comment — existing lessons also needed them.
+8. **CI:** agents proof step added; flutter pin 3.24.5→3.44.5 (theme uses DialogThemeData/WidgetState — won't compile on 3.24). NOTE: `.github/workflows/ci.yml` is untracked locally (push token lacked workflow scope — see git log).
 
-## Green (runnable proofs, no device needed) — all pass
-`node tools/validate_content.mjs` (PASS, **0 warnings**) · `fsrs_reference.mjs` 11/11 · `pitch_reference.mjs` 8/8 · `migrations_reference.mjs` 10/10 · `lesson_flow_reference.mjs` 19/19. Preview: `node tools/build_preview.mjs` → open `preview/index.html`.
-⚠️ **Flutter/Dart is NOT compiled here (no SDK in this sandbox).** The new Dart (SQLCipher wiring, lesson loop) is written against pinned package APIs and hand-reviewed but UNVERIFIED by a compiler — the CI `flutter` job (or a local `flutter analyze && flutter test`) is the first real compile check.
+## Green (all verified this session, on this machine)
+`flutter analyze` 0 issues · `flutter test` 45/45 · validator **PASS 0 warnings** · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8.
 
-## DO NEXT — in this order
-1. **Compile-check the new Dart (do this first):** on a real machine run `flutter pub get && flutter gen-l10n && flutter analyze && flutter test`. Fix anything the analyzer flags in `srs_local.dart`, `lib/db/**`, `screens.dart`. (CI does this on push, but verify locally.)
-2. **Android scaffold gotcha:** there is no `android/` folder yet. When `flutter create . --platforms=android` runs, set **`minSdkVersion >= 23`** — required by BOTH SQLCipher and `flutter_secure_storage`'s `encryptedSharedPreferences`. Build will fail below 23.
-3. **Author the JFT-A2 whitelist:** create `content_factory/jft_a2_whitelist.txt` (the 1,200-word list) to activate blocking rule 3. Note: the validator matches `srs_words` against it, so seed it from a real list, not from current content.
-4. **SRS card granularity:** the lesson SRS step currently seeds one card per *phrase* (item.jp). If you want per-*word* cards, add reading/meaning to each `srs_words` entry in the content schema, then seed those. Also wire the full `jsonschema` (rule 6) + real audio/image checks (2/8/9) once packs exist.
-5. **Branding:** `pubspec.yaml` description now says **"Bhasago"** but all UI/preview still says "SENSEI". If Bhasago is the new name, rename across `main.dart`, l10n, and the preview.
+## DO NEXT
+1. **Commit!** Working tree has ~40 files of unverified-by-git work (this + prior session). Nothing is committed since `9087281`.
+2. **Android scaffold:** no `android/` yet → `flutter create . --platforms=android`, set **minSdkVersion ≥ 23** (SQLCipher + secure storage), then native bridge stubs (MethodChannel: TTS/STT/LLM/thermal) per 02/08.
+3. **Audio pipeline (T-107):** wire `record`/`just_audio` in production step + ShadowingScreen (TODOs marked); OPUS later.
+4. **Native-review pass on new lessons:** 64 new phrases are standard textbook Japanese but 05 rule 10 wants human review — log reviewer sign-off, then also record audio.
+5. **Persona persistence at startup:** persona loads from app_meta only when Settings opens; load it in main() bootstrap too. Deletion-grace purge check likewise runs only on Settings load — move to app start.
+6. **PDF in export ZIP** (`pdf` package) + share sheet (`share_plus`) once android/ exists.
 
-## Deferred (need hardware)
-- T-000a STT spike + T-000b inference spike — need the Tecno Pova 4 + ~20 Bengali test speakers.
+## Open decisions for a human (99_DECISIONS format)
+- **D-012 (proposed, this session):** whitelist may be extended with A2-level conjugated surface forms used by verified lessons (validator matches surface forms, not lemmas). Confirm or replace with a lemmatizing validator.
+- Confirm D-011 KanjiVG CC BY-SA attribution (now also shown in Settings › Attribution).
+- Keep/kill pitch pillar (recommend KEEP).
 
-## Open decisions for a human to log in 99_DECISIONS.md
-- **Confirm D-011's KanjiVG CC BY-SA attribution** is acceptable for the commercial build (standard practice; attribution embedded in the JSON).
-- **Keep/kill the accent–pitch pillar** (`lib/domain/pitch.dart`, `pitch_accent.json`, PitchScreen). Recommend KEEP.
+## Guardrails (00 + 99 D-001) — unchanged
+Recommend never force · no dark patterns · offline-first · deterministic grading · Bengali-first · data autonomy. Agent system enforces these structurally (advice is always dismissible; rewards fixed; streak = neutral count).
 
-## Guardrails (never break — 00 + 99 D-001)
-Recommend, never force. No dark patterns (no streak-saves/loss copy, no forced locks, no hidden skip, no loot/variable rewards). Offline-first. Correctness over generation (graded = deterministic; grammar = retrieved, never invented). Bengali-first (Banglish register OK; EN/JA optional, not default).
-
-## Build commands (on a real machine, Flutter 3.22+)
+## Build commands (this machine)
 ```
-# run from the repo root — this folder IS the Flutter app root
-node tools/fetch_stroke_data.mjs   # one-time; already run, stroke data committed
-flutter pub get && flutter gen-l10n && flutter analyze && flutter test && flutter run
+& C:\flutter\bin\flutter.bat pub get; & C:\flutter\bin\flutter.bat gen-l10n
+& C:\flutter\bin\flutter.bat analyze; & C:\flutter\bin\flutter.bat test
+node tools/validate_content.mjs   # + all *_reference.mjs proofs
 ```
 
 ```
@@ -219,6 +219,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "kana",
   "items": [
     {
       "id": "h_a",
@@ -496,8 +497,11 @@ passing `validate_content.mjs`.
       "romaji": "n",
       "row": "special"
     }
-  ]
+  ],
+  "verified": true,
+  "source": "Standard gojūon chart (kana are fixed public knowledge)"
 }
+
 ```
 
 
@@ -505,6 +509,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "kana",
   "items": [
     {
       "id": "k_a",
@@ -782,8 +787,11 @@ passing `validate_content.mjs`.
       "romaji": "n",
       "row": "special"
     }
-  ]
+  ],
+  "verified": true,
+  "source": "Standard gojūon chart (kana are fixed public knowledge)"
 }
+
 ```
 
 
@@ -791,6 +799,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_clinic",
   "pack_id": "daily",
   "depends_on": [
@@ -851,6 +860,584 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
+```
+
+
+## File: assets\content\lesson_directions.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_directions",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Ask for and follow directions",
+    "bn": "রাস্তা জিজ্ঞাসা করা ও বোঝা",
+    "ja": "道を尋ねて理解する"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L5",
+  "verified": true,
+  "prerequisites": [
+    "lesson_greetings"
+  ],
+  "items": [
+    {
+      "id": "di_01",
+      "jp": "えきはどこですか",
+      "kana": "えきはどこですか",
+      "romaji": "eki wa doko desu ka",
+      "meaning": {
+        "en": "Where is the station?",
+        "bn": "স্টেশন কোথায়?",
+        "ja": "駅はどこですか"
+      },
+      "note": {
+        "en": "Start with sumimasen to catch attention first",
+        "bn": "আগে 'sumimasen' বলে দৃষ্টি আকর্ষণ করো",
+        "ja": "まず「すみません」と声をかける"
+      },
+      "srs_words": [
+        "えき",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    },
+    {
+      "id": "di_02",
+      "jp": "トイレはどこですか",
+      "kana": "トイレはどこですか",
+      "romaji": "toire wa doko desu ka",
+      "meaning": {
+        "en": "Where is the toilet?",
+        "bn": "টয়লেট কোথায়?",
+        "ja": "トイレはどこですか"
+      },
+      "note": {
+        "en": "Konbini and stations usually have free toilets",
+        "bn": "কনবিনি আর স্টেশনে সাধারণত ফ্রি টয়লেট থাকে",
+        "ja": "コンビニや駅で聞ける"
+      },
+      "srs_words": [
+        "トイレ",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    },
+    {
+      "id": "di_03",
+      "jp": "まっすぐいってください",
+      "kana": "まっすぐいってください",
+      "romaji": "massugu itte kudasai",
+      "meaning": {
+        "en": "Go straight, please",
+        "bn": "সোজা যান",
+        "ja": "まっすぐ行ってください"
+      },
+      "note": {
+        "en": "You will HEAR this often — learn to recognize it",
+        "bn": "উত্তরে এটা প্রায়ই শুনবে — চিনে রাখা জরুরি",
+        "ja": "道案内でよく聞く表現"
+      },
+      "srs_words": [
+        "まっすぐ",
+        "いって",
+        "ください"
+      ]
+    },
+    {
+      "id": "di_04",
+      "jp": "みぎにまがってください",
+      "kana": "みぎにまがってください",
+      "romaji": "migi ni magatte kudasai",
+      "meaning": {
+        "en": "Turn right, please",
+        "bn": "ডানে ঘুরুন",
+        "ja": "右に曲がってください"
+      },
+      "note": {
+        "en": "migi = right; you'll hear it with hand gestures",
+        "bn": "migi মানে ডান; সাধারণত হাতের ইশারার সাথে শুনবে",
+        "ja": "右＝みぎ"
+      },
+      "srs_words": [
+        "みぎ",
+        "に",
+        "まがって",
+        "ください"
+      ]
+    },
+    {
+      "id": "di_05",
+      "jp": "ひだりにまがってください",
+      "kana": "ひだりにまがってください",
+      "romaji": "hidari ni magatte kudasai",
+      "meaning": {
+        "en": "Turn left, please",
+        "bn": "বামে ঘুরুন",
+        "ja": "左に曲がってください"
+      },
+      "note": {
+        "en": "hidari = left; pair with migi to remember both",
+        "bn": "hidari মানে বাম; migi-র সাথে জোড়া করে মনে রাখো",
+        "ja": "左＝ひだり"
+      },
+      "srs_words": [
+        "ひだり",
+        "に",
+        "まがって",
+        "ください"
+      ]
+    },
+    {
+      "id": "di_06",
+      "jp": "ちかくにコンビニはありますか",
+      "kana": "ちかくにコンビニはありますか",
+      "romaji": "chikaku ni konbini wa arimasu ka",
+      "meaning": {
+        "en": "Is there a convenience store nearby?",
+        "bn": "কাছে কোনো কনবিনি আছে?",
+        "ja": "近くにコンビニはありますか"
+      },
+      "note": {
+        "en": "Swap konbini for eki, byouin, ATM — same pattern",
+        "bn": "konbini-র জায়গায় eki, byouin, ATM বসালেই নতুন বাক্য",
+        "ja": "「〜はありますか」で応用できる"
+      },
+      "srs_words": [
+        "ちかく",
+        "に",
+        "コンビニ",
+        "は",
+        "ありますか"
+      ]
+    },
+    {
+      "id": "di_07",
+      "jp": "ここはどこですか",
+      "kana": "ここはどこですか",
+      "romaji": "koko wa doko desu ka",
+      "meaning": {
+        "en": "Where is this place?",
+        "bn": "এই জায়গাটা কোথায়?",
+        "ja": "ここはどこですか"
+      },
+      "note": {
+        "en": "When lost, show your phone map and ask this",
+        "bn": "হারিয়ে গেলে ফোনের ম্যাপ দেখিয়ে জিজ্ঞাসা করো",
+        "ja": "迷ったときに使う"
+      },
+      "srs_words": [
+        "ここ",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    },
+    {
+      "id": "di_08",
+      "jp": "あるいていけますか",
+      "kana": "あるいていけますか",
+      "romaji": "aruite ikemasu ka",
+      "meaning": {
+        "en": "Can I walk there?",
+        "bn": "হেঁটে যাওয়া যাবে?",
+        "ja": "歩いて行けますか"
+      },
+      "note": {
+        "en": "Useful before paying for a taxi or train",
+        "bn": "ট্যাক্সি বা ট্রেনের টাকা খরচের আগে জেনে নাও",
+        "ja": "徒歩圏か確認する表現"
+      },
+      "srs_words": [
+        "あるいて",
+        "いけますか"
+      ]
+    }
+  ]
+}
+
+```
+
+
+## File: assets\content\lesson_emergency.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_emergency",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Get help in an emergency",
+    "bn": "জরুরি অবস্থায় সাহায্য চাওয়া",
+    "ja": "緊急時に助けを求める"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "JFT Can-do: emergencies",
+  "verified": true,
+  "prerequisites": [],
+  "items": [
+    {
+      "id": "em_01",
+      "jp": "たすけてください",
+      "kana": "たすけてください",
+      "romaji": "tasukete kudasai",
+      "meaning": {
+        "en": "Help me, please",
+        "bn": "আমাকে সাহায্য করুন",
+        "ja": "助けてください"
+      },
+      "note": {
+        "en": "In danger just shout 'tasukete!'",
+        "bn": "বিপদে শুধু 'tasukete!' বলে চিৎকার করলেও চলবে",
+        "ja": "緊急時は「助けて！」だけでも"
+      },
+      "srs_words": [
+        "たすけて",
+        "ください"
+      ]
+    },
+    {
+      "id": "em_02",
+      "jp": "きゅうきゅうしゃをよんでください",
+      "kana": "きゅうきゅうしゃをよんでください",
+      "romaji": "kyuukyuusha o yonde kudasai",
+      "meaning": {
+        "en": "Please call an ambulance",
+        "bn": "অ্যাম্বুলেন্স ডাকুন",
+        "ja": "救急車を呼んでください"
+      },
+      "note": {
+        "en": "Ambulance & fire = 119, police = 110. Ambulances are free",
+        "bn": "অ্যাম্বুলেন্স ও ফায়ার ১১৯, পুলিশ ১১০। অ্যাম্বুলেন্স ফ্রি",
+        "ja": "救急・消防は119番"
+      },
+      "srs_words": [
+        "きゅうきゅうしゃ",
+        "を",
+        "よんで",
+        "ください"
+      ]
+    },
+    {
+      "id": "em_03",
+      "jp": "けいさつをよんでください",
+      "kana": "けいさつをよんでください",
+      "romaji": "keisatsu o yonde kudasai",
+      "meaning": {
+        "en": "Please call the police",
+        "bn": "পুলিশ ডাকুন",
+        "ja": "警察を呼んでください"
+      },
+      "note": {
+        "en": "Police = 110; small 'kouban' police boxes are everywhere",
+        "bn": "পুলিশ ১১০; রাস্তায় ছোট 'kouban' পুলিশ বক্স সব জায়গায় আছে",
+        "ja": "警察は110番、交番も利用"
+      },
+      "srs_words": [
+        "けいさつ",
+        "を",
+        "よんで",
+        "ください"
+      ]
+    },
+    {
+      "id": "em_04",
+      "jp": "あたまがいたいです",
+      "kana": "あたまがいたいです",
+      "romaji": "atama ga itai desu",
+      "meaning": {
+        "en": "My head hurts",
+        "bn": "মাথা ব্যথা করছে",
+        "ja": "頭が痛いです"
+      },
+      "note": {
+        "en": "Body part + ga itai desu: onaka (stomach), ha (tooth), koshi (back)",
+        "bn": "শরীরের অংশ + ga itai desu: onaka (পেট), ha (দাঁত), koshi (কোমর)",
+        "ja": "「〜が痛いです」で応用"
+      },
+      "srs_words": [
+        "あたま",
+        "が",
+        "いたい",
+        "です"
+      ]
+    },
+    {
+      "id": "em_05",
+      "jp": "おなかがいたいです",
+      "kana": "おなかがいたいです",
+      "romaji": "onaka ga itai desu",
+      "meaning": {
+        "en": "My stomach hurts",
+        "bn": "পেট ব্যথা করছে",
+        "ja": "おなかが痛いです"
+      },
+      "note": {
+        "en": "Most common complaint at clinics — see lesson_clinic next",
+        "bn": "ক্লিনিকে সবচেয়ে বেশি বলা কথা — এরপরে lesson_clinic দেখো",
+        "ja": "受診時の定番表現"
+      },
+      "srs_words": [
+        "おなか",
+        "が",
+        "いたい",
+        "です"
+      ]
+    },
+    {
+      "id": "em_06",
+      "jp": "ねつがあります",
+      "kana": "ねつがあります",
+      "romaji": "netsu ga arimasu",
+      "meaning": {
+        "en": "I have a fever",
+        "bn": "জ্বর আছে",
+        "ja": "熱があります"
+      },
+      "note": {
+        "en": "Tell your workplace this before taking a sick day",
+        "bn": "অসুস্থতার ছুটি নেওয়ার আগে কর্মস্থলে এটা জানাও",
+        "ja": "病欠の連絡に使う"
+      },
+      "srs_words": [
+        "ねつ",
+        "が",
+        "あります"
+      ]
+    },
+    {
+      "id": "em_07",
+      "jp": "びょういんにいきたいです",
+      "kana": "びょういんにいきたいです",
+      "romaji": "byouin ni ikitai desu",
+      "meaning": {
+        "en": "I want to go to the hospital",
+        "bn": "হাসপাতালে যেতে চাই",
+        "ja": "病院に行きたいです"
+      },
+      "note": {
+        "en": "Bring your insurance card (hokenshou) to any clinic",
+        "bn": "যেকোনো ক্লিনিকে গেলে ইনস্যুরেন্স কার্ড (hokenshou) সাথে নাও",
+        "ja": "保険証を持参する"
+      },
+      "srs_words": [
+        "びょういん",
+        "に",
+        "いきたい",
+        "です"
+      ]
+    },
+    {
+      "id": "em_08",
+      "jp": "じしんです",
+      "kana": "じしんです",
+      "romaji": "jishin desu",
+      "meaning": {
+        "en": "It's an earthquake",
+        "bn": "ভূমিকম্প হচ্ছে",
+        "ja": "地震です"
+      },
+      "note": {
+        "en": "Drop under a table, stay away from windows; phone alarms say 'jishin desu'",
+        "bn": "টেবিলের নিচে যাও, জানালা থেকে দূরে; ফোনের সতর্কবার্তায় 'jishin desu' শুনবে",
+        "ja": "緊急地震速報で流れる"
+      },
+      "srs_words": [
+        "じしん",
+        "です"
+      ]
+    }
+  ]
+}
+
+```
+
+
+## File: assets\content\lesson_greetings.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_greetings",
+  "pack_id": "basics",
+  "depends_on": [],
+  "can_do": {
+    "en": "Greet people through the day",
+    "bn": "সারাদিনের অভিবাদন",
+    "ja": "一日のあいさつをする"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L1",
+  "verified": true,
+  "prerequisites": [
+    "kana_hiragana"
+  ],
+  "items": [
+    {
+      "id": "gr_01",
+      "jp": "おはようございます",
+      "kana": "おはようございます",
+      "romaji": "ohayou gozaimasu",
+      "meaning": {
+        "en": "Good morning (polite)",
+        "bn": "সুপ্রভাত (ভদ্রভাবে)",
+        "ja": "おはようございます"
+      },
+      "note": {
+        "en": "Workplaces say this at the day's first meeting, even afternoon shifts",
+        "bn": "কর্মস্থলে দিনের প্রথম দেখায় বলা হয়, বিকেলের শিফটেও",
+        "ja": "職場ではその日最初に会ったときに言う"
+      },
+      "srs_words": [
+        "おはようございます"
+      ]
+    },
+    {
+      "id": "gr_02",
+      "jp": "こんにちは",
+      "kana": "こんにちは",
+      "romaji": "konnichiwa",
+      "meaning": {
+        "en": "Hello / good afternoon",
+        "bn": "নমস্কার / শুভ দুপুর",
+        "ja": "こんにちは"
+      },
+      "note": {
+        "en": "Daytime greeting; the は is read 'wa'",
+        "bn": "দিনের বেলার অভিবাদন; শেষের は পড়া হয় 'wa'",
+        "ja": "昼のあいさつ。「は」は「わ」と読む"
+      },
+      "srs_words": [
+        "こんにちは"
+      ]
+    },
+    {
+      "id": "gr_03",
+      "jp": "こんばんは",
+      "kana": "こんばんは",
+      "romaji": "konbanwa",
+      "meaning": {
+        "en": "Good evening",
+        "bn": "শুভ সন্ধ্যা",
+        "ja": "こんばんは"
+      },
+      "note": {
+        "en": "After sunset; same 'wa' reading at the end",
+        "bn": "সূর্যাস্তের পরে; শেষের は এখানেও 'wa'",
+        "ja": "日没後に使う"
+      },
+      "srs_words": [
+        "こんばんは"
+      ]
+    },
+    {
+      "id": "gr_04",
+      "jp": "ありがとうございます",
+      "kana": "ありがとうございます",
+      "romaji": "arigatou gozaimasu",
+      "meaning": {
+        "en": "Thank you (polite)",
+        "bn": "ধন্যবাদ (ভদ্রভাবে)",
+        "ja": "ありがとうございます"
+      },
+      "note": {
+        "en": "Safe everywhere; short 'arigatou' is for friends only",
+        "bn": "সব জায়গায় চলে; শুধু 'arigatou' কেবল বন্ধুদের জন্য",
+        "ja": "丁寧な感謝。友達には「ありがとう」"
+      },
+      "srs_words": [
+        "ありがとうございます"
+      ]
+    },
+    {
+      "id": "gr_05",
+      "jp": "すみません",
+      "kana": "すみません",
+      "romaji": "sumimasen",
+      "meaning": {
+        "en": "Excuse me / sorry",
+        "bn": "মাফ করবেন / দুঃখিত",
+        "ja": "すみません"
+      },
+      "note": {
+        "en": "Also calls a waiter or staff — the most useful word in Japan",
+        "bn": "দোকানে বা রেস্টুরেন্টে কাউকে ডাকতেও বলা হয় — জাপানের সবচেয়ে দরকারি শব্দ",
+        "ja": "謝罪にも呼びかけにも使う"
+      },
+      "srs_words": [
+        "すみません"
+      ]
+    },
+    {
+      "id": "gr_06",
+      "jp": "おねがいします",
+      "kana": "おねがいします",
+      "romaji": "onegai shimasu",
+      "meaning": {
+        "en": "Please (requesting)",
+        "bn": "অনুগ্রহ করে (অনুরোধে)",
+        "ja": "おねがいします"
+      },
+      "note": {
+        "en": "Add after any request to make it polite",
+        "bn": "যেকোনো অনুরোধের শেষে বললে ভদ্র শোনায়",
+        "ja": "依頼の最後に付ける"
+      },
+      "srs_words": [
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "gr_07",
+      "jp": "はじめまして",
+      "kana": "はじめまして",
+      "romaji": "hajimemashite",
+      "meaning": {
+        "en": "Nice to meet you (first time)",
+        "bn": "প্রথম পরিচয়ে — আপনার সাথে দেখা হয়ে ভালো লাগল",
+        "ja": "はじめまして"
+      },
+      "note": {
+        "en": "Only at a first meeting; pairs with your self-introduction",
+        "bn": "শুধু প্রথম দেখায়; নিজের পরিচয়ের সাথে বলো",
+        "ja": "初対面のときだけ使う"
+      },
+      "srs_words": [
+        "はじめまして"
+      ]
+    },
+    {
+      "id": "gr_08",
+      "jp": "おつかれさまです",
+      "kana": "おつかれさまです",
+      "romaji": "otsukaresama desu",
+      "meaning": {
+        "en": "Thank you for your work",
+        "bn": "আপনার পরিশ্রমের জন্য ধন্যবাদ (কর্মস্থলের অভিবাদন)",
+        "ja": "おつかれさまです"
+      },
+      "note": {
+        "en": "Workplace greeting when passing colleagues or leaving",
+        "bn": "সহকর্মীদের সাথে দেখা হলে বা কাজ শেষে বলা হয় — জাপানি কর্মস্থলে রোজ লাগবে",
+        "ja": "職場ですれ違うときや退勤時に言う"
+      },
+      "srs_words": [
+        "おつかれさまです"
+      ]
+    }
+  ]
+}
+
 ```
 
 
@@ -858,6 +1445,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_konbini",
   "pack_id": "daily",
   "depends_on": [
@@ -918,6 +1506,7 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
 ```
 
 
@@ -925,6 +1514,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_numbers",
   "pack_id": "basics",
   "depends_on": [],
@@ -978,6 +1568,7 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
 ```
 
 
@@ -985,6 +1576,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_restaurant",
   "pack_id": "work",
   "depends_on": [
@@ -1024,6 +1616,410 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
+```
+
+
+## File: assets\content\lesson_shopping.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_shopping",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Shop and pay in stores",
+    "bn": "দোকানে কেনাকাটা ও দাম মেটানো",
+    "ja": "店で買い物して支払う"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L3",
+  "verified": true,
+  "prerequisites": [
+    "lesson_konbini"
+  ],
+  "items": [
+    {
+      "id": "sh_01",
+      "jp": "これをください",
+      "kana": "これをください",
+      "romaji": "kore o kudasai",
+      "meaning": {
+        "en": "This one, please",
+        "bn": "এটা দিন",
+        "ja": "これをください"
+      },
+      "note": {
+        "en": "Point at the item; works in any shop",
+        "bn": "জিনিসটা দেখিয়ে বলো; যেকোনো দোকানে চলে",
+        "ja": "指さしながら言えばよい"
+      },
+      "srs_words": [
+        "これ",
+        "を",
+        "ください"
+      ]
+    },
+    {
+      "id": "sh_02",
+      "jp": "カードでいいですか",
+      "kana": "カードでいいですか",
+      "romaji": "kaado de ii desu ka",
+      "meaning": {
+        "en": "Is card OK?",
+        "bn": "কার্ডে দেওয়া যাবে?",
+        "ja": "カードでいいですか"
+      },
+      "note": {
+        "en": "Small shops may be cash-only — always worth asking",
+        "bn": "ছোট দোকানে অনেক সময় শুধু ক্যাশ চলে — জিজ্ঞেস করে নাও",
+        "ja": "小さい店は現金のみのことも"
+      },
+      "srs_words": [
+        "カード",
+        "で",
+        "いい",
+        "ですか"
+      ]
+    },
+    {
+      "id": "sh_03",
+      "jp": "げんきんでおねがいします",
+      "kana": "げんきんでおねがいします",
+      "romaji": "genkin de onegai shimasu",
+      "meaning": {
+        "en": "Cash, please",
+        "bn": "ক্যাশে দেবো",
+        "ja": "現金でおねがいします"
+      },
+      "note": {
+        "en": "genkin = cash; say when the cashier asks how you'll pay",
+        "bn": "genkin মানে নগদ; ক্যাশিয়ার জিজ্ঞেস করলে বলো",
+        "ja": "支払い方法を聞かれたら"
+      },
+      "srs_words": [
+        "げんきん",
+        "で",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "sh_04",
+      "jp": "もうすこしやすいのはありますか",
+      "kana": "もうすこしやすいのはありますか",
+      "romaji": "mou sukoshi yasui no wa arimasu ka",
+      "meaning": {
+        "en": "Do you have a slightly cheaper one?",
+        "bn": "আরেকটু সস্তা কিছু আছে?",
+        "ja": "もう少し安いのはありますか"
+      },
+      "note": {
+        "en": "Polite way to ask for a cheaper option — no bargaining in Japan",
+        "bn": "জাপানে দরদাম হয় না — এইভাবে সস্তা বিকল্প চাওয়া যায়",
+        "ja": "値切りではなく選択肢を聞く言い方"
+      },
+      "srs_words": [
+        "もう",
+        "すこし",
+        "やすい",
+        "の",
+        "は",
+        "ありますか"
+      ]
+    },
+    {
+      "id": "sh_05",
+      "jp": "べつのいろはありますか",
+      "kana": "べつのいろはありますか",
+      "romaji": "betsu no iro wa arimasu ka",
+      "meaning": {
+        "en": "Do you have another color?",
+        "bn": "অন্য রঙের আছে?",
+        "ja": "別の色はありますか"
+      },
+      "note": {
+        "en": "Same pattern works for size (saizu) and other options",
+        "bn": "iro-র জায়গায় saizu বললে সাইজ জিজ্ঞেস করা হয়",
+        "ja": "色→サイズにも応用可"
+      },
+      "srs_words": [
+        "べつ",
+        "の",
+        "いろ",
+        "は",
+        "ありますか"
+      ]
+    },
+    {
+      "id": "sh_06",
+      "jp": "レシートをください",
+      "kana": "レシートをください",
+      "romaji": "reshiito o kudasai",
+      "meaning": {
+        "en": "Receipt, please",
+        "bn": "রসিদটা দিন",
+        "ja": "レシートをください"
+      },
+      "note": {
+        "en": "Keep receipts for work reimbursements",
+        "bn": "কাজের খরচ ফেরত পেতে রসিদ রেখে দাও",
+        "ja": "経費精算に必要"
+      },
+      "srs_words": [
+        "レシート",
+        "を",
+        "ください"
+      ]
+    },
+    {
+      "id": "sh_07",
+      "jp": "ふくろをください",
+      "kana": "ふくろをください",
+      "romaji": "fukuro o kudasai",
+      "meaning": {
+        "en": "A bag, please",
+        "bn": "একটা ব্যাগ দিন",
+        "ja": "袋をください"
+      },
+      "note": {
+        "en": "Bags cost 3-5 yen since 2020; cashiers always ask",
+        "bn": "২০২০ থেকে ব্যাগের দাম ৩-৫ ইয়েন; ক্যাশিয়ার জিজ্ঞেস করবেই",
+        "ja": "レジ袋は有料"
+      },
+      "srs_words": [
+        "ふくろ",
+        "を",
+        "ください"
+      ]
+    },
+    {
+      "id": "sh_08",
+      "jp": "みているだけです",
+      "kana": "みているだけです",
+      "romaji": "mite iru dake desu",
+      "meaning": {
+        "en": "I'm just looking",
+        "bn": "শুধু দেখছি",
+        "ja": "見ているだけです"
+      },
+      "note": {
+        "en": "Polite reply when staff offers help you don't need",
+        "bn": "দোকানের কর্মী সাহায্য করতে এলে ভদ্রভাবে এটা বলো",
+        "ja": "店員に声をかけられたときの返事"
+      },
+      "srs_words": [
+        "みて",
+        "いる",
+        "だけ",
+        "です"
+      ]
+    }
+  ]
+}
+
+```
+
+
+## File: assets\content\lesson_smalltalk.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_smalltalk",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Make simple small talk",
+    "bn": "সহজ আলাপচারিতা করা",
+    "ja": "簡単な雑談をする"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L2",
+  "verified": true,
+  "prerequisites": [
+    "lesson_greetings"
+  ],
+  "items": [
+    {
+      "id": "st_01",
+      "jp": "きょうはあついですね",
+      "kana": "きょうはあついですね",
+      "romaji": "kyou wa atsui desu ne",
+      "meaning": {
+        "en": "It's hot today, isn't it?",
+        "bn": "আজ খুব গরম, তাই না?",
+        "ja": "今日は暑いですね"
+      },
+      "note": {
+        "en": "Weather talk is THE Japanese icebreaker; 'ne' invites agreement",
+        "bn": "আবহাওয়ার কথা দিয়েই জাপানে আলাপ শুরু হয়; শেষের 'ne' মানে 'তাই না?'",
+        "ja": "天気の話は定番の雑談"
+      },
+      "srs_words": [
+        "きょう",
+        "は",
+        "あつい",
+        "ですね"
+      ]
+    },
+    {
+      "id": "st_02",
+      "jp": "きょうはさむいですね",
+      "kana": "きょうはさむいですね",
+      "romaji": "kyou wa samui desu ne",
+      "meaning": {
+        "en": "It's cold today, isn't it?",
+        "bn": "আজ বেশ ঠান্ডা, তাই না?",
+        "ja": "今日は寒いですね"
+      },
+      "note": {
+        "en": "atsui = hot, samui = cold — a pair worth drilling",
+        "bn": "atsui মানে গরম, samui মানে ঠান্ডা — জোড়ায় মনে রাখো",
+        "ja": "暑い⇔寒い"
+      },
+      "srs_words": [
+        "きょう",
+        "は",
+        "さむい",
+        "ですね"
+      ]
+    },
+    {
+      "id": "st_03",
+      "jp": "おげんきですか",
+      "kana": "おげんきですか",
+      "romaji": "ogenki desu ka",
+      "meaning": {
+        "en": "How are you?",
+        "bn": "কেমন আছেন?",
+        "ja": "お元気ですか"
+      },
+      "note": {
+        "en": "For people you haven't seen in a while, not everyday colleagues",
+        "bn": "অনেকদিন পরে দেখা হলে বলা হয়, রোজকার সহকর্মীদের নয়",
+        "ja": "久しぶりの相手に使う"
+      },
+      "srs_words": [
+        "おげんき",
+        "ですか"
+      ]
+    },
+    {
+      "id": "st_04",
+      "jp": "げんきです",
+      "kana": "げんきです",
+      "romaji": "genki desu",
+      "meaning": {
+        "en": "I'm fine",
+        "bn": "ভালো আছি",
+        "ja": "元気です"
+      },
+      "note": {
+        "en": "Add 'okagesamade' (thanks to you) to sound extra polite",
+        "bn": "আগে 'okagesamade' বললে আরও ভদ্র শোনায়",
+        "ja": "「おかげさまで」を添えると丁寧"
+      },
+      "srs_words": [
+        "げんき",
+        "です"
+      ]
+    },
+    {
+      "id": "st_05",
+      "jp": "にほんごをべんきょうしています",
+      "kana": "にほんごをべんきょうしています",
+      "romaji": "nihongo o benkyou shite imasu",
+      "meaning": {
+        "en": "I'm studying Japanese",
+        "bn": "আমি জাপানি ভাষা শিখছি",
+        "ja": "日本語を勉強しています"
+      },
+      "note": {
+        "en": "Instantly earns encouragement — great conversation opener",
+        "bn": "এটা বললেই মানুষ উৎসাহ দেবে — আলাপ জমানোর দারুণ উপায়",
+        "ja": "会話が続きやすい自己開示"
+      },
+      "srs_words": [
+        "にほんご",
+        "を",
+        "べんきょう",
+        "しています"
+      ]
+    },
+    {
+      "id": "st_06",
+      "jp": "バングラデシュからきました",
+      "kana": "バングラデシュからきました",
+      "romaji": "banguradeshu kara kimashita",
+      "meaning": {
+        "en": "I'm from Bangladesh",
+        "bn": "আমি বাংলাদেশ থেকে এসেছি",
+        "ja": "バングラデシュから来ました"
+      },
+      "note": {
+        "en": "kara = from; kimashita = came",
+        "bn": "kara মানে থেকে; kimashita মানে এসেছি",
+        "ja": "出身を伝える定番文"
+      },
+      "srs_words": [
+        "バングラデシュ",
+        "から",
+        "きました"
+      ]
+    },
+    {
+      "id": "st_07",
+      "jp": "しゅみはなんですか",
+      "kana": "しゅみはなんですか",
+      "romaji": "shumi wa nan desu ka",
+      "meaning": {
+        "en": "What are your hobbies?",
+        "bn": "আপনার শখ কী?",
+        "ja": "趣味は何ですか"
+      },
+      "note": {
+        "en": "shumi = hobby; safe question for new acquaintances",
+        "bn": "shumi মানে শখ; নতুন পরিচিতদের সাথে নিরাপদ প্রশ্ন",
+        "ja": "初対面でも聞ける話題"
+      },
+      "srs_words": [
+        "しゅみ",
+        "は",
+        "なん",
+        "ですか"
+      ]
+    },
+    {
+      "id": "st_08",
+      "jp": "しゅうまつはなにをしますか",
+      "kana": "しゅうまつはなにをしますか",
+      "romaji": "shuumatsu wa nani o shimasu ka",
+      "meaning": {
+        "en": "What will you do on the weekend?",
+        "bn": "সপ্তাহান্তে কী করবেন?",
+        "ja": "週末は何をしますか"
+      },
+      "note": {
+        "en": "Friday lunch-break standard; shuumatsu = weekend",
+        "bn": "শুক্রবারের লাঞ্চ-ব্রেকের সাধারণ প্রশ্ন; shuumatsu মানে সপ্তাহান্ত",
+        "ja": "金曜の定番トーク"
+      },
+      "srs_words": [
+        "しゅうまつ",
+        "は",
+        "なに",
+        "を",
+        "しますか"
+      ]
+    }
+  ]
+}
+
 ```
 
 
@@ -1031,6 +2027,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_time",
   "pack_id": "daily",
   "depends_on": [
@@ -1069,6 +2066,211 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
+```
+
+
+## File: assets\content\lesson_transport.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_transport",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Use trains and buses",
+    "bn": "ট্রেন ও বাসে চলাফেরা",
+    "ja": "電車とバスを使う"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L6",
+  "verified": true,
+  "prerequisites": [
+    "lesson_directions"
+  ],
+  "items": [
+    {
+      "id": "tr_01",
+      "jp": "きっぷはどこでかえますか",
+      "kana": "きっぷはどこでかえますか",
+      "romaji": "kippu wa doko de kaemasu ka",
+      "meaning": {
+        "en": "Where can I buy a ticket?",
+        "bn": "টিকিট কোথায় কিনব?",
+        "ja": "切符はどこで買えますか"
+      },
+      "note": {
+        "en": "Most people use IC cards (Suica/Pasmo) instead of tickets",
+        "bn": "বেশিরভাগ মানুষ টিকিটের বদলে IC কার্ড (Suica/Pasmo) ব্যবহার করে",
+        "ja": "ICカードが主流"
+      },
+      "srs_words": [
+        "きっぷ",
+        "は",
+        "どこ",
+        "で",
+        "かえますか"
+      ]
+    },
+    {
+      "id": "tr_02",
+      "jp": "このでんしゃはとうきょうにいきますか",
+      "kana": "このでんしゃはとうきょうにいきますか",
+      "romaji": "kono densha wa toukyou ni ikimasu ka",
+      "meaning": {
+        "en": "Does this train go to Tokyo?",
+        "bn": "এই ট্রেনটা কি টোকিও যায়?",
+        "ja": "この電車は東京に行きますか"
+      },
+      "note": {
+        "en": "Swap toukyou for any station name",
+        "bn": "toukyou-র জায়গায় যেকোনো স্টেশনের নাম বসাও",
+        "ja": "駅名を入れ替えて使える"
+      },
+      "srs_words": [
+        "この",
+        "でんしゃ",
+        "は",
+        "とうきょう",
+        "に",
+        "いきますか"
+      ]
+    },
+    {
+      "id": "tr_03",
+      "jp": "つぎのえきはなんですか",
+      "kana": "つぎのえきはなんですか",
+      "romaji": "tsugi no eki wa nan desu ka",
+      "meaning": {
+        "en": "What is the next station?",
+        "bn": "পরের স্টেশন কোনটা?",
+        "ja": "次の駅は何ですか"
+      },
+      "note": {
+        "en": "tsugi = next; also tsugi no basu (next bus)",
+        "bn": "tsugi মানে পরের; tsugi no basu মানে পরের বাস",
+        "ja": "「次の〜」で応用"
+      },
+      "srs_words": [
+        "つぎ",
+        "の",
+        "えき",
+        "は",
+        "なん",
+        "ですか"
+      ]
+    },
+    {
+      "id": "tr_04",
+      "jp": "ここでおります",
+      "kana": "ここでおります",
+      "romaji": "koko de orimasu",
+      "meaning": {
+        "en": "I get off here",
+        "bn": "আমি এখানে নামব",
+        "ja": "ここで降ります"
+      },
+      "note": {
+        "en": "Say it on a crowded bus while moving to the door",
+        "bn": "ভিড় বাসে দরজার দিকে যেতে যেতে বলো",
+        "ja": "混んだバスで降りるとき"
+      },
+      "srs_words": [
+        "ここ",
+        "で",
+        "おります"
+      ]
+    },
+    {
+      "id": "tr_05",
+      "jp": "バスていはどこですか",
+      "kana": "バスていはどこですか",
+      "romaji": "basutei wa doko desu ka",
+      "meaning": {
+        "en": "Where is the bus stop?",
+        "bn": "বাস স্টপ কোথায়?",
+        "ja": "バス停はどこですか"
+      },
+      "note": {
+        "en": "basutei = bus stop; eki = train station",
+        "bn": "basutei মানে বাস স্টপ, eki মানে ট্রেন স্টেশন",
+        "ja": "バス停＝ばすてい"
+      },
+      "srs_words": [
+        "バスてい",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    },
+    {
+      "id": "tr_06",
+      "jp": "いくらかかりますか",
+      "kana": "いくらかかりますか",
+      "romaji": "ikura kakarimasu ka",
+      "meaning": {
+        "en": "How much does it cost?",
+        "bn": "কত খরচ হবে?",
+        "ja": "いくらかかりますか"
+      },
+      "note": {
+        "en": "For fares and services; kakaru = to cost/take",
+        "bn": "ভাড়া বা সার্ভিসের খরচ জানতে; kakaru মানে লাগা",
+        "ja": "料金を尋ねる"
+      },
+      "srs_words": [
+        "いくら",
+        "かかりますか"
+      ]
+    },
+    {
+      "id": "tr_07",
+      "jp": "なんぷんかかりますか",
+      "kana": "なんぷんかかりますか",
+      "romaji": "nanpun kakarimasu ka",
+      "meaning": {
+        "en": "How many minutes does it take?",
+        "bn": "কত মিনিট লাগবে?",
+        "ja": "何分かかりますか"
+      },
+      "note": {
+        "en": "Same kakaru pattern — money or time",
+        "bn": "একই kakaru প্যাটার্ন — টাকা বা সময় দুটোতেই",
+        "ja": "時間にも「かかる」を使う"
+      },
+      "srs_words": [
+        "なんぷん",
+        "かかりますか"
+      ]
+    },
+    {
+      "id": "tr_08",
+      "jp": "のりかえはどこですか",
+      "kana": "のりかえはどこですか",
+      "romaji": "norikae wa doko desu ka",
+      "meaning": {
+        "en": "Where do I transfer?",
+        "bn": "কোথায় ট্রেন বদলাতে হবে?",
+        "ja": "乗り換えはどこですか"
+      },
+      "note": {
+        "en": "norikae = transfer; big stations have color-coded signs",
+        "bn": "norikae মানে বদলানো; বড় স্টেশনে রঙিন সাইন অনুসরণ করো",
+        "ja": "乗り換え案内の表示を見る"
+      },
+      "srs_words": [
+        "のりかえ",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    }
+  ]
+}
+
 ```
 
 
@@ -1076,6 +2278,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "work_intro_01",
   "pack_id": "basics",
   "depends_on": [],
@@ -1154,6 +2357,399 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
+```
+
+
+## File: assets\content\lesson_work_requests.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_work_requests",
+  "pack_id": "work",
+  "depends_on": [
+    "daily"
+  ],
+  "can_do": {
+    "en": "Ask and clarify at work",
+    "bn": "কর্মস্থলে জিজ্ঞাসা ও স্পষ্ট করা",
+    "ja": "職場で質問・確認する"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "SSW workplace can-do",
+  "verified": true,
+  "prerequisites": [
+    "work_intro_01"
+  ],
+  "items": [
+    {
+      "id": "wr_01",
+      "jp": "もういちどおねがいします",
+      "kana": "もういちどおねがいします",
+      "romaji": "mou ichido onegai shimasu",
+      "meaning": {
+        "en": "One more time, please",
+        "bn": "আরেকবার বলুন",
+        "ja": "もう一度おねがいします"
+      },
+      "note": {
+        "en": "The single most useful phrase for a learner — never pretend you understood",
+        "bn": "শেখার সময় সবচেয়ে দরকারি বাক্য — না বুঝে বুঝার ভান কোরো না",
+        "ja": "聞き返しは失礼ではない"
+      },
+      "srs_words": [
+        "もう",
+        "いちど",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "wr_02",
+      "jp": "ゆっくりはなしてください",
+      "kana": "ゆっくりはなしてください",
+      "romaji": "yukkuri hanashite kudasai",
+      "meaning": {
+        "en": "Please speak slowly",
+        "bn": "একটু ধীরে বলুন",
+        "ja": "ゆっくり話してください"
+      },
+      "note": {
+        "en": "yukkuri = slowly; people gladly slow down when asked",
+        "bn": "yukkuri মানে ধীরে; বললে মানুষ খুশি হয়ে ধীরে বলে",
+        "ja": "頼めば皆ゆっくり話してくれる"
+      },
+      "srs_words": [
+        "ゆっくり",
+        "はなして",
+        "ください"
+      ]
+    },
+    {
+      "id": "wr_03",
+      "jp": "わかりました",
+      "kana": "わかりました",
+      "romaji": "wakarimashita",
+      "meaning": {
+        "en": "Understood",
+        "bn": "বুঝেছি",
+        "ja": "わかりました"
+      },
+      "note": {
+        "en": "Confirm instructions with this; bosses expect to hear it",
+        "bn": "নির্দেশ পেলে এটা বলে নিশ্চিত করো; সুপারভাইজার এটা শুনতে চায়",
+        "ja": "指示への返事の基本"
+      },
+      "srs_words": [
+        "わかりました"
+      ]
+    },
+    {
+      "id": "wr_04",
+      "jp": "わかりません",
+      "kana": "わかりません",
+      "romaji": "wakarimasen",
+      "meaning": {
+        "en": "I don't understand",
+        "bn": "বুঝিনি",
+        "ja": "わかりません"
+      },
+      "note": {
+        "en": "Saying it honestly prevents accidents — never bluff at work",
+        "bn": "সত্যি করে বললে দুর্ঘটনা এড়ানো যায় — কাজে কখনো ভান কোরো না",
+        "ja": "曖昧な返事は事故のもと"
+      },
+      "srs_words": [
+        "わかりません"
+      ]
+    },
+    {
+      "id": "wr_05",
+      "jp": "しつもんがあります",
+      "kana": "しつもんがあります",
+      "romaji": "shitsumon ga arimasu",
+      "meaning": {
+        "en": "I have a question",
+        "bn": "একটা প্রশ্ন আছে",
+        "ja": "質問があります"
+      },
+      "note": {
+        "en": "Raise it before starting a task, not after a mistake",
+        "bn": "কাজ শুরুর আগেই জিজ্ঞেস করো, ভুলের পরে নয়",
+        "ja": "作業前に確認する習慣"
+      },
+      "srs_words": [
+        "しつもん",
+        "が",
+        "あります"
+      ]
+    },
+    {
+      "id": "wr_06",
+      "jp": "あしたやすんでもいいですか",
+      "kana": "あしたやすんでもいいですか",
+      "romaji": "ashita yasundemo ii desu ka",
+      "meaning": {
+        "en": "May I take tomorrow off?",
+        "bn": "কাল ছুটি নিতে পারি?",
+        "ja": "明日休んでもいいですか"
+      },
+      "note": {
+        "en": "'-temo ii desu ka' = asking permission; ask days ahead when possible",
+        "bn": "'-temo ii desu ka' মানে অনুমতি চাওয়া; পারলে কয়েকদিন আগে বলো",
+        "ja": "「〜てもいいですか」は許可を求める形"
+      },
+      "srs_words": [
+        "あした",
+        "やすんでも",
+        "いい",
+        "ですか"
+      ]
+    },
+    {
+      "id": "wr_07",
+      "jp": "てつだってください",
+      "kana": "てつだってください",
+      "romaji": "tetsudatte kudasai",
+      "meaning": {
+        "en": "Please help me (with this task)",
+        "bn": "একটু হাত লাগান",
+        "ja": "手伝ってください"
+      },
+      "note": {
+        "en": "tetsudau = to help with work; tasukete is for danger",
+        "bn": "tetsudau মানে কাজে সাহায্য; বিপদের জন্য tasukete",
+        "ja": "作業の手伝いを頼む表現"
+      },
+      "srs_words": [
+        "てつだって",
+        "ください"
+      ]
+    },
+    {
+      "id": "wr_08",
+      "jp": "これでいいですか",
+      "kana": "これでいいですか",
+      "romaji": "kore de ii desu ka",
+      "meaning": {
+        "en": "Is this okay?",
+        "bn": "এটা কি ঠিক আছে?",
+        "ja": "これでいいですか"
+      },
+      "note": {
+        "en": "Show your finished work and confirm — builds trust fast",
+        "bn": "কাজ শেষ করে দেখিয়ে নিশ্চিত হও — এতে দ্রুত ভরসা তৈরি হয়",
+        "ja": "確認の一言で信頼される"
+      },
+      "srs_words": [
+        "これ",
+        "で",
+        "いい",
+        "ですか"
+      ]
+    }
+  ]
+}
+
+```
+
+
+## File: assets\content\lesson_work_safety.json
+
+```json
+{
+  "type": "lesson",
+  "id": "lesson_work_safety",
+  "pack_id": "work",
+  "depends_on": [
+    "daily"
+  ],
+  "can_do": {
+    "en": "Understand safety instructions at work",
+    "bn": "কর্মস্থলের নিরাপত্তা নির্দেশ বোঝা",
+    "ja": "職場の安全指示を理解する"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "SSW workplace can-do",
+  "verified": true,
+  "prerequisites": [
+    "work_intro_01"
+  ],
+  "items": [
+    {
+      "id": "ws_01",
+      "jp": "あぶないです",
+      "kana": "あぶないです",
+      "romaji": "abunai desu",
+      "meaning": {
+        "en": "It's dangerous",
+        "bn": "এটা বিপজ্জনক",
+        "ja": "危ないです"
+      },
+      "note": {
+        "en": "Shouted as 'abunai!' — move immediately when you hear it",
+        "bn": "'abunai!' চিৎকার শুনলে সাথে সাথে সরে যাও",
+        "ja": "「危ない！」と叫ばれたら即避難"
+      },
+      "srs_words": [
+        "あぶない",
+        "です"
+      ]
+    },
+    {
+      "id": "ws_02",
+      "jp": "きをつけてください",
+      "kana": "きをつけてください",
+      "romaji": "ki o tsukete kudasai",
+      "meaning": {
+        "en": "Please be careful",
+        "bn": "সাবধানে থাকুন",
+        "ja": "気をつけてください"
+      },
+      "note": {
+        "en": "Also a friendly goodbye: 'take care'",
+        "bn": "বিদায়ের সময় 'সাবধানে যেও' অর্থেও বলা হয়",
+        "ja": "別れ際のあいさつにも"
+      },
+      "srs_words": [
+        "き",
+        "を",
+        "つけて",
+        "ください"
+      ]
+    },
+    {
+      "id": "ws_03",
+      "jp": "ヘルメットをかぶってください",
+      "kana": "ヘルメットをかぶってください",
+      "romaji": "herumetto o kabutte kudasai",
+      "meaning": {
+        "en": "Please wear a helmet",
+        "bn": "হেলমেট পরুন",
+        "ja": "ヘルメットをかぶってください"
+      },
+      "note": {
+        "en": "kaburu = wear on head; construction sites check this daily",
+        "bn": "kaburu মানে মাথায় পরা; নির্মাণস্থলে রোজ চেক হয়",
+        "ja": "現場の必須ルール"
+      },
+      "srs_words": [
+        "ヘルメット",
+        "を",
+        "かぶって",
+        "ください"
+      ]
+    },
+    {
+      "id": "ws_04",
+      "jp": "てぶくろをしてください",
+      "kana": "てぶくろをしてください",
+      "romaji": "tebukuro o shite kudasai",
+      "meaning": {
+        "en": "Please put on gloves",
+        "bn": "হাতমোজা পরুন",
+        "ja": "手袋をしてください"
+      },
+      "note": {
+        "en": "tebukuro = gloves (te = hand)",
+        "bn": "tebukuro মানে হাতমোজা (te মানে হাত)",
+        "ja": "手＝て、手袋＝てぶくろ"
+      },
+      "srs_words": [
+        "てぶくろ",
+        "を",
+        "して",
+        "ください"
+      ]
+    },
+    {
+      "id": "ws_05",
+      "jp": "ここにはいらないでください",
+      "kana": "ここにはいらないでください",
+      "romaji": "koko ni hairanaide kudasai",
+      "meaning": {
+        "en": "Please don't enter here",
+        "bn": "এখানে ঢুকবেন না",
+        "ja": "ここに入らないでください"
+      },
+      "note": {
+        "en": "The sign version reads 'tachiiri kinshi' (no entry)",
+        "bn": "সাইনবোর্ডে লেখা থাকে 'tachiiri kinshi' — প্রবেশ নিষেধ",
+        "ja": "掲示は「立入禁止」"
+      },
+      "srs_words": [
+        "ここ",
+        "に",
+        "はいらないで",
+        "ください"
+      ]
+    },
+    {
+      "id": "ws_06",
+      "jp": "きかいをとめてください",
+      "kana": "きかいをとめてください",
+      "romaji": "kikai o tomete kudasai",
+      "meaning": {
+        "en": "Please stop the machine",
+        "bn": "মেশিনটা বন্ধ করুন",
+        "ja": "機械を止めてください"
+      },
+      "note": {
+        "en": "kikai = machine, tomeru = to stop — critical in factories",
+        "bn": "kikai মানে মেশিন, tomeru মানে থামানো — কারখানায় খুব জরুরি",
+        "ja": "非常時の指示"
+      },
+      "srs_words": [
+        "きかい",
+        "を",
+        "とめて",
+        "ください"
+      ]
+    },
+    {
+      "id": "ws_07",
+      "jp": "けがをしました",
+      "kana": "けがをしました",
+      "romaji": "kega o shimashita",
+      "meaning": {
+        "en": "I got injured",
+        "bn": "আমি আঘাত পেয়েছি",
+        "ja": "けがをしました"
+      },
+      "note": {
+        "en": "Report every injury, even small — it's the rule and protects you",
+        "bn": "ছোট আঘাতও জানাতে হয় — এটাই নিয়ম, আর এটা তোমাকেই রক্ষা করে",
+        "ja": "労災報告は義務"
+      },
+      "srs_words": [
+        "けが",
+        "を",
+        "しました"
+      ]
+    },
+    {
+      "id": "ws_08",
+      "jp": "だいじょうぶですか",
+      "kana": "だいじょうぶですか",
+      "romaji": "daijoubu desu ka",
+      "meaning": {
+        "en": "Are you okay?",
+        "bn": "আপনি ঠিক আছেন?",
+        "ja": "大丈夫ですか"
+      },
+      "note": {
+        "en": "Reply 'daijoubu desu' (I'm fine) or 'daijoubu ja nai' (I'm not)",
+        "bn": "উত্তর: 'daijoubu desu' (ঠিক আছি) বা 'daijoubu ja nai' (ঠিক নেই)",
+        "ja": "返事は「大丈夫です」"
+      },
+      "srs_words": [
+        "だいじょうぶ",
+        "ですか"
+      ]
+    }
+  ]
+}
+
 ```
 
 
@@ -1161,6 +2757,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "lesson",
   "id": "lesson_workplace",
   "pack_id": "work",
   "depends_on": [
@@ -1199,6 +2796,7 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
 ```
 
 
@@ -1206,6 +2804,7 @@ passing `validate_content.mjs`.
 
 ```json
 {
+  "type": "pitch",
   "id": "pitch_tokyo_basics",
   "dialect": "Tokyo",
   "source": "Verified native speaker recordings",
@@ -1336,6 +2935,7 @@ passing `validate_content.mjs`.
     }
   ]
 }
+
 ```
 
 
@@ -2715,6 +4315,74 @@ watch ad to continue
 わたし
 わるい
 
+# Conjugated/polite surface forms + loanwords used in verified lessons
+# (te-forms, masu-forms, desu variants — all JFT-A2 level; appended 2026-07-10)
+ありがとうございます
+あります
+ありますか
+あるいて
+いきたい
+いきますか
+いけますか
+いたい
+いちど
+いって
+いりますか
+おすすめ
+おつかれさまです
+おはようございます
+おります
+かえますか
+かかりますか
+かぶって
+きかい
+きました
+きゅうきゅうしゃ
+ください
+げんきん
+ございます
+しつもん
+して
+しています
+しました
+しますか
+しゅみ
+じしん
+たすけて
+ちかく
+つけて
+てつだって
+てぶくろ
+で
+です
+ですか
+ですね
+とうきょう
+とめて
+なん
+なんじ
+なんぷん
+にほんご
+ねつ
+のりかえ
+はいらないで
+はじめまして
+はなして
+ふくろ
+べつ
+べんきょう
+まがって
+みて
+やすんでも
+ゆっくり
+わかりました
+わかりません
+カード
+バスてい
+バングラデシュ
+ヘルメット
+レシート
+
 ```
 
 
@@ -3310,7 +4978,7 @@ Dark-pattern screen audit (skip visible everywhere incl. Flow) · banned-copy sc
 <!-- READ WHEN: deciding what to build next. Keep statuses updated here — this file is the single source of truth for progress. DEPENDS: 00. ~1.6K tokens -->
 
 ## STATUS LEGEND: ☐ todo · ◐ in-progress · ☑ done · ⊘ blocked
-## ▶ CURRENT POINTER: **CODEBASE_MAP.md generated 2026-07-09 (see CODEBASE_MAP.md at repo root). Next real gap: FIX-B + T-102 (bundle kana stroke data offline + port writing board to Flutter).**
+## ▶ CURRENT POINTER: **2026-07-10 — compile verified (analyze+45 tests green); T-401–405 agents ☑, T-108 dashboard ☑, T-602/603 export+deletion ◐ (PDF/share pending), content 12→76 items. Next real gap: COMMIT the working tree, then android/ scaffold (minSdk≥23) + T-107 audio. See NEXT_SESSION.md.**
 
 ## Phase FIX — reconciliation fixes (from 2026-07-09 audit)
 - ☐ FIX-A (LOW) Keep streak as neutral history only when porting premium UI (D-001). Prototype-only today.
@@ -3510,6 +5178,923 @@ arb-dir: lib/l10n
 template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 output-class: S
+nullable-getter: false
+
+```
+
+
+## File: lib\agents\agent_bus.dart
+
+```dart
+// Agent bus (04 §State bus) — the single place raw interaction events become
+// SessionSignals, the four agents run, and one merged AgentState is published
+// for the UI. Riverpod StateNotifier; Director merges each tick (post-answer;
+// the UI may also call tick() on a 30s timer).
+//
+// The bus is deliberately clock-injectable and DB-free so the whole session
+// dynamic is unit-testable. Persistence (lesson completions, review history)
+// stays in SrsLocal; the bus only sees derived numbers.
+
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'agent_state.dart';
+import 'director.dart';
+import 'persona.dart';
+import 'scaffold_agent.dart';
+
+class AgentBus extends StateNotifier<AgentState> {
+  AgentBus({DateTime Function()? clock, PersonaType persona = PersonaType.didi})
+      : _now = clock ?? DateTime.now,
+        super(AgentState(persona: persona));
+
+  final DateTime Function() _now;
+
+  // --- raw session accumulators (reset by startSession) ---------------------
+  DateTime? _sessionStart;
+  int _answers = 0, _correct = 0;
+  final List<bool> _recent = <bool>[]; // sliding window, newest last
+  static const _recentWindow = 10;
+  double _hesitationEwma = 0;
+  bool _hesitationSeeded = false;
+
+  // Interaction tempo: EWMA of inter-event gaps; baseline = first 8 events.
+  DateTime? _lastInteraction;
+  final List<double> _baselineGaps = <double>[];
+  static const _baselineCount = 8;
+  double _gapEwma = 0;
+  bool _gapSeeded = false;
+
+  final Map<String, int> _missStreaks = <String, int>{};
+  String? _lastMissPattern;
+  int _hints = 0, _skips = 0;
+
+  // SRS context (fed async by the caller once SrsLocal answers).
+  double _retention = 1.0;
+  int _daysSince = 0, _dueLoad = 0;
+
+  // Session bookkeeping for the Feedback agent.
+  final List<String> _learnedIds = <String>[];
+  final Map<String, int> _missCounts = <String, int>{};
+
+  // Explainability ring buffer (04: agent_log).
+  final List<AgentLogEntry> _log = <AgentLogEntry>[];
+  static const _logCap = 200;
+  List<AgentLogEntry> get log => List.unmodifiable(_log);
+
+  Map<String, int> get missCounts => Map.unmodifiable(_missCounts);
+  List<String> get learnedIds => List.unmodifiable(_learnedIds);
+  int get hintsUsed => _hints;
+  int get skipsUsed => _skips;
+
+  /// Begins a fresh session. Safe to call again mid-app (e.g. new lesson).
+  void startSession() {
+    _sessionStart = _now();
+    _answers = 0;
+    _correct = 0;
+    _recent.clear();
+    _hesitationEwma = 0;
+    _hesitationSeeded = false;
+    _lastInteraction = null;
+    _baselineGaps.clear();
+    _gapEwma = 0;
+    _gapSeeded = false;
+    _missStreaks.clear();
+    _lastMissPattern = null;
+    _hints = 0;
+    _skips = 0;
+    _learnedIds.clear();
+    _missCounts.clear();
+    _logEvent('session: start', 'নতুন সেশন শুরু।');
+    tick();
+  }
+
+  /// SRS-derived context, fetched asynchronously by the caller (SrsLocal).
+  void updateSrsContext(
+      {double? retention, int? daysSinceLastSession, int? dueLoad}) {
+    _retention = retention ?? _retention;
+    _daysSince = daysSinceLastSession ?? _daysSince;
+    _dueLoad = dueLoad ?? _dueLoad;
+    tick();
+  }
+
+  /// A graded answer. [patternKey] groups misses ("recognition", "context",
+  /// or a finer key) so the Scaffold agent can spot a stuck pattern.
+  /// [hesitationMs] is time from prompt shown to this first interaction.
+  void recordAnswer({
+    required bool correct,
+    required String patternKey,
+    double? hesitationMs,
+  }) {
+    _touchTempo();
+    _answers++;
+    if (correct) {
+      _correct++;
+      _missStreaks[patternKey] = 0;
+    } else {
+      _missStreaks[patternKey] = (_missStreaks[patternKey] ?? 0) + 1;
+      _lastMissPattern = patternKey;
+      _missCounts[patternKey] = (_missCounts[patternKey] ?? 0) + 1;
+    }
+    _recent.add(correct);
+    if (_recent.length > _recentWindow) _recent.removeAt(0);
+    if (hesitationMs != null) {
+      _hesitationEwma = _hesitationSeeded
+          ? _hesitationEwma * 0.7 + hesitationMs * 0.3
+          : hesitationMs;
+      _hesitationSeeded = true;
+    }
+    tick();
+  }
+
+  /// A miss keyed to a concrete item (for the weak-list in the summary).
+  void recordItemMiss(String itemId) {
+    _missCounts[itemId] = (_missCounts[itemId] ?? 0) + 1;
+  }
+
+  /// An item was seeded into SRS this session (Feedback: "learned").
+  void recordLearned(String itemId) {
+    if (!_learnedIds.contains(itemId)) _learnedIds.add(itemId);
+  }
+
+  void recordHint() {
+    _touchTempo();
+    _hints++;
+    tick();
+  }
+
+  /// Skipping is a first-class, penalty-free action — recorded only so the
+  /// Director can pace, never to punish.
+  void recordSkip() {
+    _touchTempo();
+    _skips++;
+    tick();
+  }
+
+  /// Any non-answer interaction (taps, toggles) — feeds the tempo baseline.
+  void recordInteraction() {
+    _touchTempo();
+  }
+
+  void setPersona(PersonaType p) {
+    if (p == state.persona) return;
+    _logEvent('persona: ${state.persona.name}→${p.name}',
+        'তুমি টিউটর বদলেছ — এখন ${personaNameBn(p)}।');
+    state = state.copyWith(persona: p);
+  }
+
+  /// The learner dismissed the current scaffold offer — respect it silently.
+  void dismissScaffold() {
+    if (state.scaffold == null) return;
+    // Reset the triggering streak so the same offer doesn't nag next tick.
+    final p = _lastMissPattern;
+    if (p != null) _missStreaks[p] = 0;
+    _hesitationEwma = 0;
+    _hesitationSeeded = false;
+    state = state.copyWith(clearScaffold: true);
+  }
+
+  /// Re-runs all agents over the current signals and publishes the merge.
+  /// Called after every recorded event; the UI may also call it periodically.
+  void tick() {
+    final s = _signals();
+    final d = directorDecide(s, currentDifficulty: state.difficulty);
+    final offer = scaffoldCheck(s);
+    if (d.psych != state.psych) {
+      _logEvent('psych: ${state.psych.name}→${d.psych.name}', d.rationaleBn);
+    }
+    if (offer != null && offer.kind != state.scaffold?.kind) {
+      _logEvent('scaffold: offer ${offer.kind.name}', offer.promptBn);
+    }
+    state = AgentState(
+      psych: d.psych,
+      difficulty: d.difficulty,
+      recommendedLessonId: state.recommendedLessonId,
+      rationaleBn: d.rationaleBn,
+      persona: state.persona,
+      scaffold: offer,
+      advice: d.advice,
+    );
+  }
+
+  /// Line for the learner's current moment, in their chosen persona's voice.
+  String personaSay(PersonaEvent event) => personaLine(
+        state.persona,
+        event,
+        psych: state.psych,
+        rotation: _answers,
+      );
+
+  SessionSignals _signals() {
+    final started = _sessionStart;
+    final minutes =
+        started == null ? 0 : _now().difference(started).inMinutes;
+    return SessionSignals(
+      answers: _answers,
+      correct: _correct,
+      recentAnswers: _recent.length,
+      recentCorrect: _recent.where((r) => r).length,
+      meanHesitationMs: _hesitationEwma,
+      tapSpeedRatio: _tapSpeedRatio(),
+      sessionMinutes: minutes,
+      retention: _retention,
+      daysSinceLastSession: _daysSince,
+      dueLoad: _dueLoad,
+      hintsUsed: _hints,
+      skips: _skips,
+      consecutiveMissesOnPattern: _missStreaks.values
+          .fold(0, (max, v) => v > max ? v : max),
+    );
+  }
+
+  void _touchTempo() {
+    final now = _now();
+    final last = _lastInteraction;
+    _lastInteraction = now;
+    if (last == null) return;
+    final gap = now.difference(last).inMilliseconds.toDouble();
+    // Ignore idle pauses (>60s): walking away is not "slow tapping".
+    if (gap > 60000) return;
+    if (_baselineGaps.length < _baselineCount) _baselineGaps.add(gap);
+    _gapEwma = _gapSeeded ? _gapEwma * 0.7 + gap * 0.3 : gap;
+    _gapSeeded = true;
+  }
+
+  double _tapSpeedRatio() {
+    if (_baselineGaps.length < _baselineCount || _gapEwma <= 0) return 1.0;
+    final baseline =
+        _baselineGaps.reduce((a, b) => a + b) / _baselineGaps.length;
+    if (baseline <= 0) return 1.0;
+    // speed ∝ 1/gap: current speed relative to the session's own baseline.
+    return baseline / _gapEwma;
+  }
+
+  void _logEvent(String event, String rationaleBn) {
+    _log.add(AgentLogEntry(_now(), event, rationaleBn));
+    if (_log.length > _logCap) _log.removeAt(0);
+  }
+}
+
+```
+
+
+## File: lib\agents\agent_state.dart
+
+```dart
+// Agent contract types (04_AGENTS §State bus). Four deterministic agents
+// publish through this shared vocabulary; the Director arbitrates. Every
+// decision is explainable in Bengali and OVERRIDABLE by the user — nothing
+// here can lock input, hide Skip, or force a continuation (01 constitution).
+//
+// Agents run on deterministic signals (taps, timing, accuracy) — never on
+// LLM judgment (99 D-004).
+
+/// The learner's inferred session state. Recommendations only — the UI adapts
+/// colors/copy per 09 but never restricts what the learner may do.
+enum PsychState {
+  /// Not enough signals yet this session to infer anything (cold start).
+  calibrating,
+
+  /// Optimal challenge: accuracy ~70–85%, engaged, no fatigue signs.
+  flow,
+
+  /// Accuracy < 60% or rusty return: reduce difficulty, offer scaffolding.
+  struggle,
+
+  /// Fatigue: tap speed collapsed + errors rising. Recommend a break.
+  burnout,
+
+  /// Autopilot: accuracy > 90% for a while. Offer (not push) a challenge.
+  boredom,
+}
+
+/// Tutor personality the learner picked. The agent may SUGGEST a switch,
+/// never auto-switches (04 §Persona).
+enum PersonaType {
+  /// Strict, traditional — formal Bengali, measured praise.
+  sensei,
+
+  /// Warm elder sibling — patient, encouraging. The default.
+  didi,
+
+  /// Playful peer — casual register, exclamations.
+  friend,
+
+  /// Competitive trainer — pace-focused, but NEVER shaming; softens
+  /// automatically when the learner struggles.
+  coach,
+}
+
+/// What kind of help the Scaffold agent is offering. Always an offer the
+/// learner accepts or dismisses; never applied automatically.
+enum ScaffoldKind { hint, reviewSwitch, helpOffer }
+
+/// A concrete, dismissible offer of help ("এটা নিয়ে সাহায্য লাগবে?").
+class ScaffoldOffer {
+  final ScaffoldKind kind;
+
+  /// Bengali question copy (always asks, never commands — 04 §Scaffold).
+  final String promptBn;
+  const ScaffoldOffer({required this.kind, required this.promptBn});
+
+  @override
+  String toString() => 'ScaffoldOffer(${kind.name})';
+}
+
+/// What the Director recommends about the session itself. `continueSession`
+/// is the neutral default; everything else is a dismissible recommendation.
+enum AdviceKind { continueSession, shortBreak, easyReviewOnly, endSession }
+
+class SessionAdvice {
+  final AdviceKind kind;
+
+  /// Bengali recommendation copy. Empty for the neutral default.
+  final String messageBn;
+
+  /// Suggested break length when [kind] == shortBreak.
+  final int? breakMinutes;
+  const SessionAdvice({
+    required this.kind,
+    this.messageBn = '',
+    this.breakMinutes,
+  });
+
+  static const none = SessionAdvice(kind: AdviceKind.continueSession);
+}
+
+/// Deterministic inputs the agents read each tick. Built by the AgentBus from
+/// raw interaction events; agents themselves stay pure functions of this.
+class SessionSignals {
+  /// Graded answers this session (recognition picks, context builds…).
+  final int answers;
+  final int correct;
+
+  /// Sliding window (most recent ≤10 answers) for state detection, so one
+  /// early mistake doesn't haunt the whole session.
+  final int recentAnswers;
+  final int recentCorrect;
+
+  /// Time from a step appearing to the learner's first interaction with it,
+  /// exponentially smoothed, in milliseconds. >3000 is the hesitation signal.
+  final double meanHesitationMs;
+
+  /// Current interaction speed vs this session's own baseline (1.0 = same,
+  /// 0.4 = taking 2.5× longer than usual). <0.5 is the fatigue signal.
+  final double tapSpeedRatio;
+
+  final int sessionMinutes;
+
+  /// SRS recall success over the recent review history (0..1); 1.0 when
+  /// there is no history yet.
+  final double retention;
+  final int daysSinceLastSession;
+
+  /// Cards currently due (Director may recommend review-first).
+  final int dueLoad;
+
+  final int hintsUsed;
+  final int skips;
+
+  /// Longest current same-pattern miss run (e.g. 3 misses on 'recognition').
+  final int consecutiveMissesOnPattern;
+
+  const SessionSignals({
+    this.answers = 0,
+    this.correct = 0,
+    this.recentAnswers = 0,
+    this.recentCorrect = 0,
+    this.meanHesitationMs = 0,
+    this.tapSpeedRatio = 1.0,
+    this.sessionMinutes = 0,
+    this.retention = 1.0,
+    this.daysSinceLastSession = 0,
+    this.dueLoad = 0,
+    this.hintsUsed = 0,
+    this.skips = 0,
+    this.consecutiveMissesOnPattern = 0,
+  });
+
+  double get accuracy => answers == 0 ? 1.0 : correct / answers;
+  double get recentAccuracy =>
+      recentAnswers == 0 ? 1.0 : recentCorrect / recentAnswers;
+  double get recentErrorRate => 1.0 - recentAccuracy;
+}
+
+/// The single state the UI consumes (04 §State bus contract). Immutable;
+/// the AgentBus publishes a fresh one per tick.
+class AgentState {
+  final PsychState psych;
+
+  /// Current difficulty recommendation, 1..10.
+  final int difficulty;
+  final String? recommendedLessonId;
+
+  /// One-line Bengali rationale for the current recommendation —
+  /// every decision is explainable (04).
+  final String rationaleBn;
+  final PersonaType persona;
+  final ScaffoldOffer? scaffold;
+  final SessionAdvice advice;
+
+  const AgentState({
+    this.psych = PsychState.calibrating,
+    this.difficulty = 3,
+    this.recommendedLessonId,
+    this.rationaleBn = '',
+    this.persona = PersonaType.didi,
+    this.scaffold,
+    this.advice = SessionAdvice.none,
+  });
+
+  AgentState copyWith({
+    PsychState? psych,
+    int? difficulty,
+    String? recommendedLessonId,
+    String? rationaleBn,
+    PersonaType? persona,
+    ScaffoldOffer? scaffold,
+    bool clearScaffold = false,
+    SessionAdvice? advice,
+  }) =>
+      AgentState(
+        psych: psych ?? this.psych,
+        difficulty: difficulty ?? this.difficulty,
+        recommendedLessonId: recommendedLessonId ?? this.recommendedLessonId,
+        rationaleBn: rationaleBn ?? this.rationaleBn,
+        persona: persona ?? this.persona,
+        scaffold: clearScaffold ? null : (scaffold ?? this.scaffold),
+        advice: advice ?? this.advice,
+      );
+}
+
+/// One explainability entry — kept in a ring buffer for the debug overlay
+/// ("why did the app suggest that?").
+class AgentLogEntry {
+  final DateTime at;
+  final String event; // e.g. 'psych: flow→struggle'
+  final String rationaleBn;
+  const AgentLogEntry(this.at, this.event, this.rationaleBn);
+
+  @override
+  String toString() => '[$at] $event — $rationaleBn';
+}
+
+```
+
+
+## File: lib\agents\director.dart
+
+```dart
+// Director agent (04 §1) — curriculum & pacing. A PURE decision function:
+// SessionSignals in, DirectorDecision out. No clock, no randomness, no I/O —
+// fully testable (mirrored by tools/agents_reference.mjs in CI).
+//
+// Constraint: RECOMMENDS, NEVER FORCES. Every output here is a suggestion the
+// UI must render dismissible; continuing is always allowed (01 constitution).
+
+import 'agent_state.dart';
+
+/// Decision thresholds (04 §1 rules). Named so the Dart tests and the Node
+/// reference proof assert against the same numbers.
+abstract final class DirectorRules {
+  /// Below this many graded answers we don't infer anything (cold start).
+  static const int minAnswers = 4;
+
+  /// STRUGGLE (in-session): recent accuracy < 60%.
+  static const double struggleAccuracy = 0.60;
+
+  /// STRUGGLE (session start): SRS retention < 60% after > 3 days away.
+  static const double rustyRetention = 0.60;
+  static const int rustyDaysAway = 3;
+
+  /// BOREDOM: accuracy > 90% for > 20 minutes (autopilot).
+  static const double boredomAccuracy = 0.90;
+  static const int boredomMinutes = 20;
+
+  /// BURNOUT: tap speed < 50% of the session's own baseline AND
+  /// recent error rate > 30% — or the same error rate after 40+ minutes.
+  static const double burnoutTapSpeed = 0.50;
+  static const double burnoutErrorRate = 0.30;
+  static const int fatigueMinutes = 40;
+
+  /// FLOW: recent accuracy inside [0.70, 0.90].
+  static const double flowLow = 0.70;
+
+  /// Session-health soft caps (01 §Session-health, 09 §Session-cap UX).
+  static const int breakSuggestMinutes = 20;
+  static const int hardCapMinutes = 120;
+
+  static const int minDifficulty = 1;
+  static const int maxDifficulty = 10;
+}
+
+/// What the Director publishes each tick.
+class DirectorDecision {
+  final PsychState psych;
+  final int difficulty; // 1..10
+  final SessionAdvice advice;
+  final String rationaleBn;
+  const DirectorDecision({
+    required this.psych,
+    required this.difficulty,
+    required this.advice,
+    required this.rationaleBn,
+  });
+}
+
+/// The Director's decision function. [currentDifficulty] is the difficulty in
+/// force before this tick; the result nudges it by at most ±2 per tick so the
+/// experience never whiplashes.
+DirectorDecision directorDecide(SessionSignals s, {int currentDifficulty = 3}) {
+  final psych = _classify(s);
+  final difficulty = _adjustDifficulty(psych, s, currentDifficulty);
+  final advice = _advise(psych, s);
+  return DirectorDecision(
+    psych: psych,
+    difficulty: difficulty,
+    advice: advice,
+    rationaleBn: _rationale(psych, s),
+  );
+}
+
+PsychState _classify(SessionSignals s) {
+  // Session-start rule fires before any answers exist: rusty after days away.
+  if (s.answers < DirectorRules.minAnswers) {
+    final rusty = s.retention < DirectorRules.rustyRetention &&
+        s.daysSinceLastSession > DirectorRules.rustyDaysAway;
+    return rusty ? PsychState.struggle : PsychState.calibrating;
+  }
+
+  // Priority order matters: fatigue outranks everything (well-being first),
+  // then struggle, then boredom; flow is the healthy default band.
+  final fatigued = s.recentErrorRate > DirectorRules.burnoutErrorRate &&
+      (s.tapSpeedRatio < DirectorRules.burnoutTapSpeed ||
+          s.sessionMinutes >= DirectorRules.fatigueMinutes);
+  if (fatigued) return PsychState.burnout;
+
+  if (s.recentAccuracy < DirectorRules.struggleAccuracy) {
+    return PsychState.struggle;
+  }
+
+  if (s.recentAccuracy > DirectorRules.boredomAccuracy &&
+      s.sessionMinutes > DirectorRules.boredomMinutes) {
+    return PsychState.boredom;
+  }
+
+  return PsychState.flow;
+}
+
+int _adjustDifficulty(PsychState psych, SessionSignals s, int current) {
+  final delta = switch (psych) {
+    PsychState.calibrating => 0,
+    PsychState.flow =>
+      // Hold inside the band; nudge up only at the top edge (i+1 pacing).
+      s.recentAccuracy >= DirectorRules.boredomAccuracy ? 1 : 0,
+    PsychState.boredom => 1,
+    PsychState.struggle => -1,
+    PsychState.burnout => -2,
+  };
+  return (current + delta)
+      .clamp(DirectorRules.minDifficulty, DirectorRules.maxDifficulty);
+}
+
+SessionAdvice _advise(PsychState psych, SessionSignals s) {
+  // Hard soft-cap (recommendation only): 120 min → easy-review-only offer.
+  if (s.sessionMinutes >= DirectorRules.hardCapMinutes) {
+    return const SessionAdvice(
+      kind: AdviceKind.easyReviewOnly,
+      messageBn: 'অনেকক্ষণ হলো — এখন শুধু সহজ রিভিউ করলে মাথা তাজা থাকবে। '
+          'চাইলে চালিয়েও যেতে পারো।',
+    );
+  }
+  if (psych == PsychState.burnout) {
+    return const SessionAdvice(
+      kind: AdviceKind.shortBreak,
+      breakMinutes: 5,
+      messageBn: 'তোমার মস্তিষ্ক ক্লান্ত মনে হচ্ছে। ৫ মিনিটের বিরতি নিলে ভালো হয়।',
+    );
+  }
+  if (s.sessionMinutes >= DirectorRules.breakSuggestMinutes &&
+      psych != PsychState.flow) {
+    return const SessionAdvice(
+      kind: AdviceKind.shortBreak,
+      breakMinutes: 5,
+      messageBn: '৫ মিনিটের বিরতি নিলে ভালো হয়।',
+    );
+  }
+  return SessionAdvice.none;
+}
+
+String _rationale(PsychState psych, SessionSignals s) => switch (psych) {
+      PsychState.calibrating => s.daysSinceLastSession > 0
+          ? '${s.daysSinceLastSession} দিন পর ফিরেছ — ধীরে শুরু করি।'
+          : 'শুরু করছি — তোমার গতি বুঝে নিচ্ছি।',
+      PsychState.struggle => s.answers < DirectorRules.minAnswers
+          ? 'আগে একটু ঝালাই করি।'
+          : 'একটু কঠিন লাগছে — সহজ দিক থেকে এগোই।',
+      PsychState.flow => 'দারুণ চলছে — এই গতিতেই থাকি।',
+      PsychState.boredom => 'সবই পারছ! নতুন চ্যালেঞ্জ নিতে পারো।',
+      PsychState.burnout => 'গতি কমে এসেছে — বিরতি নিলে ভালো হয়।',
+    };
+
+```
+
+
+## File: lib\agents\feedback.dart
+
+```dart
+// Feedback agent (04 §4) — mastery tracking & reporting. Every reward is a
+// FIXED, PREDICTABLE function of mastery counts: correct answer → instant
+// positive line (persona), lesson → fixed XP, 10 lessons → milestone,
+// 50 retained words → level. NO variable rewards, ever (99 D-001).
+
+import '../domain/progress.dart' show kRetainedStabilityDays;
+
+/// Reward schedule constants — deliberately boring numbers, visible to the
+/// learner in advance. Changing these is a product decision (log in 99).
+abstract final class RewardSchedule {
+  /// Fixed XP per completed lesson. Never randomized, never boosted.
+  static const int xpPerLesson = 10;
+
+  /// A milestone every N completed lessons.
+  static const int lessonsPerMilestone = 10;
+
+  /// A level every N retained words.
+  static const int wordsPerLevel = 50;
+
+  /// A card counts as "retained" once its FSRS stability reaches this many
+  /// days — the memory survives a week without review (domain constant).
+  static const double retainedStabilityDays = kRetainedStabilityDays;
+
+  /// Exam target: the JFT-Basic A2 whitelist size (content_factory).
+  static const int examTargetWords = 1200;
+}
+
+/// Deterministic totals derived from persisted counts.
+class MasteryStats {
+  final int lessonsCompleted;
+  final int wordsRetained;
+  const MasteryStats(
+      {required this.lessonsCompleted, required this.wordsRetained});
+
+  int get xp => lessonsCompleted * RewardSchedule.xpPerLesson;
+  int get level => wordsRetained ~/ RewardSchedule.wordsPerLevel;
+  int get milestones => lessonsCompleted ~/ RewardSchedule.lessonsPerMilestone;
+
+  /// SSW progress marker: fraction of the exam word target retained (0..1).
+  double get examReadiness =>
+      (wordsRetained / RewardSchedule.examTargetWords).clamp(0.0, 1.0);
+}
+
+/// True exactly when this completion crosses a milestone boundary —
+/// e.g. the 10th, 20th… lesson. Pure and predictable.
+bool milestoneReached(int lessonsCompletedNow) =>
+    lessonsCompletedNow > 0 &&
+    lessonsCompletedNow % RewardSchedule.lessonsPerMilestone == 0;
+
+/// True exactly when [wordsRetainedNow] crosses a level boundary that
+/// [wordsRetainedBefore] had not reached.
+bool levelUp(int wordsRetainedBefore, int wordsRetainedNow) =>
+    wordsRetainedNow ~/ RewardSchedule.wordsPerLevel >
+    wordsRetainedBefore ~/ RewardSchedule.wordsPerLevel;
+
+/// End-of-session summary (learned / weak / next) the Feedback agent reports.
+class SessionSummary {
+  /// Item ids newly seeded into SRS this session.
+  final List<String> learnedIds;
+
+  /// Item ids missed 2+ times this session — tomorrow's focus, not a fault.
+  final List<String> weakIds;
+
+  /// Cards that will be due within the next day (what "next" looks like).
+  final int dueTomorrow;
+
+  final int xpEarned;
+  final bool milestone;
+  final bool leveledUp;
+
+  const SessionSummary({
+    required this.learnedIds,
+    required this.weakIds,
+    required this.dueTomorrow,
+    required this.xpEarned,
+    this.milestone = false,
+    this.leveledUp = false,
+  });
+
+  /// Neutral Bengali summary line ("streaks are history, not leverage").
+  String get lineBn {
+    final parts = <String>[
+      if (learnedIds.isNotEmpty) 'নতুন শিখলে ${learnedIds.length}টা',
+      if (weakIds.isNotEmpty) 'ঝালাই দরকার ${weakIds.length}টার',
+      if (dueTomorrow > 0) 'কাল রিভিউ $dueTomorrowটা',
+    ];
+    return parts.isEmpty ? 'আজ ঘুরে দেখলে — সেটাও শেখা।' : parts.join(' · ');
+  }
+}
+
+/// Builds the summary from session bookkeeping. Pure.
+SessionSummary buildSessionSummary({
+  required List<String> learnedIds,
+  required Map<String, int> missCounts,
+  required int dueTomorrow,
+  required int lessonsCompletedBefore,
+  required int lessonsCompletedNow,
+  required int wordsRetainedBefore,
+  required int wordsRetainedNow,
+}) {
+  final weak = missCounts.entries
+      .where((e) => e.value >= 2)
+      .map((e) => e.key)
+      .toList(growable: false);
+  return SessionSummary(
+    learnedIds: List.unmodifiable(learnedIds),
+    weakIds: weak,
+    dueTomorrow: dueTomorrow,
+    xpEarned: (lessonsCompletedNow - lessonsCompletedBefore) *
+        RewardSchedule.xpPerLesson,
+    milestone: milestoneReached(lessonsCompletedNow) &&
+        lessonsCompletedNow != lessonsCompletedBefore,
+    leveledUp: levelUp(wordsRetainedBefore, wordsRetainedNow),
+  );
+}
+
+```
+
+
+## File: lib\agents\persona.dart
+
+```dart
+// Persona agent (04 §2) — tone & relationship. Deterministic template
+// selection: the same (persona, event, state, count) always yields the same
+// line. NO shame or pressure copy ever; every persona softens automatically
+// when the learner struggles (anxiety → reduce intensity).
+//
+// Relationship arc: week 1 formal → weeks 2–4 warmer → month 2+ mentor →
+// month 4+ casual banter ONLY if the learner opted in (04 §Persona).
+
+import 'agent_state.dart';
+
+/// Moments the persona reacts to.
+enum PersonaEvent { greeting, correctAnswer, wrongAnswer, lessonComplete }
+
+/// Returns the persona's Bengali line for [event]. [rotation] is any
+/// monotonically increasing counter (e.g. answers so far) used to vary lines
+/// deterministically — no randomness, no variable-reward feel: the same
+/// events always cycle the same fixed set (99 D-001).
+///
+/// [weekNumber] is weeks since the learner started (1-based). [casualOptIn]
+/// gates the month-4+ banter register.
+String personaLine(
+  PersonaType persona,
+  PersonaEvent event, {
+  PsychState psych = PsychState.calibrating,
+  int rotation = 0,
+  int weekNumber = 1,
+  bool casualOptIn = false,
+}) {
+  // Struggle/burnout → every persona drops intensity and goes gentle.
+  final gentle =
+      psych == PsychState.struggle || psych == PsychState.burnout;
+  final formal = weekNumber <= 1 || persona == PersonaType.sensei;
+  final lines = _lines(persona, event,
+      gentle: gentle,
+      formal: formal,
+      casual: casualOptIn && weekNumber >= 16);
+  return lines[rotation % lines.length];
+}
+
+List<String> _lines(
+  PersonaType persona,
+  PersonaEvent event, {
+  required bool gentle,
+  required bool formal,
+  required bool casual,
+}) {
+  switch (event) {
+    case PersonaEvent.greeting:
+      return switch (persona) {
+        PersonaType.sensei => formal
+            ? const ['শুরু করা যাক। মনোযোগ দিন।', 'আজকের পাঠ প্রস্তুত।']
+            : const ['শুরু করা যাক। মনোযোগ দাও।', 'আজকের পাঠ প্রস্তুত।'],
+        PersonaType.didi => formal
+            ? const ['চলুন, আজ একটু এগোই।', 'ফিরে এসেছেন — খুব ভালো লাগল!']
+            : const ['চলো, আজ একটু এগোই।', 'ফিরে এসেছ — খুব ভালো লাগল!'],
+        PersonaType.friend => casual
+            ? const ['কி খবর! আজ কোনটা শিখবি?', 'চল শুরু করি!']
+            : const ['চলো শুরু করি!', 'আজ নতুন কিছু শিখি?'],
+        PersonaType.coach => const ['ওয়ার্মআপ শুরু। প্রস্তুত?', 'আজকের লক্ষ্য ঠিক করি।'],
+      };
+
+    case PersonaEvent.correctAnswer:
+      if (gentle) {
+        // Struggling learner just got one right — quiet, warm reinforcement.
+        return switch (persona) {
+          PersonaType.sensei => const ['সঠিক। এভাবেই।'],
+          PersonaType.didi => const ['এই তো হচ্ছে! ধীরে ধীরেই হয়।'],
+          PersonaType.friend => const ['দেখেছ? পেরেছ!'],
+          PersonaType.coach => const ['ঠিক। নিজের গতিতে চলো।'],
+        };
+      }
+      return switch (persona) {
+        PersonaType.sensei =>
+          const ['সঠিক।', 'ঠিক আছে। পরেরটায় মন দিন।', 'ভালো।'],
+        PersonaType.didi =>
+          const ['বাহ্, দারুণ!', 'একদম ঠিক!', 'খুব ভালো হচ্ছে!'],
+        PersonaType.friend =>
+          const ['সেরা!', 'একদম ঠিক! পরেরটা?', 'তুমি তো পারোই!'],
+        PersonaType.coach =>
+          const ['ঠিক! গতি ধরে রাখো।', 'ভালো। পরেরটা।', 'এই তো ফর্মে!'],
+      };
+
+    case PersonaEvent.wrongAnswer:
+      // NEVER shaming — mistakes are information, in every register.
+      if (gentle) {
+        return switch (persona) {
+          PersonaType.sensei => const ['সমস্যা নেই। আবার দেখা যাক।'],
+          PersonaType.didi => const ['ঠিক আছে, একসাথে আরেকবার দেখি।'],
+          PersonaType.friend => const ['কাছাকাছি ছিল! আরেকবার?'],
+          PersonaType.coach => const ['থামো, শ্বাস নাও — তারপর আরেকবার।'],
+        };
+      }
+      return switch (persona) {
+        PersonaType.sensei =>
+          const ['আবার দেখুন। ভুল শেখারই অংশ।', 'আরেকবার ভাবুন।'],
+        PersonaType.didi =>
+          const ['প্রায় হয়ে গিয়েছিল — আরেকবার দেখো।', 'সমস্যা নেই, আবার চেষ্টা করো।'],
+        PersonaType.friend => const ['উফ, কাছেই ছিল! আবার যাই?', 'হয়নি? হবে!'],
+        PersonaType.coach =>
+          const ['ফোকাস — পরেরটা তোমার।', 'ঠিক আছে, আবার।'],
+      };
+
+    case PersonaEvent.lessonComplete:
+      return switch (persona) {
+        PersonaType.sensei => const ['পাঠ সম্পন্ন। ভালো কাজ।'],
+        PersonaType.didi => const ['লেসন শেষ — আজ দারুণ করেছ!'],
+        PersonaType.friend => const ['শেষ! দারুণ ছিল!'],
+        PersonaType.coach => const ['সেশন শেষ। ভালো পারফরম্যান্স।'],
+      };
+  }
+}
+
+/// Bengali display name for the persona picker.
+String personaNameBn(PersonaType p) => switch (p) {
+      PersonaType.sensei => 'সেনসেই (গম্ভীর)',
+      PersonaType.didi => 'দিদি/ভাই (আন্তরিক)',
+      PersonaType.friend => 'বন্ধু (মজার)',
+      PersonaType.coach => 'কোচ (গতিশীল)',
+    };
+
+```
+
+
+## File: lib\agents\scaffold_agent.dart
+
+```dart
+// Scaffold agent (04 §3) — micro-teaching & confusion resolution. Watches
+// deterministic confusion signals and OFFERS help; the learner pulls each
+// rung of the hint ladder themselves. Always asks, never commands; accepting
+// or dismissing carries no penalty.
+
+import 'agent_state.dart';
+
+/// Scaffold thresholds (04 §3). Shared with tests + the Node reference proof.
+abstract final class ScaffoldRules {
+  /// Hesitating longer than this before the first interaction → offer a hint.
+  static const double hesitationMs = 3000;
+
+  /// This many misses on the same pattern → offer switching to review.
+  static const int missStreak = 3;
+
+  /// "Random tapping": much faster than baseline AND mostly wrong → offer help.
+  static const double rapidTapSpeed = 2.5;
+  static const double rapidErrorRate = 0.50;
+}
+
+/// Pure check: returns the single most relevant offer, or null when the
+/// learner shows no confusion signal. Priority: repeated same-pattern misses
+/// (strongest evidence) > hesitation > frantic tapping.
+ScaffoldOffer? scaffoldCheck(SessionSignals s) {
+  if (s.consecutiveMissesOnPattern >= ScaffoldRules.missStreak) {
+    return const ScaffoldOffer(
+      kind: ScaffoldKind.reviewSwitch,
+      promptBn: 'এই ধরনটা বারবার আটকে যাচ্ছে — একটু পিছিয়ে ঝালাই করবে?',
+    );
+  }
+  if (s.meanHesitationMs > ScaffoldRules.hesitationMs) {
+    return const ScaffoldOffer(
+      kind: ScaffoldKind.hint,
+      promptBn: 'এটা নিয়ে সাহায্য লাগবে?',
+    );
+  }
+  if (s.tapSpeedRatio > ScaffoldRules.rapidTapSpeed &&
+      s.recentErrorRate > ScaffoldRules.rapidErrorRate) {
+    return const ScaffoldOffer(
+      kind: ScaffoldKind.helpOffer,
+      promptBn: 'একসাথে ধীরে ধীরে দেখি? সাহায্য চাইলে বলো।',
+    );
+  }
+  return null;
+}
 
 ```
 
@@ -3520,6 +6105,8 @@ output-class: S
 // Shared Riverpod providers.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/agent_bus.dart';
+import '../agents/agent_state.dart';
 import '../data/content_repository.dart';
 import '../data/srs_local.dart';
 import '../domain/fsrs.dart';
@@ -3537,6 +6124,11 @@ final contentProvider = FutureProvider<ContentRepository>((_) async {
 /// The FSRS scheduler (pure, stateless) and the encrypted SRS store.
 final fsrsProvider = Provider<Fsrs>((_) => const Fsrs());
 final srsProvider = Provider<SrsLocal>((_) => SrsLocal());
+
+/// The four-agent state bus (04). One per app; sessions restart via
+/// [AgentBus.startSession]. UI reads the merged [AgentState] only.
+final agentBusProvider =
+    StateNotifierProvider<AgentBus, AgentState>((_) => AgentBus());
 
 ```
 
@@ -3776,13 +6368,21 @@ class ContentRepository {
     _katakana = await _loadKana('assets/content/katakana.json');
 
     for (final file in const [
+      'assets/content/lesson_greetings.json',
       'assets/content/lesson_work_intro.json',
-      'assets/content/lesson_konbini.json',
-      'assets/content/lesson_clinic.json',
       'assets/content/lesson_numbers.json',
+      'assets/content/lesson_konbini.json',
+      'assets/content/lesson_shopping.json',
+      'assets/content/lesson_clinic.json',
       'assets/content/lesson_time.json',
+      'assets/content/lesson_directions.json',
+      'assets/content/lesson_transport.json',
+      'assets/content/lesson_emergency.json',
+      'assets/content/lesson_smalltalk.json',
       'assets/content/lesson_restaurant.json',
       'assets/content/lesson_workplace.json',
+      'assets/content/lesson_work_safety.json',
+      'assets/content/lesson_work_requests.json',
     ]) {
       final lesson = Lesson.fromJson(json.decode(await rootBundle.loadString(file)));
       assert(lesson.verified, 'Refusing to load unverified lesson ${lesson.id}');
@@ -3801,6 +6401,100 @@ class ContentRepository {
   Lesson? lesson(String id) => _lessons[id];
   Iterable<Lesson> get lessons => _lessons.values;
   List<PitchSet> get pitchSets => _pitchSets;
+}
+
+```
+
+
+## File: lib\data\export_service.dart
+
+```dart
+// One-tap offline data export (01 §Data autonomy): everything the learner
+// owns, zipped as JSON (full fidelity) + CSVs (spreadsheet-friendly) + a
+// human-readable summary. No network, no support ticket, no account.
+//
+// PDF report generation is deferred (needs the `pdf` package ≈ +1MB APK);
+// summary.txt carries the same content in plain text meanwhile.
+
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:archive/archive.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
+import 'srs_local.dart';
+
+class ExportService {
+  ExportService(this._srs);
+  final SrsLocal _srs;
+
+  /// Builds the ZIP and returns the written file. Everything happens
+  /// on-device; the caller shows the path (and later a share sheet).
+  Future<File> exportZip({DateTime? now}) async {
+    final at = now ?? DateTime.now();
+    final data = await _srs.exportAll();
+
+    final archive = Archive();
+    void add(String name, String content) {
+      final bytes = utf8.encode(content);
+      archive.addFile(ArchiveFile(name, bytes.length, bytes));
+    }
+
+    add('bhasago_data.json', const JsonEncoder.withIndent('  ').convert(data));
+    add('srs_cards.csv',
+        _csv(data['srs_cards'] as List<Map<String, Object?>>));
+    add('review_history.csv',
+        _csv(data['review_history'] as List<Map<String, Object?>>));
+    add('lesson_completions.csv',
+        _csv(data['lesson_completions'] as List<Map<String, Object?>>));
+    add('summary.txt', _summary(data, at));
+
+    final bytes = ZipEncoder().encode(archive)!;
+    final dir = await getApplicationDocumentsDirectory();
+    final stamp =
+        '${at.year}${at.month.toString().padLeft(2, '0')}${at.day.toString().padLeft(2, '0')}';
+    final file = File(p.join(dir.path, 'bhasago_export_$stamp.zip'));
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
+
+  /// RFC-4180-style CSV: header from the first row's keys, fields quoted
+  /// when they contain commas/quotes/newlines.
+  String _csv(List<Map<String, Object?>> rows) {
+    if (rows.isEmpty) return '';
+    final cols = rows.first.keys.toList();
+    String cell(Object? v) {
+      final s = v?.toString() ?? '';
+      return s.contains(RegExp(r'[",\n]'))
+          ? '"${s.replaceAll('"', '""')}"'
+          : s;
+    }
+
+    final b = StringBuffer()..writeln(cols.join(','));
+    for (final r in rows) {
+      b.writeln(cols.map((c) => cell(r[c])).join(','));
+    }
+    return b.toString();
+  }
+
+  String _summary(Map<String, Object?> data, DateTime at) {
+    final cards = (data['srs_cards'] as List).length;
+    final reviews = (data['review_history'] as List).length;
+    final lessons = (data['lesson_completions'] as List).length;
+    return '''
+Bhasago — তোমার শেখার ডেটা · your learning data
+Exported: ${at.toIso8601String()}
+
+কার্ড · cards: $cards
+রিভিউ · reviews: $reviews
+লেসন শেষ · lessons completed: $lessons
+
+এই ফাইলগুলো তোমার — যেকোনো অ্যাপে খুলতে পারো, যেখানে খুশি রাখতে পারো।
+These files are yours: open them anywhere, keep them anywhere.
+JSON = full fidelity · CSV = spreadsheets · this file = quick overview.
+''';
+  }
 }
 
 ```
@@ -3950,6 +6644,169 @@ class SrsLocal {
     return updated;
   }
 
+  // --- agents, dashboard, autonomy (m002) -----------------------------------
+
+  /// Logs a finished lesson (Feedback agent's mastery counter — fixed-XP
+  /// schedule is derived from this count, never stored).
+  Future<void> recordLessonCompletion({
+    required String lessonId,
+    required int items,
+    required int correct,
+    int hints = 0,
+    int skips = 0,
+    DateTime? now,
+  }) async {
+    final db = await _open();
+    await db.insert('lesson_completions', {
+      'lesson_id': lessonId,
+      'completed_at': (now ?? DateTime.now()).millisecondsSinceEpoch,
+      'items': items,
+      'correct': correct,
+      'hints': hints,
+      'skips': skips,
+    });
+  }
+
+  Future<int> lessonCompletionCount() async {
+    final db = await _open();
+    final r = await db.rawQuery('SELECT COUNT(*) c FROM lesson_completions');
+    return (r.first['c'] as int?) ?? 0;
+  }
+
+  /// Words whose memory is considered retained (FSRS stability ≥
+  /// [minStability] days). Drives levels and the exam-readiness marker.
+  Future<int> retainedWordCount({double minStability = 7.0}) async {
+    final db = await _open();
+    final r = await db.rawQuery(
+        'SELECT COUNT(*) c FROM srs_cards WHERE stability >= ?',
+        [minStability]);
+    return (r.first['c'] as int?) ?? 0;
+  }
+
+  /// The Director's SRS context: recent recall success, days away, due load.
+  Future<({double retention, int daysSinceLastSession, int dueLoad})>
+      srsContext({DateTime? now, int window = 20}) async {
+    final db = await _open();
+    final t = (now ?? DateTime.now()).millisecondsSinceEpoch;
+    final recent = await db.query('review_history',
+        columns: ['rating', 'reviewed_at'],
+        orderBy: 'reviewed_at DESC',
+        limit: window);
+    double retention = 1.0;
+    var daysSince = 0;
+    if (recent.isNotEmpty) {
+      final ok = recent.where((r) => (r['rating'] as int) > 1).length;
+      retention = ok / recent.length;
+      final lastAt = recent.first['reviewed_at'] as int;
+      daysSince = Duration(milliseconds: t - lastAt).inDays;
+    }
+    final due = await db
+        .rawQuery('SELECT COUNT(*) c FROM srs_cards WHERE due <= ?', [t]);
+    return (
+      retention: retention,
+      daysSinceLastSession: daysSince,
+      dueLoad: (due.first['c'] as int?) ?? 0,
+    );
+  }
+
+  /// Newest-first FSRS ratings from the recent history window (progress
+  /// dashboard's retention input).
+  Future<List<int>> recentRatings({int limit = 20}) async {
+    final db = await _open();
+    final rows = await db.query('review_history',
+        columns: ['rating'], orderBy: 'reviewed_at DESC', limit: limit);
+    return rows.map((r) => r['rating'] as int).toList();
+  }
+
+  /// Every card with its display fields — the progress dashboard's raw input.
+  Future<List<({ScheduledCard card, String word, String meaningBn})>>
+      allCards() async {
+    final db = await _open();
+    final rows = await db.query('srs_cards', orderBy: 'due ASC');
+    return rows
+        .map((r) => (
+              card: _fromRow(r),
+              word: r['word'] as String,
+              meaningBn: (r['meaning_bn'] as String?) ?? '',
+            ))
+        .toList();
+  }
+
+  /// Distinct local days on which at least one review happened, newest first.
+  /// Shown as NEUTRAL history — never as a streak to protect (D-001).
+  Future<List<DateTime>> activityDays({int limit = 60}) async {
+    final db = await _open();
+    final rows = await db.query('review_history',
+        columns: ['reviewed_at'], orderBy: 'reviewed_at DESC', limit: 2000);
+    final days = <DateTime>{};
+    for (final r in rows) {
+      final d = DateTime.fromMillisecondsSinceEpoch(r['reviewed_at'] as int);
+      days.add(DateTime(d.year, d.month, d.day));
+      if (days.length >= limit) break;
+    }
+    return days.toList()..sort((a, b) => b.compareTo(a));
+  }
+
+  // --- app_meta KV + deletion grace (01 §Data autonomy) ---------------------
+
+  static const _deletionKey = 'deletion_requested_at';
+
+  Future<void> setMeta(String key, String value) async {
+    final db = await _open();
+    await db.insert('app_meta', {'key': key, 'value': value},
+        conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  Future<String?> getMeta(String key) async {
+    final db = await _open();
+    final r =
+        await db.query('app_meta', where: 'key = ?', whereArgs: [key]);
+    return r.isEmpty ? null : r.first['value'] as String;
+  }
+
+  Future<void> deleteMeta(String key) async {
+    final db = await _open();
+    await db.delete('app_meta', where: 'key = ?', whereArgs: [key]);
+  }
+
+  /// Starts the 7-day deletion grace period. Reversible until it elapses.
+  Future<void> requestDeletion({DateTime? now}) => setMeta(_deletionKey,
+      (now ?? DateTime.now()).millisecondsSinceEpoch.toString());
+
+  Future<DateTime?> deletionRequestedAt() async {
+    final v = await getMeta(_deletionKey);
+    final ms = v == null ? null : int.tryParse(v);
+    return ms == null ? null : DateTime.fromMillisecondsSinceEpoch(ms);
+  }
+
+  Future<void> cancelDeletion() => deleteMeta(_deletionKey);
+
+  /// Irreversibly removes ALL learner data by deleting the encrypted DB file.
+  /// Called after the grace period elapses (or immediately if the user chose
+  /// "delete now" and confirmed).
+  Future<void> purgeAllData() async {
+    final dir = await getDatabasesPath();
+    final path = p.join(dir, 'sensei.db');
+    await _db?.close();
+    _db = null;
+    await deleteDatabase(path);
+  }
+
+  /// Everything the learner owns, as JSON-ready maps (one-tap export — 01).
+  Future<Map<String, Object?>> exportAll() async {
+    final db = await _open();
+    return {
+      'exported_at': DateTime.now().toIso8601String(),
+      'format_version': 1,
+      'srs_cards': await db.query('srs_cards'),
+      'review_history':
+          await db.query('review_history', orderBy: 'reviewed_at ASC'),
+      'lesson_completions':
+          await db.query('lesson_completions', orderBy: 'completed_at ASC'),
+      'app_meta': await db.query('app_meta'),
+    };
+  }
+
   ScheduledCard _fromRow(Map<String, Object?> r) => ScheduledCard(
         id: r['id'] as String,
         stability: (r['stability'] as num).toDouble(),
@@ -4053,6 +6910,41 @@ final Migration m001Baseline = Migration(1, 'baseline_srs', (Database db) async 
 ```
 
 
+## File: lib\db\migrations\m002_agents_meta.dart
+
+```dart
+// 002 — agent & autonomy support: lesson completion log (Feedback agent's
+// mastery counts + progress dashboard) and an app_meta KV table (deletion
+// grace timestamp, persona preference, export bookkeeping — 01 §Data autonomy).
+// IMMUTABLE: never edit; append new migrations.
+
+import 'package:sqflite_sqlcipher/sqflite.dart';
+import 'migration.dart';
+
+final Migration m002AgentsMeta =
+    Migration(2, 'agents_meta', (Database db) async {
+  await db.execute('''
+    CREATE TABLE lesson_completions(
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      lesson_id TEXT NOT NULL,
+      completed_at INTEGER NOT NULL,
+      items INTEGER NOT NULL,
+      correct INTEGER NOT NULL,
+      hints INTEGER NOT NULL DEFAULT 0,
+      skips INTEGER NOT NULL DEFAULT 0
+    )''');
+  await db.execute(
+      'CREATE INDEX idx_completions_at ON lesson_completions(completed_at)');
+  await db.execute('''
+    CREATE TABLE app_meta(
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    )''');
+});
+
+```
+
+
 ## File: lib\db\migrations\migration.dart
 
 ```dart
@@ -4096,10 +6988,12 @@ Future<void> runMigrations(
 
 import 'migration.dart';
 import 'm001_baseline.dart';
+import 'm002_agents_meta.dart';
 
 final List<Migration> kMigrations = <Migration>[
   m001Baseline,
-  // m002_align_06_schema,  // future: widen srs_cards + add users/messages/... (06)
+  m002AgentsMeta,
+  // m003_align_06_schema,  // future: widen srs_cards + add users/messages/... (06)
 ];
 
 /// The latest schema version = highest migration number. Passed to
@@ -4386,7 +7280,7 @@ class LessonItem {
 class Lesson {
   final String id;
   final Tri canDo;
-  final String jftLevel, source;
+  final String jftLevel, source, packId;
   final bool verified;
   final List<LessonItem> items;
 
@@ -4397,6 +7291,7 @@ class Lesson {
     required this.source,
     required this.verified,
     required this.items,
+    this.packId = '',
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -4404,6 +7299,7 @@ class Lesson {
         canDo: Tri.fromJson(j['can_do']),
         jftLevel: j['jlpt_or_jft'] ?? '',
         source: j['source'] ?? '',
+        packId: j['pack_id'] ?? '',
         verified: j['verified'] == true,
         items: (j['items'] as List)
             .map((e) => LessonItem.fromJson(e))
@@ -4569,6 +7465,167 @@ double accentScore(List<double> reference, List<double> learner) {
 ```
 
 
+## File: lib\domain\progress.dart
+
+```dart
+// Progress analysis (T-108) — pure functions from SRS rows to a mastery
+// report: bucket counts, retention, weak points, due forecast, activity.
+// No I/O, no clock reads (caller passes `now`) — fully unit-testable.
+//
+// Framing rule (01/D-001): everything here is NEUTRAL history and guidance.
+// Weak points are "tomorrow's focus", never failures; activity is a plain
+// count, never a streak to protect.
+
+import 'fsrs.dart';
+
+/// A card's memory is "retained" once FSRS stability reaches this many days.
+/// Product constant — levels and exam-readiness derive from it (04 §Feedback).
+const double kRetainedStabilityDays = 7.0;
+
+enum MasteryBucket { newCard, learning, young, retained }
+
+MasteryBucket bucketOf(ScheduledCard c) {
+  if (c.state == CardState.newCard || c.reps == 0) return MasteryBucket.newCard;
+  if (c.state == CardState.learning || c.state == CardState.relearning) {
+    return MasteryBucket.learning;
+  }
+  return c.stability >= kRetainedStabilityDays
+      ? MasteryBucket.retained
+      : MasteryBucket.young;
+}
+
+/// One item the learner keeps missing — surfaced as a focus suggestion.
+class WeakPoint {
+  final String id;
+  final String word;
+  final String meaningBn;
+
+  /// Higher = weaker. Deterministic mix of lapses (dominant), FSRS difficulty,
+  /// and how far stability still is from "retained".
+  final double score;
+  final int lapses;
+  final double stability;
+
+  const WeakPoint({
+    required this.id,
+    required this.word,
+    required this.meaningBn,
+    required this.score,
+    required this.lapses,
+    required this.stability,
+  });
+}
+
+double weaknessScore(ScheduledCard c) {
+  final stabilityGap =
+      (kRetainedStabilityDays - c.stability).clamp(0.0, kRetainedStabilityDays);
+  return c.lapses * 2.0 + stabilityGap * 0.5 + (c.difficulty - 5.0) * 0.2;
+}
+
+class ProgressReport {
+  final int total;
+  final int newCount, learning, young, retained;
+
+  /// Recent recall success over the supplied history window (0..1);
+  /// 1.0 when there is no history yet.
+  final double retention;
+
+  /// Weakest items first (only cards actually reviewed at least once).
+  final List<WeakPoint> weakest;
+
+  /// Cards becoming due on each of the next [days] days; index 0 = today
+  /// (includes anything already overdue).
+  final List<int> dueForecast;
+
+  /// Days with any review in the last 30 — neutral history, not a streak.
+  final int activeDaysLast30;
+
+  const ProgressReport({
+    required this.total,
+    required this.newCount,
+    required this.learning,
+    required this.young,
+    required this.retained,
+    required this.retention,
+    required this.weakest,
+    required this.dueForecast,
+    required this.activeDaysLast30,
+  });
+
+  bool get isEmpty => total == 0;
+}
+
+/// Builds the full report. [cards] pairs each scheduled card with its display
+/// fields; [recentRatings] is the newest-first rating window (FSRS g values,
+/// 1 = again); [activityDays] is newest-first distinct review days.
+ProgressReport buildProgressReport({
+  required List<({ScheduledCard card, String word, String meaningBn})> cards,
+  required List<int> recentRatings,
+  required List<DateTime> activityDays,
+  required DateTime now,
+  int forecastDays = 7,
+  int weakLimit = 8,
+}) {
+  var newCount = 0, learning = 0, young = 0, retained = 0;
+  for (final c in cards) {
+    switch (bucketOf(c.card)) {
+      case MasteryBucket.newCard:
+        newCount++;
+      case MasteryBucket.learning:
+        learning++;
+      case MasteryBucket.young:
+        young++;
+      case MasteryBucket.retained:
+        retained++;
+    }
+  }
+
+  final retention = recentRatings.isEmpty
+      ? 1.0
+      : recentRatings.where((g) => g > 1).length / recentRatings.length;
+
+  final weakest = cards
+      .where((c) => c.card.reps > 0)
+      .map((c) => WeakPoint(
+            id: c.card.id,
+            word: c.word,
+            meaningBn: c.meaningBn,
+            score: weaknessScore(c.card),
+            lapses: c.card.lapses,
+            stability: c.card.stability,
+          ))
+      .toList()
+    ..sort((a, b) => b.score.compareTo(a.score));
+
+  final today = DateTime(now.year, now.month, now.day);
+  final forecast = List<int>.filled(forecastDays, 0);
+  for (final c in cards) {
+    final due = c.card.due;
+    final dueDay = DateTime(due.year, due.month, due.day);
+    final offset = dueDay.difference(today).inDays;
+    if (offset < forecastDays) forecast[offset < 0 ? 0 : offset]++;
+  }
+
+  final cutoff = today.subtract(const Duration(days: 30));
+  final active =
+      activityDays.where((d) => !d.isBefore(cutoff)).toSet().length;
+
+  return ProgressReport(
+    total: cards.length,
+    newCount: newCount,
+    learning: learning,
+    young: young,
+    retained: retained,
+    retention: retention,
+    weakest: weakest.take(weakLimit).toList(growable: false),
+    dueForecast: forecast,
+    activeDaysLast30: active,
+  );
+}
+
+```
+
+
 ## File: lib\l10n\app_bn.arb
 
 ```arb
@@ -4719,6 +7776,499 @@ double accentScore(List<double> reference, List<double> learner) {
 ```
 
 
+## File: lib\l10n\app_localizations.dart
+
+```dart
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations_bn.dart';
+import 'app_localizations_en.dart';
+import 'app_localizations_ja.dart';
+
+// ignore_for_file: type=lint
+
+/// Callers can lookup localized strings with an instance of S
+/// returned by `S.of(context)`.
+///
+/// Applications need to include `S.delegate()` in their app's
+/// `localizationDelegates` list, and the locales they support in the app's
+/// `supportedLocales` list. For example:
+///
+/// ```dart
+/// import 'l10n/app_localizations.dart';
+///
+/// return MaterialApp(
+///   localizationsDelegates: S.localizationsDelegates,
+///   supportedLocales: S.supportedLocales,
+///   home: MyApplicationHome(),
+/// );
+/// ```
+///
+/// ## Update pubspec.yaml
+///
+/// Please make sure to update your pubspec.yaml to include the following
+/// packages:
+///
+/// ```yaml
+/// dependencies:
+///   # Internationalization support.
+///   flutter_localizations:
+///     sdk: flutter
+///   intl: any # Use the pinned version from flutter_localizations
+///
+///   # Rest of dependencies
+/// ```
+///
+/// ## iOS Applications
+///
+/// iOS applications define key application metadata, including supported
+/// locales, in an Info.plist file that is built into the application bundle.
+/// To configure the locales supported by your app, you’ll need to edit this
+/// file.
+///
+/// First, open your project’s ios/Runner.xcworkspace Xcode workspace file.
+/// Then, in the Project Navigator, open the Info.plist file under the Runner
+/// project’s Runner folder.
+///
+/// Next, select the Information Property List item, select Add Item from the
+/// Editor menu, then select Localizations from the pop-up menu.
+///
+/// Select and expand the newly-created Localizations item then, for each
+/// locale your application supports, add a new item and select the locale
+/// you wish to add from the pop-up menu in the Value field. This list should
+/// be consistent with the languages listed in the S.supportedLocales
+/// property.
+abstract class S {
+  S(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+
+  final String localeName;
+
+  static S of(BuildContext context) {
+    return Localizations.of<S>(context, S)!;
+  }
+
+  static const LocalizationsDelegate<S> delegate = _SDelegate();
+
+  /// A list of this localizations delegate along with the default localizations
+  /// delegates.
+  ///
+  /// Returns a list of localizations delegates containing this delegate along with
+  /// GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate,
+  /// and GlobalWidgetsLocalizations.delegate.
+  ///
+  /// Additional delegates can be added by appending to this list in
+  /// MaterialApp. This list does not have to be used at all if a custom list
+  /// of delegates is preferred or required.
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
+    delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
+  ];
+
+  /// A list of this localizations delegate's supported locales.
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('bn'),
+    Locale('en'),
+    Locale('ja')
+  ];
+
+  /// App display name
+  ///
+  /// In en, this message translates to:
+  /// **'Bhasago'**
+  String get appTitle;
+
+  /// Kana grid screen title
+  ///
+  /// In en, this message translates to:
+  /// **'Kana'**
+  String get kanaTitle;
+
+  /// Bottom nav: learn tab
+  ///
+  /// In en, this message translates to:
+  /// **'Learn'**
+  String get navLearn;
+
+  /// Bottom nav: speak tab
+  ///
+  /// In en, this message translates to:
+  /// **'Speak'**
+  String get navSpeak;
+
+  /// Bottom nav: pitch accent tab
+  ///
+  /// In en, this message translates to:
+  /// **'Pitch'**
+  String get pitchTitle;
+
+  /// Bottom nav: review tab
+  ///
+  /// In en, this message translates to:
+  /// **'Review'**
+  String get navReview;
+
+  /// Review screen reveal button
+  ///
+  /// In en, this message translates to:
+  /// **'Show answer'**
+  String get showAnswer;
+
+  /// Review screen completion message
+  ///
+  /// In en, this message translates to:
+  /// **'All done!'**
+  String get reviewDone;
+
+  /// FSRS rating: again
+  ///
+  /// In en, this message translates to:
+  /// **'Again'**
+  String get rAgain;
+
+  /// FSRS rating: hard
+  ///
+  /// In en, this message translates to:
+  /// **'Hard'**
+  String get rHard;
+
+  /// FSRS rating: good
+  ///
+  /// In en, this message translates to:
+  /// **'Good'**
+  String get rGood;
+
+  /// FSRS rating: easy
+  ///
+  /// In en, this message translates to:
+  /// **'Easy'**
+  String get rEasy;
+
+  /// Skip button label
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skipLabel;
+
+  /// Hint button label
+  ///
+  /// In en, this message translates to:
+  /// **'Hint'**
+  String get hintLabel;
+
+  /// Quit button label
+  ///
+  /// In en, this message translates to:
+  /// **'Quit'**
+  String get quitLabel;
+
+  /// Lesson start button
+  ///
+  /// In en, this message translates to:
+  /// **'Start'**
+  String get startLesson;
+
+  /// Next step button
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get nextLabel;
+
+  /// Audio play button
+  ///
+  /// In en, this message translates to:
+  /// **'Listen'**
+  String get listenLabel;
+
+  /// Microphone record button
+  ///
+  /// In en, this message translates to:
+  /// **'Record'**
+  String get recordLabel;
+
+  /// Lesson completion heading
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson complete'**
+  String get lessonComplete;
+}
+
+class _SDelegate extends LocalizationsDelegate<S> {
+  const _SDelegate();
+
+  @override
+  Future<S> load(Locale locale) {
+    return SynchronousFuture<S>(lookupS(locale));
+  }
+
+  @override
+  bool isSupported(Locale locale) =>
+      <String>['bn', 'en', 'ja'].contains(locale.languageCode);
+
+  @override
+  bool shouldReload(_SDelegate old) => false;
+}
+
+S lookupS(Locale locale) {
+  // Lookup logic when only language code is specified.
+  switch (locale.languageCode) {
+    case 'bn':
+      return SBn();
+    case 'en':
+      return SEn();
+    case 'ja':
+      return SJa();
+  }
+
+  throw FlutterError(
+      'S.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
+}
+
+```
+
+
+## File: lib\l10n\app_localizations_bn.dart
+
+```dart
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Bengali Bangla (`bn`).
+class SBn extends S {
+  SBn([String locale = 'bn']) : super(locale);
+
+  @override
+  String get appTitle => 'ভাষাগো';
+
+  @override
+  String get kanaTitle => 'কানা';
+
+  @override
+  String get navLearn => 'শেখো';
+
+  @override
+  String get navSpeak => 'বলো';
+
+  @override
+  String get pitchTitle => 'স্বর';
+
+  @override
+  String get navReview => 'রিভিউ';
+
+  @override
+  String get showAnswer => 'উত্তর দেখাও';
+
+  @override
+  String get reviewDone => 'সব শেষ!';
+
+  @override
+  String get rAgain => 'আবার';
+
+  @override
+  String get rHard => 'কঠিন';
+
+  @override
+  String get rGood => 'ভালো';
+
+  @override
+  String get rEasy => 'সহজ';
+
+  @override
+  String get skipLabel => 'বাদ';
+
+  @override
+  String get hintLabel => 'ইঙ্গিত';
+
+  @override
+  String get quitLabel => 'বন্ধ';
+
+  @override
+  String get startLesson => 'শুরু করো';
+
+  @override
+  String get nextLabel => 'পরের';
+
+  @override
+  String get listenLabel => 'শুনুন';
+
+  @override
+  String get recordLabel => 'রেকর্ড';
+
+  @override
+  String get lessonComplete => 'লেসন শেষ';
+}
+
+```
+
+
+## File: lib\l10n\app_localizations_en.dart
+
+```dart
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class SEn extends S {
+  SEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appTitle => 'Bhasago';
+
+  @override
+  String get kanaTitle => 'Kana';
+
+  @override
+  String get navLearn => 'Learn';
+
+  @override
+  String get navSpeak => 'Speak';
+
+  @override
+  String get pitchTitle => 'Pitch';
+
+  @override
+  String get navReview => 'Review';
+
+  @override
+  String get showAnswer => 'Show answer';
+
+  @override
+  String get reviewDone => 'All done!';
+
+  @override
+  String get rAgain => 'Again';
+
+  @override
+  String get rHard => 'Hard';
+
+  @override
+  String get rGood => 'Good';
+
+  @override
+  String get rEasy => 'Easy';
+
+  @override
+  String get skipLabel => 'Skip';
+
+  @override
+  String get hintLabel => 'Hint';
+
+  @override
+  String get quitLabel => 'Quit';
+
+  @override
+  String get startLesson => 'Start';
+
+  @override
+  String get nextLabel => 'Next';
+
+  @override
+  String get listenLabel => 'Listen';
+
+  @override
+  String get recordLabel => 'Record';
+
+  @override
+  String get lessonComplete => 'Lesson complete';
+}
+
+```
+
+
+## File: lib\l10n\app_localizations_ja.dart
+
+```dart
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Japanese (`ja`).
+class SJa extends S {
+  SJa([String locale = 'ja']) : super(locale);
+
+  @override
+  String get appTitle => 'Bhasago';
+
+  @override
+  String get kanaTitle => 'かな';
+
+  @override
+  String get navLearn => '学習';
+
+  @override
+  String get navSpeak => '話す';
+
+  @override
+  String get pitchTitle => 'アクセント';
+
+  @override
+  String get navReview => '復習';
+
+  @override
+  String get showAnswer => '答えを見る';
+
+  @override
+  String get reviewDone => '完了！';
+
+  @override
+  String get rAgain => 'もう一度';
+
+  @override
+  String get rHard => '難しい';
+
+  @override
+  String get rGood => '良い';
+
+  @override
+  String get rEasy => '簡単';
+
+  @override
+  String get skipLabel => 'スキップ';
+
+  @override
+  String get hintLabel => 'ヒント';
+
+  @override
+  String get quitLabel => '終了';
+
+  @override
+  String get startLesson => '開始';
+
+  @override
+  String get nextLabel => '次へ';
+
+  @override
+  String get listenLabel => '聞く';
+
+  @override
+  String get recordLabel => '録音';
+
+  @override
+  String get lessonComplete => 'レッスン完了';
+}
+
+```
+
+
 ## File: lib\main.dart
 
 ```dart
@@ -4734,6 +8284,9 @@ import 'app/providers.dart';
 import 'app/theme.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
+import 'presentation/lesson_list_screen.dart';
+import 'presentation/progress_screen.dart';
+import 'presentation/settings_screen.dart';
 import 'presentation/writing_screen.dart';
 
 void main() => runApp(const ProviderScope(child: SenseiApp()));
@@ -4773,11 +8326,20 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   static const _pages = [
     KanaScreen(),
     WritingScreen(),
-    LessonScreen(lessonId: 'work_intro_01'),
+    LessonListScreen(),
     ShadowingScreen(),
     PitchScreen(),
     ReviewScreen(),
   ];
+
+  void _push(BuildContext context, String title, Widget body) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: body,
+      ),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -4786,12 +8348,18 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       appBar: AppBar(
         title: const Text('Bhasago'),
         actions: [
-          for (final l in const [('EN', 'en'), ('বাংলা', 'bn'), ('日本語', 'ja')])
-            TextButton(
-              onPressed: () =>
-                  ref.read(localeProvider.notifier).state = Locale(l.$2),
-              child: Text(l.$1),
-            ),
+          IconButton(
+            icon: const Icon(Icons.insights),
+            tooltip: 'অগ্রগতি · Progress',
+            onPressed: () => _push(context, 'অগ্রগতি · Progress',
+                const ProgressScreen()),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: 'সেটিংস · Settings',
+            onPressed: () => _push(context, 'সেটিংস · Settings',
+                const SettingsScreen()),
+          ),
         ],
       ),
       body: _pages[tab],
@@ -4823,7 +8391,6 @@ class _HomeShellState extends ConsumerState<HomeShell> {
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
-import '../domain/models.dart';
 import '../domain/pitch.dart';
 import 'widgets.dart';
 
@@ -4935,7 +8502,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
       if (recording) {
         recording = false;
         // TODO: stop `record`, decode PCM, learner = f0Contour(pcm, 16000).
-        final learner = const [178, 205, 232, 248, 246, 238]; // demo capture
+        const learner = <double>[178, 205, 232, 248, 246, 238]; // demo capture
         score = accentScore(_referenceContour, learner);
       } else {
         recording = true;
@@ -4994,6 +8561,542 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
 ```
 
 
+## File: lib\presentation\agent_panel.dart
+
+```dart
+// AgentPanel — the visible face of the four-agent system inside a lesson.
+// Renders: psych-state accent strip + Bengali rationale (explainability),
+// a dismissible session advice banner, and the Scaffold agent's help offer.
+//
+// Invariants (01/09): everything here is a RECOMMENDATION. Every banner has
+// an always-enabled dismiss/continue; nothing locks input or hides Skip.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/agent_state.dart';
+import '../app/providers.dart';
+
+/// 09 §state colors: FLOW green · STRUGGLE warm · BURNOUT calm blue ·
+/// BOREDOM playful purple · calibrating neutral.
+Color psychColor(PsychState s) => switch (s) {
+      PsychState.calibrating => const Color(0xFF6B7280),
+      PsychState.flow => const Color(0xFF00C853),
+      PsychState.struggle => const Color(0xFFFF6D00),
+      PsychState.burnout => const Color(0xFF2979FF),
+      PsychState.boredom => const Color(0xFFAA00FF),
+    };
+
+class AgentPanel extends ConsumerStatefulWidget {
+  /// Called when the learner accepts a hint/help offer (opens the hint UI).
+  final VoidCallback onAcceptHint;
+  const AgentPanel({super.key, required this.onAcceptHint});
+
+  @override
+  ConsumerState<AgentPanel> createState() => _AgentPanelState();
+}
+
+class _AgentPanelState extends ConsumerState<AgentPanel> {
+  bool _adviceDismissed = false;
+  AdviceKind? _dismissedKind;
+
+  @override
+  Widget build(BuildContext context) {
+    final agent = ref.watch(agentBusProvider);
+    final color = psychColor(agent.psych);
+
+    // A new kind of advice re-arms the banner; dismissing sticks per kind.
+    if (_dismissedKind != agent.advice.kind) _adviceDismissed = false;
+
+    final showAdvice = agent.advice.kind != AdviceKind.continueSession &&
+        !_adviceDismissed;
+    final offer = agent.scaffold;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Psych strip + one-line Bengali rationale (always explainable — 04).
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 400),
+          height: 3,
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(2),
+          ),
+        ),
+        if (agent.rationaleBn.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              agent.rationaleBn,
+              style: TextStyle(fontSize: 11, color: color.withValues(alpha: .9)),
+            ),
+          ),
+        if (showAdvice) _adviceBanner(agent.advice, color),
+        if (offer != null) _scaffoldOffer(offer),
+      ],
+    );
+  }
+
+  Widget _adviceBanner(SessionAdvice advice, Color color) {
+    return Card(
+      margin: const EdgeInsets.only(top: 8),
+      color: color.withValues(alpha: .12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(children: [
+          Icon(
+            advice.kind == AdviceKind.shortBreak
+                ? Icons.self_improvement
+                : Icons.tips_and_updates_outlined,
+            size: 18,
+            color: color,
+          ),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(advice.messageBn, style: const TextStyle(fontSize: 12)),
+          ),
+          // Continuing is ALWAYS allowed — this only hides the banner.
+          TextButton(
+            onPressed: () => setState(() {
+              _adviceDismissed = true;
+              _dismissedKind = advice.kind;
+            }),
+            child: const Text('ঠিক আছে', style: TextStyle(fontSize: 12)),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _scaffoldOffer(ScaffoldOffer offer) {
+    return Card(
+      margin: const EdgeInsets.only(top: 8),
+      color: const Color(0xFF1A2230),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        child: Row(children: [
+          const Icon(Icons.support_agent, size: 18, color: Color(0xFFFFC400)),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(offer.promptBn, style: const TextStyle(fontSize: 12)),
+          ),
+          TextButton(
+            onPressed: () {
+              ref.read(agentBusProvider.notifier).dismissScaffold();
+              widget.onAcceptHint();
+            },
+            child: const Text('হ্যাঁ, দেখাও', style: TextStyle(fontSize: 12)),
+          ),
+          TextButton(
+            onPressed: () =>
+                ref.read(agentBusProvider.notifier).dismissScaffold(),
+            child: const Text('না, থাক', style: TextStyle(fontSize: 12)),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+```
+
+
+## File: lib\presentation\lesson_list_screen.dart
+
+```dart
+// Lesson picker — all verified lessons grouped by pack (basics → daily →
+// work), each opening the 5-step micro-loop. Choosing is always the
+// learner's: no locks, no forced order (prerequisites are shown as guidance).
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../app/providers.dart';
+import '../domain/models.dart';
+import 'screens.dart';
+import 'widgets.dart';
+
+class LessonListScreen extends ConsumerWidget {
+  const LessonListScreen({super.key});
+
+  static const _packOrder = ['basics', 'daily', 'work'];
+  static const _packNames = {
+    'basics': 'ভিত্তি · Basics',
+    'daily': 'দৈনন্দিন · Daily life',
+    'work': 'কাজ · Work',
+  };
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final repo = ref.watch(contentProvider).valueOrNull;
+    if (repo == null) return const Center(child: CircularProgressIndicator());
+    final lang = ref.watch(localeProvider).languageCode;
+
+    final byPack = <String, List<Lesson>>{};
+    for (final l in repo.lessons) {
+      byPack.putIfAbsent(l.packId, () => []).add(l);
+    }
+    final packs = [
+      ..._packOrder.where(byPack.containsKey),
+      ...byPack.keys.where((p) => !_packOrder.contains(p)),
+    ];
+
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        for (final pack in packs) ...[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8, top: 4, left: 4),
+            child: Text(_packNames[pack] ?? pack,
+                style: const TextStyle(
+                    fontSize: 13, fontWeight: FontWeight.w600)),
+          ),
+          for (final lesson in byPack[pack]!)
+            Card(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: ListTile(
+                title: BilingualText(lesson.canDo, lang: lang),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: 2),
+                  child: Text('${lesson.items.length} শব্দ · ৫ ধাপ',
+                      style: TextStyle(
+                          fontSize: 11, color: Colors.grey.shade500)),
+                ),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                  builder: (_) => Scaffold(
+                    appBar: AppBar(title: Text(lesson.canDo.of(lang))),
+                    body: LessonScreen(lessonId: lesson.id),
+                  ),
+                )),
+              ),
+            ),
+          const SizedBox(height: 8),
+        ],
+      ],
+    );
+  }
+}
+
+```
+
+
+## File: lib\presentation\progress_screen.dart
+
+```dart
+// Progress dashboard (T-108) — mastery map, weak points, due forecast, and
+// neutral activity history, all computed offline from the encrypted SRS store
+// by domain/progress.dart.
+//
+// Framing (01/D-001): numbers are neutral history. Weak points read as
+// "tomorrow's focus", never failure; activity is a plain count, never a
+// streak with loss-warnings.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/feedback.dart';
+import '../app/providers.dart';
+import '../domain/progress.dart';
+
+class ProgressScreen extends ConsumerStatefulWidget {
+  const ProgressScreen({super.key});
+  @override
+  ConsumerState<ProgressScreen> createState() => _ProgressScreenState();
+}
+
+class _ProgressScreenState extends ConsumerState<ProgressScreen> {
+  ProgressReport? _report;
+  MasteryStats? _mastery;
+  bool _error = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      final srs = ref.read(srsProvider);
+      final cards = await srs.allCards();
+      final ratings = await srs.recentRatings();
+      final days = await srs.activityDays();
+      final lessons = await srs.lessonCompletionCount();
+      final retained = await srs.retainedWordCount(
+          minStability: RewardSchedule.retainedStabilityDays);
+      final report = buildProgressReport(
+        cards: cards,
+        recentRatings: ratings,
+        activityDays: days,
+        now: DateTime.now(),
+      );
+      if (!mounted) return;
+      setState(() {
+        _report = report;
+        _mastery =
+            MasteryStats(lessonsCompleted: lessons, wordsRetained: retained);
+      });
+    } catch (_) {
+      if (mounted) setState(() => _error = true);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final report = _report;
+    if (_error) {
+      return const Center(
+          child: Text('ডেটা পাওয়া যায়নি · progress data unavailable'));
+    }
+    if (report == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    if (report.isEmpty) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            const Icon(Icons.insights, size: 40, color: Color(0xFF6B7280)),
+            const SizedBox(height: 12),
+            const Text('এখনো কিছু জমা হয়নি · nothing tracked yet',
+                textAlign: TextAlign.center),
+            const SizedBox(height: 4),
+            Text('একটা লেসন শেষ করলে এখানে অগ্রগতি দেখা যাবে',
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.grey.shade500, fontSize: 12)),
+          ]),
+        ),
+      );
+    }
+    final mastery = _mastery;
+    return RefreshIndicator(
+      onRefresh: _load,
+      child: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          if (mastery != null) _headerStats(mastery),
+          const SizedBox(height: 12),
+          _masteryCard(report),
+          const SizedBox(height: 12),
+          _forecastCard(report),
+          if (report.weakest.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            _weakCard(report),
+          ],
+          const SizedBox(height: 12),
+          _activityCard(report),
+        ],
+      ),
+    );
+  }
+
+  // XP / level / exam readiness — every number a fixed function of mastery.
+  Widget _headerStats(MasteryStats m) {
+    Widget stat(String label, String value) => Expanded(
+          child: Column(children: [
+            Text(value,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            Text(label,
+                style: TextStyle(fontSize: 11, color: Colors.grey.shade500),
+                textAlign: TextAlign.center),
+          ]),
+        );
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        child: Column(children: [
+          Row(children: [
+            stat('XP', '${m.xp}'),
+            stat('লেভেল · Level', '${m.level}'),
+            stat('লেসন · Lessons', '${m.lessonsCompleted}'),
+          ]),
+          const SizedBox(height: 12),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                  'JFT-A2 প্রস্তুতি · exam readiness  ${(m.examReadiness * 100).toStringAsFixed(0)}%',
+                  style: TextStyle(fontSize: 12, color: Colors.grey.shade400)),
+              const SizedBox(height: 6),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: m.examReadiness,
+                  minHeight: 8,
+                  backgroundColor: Colors.white10,
+                  color: const Color(0xFF00C853),
+                ),
+              ),
+            ]),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _masteryCard(ProgressReport r) {
+    final buckets = [
+      ('নতুন', r.newCount, const Color(0xFF6B7280)),
+      ('শিখছি', r.learning, const Color(0xFFFFAB00)),
+      ('কাঁচা', r.young, const Color(0xFF29B6F6)),
+      ('মনে আছে', r.retained, const Color(0xFF00C853)),
+    ];
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text('স্মৃতির মানচিত্র · memory map (${r.total})',
+              style: const TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 10),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: SizedBox(
+              height: 12,
+              child: Row(children: [
+                for (final (_, count, color) in buckets)
+                  if (count > 0)
+                    Expanded(flex: count, child: Container(color: color)),
+              ]),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Wrap(spacing: 12, runSpacing: 4, children: [
+            for (final (label, count, color) in buckets)
+              Row(mainAxisSize: MainAxisSize.min, children: [
+                Container(width: 8, height: 8, color: color),
+                const SizedBox(width: 4),
+                Text('$label $count', style: const TextStyle(fontSize: 12)),
+              ]),
+          ]),
+          const SizedBox(height: 8),
+          Text(
+              'রিটেনশন · retention ${(r.retention * 100).toStringAsFixed(0)}%',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade400)),
+        ]),
+      ),
+    );
+  }
+
+  Widget _forecastCard(ProgressReport r) {
+    const dayLabels = ['আজ', '+১', '+২', '+৩', '+৪', '+৫', '+৬'];
+    final maxCount =
+        r.dueForecast.fold(1, (max, v) => v > max ? v : max);
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('সামনের রিভিউ · due this week',
+              style: TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          SizedBox(
+            height: 72,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                for (var d = 0; d < r.dueForecast.length && d < 7; d++)
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          if (r.dueForecast[d] > 0)
+                            Text('${r.dueForecast[d]}',
+                                style: const TextStyle(fontSize: 10)),
+                          const SizedBox(height: 2),
+                          Container(
+                            height: 40.0 * r.dueForecast[d] / maxCount + 2,
+                            decoration: BoxDecoration(
+                              color: d == 0
+                                  ? const Color(0xFF00C853)
+                                  : const Color(0xFF3D5AFE),
+                              borderRadius: BorderRadius.circular(3),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(dayLabels[d],
+                              style: TextStyle(
+                                  fontSize: 10,
+                                  color: Colors.grey.shade500)),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  // "Tomorrow's focus" — weakness framed as guidance, never as failure.
+  Widget _weakCard(ProgressReport r) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          const Text('ঝালাইয়ের তালিকা · focus next',
+              style: TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 4),
+          Text('এগুলো একটু বেশি দেখা দরকার — এটাই স্বাভাবিক শেখা।',
+              style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+          const SizedBox(height: 8),
+          for (final w in r.weakest)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(children: [
+                Expanded(
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(w.word,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w600)),
+                        if (w.meaningBn.isNotEmpty)
+                          Text(w.meaningBn,
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade500)),
+                      ]),
+                ),
+                Text(
+                    w.lapses > 0
+                        ? '${w.lapses}× ভুলে গেছ'
+                        : 'এখনো কাঁচা',
+                    style: TextStyle(
+                        fontSize: 11, color: Colors.amber.shade300)),
+              ]),
+            ),
+        ]),
+      ),
+    );
+  }
+
+  Widget _activityCard(ProgressReport r) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(children: [
+          const Icon(Icons.calendar_month, size: 20, color: Color(0xFF6B7280)),
+          const SizedBox(width: 10),
+          Expanded(
+            // Neutral history — a fact, never a streak to protect (D-001).
+            child: Text(
+                'গত ৩০ দিনে ${r.activeDaysLast30} দিন পড়েছ · '
+                '${r.activeDaysLast30} active days in 30',
+                style: const TextStyle(fontSize: 13)),
+          ),
+        ]),
+      ),
+    );
+  }
+}
+
+```
+
+
 ## File: lib\presentation\screens.dart
 
 ```dart
@@ -5004,10 +9107,12 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/persona.dart';
 import '../app/providers.dart';
 import '../domain/fsrs.dart';
 import '../domain/models.dart';
 import '../l10n/app_localizations.dart';
+import 'agent_panel.dart';
 import 'widgets.dart';
 
 /// Kana grid — tap a character to hear it (TTS hook).
@@ -5080,7 +9185,28 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   final List<String> _built = [];
   List<String> _bank = [];
 
+  // agent signals: when the current step appeared (hesitation) and whether
+  // this step's first graded interaction was already timed.
+  DateTime _stepShownAt = DateTime.now();
+  bool _stepTimed = false;
+
+  // per-lesson bookkeeping for the Feedback agent's completion record.
+  int _lessonAnswers = 0, _lessonCorrect = 0, _lessonHints = 0, _lessonSkips = 0;
+
   _Phase get _phase => _Phase.values[_phaseIx];
+
+  /// Milliseconds the learner looked at this step before first acting on it.
+  /// Reported once per step so retries don't read as hesitation.
+  double? _takeHesitation() {
+    if (_stepTimed) return null;
+    _stepTimed = true;
+    return DateTime.now().difference(_stepShownAt).inMilliseconds.toDouble();
+  }
+
+  void _markStepShown() {
+    _stepShownAt = DateTime.now();
+    _stepTimed = false;
+  }
 
   void _resetStep() {
     _hint = false;
@@ -5094,13 +9220,32 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     _bank = [];
   }
 
-  void _start() => setState(() {
-        _started = true;
-        _done = false;
-        _item = 0;
-        _phaseIx = 0;
-        _resetStep();
-      });
+  void _start() {
+    setState(() {
+      _started = true;
+      _done = false;
+      _item = 0;
+      _phaseIx = 0;
+      _lessonAnswers = 0;
+      _lessonCorrect = 0;
+      _lessonHints = 0;
+      _lessonSkips = 0;
+      _resetStep();
+      _markStepShown();
+    });
+    // Wake the agent bus and feed it the SRS context (retention, days away,
+    // due load) as soon as the encrypted store answers. Fire-and-forget: the
+    // agents degrade to in-session signals if the DB is unavailable.
+    final bus = ref.read(agentBusProvider.notifier);
+    bus.startSession();
+    ref.read(srsProvider).srsContext().then((c) {
+      bus.updateSrsContext(
+        retention: c.retention,
+        daysSinceLastSession: c.daysSinceLastSession,
+        dueLoad: c.dueLoad,
+      );
+    }).catchError((_) {/* device-only DB may be absent off-device */});
+  }
 
   void _quit() => setState(() {
         _started = false;
@@ -5112,6 +9257,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
   void _advance(int itemCount) => setState(() {
         _resetStep();
+        _markStepShown();
         if (_phaseIx < _Phase.values.length - 1) {
           _phaseIx++;
         } else if (_item < itemCount - 1) {
@@ -5120,8 +9266,40 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         } else {
           _started = false;
           _done = true;
+          _recordCompletion();
         }
       });
+
+  /// One graded answer → both the agent bus (adaptation) and the per-lesson
+  /// counters (Feedback agent's completion record).
+  void _gradeAnswer({
+    required bool correct,
+    required String patternKey,
+    required String itemId,
+  }) {
+    _lessonAnswers++;
+    if (correct) _lessonCorrect++;
+    final bus = ref.read(agentBusProvider.notifier);
+    if (!correct) bus.recordItemMiss(itemId);
+    bus.recordAnswer(
+      correct: correct,
+      patternKey: patternKey,
+      hesitationMs: _takeHesitation(),
+    );
+  }
+
+  /// Persists the finished lesson (fixed-XP mastery record). Fire-and-forget.
+  Future<void> _recordCompletion() async {
+    try {
+      await ref.read(srsProvider).recordLessonCompletion(
+            lessonId: widget.lessonId,
+            items: _lessonAnswers,
+            correct: _lessonCorrect,
+            hints: _lessonHints,
+            skips: _lessonSkips,
+          );
+    } catch (_) {/* DB unavailable off-device; completion UI still shows */}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -5143,7 +9321,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           _header(context, lesson, lang),
           const SizedBox(height: 10),
           _controls(lang, n), // [Skip] [Hint] [Quit] — present in every step
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
+          // The agents' visible face: psych strip, rationale, offers (04/09).
+          AgentPanel(onAcceptHint: () => setState(() => _hint = true)),
+          const SizedBox(height: 8),
           Expanded(
             child: SingleChildScrollView(
               child: _phaseBody(context, lesson, item, lang, n),
@@ -5185,10 +9366,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           ),
         );
     return Row(children: [
-      btn(Icons.lightbulb_outline, 'ইঙ্গিত', 'Show a hint',
-          () => setState(() => _hint = !_hint)),
+      btn(Icons.lightbulb_outline, 'ইঙ্গিত', 'Show a hint', () {
+        if (!_hint) {
+          _lessonHints++;
+          ref.read(agentBusProvider.notifier).recordHint();
+        }
+        setState(() => _hint = !_hint);
+      }),
       const SizedBox(width: 8),
-      btn(Icons.skip_next, 'বাদ', 'Skip this step', () => _advance(itemCount)),
+      btn(Icons.skip_next, 'বাদ', 'Skip this step', () {
+        _lessonSkips++;
+        ref.read(agentBusProvider.notifier).recordSkip();
+        _advance(itemCount);
+      }),
       const SizedBox(width: 8),
       btn(Icons.close, 'বন্ধ', 'Quit the lesson', _quit),
     ]);
@@ -5342,25 +9532,31 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       for (var k = 0; k < _opts.length; k++)
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
-          child: _optionTile(context, lang, k),
+          child: _optionTile(context, lang, k, item),
         ),
       const SizedBox(height: 4),
       if (picked && correct)
         Row(children: [
           const Icon(Icons.check_circle, color: Color(0xFF00C853), size: 20),
           const SizedBox(width: 6),
-          const Text('ঠিক! · Correct'),
-          const Spacer(),
+          // Instant positive feedback in the learner's chosen tutor voice.
+          Expanded(
+            child: Text(ref
+                .read(agentBusProvider.notifier)
+                .personaSay(PersonaEvent.correctAnswer)),
+          ),
           FilledButton(
               onPressed: () => _advance(n), child: const Text('পরের · Next')),
         ])
       else if (picked && !correct)
-        Text('আবার দেখো · Not quite — try another',
+        Text(
+            '${ref.read(agentBusProvider.notifier).personaSay(PersonaEvent.wrongAnswer)} · try another',
             style: TextStyle(color: Colors.amber.shade300, fontSize: 13)),
     ]);
   }
 
-  Widget _optionTile(BuildContext context, String lang, int k) {
+  Widget _optionTile(
+      BuildContext context, String lang, int k, LessonItem item) {
     final opt = _opts[k];
     final isPick = _pick == k;
     // Reveal correctness only for the tapped option; a hint highlights the answer.
@@ -5370,7 +9566,16 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
     final hinted = _hint && opt.correct;
     return InkWell(
-      onTap: () => setState(() => _pick = k),
+      onTap: () {
+        if (_pick != k) {
+          // A changed pick is a fresh graded attempt (deterministic key match).
+          _gradeAnswer(
+              correct: opt.correct,
+              patternKey: 'recognition',
+              itemId: item.id);
+        }
+        setState(() => _pick = k);
+      },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         constraints: const BoxConstraints(minHeight: 48),
@@ -5507,6 +9712,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
               ActionChip(
                 label: Text(_built[k], style: const TextStyle(fontSize: 18)),
                 onPressed: () => setState(() {
+                  ref.read(agentBusProvider.notifier).recordInteraction();
                   _bank.add(_built.removeAt(k)); // tap to send back
                 }),
               ),
@@ -5524,7 +9730,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           for (var k = 0; k < _bank.length; k++)
             ActionChip(
               label: Text(_bank[k], style: const TextStyle(fontSize: 18)),
-              onPressed: () => setState(() => _built.add(_bank.removeAt(k))),
+              onPressed: () => setState(() {
+                ref.read(agentBusProvider.notifier).recordInteraction();
+                _built.add(_bank.removeAt(k));
+                if (_built.length == tokens.length) {
+                  // Placing the last block completes one graded attempt.
+                  _gradeAnswer(
+                      correct: _listEq(_built, tokens),
+                      patternKey: 'context',
+                      itemId: item.id);
+                }
+              }),
             ),
         ],
       ),
@@ -5653,9 +9869,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         children: [
           const Icon(Icons.check_circle, color: Color(0xFF00C853), size: 48),
           const SizedBox(height: 12),
-          const Text('লেসন শেষ · Lesson complete',
+          Text(
+              ref
+                  .read(agentBusProvider.notifier)
+                  .personaSay(PersonaEvent.lessonComplete),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          // Fixed, predictable XP — never randomized (D-001 reward schedule).
+          Text('+১০ XP · প্রতি লেসনে নির্দিষ্ট',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13)),
           const SizedBox(height: 8),
           Text('আরেকটা? · Another round?',
               textAlign: TextAlign.center,
@@ -5675,6 +9900,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   // forget: the encrypted DB is device-only, so a failure here (e.g. running
   // without the SQLCipher plugin) never blocks the lesson flow.
   Future<void> _seedAndReview(LessonItem item, Rating r) async {
+    ref.read(agentBusProvider.notifier).recordLearned(item.id);
     try {
       final srs = ref.read(srsProvider);
       await srs.seedCard(
@@ -5825,6 +10051,263 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 ```
 
 
+## File: lib\presentation\settings_screen.dart
+
+```dart
+// Settings — language, tutor persona, and DATA AUTONOMY (01 constitution):
+// one-tap offline export (ZIP) and deletion with a 7-day grace period the
+// learner can cancel anytime. No support ticket, no account, no friction.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../agents/agent_state.dart';
+import '../agents/persona.dart';
+import '../app/providers.dart';
+import '../data/export_service.dart';
+
+/// How long a deletion request stays cancellable before the purge.
+const kDeletionGraceDays = 7;
+
+class SettingsScreen extends ConsumerStatefulWidget {
+  const SettingsScreen({super.key});
+  @override
+  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+  DateTime? _deletionRequestedAt;
+  bool _busy = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadState();
+  }
+
+  /// Loads persisted choices and — if a deletion grace period has fully
+  /// elapsed — completes the purge the learner asked for.
+  Future<void> _loadState() async {
+    try {
+      final srs = ref.read(srsProvider);
+      final requested = await srs.deletionRequestedAt();
+      if (requested != null &&
+          DateTime.now().difference(requested).inDays >= kDeletionGraceDays) {
+        await srs.purgeAllData();
+        if (mounted) setState(() => _deletionRequestedAt = null);
+        return;
+      }
+      final persona = await srs.getMeta('persona');
+      if (persona != null) {
+        final type = PersonaType.values
+            .where((p) => p.name == persona)
+            .firstOrNull;
+        if (type != null) {
+          ref.read(agentBusProvider.notifier).setPersona(type);
+        }
+      }
+      if (mounted) setState(() => _deletionRequestedAt = requested);
+    } catch (_) {/* device-only DB may be absent off-device */}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final locale = ref.watch(localeProvider);
+    final agent = ref.watch(agentBusProvider);
+    return ListView(
+      padding: const EdgeInsets.all(16),
+      children: [
+        if (_deletionRequestedAt != null) _deletionPendingBanner(),
+        _section('ভাষা · Language'),
+        Card(
+          child: RadioGroup<String>(
+            groupValue: locale.languageCode,
+            onChanged: (v) =>
+                ref.read(localeProvider.notifier).state = Locale(v ?? 'bn'),
+            child: Column(children: [
+              for (final (label, code) in const [
+                ('বাংলা (English gloss সহ)', 'bn'),
+                ('English', 'en'),
+                ('日本語', 'ja'),
+              ])
+                RadioListTile<String>(title: Text(label), value: code),
+            ]),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _section('তোমার টিউটর · Your tutor'),
+        Card(
+          child: RadioGroup<PersonaType>(
+            groupValue: agent.persona,
+            onChanged: (v) {
+              if (v == null) return;
+              ref.read(agentBusProvider.notifier).setPersona(v);
+              // Best-effort persistence; the bus holds it for the session.
+              ref
+                  .read(srsProvider)
+                  .setMeta('persona', v.name)
+                  .catchError((_) {});
+            },
+            child: Column(children: [
+              for (final p in PersonaType.values)
+                RadioListTile<PersonaType>(
+                  title: Text(personaNameBn(p)),
+                  subtitle: Text(
+                      personaLine(p, PersonaEvent.greeting,
+                          psych: PsychState.flow, weekNumber: 2),
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.grey.shade500)),
+                  value: p,
+                ),
+            ]),
+          ),
+        ),
+        const SizedBox(height: 16),
+        _section('তোমার ডেটা · Your data'),
+        Card(
+          child: Column(children: [
+            ListTile(
+              leading: const Icon(Icons.archive_outlined),
+              title: const Text('ডেটা এক্সপোর্ট · Export everything (ZIP)'),
+              subtitle: const Text('JSON + CSV — এক ট্যাপে, অফলাইনে',
+                  style: TextStyle(fontSize: 12)),
+              trailing: _busy
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Icon(Icons.chevron_right),
+              onTap: _busy ? null : _export,
+            ),
+            const Divider(height: 1),
+            ListTile(
+              leading:
+                  const Icon(Icons.delete_outline, color: Color(0xFFFF6D00)),
+              title: const Text('সব ডেটা মুছে ফেলো · Delete all data'),
+              subtitle: Text(
+                  '$kDeletionGraceDays দিনের মধ্যে মত বদলালে ফিরিয়ে আনা যাবে',
+                  style: const TextStyle(fontSize: 12)),
+              enabled: _deletionRequestedAt == null,
+              onTap: _deletionRequestedAt == null ? _confirmDeletion : null,
+            ),
+          ]),
+        ),
+        const SizedBox(height: 16),
+        _section('স্বীকৃতি · Attribution'),
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('Stroke-order data: KanjiVG',
+                      style: TextStyle(fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 4),
+                  Text(
+                      '© Ulrich Apel, CC BY-SA 3.0 — kanjivg.tagaini.net\n'
+                      'Kana stroke animations derive from KanjiVG path data.',
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.grey.shade500)),
+                ]),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _section(String title) => Padding(
+        padding: const EdgeInsets.only(bottom: 8, left: 4),
+        child: Text(title,
+            style: const TextStyle(
+                fontSize: 13, fontWeight: FontWeight.w600)),
+      );
+
+  Widget _deletionPendingBanner() {
+    final requested = _deletionRequestedAt!;
+    final daysLeft = kDeletionGraceDays -
+        DateTime.now().difference(requested).inDays;
+    return Card(
+      color: const Color(0xFF3A2A12),
+      margin: const EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(children: [
+          const Icon(Icons.hourglass_top, color: Color(0xFFFFAB00)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+                'ডেটা মুছে যাবে $daysLeft দিনের মধ্যে। মত বদলেছ? এক ট্যাপে বাতিল করো।',
+                style: const TextStyle(fontSize: 13)),
+          ),
+          TextButton(
+            onPressed: () async {
+              try {
+                await ref.read(srsProvider).cancelDeletion();
+              } catch (_) {}
+              if (mounted) setState(() => _deletionRequestedAt = null);
+            },
+            child: const Text('বাতিল · Cancel'),
+          ),
+        ]),
+      ),
+    );
+  }
+
+  Future<void> _export() async {
+    setState(() => _busy = true);
+    try {
+      final file =
+          await ExportService(ref.read(srsProvider)).exportZip();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('এক্সপোর্ট হয়েছে · saved:\n${file.path}'),
+        duration: const Duration(seconds: 6),
+      ));
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('এক্সপোর্ট করা গেল না · export failed')));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
+  Future<void> _confirmDeletion() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('সব ডেটা মুছে ফেলবে?'),
+        content: Text(
+            'তোমার সব কার্ড, রিভিউ আর অগ্রগতি মুছে যাবে।\n\n'
+            '$kDeletionGraceDays দিনের মধ্যে মত বদলালে এখান থেকেই বাতিল করা যাবে। '
+            'তার আগে চাইলে ডেটা এক্সপোর্ট করে রেখো।'),
+        actions: [
+          TextButton(
+              onPressed: () => Navigator.pop(ctx, false),
+              child: const Text('থাক · Keep my data')),
+          FilledButton(
+              onPressed: () => Navigator.pop(ctx, true),
+              child: const Text('মুছে ফেলো · Delete')),
+        ],
+      ),
+    );
+    if (confirmed != true) return;
+    try {
+      await ref.read(srsProvider).requestDeletion();
+      if (mounted) {
+        setState(() => _deletionRequestedAt = DateTime.now());
+      }
+    } catch (_) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('অনুরোধ রাখা গেল না · could not request deletion')));
+    }
+  }
+}
+
+```
+
+
 ## File: lib\presentation\widgets.dart
 
 ```dart
@@ -5889,8 +10372,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-const _hira = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
-const _kata = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const _hiraChars = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
+const _kataChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
 class WritingScreen extends StatefulWidget {
   const WritingScreen({super.key});
@@ -5909,9 +10392,8 @@ class _WritingScreenState extends State<WritingScreen>
       AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
   bool _animating = false;
 
-  String get _script => _kata ? _kata_ : 'hiragana';
-  final String _kata_ = 'katakana';
-  String get _chars => _kata ? _kata : _hira;
+  String get _script => _kata ? 'katakana' : 'hiragana';
+  String get _chars => _kata ? _kataChars : _hiraChars;
   String get _cur => _chars[_idx];
 
   @override
@@ -8964,7 +13446,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
   flutter_riverpod: ^2.5.1
   sqflite_sqlcipher: ^3.4.0   # SQLCipher AES-256 (encrypted at rest — T-101/06)
   flutter_secure_storage: ^9.2.4  # Keystore-backed DB passphrase store
@@ -8973,6 +13455,8 @@ dependencies:
   record: ^5.1.2       # mic capture for shadowing
   just_audio: ^0.9.40  # native reference-audio playback
   fftea: ^1.5.0        # on-device pitch (F0) extraction for accent scoring
+  archive: ^3.6.1      # pure-Dart ZIP for one-tap offline data export (01)
+  path_provider: ^2.1.4 # documents dir for the export file
 
 dev_dependencies:
   flutter_test:
@@ -8988,6 +13472,437 @@ flutter:
 
 # Native model integration (llama.cpp / whisper.cpp / Kokoro) is wired through
 # a Kotlin MethodChannel on the Android side — see README.
+
+```
+
+
+## File: test\agents_test.dart
+
+```dart
+// Agent-system tests (04): Director decision table, Scaffold offers, Persona
+// determinism + softening, Feedback fixed-reward schedule, and full AgentBus
+// session dynamics with an injected clock. Mirrors tools/agents_reference.mjs.
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:sensei_app/agents/agent_bus.dart';
+import 'package:sensei_app/agents/agent_state.dart';
+import 'package:sensei_app/agents/director.dart';
+import 'package:sensei_app/agents/feedback.dart';
+import 'package:sensei_app/agents/persona.dart';
+import 'package:sensei_app/agents/scaffold_agent.dart';
+
+void main() {
+  group('Director', () {
+    test('too few answers → calibrating', () {
+      final d = directorDecide(const SessionSignals(answers: 3, correct: 1));
+      expect(d.psych, PsychState.calibrating);
+    });
+
+    test('session-start rusty rule: low retention after days away → struggle',
+        () {
+      final d = directorDecide(const SessionSignals(
+          answers: 0, retention: 0.5, daysSinceLastSession: 4));
+      expect(d.psych, PsychState.struggle);
+      expect(d.rationaleBn, 'আগে একটু ঝালাই করি।');
+    });
+
+    test('recent accuracy < 60% → struggle, difficulty −1', () {
+      final d = directorDecide(
+        const SessionSignals(
+            answers: 10, correct: 5, recentAnswers: 10, recentCorrect: 5),
+        currentDifficulty: 5,
+      );
+      expect(d.psych, PsychState.struggle);
+      expect(d.difficulty, 4);
+    });
+
+    test('accuracy > 90% after 20 min → boredom, difficulty +1', () {
+      final d = directorDecide(
+        const SessionSignals(
+            answers: 20,
+            correct: 19,
+            recentAnswers: 10,
+            recentCorrect: 10,
+            sessionMinutes: 25),
+        currentDifficulty: 5,
+      );
+      expect(d.psych, PsychState.boredom);
+      expect(d.difficulty, 6);
+    });
+
+    test('high accuracy early in the session is flow, not boredom', () {
+      final d = directorDecide(const SessionSignals(
+          answers: 8,
+          correct: 8,
+          recentAnswers: 8,
+          recentCorrect: 8,
+          sessionMinutes: 10));
+      expect(d.psych, PsychState.flow);
+    });
+
+    test('collapsed tap speed + errors → burnout, difficulty −2, break advice',
+        () {
+      final d = directorDecide(
+        const SessionSignals(
+            answers: 12,
+            correct: 7,
+            recentAnswers: 10,
+            recentCorrect: 6,
+            tapSpeedRatio: 0.4),
+        currentDifficulty: 5,
+      );
+      expect(d.psych, PsychState.burnout);
+      expect(d.difficulty, 3);
+      expect(d.advice.kind, AdviceKind.shortBreak);
+      expect(d.advice.breakMinutes, 5);
+    });
+
+    test('errors after 40+ minutes also read as fatigue', () {
+      final d = directorDecide(const SessionSignals(
+          answers: 30,
+          correct: 18,
+          recentAnswers: 10,
+          recentCorrect: 6,
+          sessionMinutes: 45));
+      expect(d.psych, PsychState.burnout);
+    });
+
+    test('flow band holds difficulty', () {
+      final d = directorDecide(
+        const SessionSignals(
+            answers: 10, correct: 8, recentAnswers: 10, recentCorrect: 8),
+        currentDifficulty: 5,
+      );
+      expect(d.psych, PsychState.flow);
+      expect(d.difficulty, 5);
+      expect(d.advice.kind, AdviceKind.continueSession);
+    });
+
+    test('difficulty clamps to [1,10]', () {
+      final low = directorDecide(
+        const SessionSignals(
+            answers: 10,
+            correct: 5,
+            recentAnswers: 10,
+            recentCorrect: 5,
+            tapSpeedRatio: 0.3),
+        currentDifficulty: 1,
+      );
+      expect(low.difficulty, 1);
+      final high = directorDecide(
+        const SessionSignals(
+            answers: 30,
+            correct: 30,
+            recentAnswers: 10,
+            recentCorrect: 10,
+            sessionMinutes: 30),
+        currentDifficulty: 10,
+      );
+      expect(high.difficulty, 10);
+    });
+
+    test('120-minute soft cap → easy-review-only recommendation', () {
+      final d = directorDecide(const SessionSignals(
+          answers: 50,
+          correct: 40,
+          recentAnswers: 10,
+          recentCorrect: 8,
+          sessionMinutes: 121));
+      expect(d.advice.kind, AdviceKind.easyReviewOnly);
+      // The copy itself must keep continuing possible (never force).
+      expect(d.advice.messageBn, contains('চালিয়ে'));
+    });
+
+    test('every state carries a non-empty Bengali rationale', () {
+      for (final s in [
+        const SessionSignals(),
+        const SessionSignals(answers: 10, correct: 4, recentAnswers: 10, recentCorrect: 4),
+        const SessionSignals(answers: 10, correct: 8, recentAnswers: 10, recentCorrect: 8),
+        const SessionSignals(
+            answers: 30, correct: 29, recentAnswers: 10, recentCorrect: 10, sessionMinutes: 30),
+        const SessionSignals(
+            answers: 10, correct: 6, recentAnswers: 10, recentCorrect: 6, tapSpeedRatio: 0.2),
+      ]) {
+        expect(directorDecide(s).rationaleBn, isNotEmpty);
+      }
+    });
+  });
+
+  group('Scaffold', () {
+    test('3+ misses on one pattern → review-switch offer', () {
+      final o = scaffoldCheck(
+          const SessionSignals(consecutiveMissesOnPattern: 3));
+      expect(o?.kind, ScaffoldKind.reviewSwitch);
+    });
+
+    test('hesitation > 3s → hint offer, phrased as a question', () {
+      final o = scaffoldCheck(const SessionSignals(meanHesitationMs: 3200));
+      expect(o?.kind, ScaffoldKind.hint);
+      expect(o!.promptBn, endsWith('?'));
+    });
+
+    test('miss streak outranks hesitation', () {
+      final o = scaffoldCheck(const SessionSignals(
+          consecutiveMissesOnPattern: 3, meanHesitationMs: 5000));
+      expect(o?.kind, ScaffoldKind.reviewSwitch);
+    });
+
+    test('frantic tapping with errors → help offer', () {
+      final o = scaffoldCheck(const SessionSignals(
+          tapSpeedRatio: 3.0,
+          answers: 10,
+          correct: 4,
+          recentAnswers: 10,
+          recentCorrect: 4));
+      expect(o?.kind, ScaffoldKind.helpOffer);
+    });
+
+    test('no confusion signal → no offer', () {
+      expect(scaffoldCheck(const SessionSignals()), isNull);
+    });
+  });
+
+  group('Persona', () {
+    test('deterministic: same inputs, same line', () {
+      final a = personaLine(PersonaType.didi, PersonaEvent.correctAnswer,
+          rotation: 4, psych: PsychState.flow);
+      final b = personaLine(PersonaType.didi, PersonaEvent.correctAnswer,
+          rotation: 4, psych: PsychState.flow);
+      expect(a, b);
+    });
+
+    test('rotation cycles a fixed set (no variable-reward feel)', () {
+      final seen = <String>{};
+      for (var i = 0; i < 12; i++) {
+        seen.add(personaLine(PersonaType.friend, PersonaEvent.correctAnswer,
+            rotation: i, psych: PsychState.flow));
+      }
+      final cycle = seen.length;
+      expect(cycle, greaterThan(1));
+      // The 13th line repeats the cycle exactly.
+      expect(
+          personaLine(PersonaType.friend, PersonaEvent.correctAnswer,
+              rotation: 12, psych: PsychState.flow),
+          personaLine(PersonaType.friend, PersonaEvent.correctAnswer,
+              rotation: 12 % cycle, psych: PsychState.flow));
+    });
+
+    test('every persona softens on struggle (anxiety → reduce intensity)', () {
+      for (final p in PersonaType.values) {
+        final normal = personaLine(p, PersonaEvent.wrongAnswer,
+            psych: PsychState.flow, rotation: 0);
+        final gentle = personaLine(p, PersonaEvent.wrongAnswer,
+            psych: PsychState.struggle, rotation: 0);
+        expect(gentle, isNot(normal),
+            reason: '${p.name} must change tone when the learner struggles');
+      }
+    });
+
+    test('personas have distinct voices', () {
+      final lines = PersonaType.values
+          .map((p) => personaLine(p, PersonaEvent.correctAnswer,
+              psych: PsychState.flow, rotation: 0))
+          .toSet();
+      expect(lines.length, PersonaType.values.length);
+    });
+
+    test('all lines are non-empty for every event/state combination', () {
+      for (final p in PersonaType.values) {
+        for (final e in PersonaEvent.values) {
+          for (final st in PsychState.values) {
+            for (var r = 0; r < 4; r++) {
+              expect(
+                  personaLine(p, e, psych: st, rotation: r, weekNumber: 1),
+                  isNotEmpty);
+              expect(
+                  personaLine(p, e,
+                      psych: st, rotation: r, weekNumber: 20, casualOptIn: true),
+                  isNotEmpty);
+            }
+          }
+        }
+      }
+    });
+  });
+
+  group('Feedback (fixed reward schedule)', () {
+    test('XP is a fixed multiple of lessons — never anything else', () {
+      expect(const MasteryStats(lessonsCompleted: 0, wordsRetained: 0).xp, 0);
+      expect(const MasteryStats(lessonsCompleted: 7, wordsRetained: 0).xp, 70);
+    });
+
+    test('milestone exactly every 10 lessons', () {
+      expect(milestoneReached(9), isFalse);
+      expect(milestoneReached(10), isTrue);
+      expect(milestoneReached(11), isFalse);
+      expect(milestoneReached(20), isTrue);
+    });
+
+    test('level rises exactly every 50 retained words', () {
+      expect(levelUp(49, 50), isTrue);
+      expect(levelUp(50, 51), isFalse);
+      expect(levelUp(100, 149), isFalse);
+      expect(levelUp(99, 150), isTrue);
+      expect(
+          const MasteryStats(lessonsCompleted: 0, wordsRetained: 120).level, 2);
+    });
+
+    test('exam readiness is retained/target, clamped', () {
+      expect(
+          const MasteryStats(lessonsCompleted: 0, wordsRetained: 600)
+              .examReadiness,
+          closeTo(0.5, 1e-9));
+      expect(
+          const MasteryStats(lessonsCompleted: 0, wordsRetained: 5000)
+              .examReadiness,
+          1.0);
+    });
+
+    test('session summary: weak = missed twice+, neutral copy when empty', () {
+      final s = buildSessionSummary(
+        learnedIds: ['a', 'b'],
+        missCounts: {'a': 1, 'c': 2, 'd': 3},
+        dueTomorrow: 4,
+        lessonsCompletedBefore: 9,
+        lessonsCompletedNow: 10,
+        wordsRetainedBefore: 49,
+        wordsRetainedNow: 50,
+      );
+      expect(s.weakIds, unorderedEquals(['c', 'd']));
+      expect(s.xpEarned, RewardSchedule.xpPerLesson);
+      expect(s.milestone, isTrue);
+      expect(s.leveledUp, isTrue);
+      expect(s.lineBn, isNotEmpty);
+
+      final empty = buildSessionSummary(
+        learnedIds: const [],
+        missCounts: const {},
+        dueTomorrow: 0,
+        lessonsCompletedBefore: 0,
+        lessonsCompletedNow: 0,
+        wordsRetainedBefore: 0,
+        wordsRetainedNow: 0,
+      );
+      expect(empty.lineBn, 'আজ ঘুরে দেখলে — সেটাও শেখা।');
+    });
+  });
+
+  group('AgentBus (session dynamics, fake clock)', () {
+    late DateTime now;
+    late AgentBus bus;
+
+    setUp(() {
+      now = DateTime(2026, 7, 10, 9, 0);
+      bus = AgentBus(clock: () => now);
+      bus.startSession();
+    });
+
+    void tickClock(Duration d) => now = now.add(d);
+
+    test('fresh session starts calibrating', () {
+      expect(bus.state.psych, PsychState.calibrating);
+    });
+
+    test('sustained correct answers reach flow', () {
+      for (var i = 0; i < 8; i++) {
+        tickClock(const Duration(seconds: 5));
+        bus.recordAnswer(correct: i != 2, patternKey: 'recognition');
+      }
+      expect(bus.state.psych, PsychState.flow);
+    });
+
+    test('a same-pattern miss streak surfaces a scaffold offer + struggle',
+        () {
+      for (var i = 0; i < 5; i++) {
+        tickClock(const Duration(seconds: 5));
+        bus.recordAnswer(correct: false, patternKey: 'context');
+      }
+      expect(bus.state.psych, PsychState.struggle);
+      expect(bus.state.scaffold?.kind, ScaffoldKind.reviewSwitch);
+    });
+
+    test('dismissing a scaffold offer clears it and resets the streak', () {
+      for (var i = 0; i < 4; i++) {
+        tickClock(const Duration(seconds: 5));
+        bus.recordAnswer(correct: false, patternKey: 'context');
+      }
+      expect(bus.state.scaffold, isNotNull);
+      bus.dismissScaffold();
+      expect(bus.state.scaffold, isNull);
+      // One more miss is NOT enough to re-trigger (streak was reset).
+      tickClock(const Duration(seconds: 5));
+      bus.recordAnswer(correct: true, patternKey: 'recognition');
+      expect(bus.state.scaffold, isNull);
+    });
+
+    test('slowing taps + errors drive burnout with a break recommendation',
+        () {
+      // Establish a brisk baseline tempo (8 gaps at 2s), mostly correct.
+      for (var i = 0; i < 9; i++) {
+        tickClock(const Duration(seconds: 2));
+        bus.recordAnswer(correct: true, patternKey: 'recognition');
+      }
+      // Then: everything slows to 5× and answers go wrong.
+      for (var i = 0; i < 8; i++) {
+        tickClock(const Duration(seconds: 10));
+        bus.recordAnswer(correct: false, patternKey: 'recognition');
+      }
+      expect(bus.state.psych, PsychState.burnout);
+      expect(bus.state.advice.kind, AdviceKind.shortBreak);
+    });
+
+    test('120 minutes triggers the easy-review-only soft cap', () {
+      for (var i = 0; i < 6; i++) {
+        tickClock(const Duration(seconds: 5));
+        bus.recordAnswer(correct: true, patternKey: 'recognition');
+      }
+      tickClock(const Duration(minutes: 121));
+      bus.tick();
+      expect(bus.state.advice.kind, AdviceKind.easyReviewOnly);
+    });
+
+    test('rusty SRS context flips a fresh session to gentle review mode', () {
+      bus.updateSrsContext(retention: 0.4, daysSinceLastSession: 6);
+      expect(bus.state.psych, PsychState.struggle);
+      expect(bus.state.rationaleBn, 'আগে একটু ঝালাই করি।');
+    });
+
+    test('psych transitions are logged for explainability', () {
+      for (var i = 0; i < 8; i++) {
+        tickClock(const Duration(seconds: 5));
+        bus.recordAnswer(correct: false, patternKey: 'context');
+      }
+      expect(
+          bus.log.any((e) => e.event.contains('struggle')), isTrue);
+      expect(bus.log.every((e) => e.rationaleBn.isNotEmpty), isTrue);
+    });
+
+    test('persona switching is learner-driven and logged, never automatic',
+        () {
+      expect(bus.state.persona, PersonaType.didi);
+      // Nothing in a whole stormy session may auto-switch the persona.
+      for (var i = 0; i < 15; i++) {
+        tickClock(const Duration(seconds: 8));
+        bus.recordAnswer(correct: i.isEven, patternKey: 'recognition');
+      }
+      expect(bus.state.persona, PersonaType.didi);
+      bus.setPersona(PersonaType.coach);
+      expect(bus.state.persona, PersonaType.coach);
+      expect(bus.log.any((e) => e.event.startsWith('persona:')), isTrue);
+    });
+
+    test('idle pauses (>60s) never count as slow tapping', () {
+      for (var i = 0; i < 9; i++) {
+        tickClock(const Duration(seconds: 2));
+        bus.recordAnswer(correct: true, patternKey: 'recognition');
+      }
+      // A tea break…
+      tickClock(const Duration(minutes: 5));
+      bus.recordAnswer(correct: true, patternKey: 'recognition');
+      expect(bus.state.psych, isNot(PsychState.burnout));
+    });
+  });
+}
 
 ```
 
@@ -9044,6 +13959,278 @@ void main() {
     expect(after.lapses, equals(1));
   });
 }
+
+```
+
+
+## File: test\progress_test.dart
+
+```dart
+// Progress-analysis tests (T-108): mastery buckets, weakness ordering,
+// due forecast, retention, and neutral activity counting.
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:sensei_app/domain/fsrs.dart';
+import 'package:sensei_app/domain/progress.dart';
+
+({ScheduledCard card, String word, String meaningBn}) entry(
+  String id, {
+  CardState state = CardState.review,
+  double stability = 10,
+  double difficulty = 5,
+  int reps = 3,
+  int lapses = 0,
+  DateTime? due,
+}) =>
+    (
+      card: ScheduledCard(
+        id: id,
+        state: state,
+        stability: stability,
+        difficulty: difficulty,
+        reps: reps,
+        lapses: lapses,
+        due: due ?? DateTime(2026, 7, 10),
+      ),
+      word: id,
+      meaningBn: 'অর্থ-$id',
+    );
+
+void main() {
+  final now = DateTime(2026, 7, 10, 12, 0);
+
+  group('mastery buckets', () {
+    test('classification follows state + stability', () {
+      expect(bucketOf(entry('a', state: CardState.newCard, reps: 0).card),
+          MasteryBucket.newCard);
+      expect(bucketOf(entry('b', state: CardState.learning).card),
+          MasteryBucket.learning);
+      expect(bucketOf(entry('c', state: CardState.relearning).card),
+          MasteryBucket.learning);
+      expect(bucketOf(entry('d', stability: 3).card), MasteryBucket.young);
+      expect(bucketOf(entry('e', stability: 8).card), MasteryBucket.retained);
+    });
+  });
+
+  group('weakness', () {
+    test('lapses dominate the score; low stability adds to it', () {
+      final lapsed = weaknessScore(entry('x', lapses: 3, stability: 2).card);
+      final stable = weaknessScore(entry('y', lapses: 0, stability: 20).card);
+      expect(lapsed, greaterThan(stable));
+    });
+  });
+
+  group('buildProgressReport', () {
+    test('counts, forecast, retention, and activity are correct', () {
+      final cards = [
+        entry('new1', state: CardState.newCard, reps: 0),
+        entry('learn1', state: CardState.learning, due: now),
+        entry('young1', stability: 2, due: now.add(const Duration(days: 2))),
+        entry('ret1', stability: 30, due: now.add(const Duration(days: 6))),
+        entry('overdue',
+            stability: 1,
+            lapses: 4,
+            due: now.subtract(const Duration(days: 3))),
+        entry('far', stability: 40, due: now.add(const Duration(days: 30))),
+      ];
+      final report = buildProgressReport(
+        cards: cards,
+        recentRatings: [3, 3, 1, 4, 3], // one "again" in five
+        activityDays: [
+          DateTime(2026, 7, 10),
+          DateTime(2026, 7, 8),
+          DateTime(2026, 5, 1), // outside the 30-day window
+        ],
+        now: now,
+      );
+
+      expect(report.total, 6);
+      expect(report.newCount, 1);
+      expect(report.learning, 1);
+      expect(report.young, 2); // young1 + overdue (stability < 7)
+      expect(report.retained, 2);
+
+      expect(report.retention, closeTo(0.8, 1e-9));
+
+      // Forecast: overdue + today's learn1 + new1 (default due = today) land
+      // on index 0; young1 on 2; ret1 on 6; 'far' beyond the window is out.
+      expect(report.dueForecast[0], 3);
+      expect(report.dueForecast[2], 1);
+      expect(report.dueForecast[6], 1);
+      expect(report.dueForecast.reduce((a, b) => a + b), 5);
+
+      expect(report.activeDaysLast30, 2);
+
+      // Weakest first: the much-lapsed overdue card tops the list; the
+      // never-reviewed card is excluded (nothing to diagnose yet).
+      expect(report.weakest.first.id, 'overdue');
+      expect(report.weakest.any((w) => w.id == 'new1'), isFalse);
+    });
+
+    test('empty store yields a calm empty report', () {
+      final report = buildProgressReport(
+          cards: const [], recentRatings: const [], activityDays: const [], now: now);
+      expect(report.isEmpty, isTrue);
+      expect(report.retention, 1.0);
+      expect(report.weakest, isEmpty);
+    });
+  });
+}
+
+```
+
+
+## File: tools\agents_reference.mjs
+
+```mjs
+// Agents reference proof — a 1:1 JS port of the Director decision function
+// (lib/agents/director.dart) and Scaffold check (lib/agents/scaffold_agent.dart)
+// asserted against the same decision table as test/agents_test.dart. Runs in
+// CI's Node job so agent logic is proven even without a Flutter toolchain.
+//
+// If this file and the Dart disagree, the Dart tests are the source of truth —
+// update BOTH when a threshold changes (they share the 04_AGENTS rule table).
+
+// --- thresholds (must equal DirectorRules / ScaffoldRules in Dart) ----------
+const R = {
+  minAnswers: 4,
+  struggleAccuracy: 0.60,
+  rustyRetention: 0.60,
+  rustyDaysAway: 3,
+  boredomAccuracy: 0.90,
+  boredomMinutes: 20,
+  burnoutTapSpeed: 0.50,
+  burnoutErrorRate: 0.30,
+  fatigueMinutes: 40,
+  hardCapMinutes: 120,
+  breakSuggestMinutes: 20,
+  minDifficulty: 1,
+  maxDifficulty: 10,
+};
+const S = { hesitationMs: 3000, missStreak: 3, rapidTapSpeed: 2.5, rapidErrorRate: 0.50 };
+
+const sig = (o = {}) => ({
+  answers: 0, correct: 0, recentAnswers: 0, recentCorrect: 0,
+  meanHesitationMs: 0, tapSpeedRatio: 1.0, sessionMinutes: 0,
+  retention: 1.0, daysSinceLastSession: 0, dueLoad: 0,
+  hintsUsed: 0, skips: 0, consecutiveMissesOnPattern: 0, ...o,
+});
+const recentAccuracy = (s) => (s.recentAnswers === 0 ? 1.0 : s.recentCorrect / s.recentAnswers);
+const recentErrorRate = (s) => 1.0 - recentAccuracy(s);
+
+function classify(s) {
+  if (s.answers < R.minAnswers) {
+    const rusty = s.retention < R.rustyRetention && s.daysSinceLastSession > R.rustyDaysAway;
+    return rusty ? 'struggle' : 'calibrating';
+  }
+  const fatigued = recentErrorRate(s) > R.burnoutErrorRate &&
+    (s.tapSpeedRatio < R.burnoutTapSpeed || s.sessionMinutes >= R.fatigueMinutes);
+  if (fatigued) return 'burnout';
+  if (recentAccuracy(s) < R.struggleAccuracy) return 'struggle';
+  if (recentAccuracy(s) > R.boredomAccuracy && s.sessionMinutes > R.boredomMinutes) return 'boredom';
+  return 'flow';
+}
+
+function adjustDifficulty(psych, s, current) {
+  const delta = {
+    calibrating: 0,
+    flow: recentAccuracy(s) >= R.boredomAccuracy ? 1 : 0,
+    boredom: 1,
+    struggle: -1,
+    burnout: -2,
+  }[psych];
+  return Math.min(R.maxDifficulty, Math.max(R.minDifficulty, current + delta));
+}
+
+function advise(psych, s) {
+  if (s.sessionMinutes >= R.hardCapMinutes) return 'easyReviewOnly';
+  if (psych === 'burnout') return 'shortBreak';
+  if (s.sessionMinutes >= R.breakSuggestMinutes && psych !== 'flow') return 'shortBreak';
+  return 'continueSession';
+}
+
+const decide = (s, current = 3) => {
+  const psych = classify(s);
+  return { psych, difficulty: adjustDifficulty(psych, s, current), advice: advise(psych, s) };
+};
+
+function scaffoldCheck(s) {
+  if (s.consecutiveMissesOnPattern >= S.missStreak) return 'reviewSwitch';
+  if (s.meanHesitationMs > S.hesitationMs) return 'hint';
+  if (s.tapSpeedRatio > S.rapidTapSpeed && recentErrorRate(s) > S.rapidErrorRate) return 'helpOffer';
+  return null;
+}
+
+// --- decision table (mirrors test/agents_test.dart) --------------------------
+let pass = 0, fail = 0;
+const ok = (name, cond) => {
+  if (cond) { pass++; } else { fail++; console.error(`FAIL: ${name}`); }
+};
+
+// Director
+ok('calibrating below min answers', decide(sig({ answers: 3, correct: 1 })).psych === 'calibrating');
+ok('rusty return → struggle', decide(sig({ retention: 0.5, daysSinceLastSession: 4 })).psych === 'struggle');
+{
+  const d = decide(sig({ answers: 10, correct: 5, recentAnswers: 10, recentCorrect: 5 }), 5);
+  ok('accuracy<60% → struggle, −1', d.psych === 'struggle' && d.difficulty === 4);
+}
+{
+  const d = decide(sig({ answers: 20, correct: 19, recentAnswers: 10, recentCorrect: 10, sessionMinutes: 25 }), 5);
+  ok('acc>90% after 20min → boredom, +1', d.psych === 'boredom' && d.difficulty === 6);
+}
+ok('high accuracy early = flow, not boredom',
+  decide(sig({ answers: 8, correct: 8, recentAnswers: 8, recentCorrect: 8, sessionMinutes: 10 })).psych === 'flow');
+{
+  const d = decide(sig({ answers: 12, correct: 7, recentAnswers: 10, recentCorrect: 6, tapSpeedRatio: 0.4 }), 5);
+  ok('slow taps + errors → burnout, −2, break', d.psych === 'burnout' && d.difficulty === 3 && d.advice === 'shortBreak');
+}
+ok('errors after 40min → burnout',
+  decide(sig({ answers: 30, correct: 18, recentAnswers: 10, recentCorrect: 6, sessionMinutes: 45 })).psych === 'burnout');
+{
+  const d = decide(sig({ answers: 10, correct: 8, recentAnswers: 10, recentCorrect: 8 }), 5);
+  ok('flow band holds difficulty', d.psych === 'flow' && d.difficulty === 5 && d.advice === 'continueSession');
+}
+ok('difficulty floor 1',
+  decide(sig({ answers: 10, correct: 5, recentAnswers: 10, recentCorrect: 5, tapSpeedRatio: 0.3 }), 1).difficulty === 1);
+ok('difficulty ceiling 10',
+  decide(sig({ answers: 30, correct: 30, recentAnswers: 10, recentCorrect: 10, sessionMinutes: 30 }), 10).difficulty === 10);
+ok('120-min soft cap → easyReviewOnly',
+  decide(sig({ answers: 50, correct: 40, recentAnswers: 10, recentCorrect: 8, sessionMinutes: 121 })).advice === 'easyReviewOnly');
+
+// Scaffold
+ok('3 misses → reviewSwitch', scaffoldCheck(sig({ consecutiveMissesOnPattern: 3 })) === 'reviewSwitch');
+ok('hesitation > 3s → hint', scaffoldCheck(sig({ meanHesitationMs: 3200 })) === 'hint');
+ok('miss streak outranks hesitation',
+  scaffoldCheck(sig({ consecutiveMissesOnPattern: 3, meanHesitationMs: 5000 })) === 'reviewSwitch');
+ok('frantic wrong tapping → helpOffer',
+  scaffoldCheck(sig({ tapSpeedRatio: 3.0, recentAnswers: 10, recentCorrect: 4 })) === 'helpOffer');
+ok('calm → no offer', scaffoldCheck(sig()) === null);
+
+// Invariants: no signal combination may ever remove the learner's agency —
+// structurally, advice is one of a fixed recommendation set (no "lock" state).
+const adviceKinds = new Set(['continueSession', 'shortBreak', 'easyReviewOnly', 'endSession']);
+{
+  let allKnown = true;
+  for (const answers of [0, 5, 20]) {
+    for (const correctRate of [0.2, 0.7, 1.0]) {
+      for (const minutes of [0, 25, 45, 130]) {
+        for (const tap of [0.3, 1.0, 3.0]) {
+          const s = sig({
+            answers, correct: Math.round(answers * correctRate),
+            recentAnswers: Math.min(answers, 10),
+            recentCorrect: Math.round(Math.min(answers, 10) * correctRate),
+            sessionMinutes: minutes, tapSpeedRatio: tap,
+          });
+          if (!adviceKinds.has(decide(s).advice)) allKnown = false;
+        }
+      }
+    }
+  }
+  ok('every advice is a recommendation from the fixed set (no lock states)', allKnown);
+}
+
+console.log(`\n${pass}/${pass + fail} passed`);
+process.exit(fail ? 1 : 0);
 
 ```
 
@@ -10076,261 +15263,221 @@ http.createServer((req, res) => {
 ## File: tools\validate_content.mjs
 
 ```mjs
-#!/usr/bin/env node
-// Content guardrail — enforces the 12 validation rules from 05_CONTENT_SCHEMAS.md.
-// Run: node tools/validate_content.mjs
-// Exit 0 = PASS, Exit 1 = FAIL (blocking errors found)
+// Content validator — guardrail behind "never teach wrong Japanese" and
+// "never ship dark-pattern copy". Run: node tools/validate_content.mjs
+// Maps to the 12 blocking rules in docs/05_CONTENT_SCHEMAS.md §Validation rules.
+//   Enforced (blocking): 1 JP↔BN · 5 strict JSON · 6 structure · 7 half-width
+//     katakana · 12 banned copy · (4 prereqs & 11 acyclic when those fields exist)
+//   Scaffolded (warn/notice until the data/list exists): 2 audio · 3 whitelist ·
+//     8 audio-len · 9 images · 10 cultural review · 11 pack_id
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const fs = require('fs');
-const path = require('path');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(__dirname, '..');
+const CONTENT = path.join(ROOT, 'assets', 'content');
+const FACTORY = path.join(ROOT, 'content_factory');
+const LANGS = ['en', 'bn', 'ja'];
 
-const CONTENT_DIR = 'assets/content';
-const FACTORY_DIR = 'content_factory';
+let errors = 0;
+const warnings = [];
+const err = (f, m) => { errors++; console.log(`  x [${f}] ${m}`); };
+const warn = (f, m) => warnings.push(`  ! [${f}] ${m}`);
+const nonEmpty = (s) => typeof s === 'string' && s.trim().length > 0;
+const triOk = (o) => o && typeof o === 'object' && LANGS.every((l) => nonEmpty(o[l]));
+const triStrings = (o) => (o && typeof o === 'object' ? LANGS.map((l) => o[l]).filter(nonEmpty) : []);
 
-// ── Load guardrails ──────────────────────────────────────────────────────
-
-let bannedPhrases = [];
-const bannedPath = path.join(FACTORY_DIR, 'banned_phrases.txt');
-if (fs.existsSync(bannedPath)) {
-  bannedPhrases = fs.readFileSync(bannedPath, 'utf-8')
-    .split('\n')
-    .map(l => l.trim())
-    .filter(l => l && !l.startsWith('#'));
+// --- optional CI resources (scaffolds) --------------------------------------
+function loadLines(file) {
+  if (!fs.existsSync(file)) return null;
+  return fs.readFileSync(file, 'utf8')
+    .split(/\r?\n/)
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'));
 }
+const banned = (loadLines(path.join(FACTORY, 'banned_phrases.txt')) || []).map((s) => s.toLowerCase());
+const whitelist = loadLines(path.join(FACTORY, 'jft_a2_whitelist.txt')); // null until authored
+const whitelistSet = whitelist ? new Set(whitelist) : null;
 
-let whitelist = new Set();
-const whitelistPath = path.join(FACTORY_DIR, 'jft_a2_whitelist.txt');
-if (fs.existsSync(whitelistPath)) {
-  whitelist = new Set(
-    fs.readFileSync(whitelistPath, 'utf-8')
-      .split('\n')
-      .map(l => l.trim())
-      .filter(l => l && !l.startsWith('#'))
-  );
-}
+const HALFWIDTH_KATAKANA = /[｡-ﾟ]/; // rule 7
 
-// ── Rule definitions ─────────────────────────────────────────────────────
-
-const rules = {
-  // BLOCKING rules (exit 1 if violated)
-  1: { name: 'Every [JP] has a [BN]', blocking: true },
-  5: { name: 'Strict JSON', blocking: true },
-  6: { name: 'Schema-valid structure', blocking: true },
-  7: { name: 'No half-width katakana in beginner packs', blocking: true },
-  12: { name: 'No banned dark-pattern copy', blocking: true },
-  4: { name: 'Prerequisite IDs resolve', blocking: true },
-  11: { name: 'Pack ID present + DAG acyclic', blocking: true },
-
-  // SCAFFOLD rules (warning only — activate when data present)
-  3: { name: 'Whitelist: all srs_words in JFT-A2 list', blocking: false },
-  2: { name: 'Audio files exist', blocking: false },
-  8: { name: 'Audio 1-10s', blocking: false },
-  9: { name: 'Images <100KB', blocking: false },
-  10: { name: 'Cultural notes reviewed', blocking: false },
-};
-
-// ── Helpers ──────────────────────────────────────────────────────────────
-
-function loadJson(filePath) {
-  try {
-    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  } catch (e) {
-    return { _parseError: e.message };
-  }
-}
-
-function hasHalfWidthKatakana(str) {
-  // U+FF65-U+FF9F = half-width katakana
-  return /[\uFF65-\uFF9F]/.test(str);
-}
-
-function findBannedPhrases(obj) {
-  const text = JSON.stringify(obj);
-  const found = [];
-  for (const phrase of bannedPhrases) {
-    if (text.toLowerCase().includes(phrase.toLowerCase())) {
-      found.push(phrase);
+// Rule 12: banned dark-pattern copy in any user-facing string.
+function scanBanned(file, tag, strings) {
+  for (const s of strings) {
+    const low = s.toLowerCase();
+    for (const b of banned) {
+      if (low.includes(b)) err(file, `${tag}: banned copy "${b}" in "${s}" (05 rule 12 / D-001)`);
     }
   }
-  return found;
+}
+// Rule 7: no half-width katakana in learner-facing JP.
+function scanHalfwidth(file, tag, jpStrings) {
+  for (const s of jpStrings) {
+    if (HALFWIDTH_KATAKANA.test(s)) err(file, `${tag}: half-width katakana in "${s}" (05 rule 7)`);
+  }
+}
+// Rules 2/8/9: referenced media must exist (len/dimension checks run in the full pipeline).
+function checkMedia(file, tag, item) {
+  for (const key of ['audio_path', 'audio_url', 'image_path', 'image_url']) {
+    const rel = item[key];
+    if (!nonEmpty(rel)) continue;
+    const abs = path.join(ROOT, rel.replace(/^\//, ''));
+    if (!fs.existsSync(abs)) err(file, `${tag}: ${key} "${rel}" not found (05 rule ${key.startsWith('audio') ? '2' : '9'})`);
+    else warn(file, `${tag}: ${key} present — duration/size not verified here (05 rule 8/9, pipeline)`);
+  }
 }
 
-function checkWhitelist(obj, file) {
-  const violations = [];
-  const items = obj.items || [];
-  for (const item of items) {
-    const words = item.srs_words || [];
-    for (const w of words) {
-      if (!whitelist.has(w)) {
-        violations.push({ file, item: item.id, word: w });
+// --- per-type structural validators -----------------------------------------
+function validateKana(file, data) {
+  if (!data.verified) err(file, 'missing verified:true');
+  if (!nonEmpty(data.source)) err(file, 'missing source');
+  const items = data.items || [];
+  if (items.length !== 46) err(file, `expected 46 base kana, got ${items.length}`);
+  const chars = new Set(), roma = new Set();
+  for (const it of items) {
+    if (!nonEmpty(it.char)) err(file, `${it.id}: empty char`);
+    if (!/^[a-z]+$/.test(it.romaji || '')) err(file, `${it.id}: bad romaji "${it.romaji}"`);
+    if (chars.has(it.char)) err(file, `duplicate char ${it.char}`);
+    if (roma.has(it.romaji)) err(file, `duplicate romaji ${it.romaji}`);
+    chars.add(it.char); roma.add(it.romaji);
+    scanHalfwidth(file, it.id, [it.char]);
+  }
+}
+
+function validateLesson(file, data, reg) {
+  if (!data.verified) err(file, 'missing verified:true');
+  if (!nonEmpty(data.source)) err(file, 'missing source');
+  if (!triOk(data.can_do)) err(file, 'can_do not trilingual');
+  scanBanned(file, 'can_do', triStrings(data.can_do));
+  const items = data.items || [];
+  if (items.length === 0) err(file, 'no items');
+  const ids = new Set();
+  for (const it of items) {
+    const tag = it.id || '(no-id)';
+    if (ids.has(it.id)) err(file, `duplicate item id ${it.id}`);
+    ids.add(it.id);
+    if (!nonEmpty(it.jp)) err(file, `${tag}: empty jp`);
+    if (!nonEmpty(it.kana)) err(file, `${tag}: empty kana`);
+    if (!nonEmpty(it.romaji)) err(file, `${tag}: empty romaji`);
+    // rule 1: every learner-facing JP carries a Bengali meaning.
+    if (!triOk(it.meaning)) err(file, `${tag}: meaning not trilingual (05 rule 1)`);
+    else if (!nonEmpty(it.meaning.bn)) err(file, `${tag}: JP without BN meaning (05 rule 1)`);
+    if (!triOk(it.note)) err(file, `${tag}: note not trilingual`);
+    if (!Array.isArray(it.srs_words) || it.srs_words.length === 0) err(file, `${tag}: srs_words missing`);
+    else for (const w of it.srs_words) reg.srsWords.push({ file, tag, word: w });
+    scanHalfwidth(file, tag, [it.jp, it.kana]);
+    scanBanned(file, tag, [...triStrings(it.meaning), ...triStrings(it.note)]);
+    checkMedia(file, tag, it);
+  }
+  // rules 4 & 11: record lesson id, pack_id, prerequisites for the global pass.
+  if (nonEmpty(data.id)) reg.lessonIds.add(data.id);
+  if (nonEmpty(data.pack_id)) reg.packEdges.push([data.pack_id, data.depends_on || data.pack_deps || []]);
+  else warn(file, 'no pack_id (05 rule 11 — required before bundling)');
+  if (Array.isArray(data.prerequisites)) reg.prereqs.push({ file, id: data.id, needs: data.prerequisites });
+}
+
+function validatePitch(file, data) {
+  if (!data.verified) err(file, 'missing verified:true');
+  if (!nonEmpty(data.source)) err(file, 'missing source');
+  if (!nonEmpty(data.dialect)) err(file, 'missing dialect');
+  const items = data.items || [];
+  if (items.length === 0) err(file, 'no items');
+  for (const it of items) {
+    const tag = it.id || '(no-id)';
+    if (!nonEmpty(it.word)) err(file, `${tag}: empty word`);
+    if (!nonEmpty(it.romaji)) err(file, `${tag}: empty romaji`);
+    if (!Array.isArray(it.pattern) || it.pattern.length === 0) err(file, `${tag}: pattern missing`);
+    else {
+      if (!it.pattern.every((n) => n === 0 || n === 1)) err(file, `${tag}: pattern must be 0/1 per mora`);
+      const morae = [...it.word].length;
+      if (it.pattern.length !== morae) err(file, `${tag}: pattern length ${it.pattern.length} != morae ${morae}`);
+    }
+    if (!triOk(it.meaning)) err(file, `${tag}: meaning not trilingual`);
+    if (!triOk(it.accent_type)) err(file, `${tag}: accent_type not trilingual`);
+    scanHalfwidth(file, tag, [it.word, it.kanji].filter(nonEmpty));
+    scanBanned(file, tag, [...triStrings(it.meaning), ...triStrings(it.accent_type)]);
+  }
+}
+
+// --- global cross-file checks (rules 3, 4, 11) ------------------------------
+// Anchors that legitimately satisfy a prerequisite without being a lesson file.
+const PREREQ_ANCHORS = new Set(['kana_hiragana', 'kana_katakana']);
+
+function checkPrereqs(reg) {
+  for (const { file, id, needs } of reg.prereqs) {
+    for (const dep of needs) {
+      if (!reg.lessonIds.has(dep) && !PREREQ_ANCHORS.has(dep)) {
+        err(file, `prerequisite "${dep}" of ${id} does not resolve (05 rule 4)`);
       }
     }
   }
-  return violations;
 }
 
-// ── Validation engine ────────────────────────────────────────────────────
-
-let blockingErrors = 0;
-let warnings = 0;
-const errors = [];
-const warnList = [];
-
-function error(ruleNum, msg) {
-  blockingErrors++;
-  errors.push(`[BLOCKING Rule ${ruleNum}] ${rules[ruleNum].name}: ${msg}`);
-}
-
-function warn(ruleNum, msg) {
-  warnings++;
-  warnList.push(`[WARN Rule ${ruleNum}] ${rules[ruleNum].name}: ${msg}`);
-}
-
-// ── Load all content ─────────────────────────────────────────────────────
-
-const files = fs.readdirSync(CONTENT_DIR)
-  .filter(f => f.endsWith('.json'))
-  .map(f => ({ name: f, path: path.join(CONTENT_DIR, f), data: loadJson(path.join(CONTENT_DIR, f)) }));
-
-const lessons = files.filter(f => f.name.startsWith('lesson_'));
-const allIds = new Set();
-const packGraph = new Map(); // pack_id -> [depends_on packs]
-
-// ── Run checks ───────────────────────────────────────────────────────────
-
-for (const file of files) {
-  const { name, data } = file;
-
-  // Rule 5: Strict JSON
-  if (data._parseError) {
-    error(5, `${name}: ${data._parseError}`);
-    continue;
+function checkPackAcyclic(reg) {
+  if (reg.packEdges.length === 0) return;
+  // Union deps per pack: many lessons can share one pack_id, so an edge from any
+  // of them belongs to the pack (overwriting would silently drop edges).
+  const graph = new Map();
+  for (const [pack, deps] of reg.packEdges) {
+    const set = graph.get(pack) || new Set();
+    for (const d of deps) set.add(d);
+    graph.set(pack, set);
   }
-
-  // Rule 6: Schema-valid structure
-  if (!data.id) warn(6, `${name}: missing 'id'`);
-  if (!data.verified === true) warn(6, `${name}: not marked verified`);
-
-  // Rule 1: Every JP has BN
-  const items = data.items || data.items || [];
-  for (const item of items) {
-    if (item.jp && (!item.meaning || !item.meaning.bn)) {
-      error(1, `${name} item ${item.id}: jp present but meaning.bn missing`);
+  const state = new Map(); // 0=visiting,1=done
+  let reported = false;
+  const dfs = (node, trail) => {
+    if (state.get(node) === 1) return;
+    if (state.get(node) === 0) {
+      if (!reported) {
+        err('pack-graph', `dependency cycle: ${[...trail, node].join(' -> ')} (05 rule 11)`);
+        reported = true;
+      }
+      return;
     }
-  }
+    state.set(node, 0);
+    for (const d of graph.get(node) || []) dfs(d, [...trail, node]);
+    state.set(node, 1);
+  };
+  for (const pack of graph.keys()) dfs(pack, []);
+}
 
-  // Rule 7: No half-width katakana
-  const text = JSON.stringify(data);
-  if (hasHalfWidthKatakana(text)) {
-    error(7, `${name}: contains half-width katakana`);
-  }
-
-  // Rule 12: Banned phrases
-  const banned = findBannedPhrases(data);
-  if (banned.length > 0) {
-    error(12, `${name}: banned phrases found: ${banned.join(', ')}`);
-  }
-
-  // Rule 3: Whitelist (scaffold — only warn)
-  if (whitelist.size > 0) {
-    const wlViolations = checkWhitelist(data, name);
-    for (const v of wlViolations) {
-      warn(3, `${v.file} item ${v.item}: "${v.word}" not in JFT-A2 whitelist`);
-    }
-  }
-
-  // Collect IDs and pack graph
-  allIds.add(data.id);
-  if (data.pack_id) {
-    if (!packGraph.has(data.pack_id)) {
-      packGraph.set(data.pack_id, new Set(data.depends_on || []));
-    }
+function checkWhitelist(reg) {
+  if (!whitelistSet) return; // scaffold: no list authored yet
+  for (const { file, tag, word } of reg.srsWords) {
+    if (!whitelistSet.has(word)) err(file, `${tag}: "${word}" outside JFT-A2 whitelist (05 rule 3)`);
   }
 }
 
-// Rule 4: Prerequisite IDs resolve
-for (const lesson of lessons) {
-  const prereqs = lesson.data.prerequisites || [];
-  for (const p of prereqs) {
-    if (!allIds.has(p) && p !== 'kana_hiragana') {
-      // kana_hiragana is a meta-prerequisite (not a lesson ID)
-      warn(4, `${lesson.name}: prerequisite "${p}" not found in content`);
-    }
-  }
+// --- run --------------------------------------------------------------------
+const files = fs.readdirSync(CONTENT).filter((f) => f.endsWith('.json'));
+console.log(`Validating ${files.length} content file(s) in assets/content/`);
+console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'}\n`);
+
+const reg = { lessonIds: new Set(), packEdges: [], prereqs: [], srsWords: [] };
+
+for (const f of files) {
+  let data;
+  try { data = JSON.parse(fs.readFileSync(path.join(CONTENT, f), 'utf8')); } // rule 5
+  catch (e) { err(f, 'invalid JSON: ' + e.message); continue; }
+  const before = errors;
+  if (data.type === 'kana') validateKana(f, data);
+  else if (data.type === 'lesson') validateLesson(f, data, reg);
+  else if (data.type === 'pitch') validatePitch(f, data);
+  else err(f, `unknown content type "${data.type}"`);
+  if (errors === before) console.log(`  ok ${f} (${(data.items || []).length} items)`);
 }
 
-// Rule 11: DAG acyclic check
-function hasCycle(graph) {
-  const visited = new Set();
-  const recStack = new Set();
+checkPrereqs(reg);   // rule 4
+checkPackAcyclic(reg); // rule 11
+checkWhitelist(reg); // rule 3
 
-  function dfs(node) {
-    visited.add(node);
-    recStack.add(node);
-    const deps = graph.get(node) || new Set();
-    for (const dep of deps) {
-      if (!visited.has(dep) && dfs(dep)) return true;
-      if (recStack.has(dep)) return true;
-    }
-    recStack.delete(node);
-    return false;
-  }
-
-  for (const node of graph.keys()) {
-    if (!visited.has(node)) {
-      if (dfs(node)) return true;
-    }
-  }
-  return false;
+if (warnings.length) {
+  console.log(`\n${warnings.length} warning(s) — non-blocking scaffolds:`);
+  for (const w of warnings) console.log(w);
 }
 
-if (packGraph.size > 0) {
-  if (hasCycle(packGraph)) {
-    error(11, 'Pack dependency graph contains a cycle');
-  }
-  // Check all lessons have pack_id
-  for (const lesson of lessons) {
-    if (!lesson.data.pack_id) {
-      warn(11, `${lesson.name}: missing pack_id`);
-    }
-  }
-}
-
-// ── Report ───────────────────────────────────────────────────────────────
-
-console.log('═══════════════════════════════════════════════════════════════');
-console.log('  BHASAGO Content Validator');
-console.log('═══════════════════════════════════════════════════════════════');
-console.log(`Files checked: ${files.length}`);
-console.log(`Lessons: ${lessons.length}`);
-console.log(`Whitelist loaded: ${whitelist.size} words`);
-console.log(`Banned phrases loaded: ${bannedPhrases.length}`);
-console.log('');
-
-if (errors.length > 0) {
-  console.log('❌ BLOCKING ERRORS:');
-  for (const e of errors) console.log('   ' + e);
-  console.log('');
-}
-
-if (warnList.length > 0) {
-  console.log('⚠️  WARNINGS:');
-  for (const w of warnList) console.log('   ' + w);
-  console.log('');
-}
-
-console.log(`Result: ${blockingErrors === 0 ? '✅ PASS' : '❌ FAIL'}`);
-console.log(`  Blocking errors: ${blockingErrors}`);
-console.log(`  Warnings: ${warnings}`);
-console.log('');
-
-// Rule coverage summary
-console.log('Rule coverage:');
-for (const [num, rule] of Object.entries(rules)) {
-  const status = rule.blocking ? 'blocking' : 'scaffold';
-  console.log(`  ${num}. ${rule.name} (${status})`);
-}
-
-process.exit(blockingErrors > 0 ? 1 : 0);
+console.log(`\n${errors ? `FAIL: ${errors} problem(s)` : 'PASS: all content verified - cleared to ship'}`);
+process.exit(errors ? 1 : 0);
 
 ```

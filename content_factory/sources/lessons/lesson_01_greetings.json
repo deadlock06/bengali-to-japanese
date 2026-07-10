@@ -1,0 +1,103 @@
+{
+  "id": "lsn_01_greetings",
+  "title_bengali": "জাপানি অভিবাদন",
+  "title_japanese": "日本語のあいさつ",
+  "title_english": "Japanese Greetings",
+  "jlpt_level": "N5",
+  "lesson_number": 1,
+  "prerequisite_lessons": [],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 60,
+      "instructions_bengali": "এই পাঠে আমরা জাপানের মৌলিক অভিবাদন শিখব। জাপানি সংস্কৃতিতে সম্মানজনক ভাষা ব্যবহার খুবই গুরুত্বপূর্ণ।",
+      "instructions_english": "In this lesson, we learn basic Japanese greetings. Respectful language is very important in Japanese culture."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_11_ohayo",
+        "voc_12_konnichiwa",
+        "voc_13_konbanwa",
+        "voc_14_oyasumi",
+        "voc_15_arigato",
+        "voc_16_sumimasen"
+      ],
+      "duration_seconds": 180,
+      "instructions_bengali": "নতুন শব্দগুলো দেখুন। প্রতিটি শব্দের উচ্চারণ শুনুন এবং পড়ার চেষ্টা করুন।",
+      "instructions_english": "Look at the new words. Listen to the pronunciation of each word and try to read along."
+    },
+    {
+      "block_type": "grammar_present",
+      "content_refs": [
+        "grm_01_wa",
+        "grm_02_ga"
+      ],
+      "duration_seconds": 240,
+      "instructions_bengali": "「は» এবং 「が» কণিকার পার্থক্য বোঝুন। は বিষয় চিহ্নিত করে, が নতুন তথ্য দেয়।",
+      "instructions_english": "Understand the difference between は and が particles. は marks the topic, が introduces new information."
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_11_ohayo",
+        "voc_12_konnichiwa"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "মাইক্রোফোনে বলুন: 'おはようございます' এবং 'こんにちは'। আপনার উচ্চারণ যাচাই করা হবে।",
+      "instructions_english": "Say into the microphone: 'おはようございます' and 'こんにちは'. Your pronunciation will be checked.",
+      "alignment_text": "おはようございます。こんにちは。"
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "voc_18_hai",
+        "voc_19_iie",
+        "voc_20_watashi"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "প্রশ্নের সঠিক উত্তর বেছে নিন। 'はい' মানে হ্যাঁ, 'いいえ' মানে না।",
+      "instructions_english": "Choose the correct answer to each question. 'はい' means yes, 'いいえ' means no."
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 180,
+      "instructions_bengali": "FSRS রিভিউ কার্ডগুলো দেখুন। যে শব্দগুলো ভুল হবে সেগুলো আবার দেখা হবে।",
+      "instructions_english": "Review the FSRS cards. Words you get wrong will be shown again.",
+      "card_ids": [
+        "crd_voc_11_ohayo_recognize",
+        "crd_voc_12_konnichiwa_recognize",
+        "crd_voc_15_arigato_recall",
+        "crd_voc_20_watashi_recognize"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 15,
+  "tags": [
+    "greetings",
+    "beginner",
+    "social"
+  ],
+  "new_vocab": [
+    "voc_11_ohayo",
+    "voc_12_konnichiwa",
+    "voc_13_konbanwa",
+    "voc_14_oyasumi",
+    "voc_15_arigato",
+    "voc_16_sumimasen",
+    "voc_17_ohisashi",
+    "voc_18_hai",
+    "voc_19_iie",
+    "voc_20_watashi"
+  ],
+  "new_grammar": [
+    "grm_01_wa",
+    "grm_02_ga"
+  ],
+  "new_kanji": [
+    "kan_04_hito",
+    "kan_05_hi"
+  ]
+}

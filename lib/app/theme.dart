@@ -104,11 +104,31 @@ abstract final class BhasagoTheme {
           ),
         ),
       ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          minimumSize: const Size(48, 48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          side: const BorderSide(color: BhasagoColors.outline),
+          foregroundColor: BhasagoColors.ink,
+        ),
+      ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: BhasagoColors.surface,
         indicatorColor: BhasagoColors.aiDeep,
         surfaceTintColor: Colors.transparent,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: BhasagoColors.aiBright,
+            );
+          }
+          return const TextStyle(fontSize: 12, color: BhasagoColors.inkDim);
+        }),
       ),
       chipTheme: ChipThemeData(
         backgroundColor: BhasagoColors.surfaceHigh,
@@ -116,8 +136,66 @@ abstract final class BhasagoTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(999),
         ),
+        labelStyle: const TextStyle(color: BhasagoColors.ink),
       ),
       dividerColor: BhasagoColors.outline,
+      textTheme: _textTheme(base.textTheme),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: BhasagoColors.surfaceHigh,
+        contentTextStyle: const TextStyle(color: BhasagoColors.ink),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        behavior: SnackBarBehavior.floating,
+      ),
+      dialogTheme: DialogThemeData(
+        backgroundColor: BhasagoColors.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_radius),
+          side: const BorderSide(color: BhasagoColors.outline),
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: BhasagoColors.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
+        ),
+      ),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: BhasagoColors.surfaceHigh,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: BhasagoColors.outline),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: BhasagoColors.outline),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(color: BhasagoColors.aiBright, width: 1.5),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      ),
+    );
+  }
+
+  static TextTheme _textTheme(TextTheme base) {
+    return base.copyWith(
+      displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink),
+      displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink),
+      displaySmall: base.displaySmall?.copyWith(color: BhasagoColors.ink),
+      headlineLarge: base.headlineLarge?.copyWith(color: BhasagoColors.ink),
+      headlineMedium: base.headlineMedium?.copyWith(color: BhasagoColors.ink),
+      headlineSmall: base.headlineSmall?.copyWith(color: BhasagoColors.ink),
+      titleLarge: base.titleLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w600),
+      titleMedium: base.titleMedium?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
+      titleSmall: base.titleSmall?.copyWith(color: BhasagoColors.inkDim, fontWeight: FontWeight.w500),
+      bodyLarge: base.bodyLarge?.copyWith(color: BhasagoColors.ink),
+      bodyMedium: base.bodyMedium?.copyWith(color: BhasagoColors.ink),
+      bodySmall: base.bodySmall?.copyWith(color: BhasagoColors.inkDim),
+      labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
+      labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim),
+      labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim),
     );
   }
 }

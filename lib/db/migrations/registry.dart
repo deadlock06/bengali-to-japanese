@@ -3,10 +3,12 @@
 
 import 'migration.dart';
 import 'm001_baseline.dart';
+import 'm002_agents_meta.dart';
 
 final List<Migration> kMigrations = <Migration>[
   m001Baseline,
-  // m002_align_06_schema,  // future: widen srs_cards + add users/messages/... (06)
+  m002AgentsMeta,
+  // m003_align_06_schema,  // future: widen srs_cards + add users/messages/... (06)
 ];
 
 /// The latest schema version = highest migration number. Passed to

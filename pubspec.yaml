@@ -14,7 +14,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
   flutter_riverpod: ^2.5.1
   sqflite_sqlcipher: ^3.4.0   # SQLCipher AES-256 (encrypted at rest — T-101/06)
   flutter_secure_storage: ^9.2.4  # Keystore-backed DB passphrase store
@@ -23,6 +23,8 @@ dependencies:
   record: ^5.1.2       # mic capture for shadowing
   just_audio: ^0.9.40  # native reference-audio playback
   fftea: ^1.5.0        # on-device pitch (F0) extraction for accent scoring
+  archive: ^3.6.1      # pure-Dart ZIP for one-tap offline data export (01)
+  path_provider: ^2.1.4 # documents dir for the export file
 
 dev_dependencies:
   flutter_test:

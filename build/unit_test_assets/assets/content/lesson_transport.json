@@ -1,0 +1,197 @@
+{
+  "type": "lesson",
+  "id": "lesson_transport",
+  "pack_id": "daily",
+  "depends_on": [
+    "basics"
+  ],
+  "can_do": {
+    "en": "Use trains and buses",
+    "bn": "ট্রেন ও বাসে চলাফেরা",
+    "ja": "電車とバスを使う"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Starter L6",
+  "verified": true,
+  "prerequisites": [
+    "lesson_directions"
+  ],
+  "items": [
+    {
+      "id": "tr_01",
+      "jp": "きっぷはどこでかえますか",
+      "kana": "きっぷはどこでかえますか",
+      "romaji": "kippu wa doko de kaemasu ka",
+      "meaning": {
+        "en": "Where can I buy a ticket?",
+        "bn": "টিকিট কোথায় কিনব?",
+        "ja": "切符はどこで買えますか"
+      },
+      "note": {
+        "en": "Most people use IC cards (Suica/Pasmo) instead of tickets",
+        "bn": "বেশিরভাগ মানুষ টিকিটের বদলে IC কার্ড (Suica/Pasmo) ব্যবহার করে",
+        "ja": "ICカードが主流"
+      },
+      "srs_words": [
+        "きっぷ",
+        "は",
+        "どこ",
+        "で",
+        "かえますか"
+      ]
+    },
+    {
+      "id": "tr_02",
+      "jp": "このでんしゃはとうきょうにいきますか",
+      "kana": "このでんしゃはとうきょうにいきますか",
+      "romaji": "kono densha wa toukyou ni ikimasu ka",
+      "meaning": {
+        "en": "Does this train go to Tokyo?",
+        "bn": "এই ট্রেনটা কি টোকিও যায়?",
+        "ja": "この電車は東京に行きますか"
+      },
+      "note": {
+        "en": "Swap toukyou for any station name",
+        "bn": "toukyou-র জায়গায় যেকোনো স্টেশনের নাম বসাও",
+        "ja": "駅名を入れ替えて使える"
+      },
+      "srs_words": [
+        "この",
+        "でんしゃ",
+        "は",
+        "とうきょう",
+        "に",
+        "いきますか"
+      ]
+    },
+    {
+      "id": "tr_03",
+      "jp": "つぎのえきはなんですか",
+      "kana": "つぎのえきはなんですか",
+      "romaji": "tsugi no eki wa nan desu ka",
+      "meaning": {
+        "en": "What is the next station?",
+        "bn": "পরের স্টেশন কোনটা?",
+        "ja": "次の駅は何ですか"
+      },
+      "note": {
+        "en": "tsugi = next; also tsugi no basu (next bus)",
+        "bn": "tsugi মানে পরের; tsugi no basu মানে পরের বাস",
+        "ja": "「次の〜」で応用"
+      },
+      "srs_words": [
+        "つぎ",
+        "の",
+        "えき",
+        "は",
+        "なん",
+        "ですか"
+      ]
+    },
+    {
+      "id": "tr_04",
+      "jp": "ここでおります",
+      "kana": "ここでおります",
+      "romaji": "koko de orimasu",
+      "meaning": {
+        "en": "I get off here",
+        "bn": "আমি এখানে নামব",
+        "ja": "ここで降ります"
+      },
+      "note": {
+        "en": "Say it on a crowded bus while moving to the door",
+        "bn": "ভিড় বাসে দরজার দিকে যেতে যেতে বলো",
+        "ja": "混んだバスで降りるとき"
+      },
+      "srs_words": [
+        "ここ",
+        "で",
+        "おります"
+      ]
+    },
+    {
+      "id": "tr_05",
+      "jp": "バスていはどこですか",
+      "kana": "バスていはどこですか",
+      "romaji": "basutei wa doko desu ka",
+      "meaning": {
+        "en": "Where is the bus stop?",
+        "bn": "বাস স্টপ কোথায়?",
+        "ja": "バス停はどこですか"
+      },
+      "note": {
+        "en": "basutei = bus stop; eki = train station",
+        "bn": "basutei মানে বাস স্টপ, eki মানে ট্রেন স্টেশন",
+        "ja": "バス停＝ばすてい"
+      },
+      "srs_words": [
+        "バスてい",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    },
+    {
+      "id": "tr_06",
+      "jp": "いくらかかりますか",
+      "kana": "いくらかかりますか",
+      "romaji": "ikura kakarimasu ka",
+      "meaning": {
+        "en": "How much does it cost?",
+        "bn": "কত খরচ হবে?",
+        "ja": "いくらかかりますか"
+      },
+      "note": {
+        "en": "For fares and services; kakaru = to cost/take",
+        "bn": "ভাড়া বা সার্ভিসের খরচ জানতে; kakaru মানে লাগা",
+        "ja": "料金を尋ねる"
+      },
+      "srs_words": [
+        "いくら",
+        "かかりますか"
+      ]
+    },
+    {
+      "id": "tr_07",
+      "jp": "なんぷんかかりますか",
+      "kana": "なんぷんかかりますか",
+      "romaji": "nanpun kakarimasu ka",
+      "meaning": {
+        "en": "How many minutes does it take?",
+        "bn": "কত মিনিট লাগবে?",
+        "ja": "何分かかりますか"
+      },
+      "note": {
+        "en": "Same kakaru pattern — money or time",
+        "bn": "একই kakaru প্যাটার্ন — টাকা বা সময় দুটোতেই",
+        "ja": "時間にも「かかる」を使う"
+      },
+      "srs_words": [
+        "なんぷん",
+        "かかりますか"
+      ]
+    },
+    {
+      "id": "tr_08",
+      "jp": "のりかえはどこですか",
+      "kana": "のりかえはどこですか",
+      "romaji": "norikae wa doko desu ka",
+      "meaning": {
+        "en": "Where do I transfer?",
+        "bn": "কোথায় ট্রেন বদলাতে হবে?",
+        "ja": "乗り換えはどこですか"
+      },
+      "note": {
+        "en": "norikae = transfer; big stations have color-coded signs",
+        "bn": "norikae মানে বদলানো; বড় স্টেশনে রঙিন সাইন অনুসরণ করো",
+        "ja": "乗り換え案内の表示を見る"
+      },
+      "srs_words": [
+        "のりかえ",
+        "は",
+        "どこ",
+        "ですか"
+      ]
+    }
+  ]
+}

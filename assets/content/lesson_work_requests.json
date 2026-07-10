@@ -1,0 +1,186 @@
+{
+  "type": "lesson",
+  "id": "lesson_work_requests",
+  "pack_id": "work",
+  "depends_on": [
+    "daily"
+  ],
+  "can_do": {
+    "en": "Ask and clarify at work",
+    "bn": "কর্মস্থলে জিজ্ঞাসা ও স্পষ্ট করা",
+    "ja": "職場で質問・確認する"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "SSW workplace can-do",
+  "verified": true,
+  "prerequisites": [
+    "work_intro_01"
+  ],
+  "items": [
+    {
+      "id": "wr_01",
+      "jp": "もういちどおねがいします",
+      "kana": "もういちどおねがいします",
+      "romaji": "mou ichido onegai shimasu",
+      "meaning": {
+        "en": "One more time, please",
+        "bn": "আরেকবার বলুন",
+        "ja": "もう一度おねがいします"
+      },
+      "note": {
+        "en": "The single most useful phrase for a learner — never pretend you understood",
+        "bn": "শেখার সময় সবচেয়ে দরকারি বাক্য — না বুঝে বুঝার ভান কোরো না",
+        "ja": "聞き返しは失礼ではない"
+      },
+      "srs_words": [
+        "もう",
+        "いちど",
+        "おねがいします"
+      ]
+    },
+    {
+      "id": "wr_02",
+      "jp": "ゆっくりはなしてください",
+      "kana": "ゆっくりはなしてください",
+      "romaji": "yukkuri hanashite kudasai",
+      "meaning": {
+        "en": "Please speak slowly",
+        "bn": "একটু ধীরে বলুন",
+        "ja": "ゆっくり話してください"
+      },
+      "note": {
+        "en": "yukkuri = slowly; people gladly slow down when asked",
+        "bn": "yukkuri মানে ধীরে; বললে মানুষ খুশি হয়ে ধীরে বলে",
+        "ja": "頼めば皆ゆっくり話してくれる"
+      },
+      "srs_words": [
+        "ゆっくり",
+        "はなして",
+        "ください"
+      ]
+    },
+    {
+      "id": "wr_03",
+      "jp": "わかりました",
+      "kana": "わかりました",
+      "romaji": "wakarimashita",
+      "meaning": {
+        "en": "Understood",
+        "bn": "বুঝেছি",
+        "ja": "わかりました"
+      },
+      "note": {
+        "en": "Confirm instructions with this; bosses expect to hear it",
+        "bn": "নির্দেশ পেলে এটা বলে নিশ্চিত করো; সুপারভাইজার এটা শুনতে চায়",
+        "ja": "指示への返事の基本"
+      },
+      "srs_words": [
+        "わかりました"
+      ]
+    },
+    {
+      "id": "wr_04",
+      "jp": "わかりません",
+      "kana": "わかりません",
+      "romaji": "wakarimasen",
+      "meaning": {
+        "en": "I don't understand",
+        "bn": "বুঝিনি",
+        "ja": "わかりません"
+      },
+      "note": {
+        "en": "Saying it honestly prevents accidents — never bluff at work",
+        "bn": "সত্যি করে বললে দুর্ঘটনা এড়ানো যায় — কাজে কখনো ভান কোরো না",
+        "ja": "曖昧な返事は事故のもと"
+      },
+      "srs_words": [
+        "わかりません"
+      ]
+    },
+    {
+      "id": "wr_05",
+      "jp": "しつもんがあります",
+      "kana": "しつもんがあります",
+      "romaji": "shitsumon ga arimasu",
+      "meaning": {
+        "en": "I have a question",
+        "bn": "একটা প্রশ্ন আছে",
+        "ja": "質問があります"
+      },
+      "note": {
+        "en": "Raise it before starting a task, not after a mistake",
+        "bn": "কাজ শুরুর আগেই জিজ্ঞেস করো, ভুলের পরে নয়",
+        "ja": "作業前に確認する習慣"
+      },
+      "srs_words": [
+        "しつもん",
+        "が",
+        "あります"
+      ]
+    },
+    {
+      "id": "wr_06",
+      "jp": "あしたやすんでもいいですか",
+      "kana": "あしたやすんでもいいですか",
+      "romaji": "ashita yasundemo ii desu ka",
+      "meaning": {
+        "en": "May I take tomorrow off?",
+        "bn": "কাল ছুটি নিতে পারি?",
+        "ja": "明日休んでもいいですか"
+      },
+      "note": {
+        "en": "'-temo ii desu ka' = asking permission; ask days ahead when possible",
+        "bn": "'-temo ii desu ka' মানে অনুমতি চাওয়া; পারলে কয়েকদিন আগে বলো",
+        "ja": "「〜てもいいですか」は許可を求める形"
+      },
+      "srs_words": [
+        "あした",
+        "やすんでも",
+        "いい",
+        "ですか"
+      ]
+    },
+    {
+      "id": "wr_07",
+      "jp": "てつだってください",
+      "kana": "てつだってください",
+      "romaji": "tetsudatte kudasai",
+      "meaning": {
+        "en": "Please help me (with this task)",
+        "bn": "একটু হাত লাগান",
+        "ja": "手伝ってください"
+      },
+      "note": {
+        "en": "tetsudau = to help with work; tasukete is for danger",
+        "bn": "tetsudau মানে কাজে সাহায্য; বিপদের জন্য tasukete",
+        "ja": "作業の手伝いを頼む表現"
+      },
+      "srs_words": [
+        "てつだって",
+        "ください"
+      ]
+    },
+    {
+      "id": "wr_08",
+      "jp": "これでいいですか",
+      "kana": "これでいいですか",
+      "romaji": "kore de ii desu ka",
+      "meaning": {
+        "en": "Is this okay?",
+        "bn": "এটা কি ঠিক আছে?",
+        "ja": "これでいいですか"
+      },
+      "note": {
+        "en": "Show your finished work and confirm — builds trust fast",
+        "bn": "কাজ শেষ করে দেখিয়ে নিশ্চিত হও — এতে দ্রুত ভরসা তৈরি হয়",
+        "ja": "確認の一言で信頼される"
+      },
+      "srs_words": [
+        "これ",
+        "で",
+        "いい",
+        "ですか"
+      ]
+    }
+  ]
+}

@@ -22,13 +22,21 @@ class ContentRepository {
     _katakana = await _loadKana('assets/content/katakana.json');
 
     for (final file in const [
+      'assets/content/lesson_greetings.json',
       'assets/content/lesson_work_intro.json',
-      'assets/content/lesson_konbini.json',
-      'assets/content/lesson_clinic.json',
       'assets/content/lesson_numbers.json',
+      'assets/content/lesson_konbini.json',
+      'assets/content/lesson_shopping.json',
+      'assets/content/lesson_clinic.json',
       'assets/content/lesson_time.json',
+      'assets/content/lesson_directions.json',
+      'assets/content/lesson_transport.json',
+      'assets/content/lesson_emergency.json',
+      'assets/content/lesson_smalltalk.json',
       'assets/content/lesson_restaurant.json',
       'assets/content/lesson_workplace.json',
+      'assets/content/lesson_work_safety.json',
+      'assets/content/lesson_work_requests.json',
     ]) {
       final lesson = Lesson.fromJson(json.decode(await rootBundle.loadString(file)));
       assert(lesson.verified, 'Refusing to load unverified lesson ${lesson.id}');

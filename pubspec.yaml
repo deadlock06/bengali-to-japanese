@@ -40,5 +40,28 @@ flutter:
     - assets/content/
     - assets/stroke/
 
+  # v4 "Bold Ink" brand fonts (theme references these family names; Flutter
+  # falls back to system fonts until the files exist). To enable: download the
+  # variable TTFs from Google Fonts into assets/fonts/ with these exact names,
+  # then UNCOMMENT this block and run `flutter pub get`.
+  # fonts:
+  #   - family: Baloo Da 2
+  #     fonts:
+  #       - asset: assets/fonts/BalooDa2.ttf          # BalooDa2[wght].ttf
+  #   - family: Zen Kaku Gothic New
+  #     fonts:
+  #       - asset: assets/fonts/ZenKakuGothicNew-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/ZenKakuGothicNew-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/ZenKakuGothicNew-Black.ttf
+  #         weight: 900
+  #   - family: Archivo
+  #     fonts:
+  #       - asset: assets/fonts/Archivo.ttf           # Archivo[wdth,wght].ttf
+  #   - family: Space Grotesk
+  #     fonts:
+  #       - asset: assets/fonts/SpaceGrotesk.ttf      # SpaceGrotesk[wght].ttf
+
 # Native model integration (llama.cpp / whisper.cpp / Kokoro) is wired through
 # a Kotlin MethodChannel on the Android side — see README.

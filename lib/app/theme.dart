@@ -1,75 +1,83 @@
-// Bhasago — brand theme & design tokens.
+// Bhasago — brand theme & design tokens. (v4 design refresh — "Bold Ink")
 //
-// Brand story: "Ai" indigo (藍 / নীল) bridges Bengal's indigo heritage and
-// Japanese aizome; Sakura vermilion is the torii gateway to Japan. Sumi-ink
-// darks keep the app calm and battery-friendly on budget AMOLED devices.
+// Brand story update: sumi-ink black canvas; four solid accent inks —
+// yellow (attention/current), pink (review/memory), blue (AI/exam),
+// green (growth/progress). Color is used as ACCENT on near-black surfaces;
+// one statement card per screen, everything else stays quiet.
 //
-// Colors map to the 09_UI_STATES design system. Psych-STATE colors (flow /
-// struggle / burnout / boredom) are functional and live in [BhasagoStateColors];
-// the resting brand identity is Ai indigo + Sakura, never a volatile state hue.
+// Psych-STATE colors (flow / struggle / burnout / boredom) are unchanged and
+// live in [BhasagoStateColors] — functional, never the resting palette.
+//
+// Fonts (declare in pubspec.yaml, assets from Google Fonts):
+//   Baloo Da 2          — Bengali + display headings
+//   Zen Kaku Gothic New — Japanese
+//   Archivo             — Latin UI labels
+//   Space Grotesk       — numbers / tags (optional)
 //
 // Usage:  MaterialApp(theme: BhasagoTheme.dark(), ...)
-// Note: pure ColorScheme/shape theming — no custom font family is set here so
-// there are no missing-asset risks. To adopt Noto Sans Bengali/JP later, declare
-// the fonts in pubspec and pass `fontFamily` into [_textTheme].
 
 import 'package:flutter/material.dart';
 
-/// Raw brand tokens. Prefer reading colors from `Theme.of(context).colorScheme`;
-/// use these directly only for brand chrome (logo, splash, state screens).
+/// Raw brand tokens (v4). Prefer Theme.of(context).colorScheme; use these
+/// directly only for brand chrome (logo, splash, the four accent cards).
 abstract final class BhasagoColors {
-  // Sumi-ink darks
-  static const bg = Color(0xFF0E1116); // app background (matches prior build)
-  static const surface = Color(0xFF171B22);
-  static const surfaceHigh = Color(0xFF212734);
-  static const outline = Color(0xFF2E3644);
+  // Ink darks
+  static const bg = Color(0xFF0F0F0F); // app background
+  static const surface = Color(0xFF1A1A1A);
+  static const surfaceHigh = Color(0xFF242424);
+  static const outline = Color(0xFF2E2E2E);
 
-  // Ai indigo — primary brand
-  static const ai = Color(0xFF5B7CFA);
-  static const aiBright = Color(0xFF8AA0FF); // primary on dark (contrast-safe)
-  static const aiDeep = Color(0xFF29347A); // primaryContainer on dark
+  // Accent inks — solid fills, always with near-black (#111) content on top
+  static const yellow = Color(0xFFEFE94B); // current lesson / primary action
+  static const pink = Color(0xFFF06EB7); // review / memory
+  static const blue = Color(0xFF4D7DF7); // AI examiner / mock exam
+  static const green = Color(0xFF35E065); // progress / success / live chart
 
-  // Sakura vermilion — secondary accent / torii
-  static const sakura = Color(0xFFFF6F86);
-  static const sakuraDeep = Color(0xFF7A2233);
+  // Content-on-accent darks (text/icons placed on the accent fills)
+  static const onYellow = Color(0xFF111111);
+  static const yellowDim = Color(0xFF3D3B10);
+  static const pinkDim = Color(0xFF6B1C44);
+  static const blueDim = Color(0xFF0E2A6B);
+  static const greenDim = Color(0xFF0B5225);
 
-  // Gold — mastery / rewards (predictable, never a loot surprise)
-  static const gold = Color(0xFFFFC24B);
+  static const ink = Color(0xFFF5F5F0); // primary text on dark
+  static const inkDim = Color(0xFF8F8F8A); // secondary text
+  static const error = Color(0xFFD6357E); // alert error (pink family)
+  static const success = Color(0xFF1FA84E); // alert success (green family)
 
-  static const ink = Color(0xFFF3F5FA); // primary text on dark
-  static const inkDim = Color(0xFFAAB3C5); // secondary text
-  static const error = Color(0xFFFF5370);
+  // Japanese background motif (very low opacity decorative layer)
+  static const sun = Color(0xFFD84040); // red sun radial, ~0.3 alpha max
 }
 
-/// Functional psych-state colors from 09_UI_STATES. Used by state screens, not
-/// as the resting brand palette.
+/// Functional psych-state colors from 09_UI_STATES — UNCHANGED from v0.1.
 abstract final class BhasagoStateColors {
-  static const flow = Color(0xFF00C853); // optimal challenge
-  static const struggle = Color(0xFFFF6D00); // rising errors — calm, warm
-  static const burnout = Color(0xFF2979FF); // fatigue — zero motion
-  static const boredom = Color(0xFFAA00FF); // autopilot — playful
+  static const flow = Color(0xFF00C853);
+  static const struggle = Color(0xFFFF6D00);
+  static const burnout = Color(0xFF2979FF);
+  static const boredom = Color(0xFFAA00FF);
 }
 
 abstract final class BhasagoTheme {
-  static const _radius = 16.0;
+  static const _radiusCard = 20.0; // v4: cards
+  static const _radiusField = 14.0;
 
   static ThemeData dark() {
     const scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: BhasagoColors.aiBright,
-      onPrimary: Color(0xFF0A1230),
-      primaryContainer: BhasagoColors.aiDeep,
-      onPrimaryContainer: Color(0xFFDDE4FF),
-      secondary: BhasagoColors.sakura,
-      onSecondary: Color(0xFF3A0710),
-      secondaryContainer: BhasagoColors.sakuraDeep,
-      onSecondaryContainer: Color(0xFFFFDCE2),
-      tertiary: BhasagoColors.gold,
-      onTertiary: Color(0xFF3A2A00),
-      tertiaryContainer: Color(0xFF5C4200),
-      onTertiaryContainer: Color(0xFFFFE6B0),
+      primary: BhasagoColors.yellow,
+      onPrimary: BhasagoColors.onYellow,
+      primaryContainer: Color(0xFF4A470F),
+      onPrimaryContainer: Color(0xFFF7F3A9),
+      secondary: BhasagoColors.pink,
+      onSecondary: Color(0xFF111111),
+      secondaryContainer: Color(0xFF4A1030),
+      onSecondaryContainer: Color(0xFFFBD4EA),
+      tertiary: BhasagoColors.green,
+      onTertiary: Color(0xFF111111),
+      tertiaryContainer: Color(0xFF0B3D20),
+      onTertiaryContainer: Color(0xFFC7F5D6),
       error: BhasagoColors.error,
-      onError: Color(0xFF3A0510),
+      onError: Color(0xFFFFFFFF),
       surface: BhasagoColors.surface,
       onSurface: BhasagoColors.ink,
       surfaceContainerHighest: BhasagoColors.surfaceHigh,
@@ -91,52 +99,61 @@ abstract final class BhasagoTheme {
         color: BhasagoColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
+          borderRadius: BorderRadius.circular(_radiusCard),
           side: const BorderSide(color: BhasagoColors.outline),
         ),
         margin: const EdgeInsets.symmetric(vertical: 6),
       ),
+      // v4: all buttons are stadium pills
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(48, 48), // spec: touch target >=48dp
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: const StadiumBorder(),
+          textStyle: const TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(48, 48),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          side: const BorderSide(color: BhasagoColors.outline),
+          shape: const StadiumBorder(),
+          side: const BorderSide(color: Color(0xFF3A3A3A), width: 1.5),
           foregroundColor: BhasagoColors.ink,
         ),
       ),
+      // v4: active destination = ink-white pill, icon+label dark
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: BhasagoColors.surface,
-        indicatorColor: BhasagoColors.aiDeep,
+        backgroundColor: const Color(0xFF0B0B0B),
+        indicatorColor: BhasagoColors.ink,
         surfaceTintColor: Colors.transparent,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: Color(0xFF111111));
+          }
+          return const IconThemeData(color: BhasagoColors.inkDim);
+        }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: BhasagoColors.aiBright,
+              fontWeight: FontWeight.w700,
+              color: BhasagoColors.ink,
             );
           }
           return const TextStyle(fontSize: 12, color: BhasagoColors.inkDim);
         }),
       ),
-      chipTheme: ChipThemeData(
-        backgroundColor: BhasagoColors.surfaceHigh,
-        side: const BorderSide(color: BhasagoColors.outline),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(999),
+      chipTheme: const ChipThemeData(
+        backgroundColor: Colors.transparent,
+        side: BorderSide(color: Color(0xFF3A3A3A), width: 1.5),
+        shape: StadiumBorder(),
+        labelStyle: TextStyle(color: BhasagoColors.inkDim),
+        // selected chip: ink-white fill, dark label (see styleguide chips)
+        selectedColor: BhasagoColors.ink,
+        secondaryLabelStyle: TextStyle(
+          color: Color(0xFF111111),
+          fontWeight: FontWeight.w700,
         ),
-        labelStyle: const TextStyle(color: BhasagoColors.ink),
       ),
       dividerColor: BhasagoColors.outline,
       textTheme: _textTheme(base.textTheme),
@@ -149,53 +166,62 @@ abstract final class BhasagoTheme {
       dialogTheme: DialogThemeData(
         backgroundColor: BhasagoColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
+          borderRadius: BorderRadius.circular(_radiusCard),
           side: const BorderSide(color: BhasagoColors.outline),
         ),
       ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: BhasagoColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(_radiusCard)),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: BhasagoColors.surfaceHigh,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(_radiusField),
           borderSide: const BorderSide(color: BhasagoColors.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(_radiusField),
           borderSide: const BorderSide(color: BhasagoColors.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: BhasagoColors.aiBright, width: 1.5),
+          borderRadius: BorderRadius.circular(_radiusField),
+          borderSide: const BorderSide(color: BhasagoColors.ink, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
 
+  // Display = Baloo Da 2 (bn + headings); body inherits platform fallbacks.
+  // Requires in pubspec.yaml:
+  //   fonts:
+  //     - family: Baloo Da 2        (w500..w800)
+  //     - family: Zen Kaku Gothic New (w500/w700/w900)  — set via
+  //       TextStyle(fontFamily: 'Zen Kaku Gothic New') on Japanese text widgets
+  //     - family: Archivo           (w500/w700/w800)
   static TextTheme _textTheme(TextTheme base) {
+    const display = 'Baloo Da 2';
+    const latin = 'Archivo';
     return base.copyWith(
-      displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink),
-      displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink),
-      displaySmall: base.displaySmall?.copyWith(color: BhasagoColors.ink),
-      headlineLarge: base.headlineLarge?.copyWith(color: BhasagoColors.ink),
-      headlineMedium: base.headlineMedium?.copyWith(color: BhasagoColors.ink),
-      headlineSmall: base.headlineSmall?.copyWith(color: BhasagoColors.ink),
-      titleLarge: base.titleLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w600),
-      titleMedium: base.titleMedium?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
-      titleSmall: base.titleSmall?.copyWith(color: BhasagoColors.inkDim, fontWeight: FontWeight.w500),
-      bodyLarge: base.bodyLarge?.copyWith(color: BhasagoColors.ink),
-      bodyMedium: base.bodyMedium?.copyWith(color: BhasagoColors.ink),
-      bodySmall: base.bodySmall?.copyWith(color: BhasagoColors.inkDim),
-      labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
-      labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim),
-      labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim),
+      displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+      displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      displaySmall: base.displaySmall?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      headlineLarge: base.headlineLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      headlineMedium: base.headlineMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      headlineSmall: base.headlineSmall?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      titleLarge: base.titleLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      titleMedium: base.titleMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w600),
+      titleSmall: base.titleSmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: display, fontWeight: FontWeight.w600),
+      bodyLarge: base.bodyLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display),
+      bodyMedium: base.bodyMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display),
+      bodySmall: base.bodySmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: display),
+      labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontFamily: latin, fontWeight: FontWeight.w700),
+      labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
+      labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
     );
   }
 }

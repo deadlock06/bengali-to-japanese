@@ -1,6 +1,7 @@
 // Shared Riverpod providers.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../agents/agent_bus.dart';
 import '../agents/agent_state.dart';
 import '../data/content_repository.dart';
@@ -9,6 +10,14 @@ import '../domain/fsrs.dart';
 
 /// Selected UI locale (persist via shared_preferences in the full app).
 final localeProvider = StateProvider<Locale>((_) => const Locale('bn'));
+
+/// Whether the first-run language screen was completed (v4 onboarding).
+/// shared_preferences on purpose — locale is not a secret; Keystore stays
+/// DB-key-only (00 §data autonomy / security posture).
+final localeChosenProvider = FutureProvider<bool>((_) async {
+  final p = await SharedPreferences.getInstance();
+  return p.getString('locale_chosen') != null;
+});
 
 /// Loads the verified content bundle once at startup.
 final contentProvider = FutureProvider<ContentRepository>((_) async {

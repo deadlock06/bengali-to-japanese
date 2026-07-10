@@ -57,6 +57,84 @@
 ```
 
 
+## File: DESIGN_BRIEF.md
+
+```md
+# DESIGN BRIEF — Bhasago v4 "Bold Ink" (for the Claude design project)
+
+Paste this file into the design project when starting the next design session.
+Working model (owner's direction): **design the system first, then hand off —
+code follows the design, never the other way.** The design project may
+**re-architect any screen or component**, including ones already implemented;
+nothing in the codebase is frozen. Every approved design ships as a
+`*.dc.html` + a `HANDOFF.md` with ordered steps and exact repo destinations
+(the v4 home handoff is the template — keep that format).
+
+## 1. Where the design system stands (2026-07-10)
+DESIGNED + IMPLEMENTED (from `Home v4.dc.html` handoff):
+- Token set: ink-black surfaces `#0F0F0F/#1A1A1A/#242424`, outline `#2E2E2E`;
+  accent inks yellow `#EFE94B` (current/primary), pink `#F06EB7` (review),
+  blue `#4D7DF7` (AI/exam), green `#35E065` (progress); content on accents is
+  always near-black `#111`; text `#F5F5F0` / dim `#8F8F8A`.
+- Shape: cards 20px radius, buttons/chips stadium pills, bottom-nav active =
+  white pill; type: Baloo Da 2 (BN+display), Zen Kaku Gothic New (JA),
+  Archivo (Latin labels), Space Grotesk (numbers, optional).
+- Screens: Home, first-run language onboarding, Progress (retention chart),
+  AI-check (mock exam + Banglish suggestion), 4-tab shell
+  (Home / Learn / Speak / Progress; Kana·Write·Settings push from Home AppBar).
+
+NOT YET DESIGNED (running on old v0.1 styling inside the new theme):
+Lesson player, Review (SRS), Learn tab (lesson list), Speak tab (shadowing),
+Pitch, Kana grid, Writing practice, Settings/export/deletion, agent psych
+strip, and all empty/error/offline states.
+
+## 2. Design next — priority order
+1. **Lesson player** (`lib/presentation/screens.dart` → LessonScreen) — the
+   core loop: exercise card, answer states, agent psych strip + dismissible
+   advice (persona voice), fixed rewards (10 XP/lesson). MUST keep visible,
+   penalty-free **Skip / Hint / Quit** at all times (spec invariant).
+2. **Speak tab** (ShadowingScreen) — record/playback vs reference audio,
+   alignment-based score, text-input fallback always offered, **plus the
+   Pitch entry card** (Pitch currently has no route in the v4 shell).
+3. **Learn tab** (LessonListScreen) — lessons grouped by pack
+   (basics ← daily ← work DAG), per-lesson progress, downloadable-pack
+   affordance (03: tiered packs, P2P share).
+4. **Review** (ReviewScreen) — SRS card flow in the pink family; neutral
+   "N cards due today" framing (never guilt/streak pressure).
+5. **Kana grid + Writing practice** — stroke-order playback, square canvas
+   adapts to shorter axis (D-013 — don't design a fixed-portrait canvas).
+6. **Settings + data autonomy** — locale, persona picker, one-tap export
+   (ZIP), delete with 7-day grace, KanjiVG CC BY-SA attribution line.
+7. **State pack** — loading / empty / error / offline / first-use for every
+   screen above (offline is the NORMAL state, not an error).
+
+## 3. Hard constraints (00_START_HERE non-negotiables — design MUST honor)
+- **Recommend, never force**: no locks, no forced sessions; Skip/Hint/Quit
+  everywhere; break suggestions are dismissible.
+- **No dark patterns**: no variable rewards, streak-saves, guilt/FOMO copy;
+  fail states neutral (D-001). Rewards predictable and mastery-based.
+- **Offline-first**: no design may depend on connectivity; cloud = optional.
+- **Correctness over generation**: "AI" UI must read as *examiner that grades
+  from the answer key*; LLM only phrases feedback (Banglish OK).
+- **Bengali-first**: BN is the default register everywhere; EN/JA secondary.
+- **Data autonomy**: export/delete are first-class UI, not buried.
+- Budget-phone target (Tecno Pova class): light effects only, no heavy blur/
+  video backgrounds; tap targets ≥ 44px; contrast on accent fills uses `#111`.
+
+## 4. Handoff format (repeat what worked)
+- One `.dc.html` per screen/flow, mobile 390×844 frame, tokens from §1.
+- `HANDOFF.md` with: design summary, files→destinations table, ordered steps
+  (later steps may import earlier ones), spec-compliance checklist (call out
+  D-001 + Skip/Hint/Quit explicitly), post-copy commands, open follow-ups,
+  suggested commit message.
+- Component naming: match existing Dart (`BhasagoColors.*`, screens in
+  `lib/presentation/`, providers in `lib/app/providers.dart`).
+- If a design re-architects an existing component, say so in HANDOFF.md
+  ("replaces X, migrate Y") — the coding session will follow it.
+
+```
+
+
 ## File: NEXT_SESSION.md
 
 ```md
@@ -67,8 +145,9 @@ You are an AI continuing work on **SENSEI/Bhasago**. Read order:
 2. `CODEBASE_MAP.md` — what exists vs spec (2026-07-09; still mostly accurate, see delta below).
 3. This file — what the last session did and what to do next.
 
-## Last session (2026-07-10, Claude Fable 5) — first real compile + agents + dashboard + autonomy UI + content ×5
-**Flutter 3.44.5 IS INSTALLED on this machine (`C:\flutter\bin\flutter.bat`, not on PATH).** All checks run for real now.
+## Last session (2026-07-10, Claude Fable 5 & Antigravity) — first real compile + agents + dashboard + autonomy UI + content ×5
+**Flutter 3.44.5 IS INSTALLED on this machine (`D:\flutter\bin\flutter.bat`).** All checks run for real now.
+*Antigravity injected the new UI screens, fixed the `intl` pubspec constraint, and successfully ran `flutter pub get` & `gen-l10n` to finalize the build state.*
 1. **First-ever compile check (DO-NEXT #1 done):** fixed 12 analyzer issues — `nullable-getter: false` added to `l10n.yaml` (S.of non-null), kata-shadowing bug in `writing_screen.dart`, `List<double>` contour in `accent_screens.dart`. `flutter analyze` clean, `flutter test` 45/45.
 2. **Four-agent system built (T-401–405):** `lib/agents/` — `agent_state.dart` (contract), `director.dart` + `scaffold_agent.dart` (pure decision fns w/ named thresholds), `persona.dart` (4 voices, deterministic rotation, struggle-softening), `feedback.dart` (fixed rewards: 10 XP/lesson, milestone/10 lessons, level/50 retained words), `agent_bus.dart` (Riverpod StateNotifier, injectable clock, agent_log ring buffer). Wired into LessonScreen (grades recognition+context, hesitation timing, hint/skip signals) + `agent_panel.dart` (psych strip w/ 09 colors, dismissible advice, scaffold offers). Proofs: `test/agents_test.dart` + `tools/agents_reference.mjs` (17/17, added to CI).
 3. **Progress dashboard (T-108):** `lib/domain/progress.dart` (pure; buckets/weakness/forecast/retention, `test/progress_test.dart`) + `lib/presentation/progress_screen.dart` (memory map, weak list framed as "focus next", 7-day forecast, neutral activity count). AppBar → insights icon.
@@ -81,13 +160,37 @@ You are an AI continuing work on **SENSEI/Bhasago**. Read order:
 ## Green (all verified this session, on this machine)
 `flutter analyze` 0 issues · `flutter test` 45/45 · validator **PASS 0 warnings** · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8.
 
+## Later session (2026-07-10 night, Claude Fable 5) — FIRST SUCCESSFUL DEVICE BUILD + INSTALL
+1. **Android toolchain fixed (D-014):** scaffold pinned AGP 8.3.0 / Kotlin 1.9.22 / Gradle 8.7 → device build always failed (Flutter 3.44.5 requires AGP ≥ 8.6). Re-pinned to the installed SDK's own template versions (read from `flutter_tools/.../gradle_utils.dart`): **AGP 9.0.1 / Kotlin 2.3.20 / Gradle 9.1.0** in `android/settings.gradle.kts` + `gradle-wrapper.properties`. All other android/ files already matched the new template byte-for-byte; `gradle.properties` keeps `android.newDsl=false`.
+2. **`kotlin.incremental=false` added to `android/gradle.properties`:** Kotlin incremental caches crash when pub cache (C:) and project (D:) are on different drives ("this and base files have different roots"). Machine-specific but harmless everywhere.
+3. **Verified end-to-end on TECNO LG7n:** `flutter build apk --debug` ✓ (5.4 min cold) · `adb install -r` ✓ · launch ✓ — Impeller/Vulkan backend, Dart VM service up, no fatal exceptions, process stable; app force-stopped afterwards to save battery. minSdk is 24 via `flutter.minSdkVersion` — already satisfies the ≥23 (SQLCipher) requirement, DO-NEXT #2's minSdk step is moot.
+4. Re-verified after all changes: `flutter analyze` 0 issues · `flutter test` 47/47.
+5. Remaining from DO-NEXT #2: native bridge stubs (MethodChannel: TTS/STT/LLM/thermal) per 02/08 — the scaffold itself is done and proven.
+
+## Later session (2026-07-10, Claude Fable 5) — WritingScreen short-viewport fix
+1. **WritingScreen overflow fixed (D-013):** paper is now `Expanded > Center > AspectRatio(1)` (square = shorter axis, redundant `Spacer` removed) — no overflow in landscape / split-screen / the default 800x600 test surface; portrait rendering unchanged. Chose adaptive layout over a `SystemChrome` portrait lock because Android multi-window ignores orientation preferences — rationale logged in `99_DECISIONS.md` D-013.
+2. `test/widget_test.dart`: added a regression test on the default landscape surface (Write tab, no exception); viewport-pin comment updated (pin is now realism, not a safety workaround).
+3. Cleared 8 pre-existing analyzer infos that had crept into the working tree (theme const, pitch/writing-painter for-braces, main const, screens interpolation, settings `withOpacity`→`withValues`).
+4. Re-verified: `flutter analyze` 0 issues · `flutter test` **47/47**.
+
+## Later session (2026-07-10 late night, Claude Fable 5 / Cowork) — v4 "Bold Ink" design handoff applied
+Source: `Shared design file.zip` → `handoff/HANDOFF.md` + 5 step files (from the approved `Home v4.dc.html` Claude design project). **User direction: design-system-first — the Claude design project is the source of truth for UI/UX; code follows it, never improvises; any screen/component may be re-architected by a new design. See `DESIGN_BRIEF.md` (new, repo root) for what to design next.**
+1. **Committed the pre-refresh checkpoint first** (`32c5fe1`, ~127 files — everything from the three sessions above), so the design refresh is its own commit. Stale `.git/*.lock` files blocked git (sandbox can't unlink them) → renamed aside as `.git/*.lock.stale*`/`lockjunk*` — safe to delete all of those anytime.
+2. **Applied all 5 handoff steps to their spec'd destinations:** `lib/app/theme.dart` (replaced — ink-black + yellow/pink/blue/green token set; old `ai`/`sakura`/`gold` tokens had no usages outside theme.dart, verified by grep), `lib/presentation/home_screen.dart` (new), `lib/main.dart` (replaced — 4-tab shell Home/Learn/Speak/Progress; Kana/Write/Settings are Home-AppBar pushes per the handoff, Review/AI-check pushed from Home cards), `lib/presentation/onboarding_screen.dart` (new, first-run language select), `lib/presentation/progress_screen_v4.dart` (new — ProgressScreenV4 + AiCheckScreen).
+3. **Wiring beyond raw copies (all per handoff notes):** `localeChosenProvider` added to `app/providers.dart` (shared_preferences; Keystore stays DB-key-only); step-4 onboarding gate in `SenseiApp` (`chosen==null` → blank frame, else Onboarding/HomeShell, `onDone` → `ref.invalidate`); step-3 TODOs resolved — Home AI card + Progress tab now use the real `AiCheckScreen`/`ProgressScreenV4`. Old `progress_screen.dart` (v0.1 insights dashboard) is **no longer routed** (kept — its T-108 logic feeds V4 later). PitchScreen also unrouted (known handoff follow-up: card inside Speak tab).
+4. **Tests updated:** `test/widget_test.dart` rewritten for the v4 shell — 4 destinations (was 6), `SharedPreferences.setMockInitialValues` for the gate, new first-run onboarding test, D-013 landscape regression kept (Write now via Home AppBar icon).
+5. **Fonts NOT bundled** (sandbox had no network to font repos): pubspec has a ready commented `fonts:` block with exact file names. Until TTFs exist in `assets/fonts/`, Flutter silently falls back to system fonts — compiles and runs fine.
+6. **Verified from sandbox:** validator PASS 0 warnings · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8; static grep checks (removed tokens, screen constructors, l10n keys) clean. **`flutter analyze` + `flutter test` NOT run (no Flutter in the sandbox) — run them first thing next session.**
+7. **Cowork infra note for future sessions:** when working through the Cowork sandbox mount, WRITE FILES VIA THE SHELL — files written by the desktop file tools can appear truncated to git through the mount (stale size cache). This session hit it and repaired by rewriting the affected files from the shell.
+
 ## DO NEXT
-1. **Commit!** Working tree has ~40 files of unverified-by-git work (this + prior session). Nothing is committed since `9087281`.
-2. **Android scaffold:** no `android/` yet → `flutter create . --platforms=android`, set **minSdkVersion ≥ 23** (SQLCipher + secure storage), then native bridge stubs (MethodChannel: TTS/STT/LLM/thermal) per 02/08.
-3. **Audio pipeline (T-107):** wire `record`/`just_audio` in production step + ShadowingScreen (TODOs marked); OPUS later.
-4. **Native-review pass on new lessons:** 64 new phrases are standard textbook Japanese but 05 rule 10 wants human review — log reviewer sign-off, then also record audio.
-5. **Persona persistence at startup:** persona loads from app_meta only when Settings opens; load it in main() bootstrap too. Deletion-grace purge check likewise runs only on Settings load — move to app start.
-6. **PDF in export ZIP** (`pdf` package) + share sheet (`share_plus`) once android/ exists.
+1. **Run the real checks** (sandbox couldn't): `flutter pub get; flutter gen-l10n; flutter analyze; flutter test`. Expect green; fix anything the static pass missed.
+2. **Fonts:** download Baloo Da 2, Zen Kaku Gothic New (Medium/Bold/Black), Archivo, Space Grotesk from Google Fonts → `assets/fonts/` with the exact names in pubspec's commented block → uncomment → `flutter pub get`. The design's whole feel depends on these.
+3. **l10n:** new v4 strings are hardcoded BN for design parity — move to `lib/l10n/app_{en,bn,ja}.arb` (add `navHome`, `navProgress`, `home*`, onboarding + progress/AI-check keys) and swap in `S.of` lookups.
+4. **PitchScreen entry point:** card inside the Speak tab (waiting on the Speak-tab design — `DESIGN_BRIEF.md` item 2; don't improvise it).
+5. **T-108 data into V4:** implement `SrsLocal.retentionByDay()` + per-skill accuracy; point `retentionSeriesProvider` at it (re-import `app/providers.dart` in progress_screen_v4 — TODO marked); add `dueCountProvider` for the pink Home card; real course % on Home. Reuse `lib/domain/progress.dart` (already pure + tested).
+6. **Real mock exam in AiCheckScreen:** sample from verified content, grade vs answer key ONLY (00 non-negotiable #4); Banglish suggestion from weak-skill template. Currently a demo coin-flip, clearly TODO-marked.
+7. Carry-overs: audio pipeline (T-107) · native bridge stubs (MethodChannel TTS/STT/LLM/thermal) · native-review sign-off on the 64 new phrases · persona + purge-check bootstrap in `main()` · PDF in export ZIP + `share_plus`.
 
 ## Open decisions for a human (99_DECISIONS format)
 - **D-012 (proposed, this session):** whitelist may be extended with A2-level conjugated surface forms used by verified lessons (validator matches surface forms, not lemmas). Confirm or replace with a lemmatizing validator.
@@ -211,6 +314,41 @@ file must pass `validate_content.mjs` before it ships.
 
 Content now: 46 hiragana + 46 katakana + 2 Can-do lessons + 6 pitch pairs, all
 passing `validate_content.mjs`.
+
+```
+
+
+## File: analysis_options.yaml
+
+```yaml
+# This file configures the analyzer, which statically analyzes Dart code to
+# check for errors, warnings, and lints.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+# The following line activates a set of recommended lints for Flutter apps,
+# packages, and plugins designed to encourage good coding practices.
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  # The lint rules applied to this project can be customized in the
+  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
+  # included above or to enable additional rules. A list of all available lints
+  # and their documentation is published at https://dart.dev/lints.
+  #
+  # Instead of disabling a lint rule for the entire project in the
+  # section below, it can also be suppressed for a single line of code
+  # or a specific dart file by using the `// ignore: name_of_lint` and
+  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
+  # producing the lint.
+  rules:
+    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
+    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options
 
 ```
 
@@ -2939,6 +3077,63 @@ passing `validate_content.mjs`.
 ```
 
 
+## File: content_factory\.pytest_cache\README.md
+
+```md
+# pytest cache directory #
+
+This directory contains data from the pytest's cache plugin,
+which provides the `--lf` and `--ff` options, as well as the `cache` fixture.
+
+**Do not** commit this to version control.
+
+See [the docs](https://docs.pytest.org/en/stable/how-to/cache.html) for more information.
+
+```
+
+
+## File: content_factory\BUILD_SUMMARY.md
+
+```md
+# SENSEI Content Factory — Build Summary
+
+## Build Info
+- Date: 2026-07-10
+- Pipeline: SENSEI Content Factory v4.2
+- Tier: 1 (JLPT N5 Core)
+
+## Content Stats
+- Vocabulary: 20 items (20 valid)
+- Grammar: 3 points (3 valid)
+- Kanji: 5 characters (5 valid)
+- Lessons: 3 lessons
+- Cards: 81 generated
+
+## Output
+- Database: `output/sensei_content.db`
+- Package: `pak_sensei_n5_core`
+- Size: ~0.16 MB
+- SHA256: see build output
+
+## Files Reconstructed
+The uploaded files had mismatched names/content. This build reconstructs the proper structure:
+- `schemas/` — Pydantic v2 models (reconstructed from imports)
+- `validators/` — Deterministic validators (no LLM)
+- `compilers/` — SQLite compiler + Card generator
+- `packagers/` — Tier packager
+- `scripts/` — Build pipeline
+- `sources/` — JSON content files
+- `output/` — Compiled `.db` + manifest
+
+## Fixes Applied
+1. Relative imports → absolute imports for package-less execution
+2. Pydantic v2 model access (`getattr` instead of dict `.get()`)
+3. JSON serialization for Pydantic models in SQLite compiler
+4. Bengali meaning length threshold lowered (single-char words like "না" are valid)
+
+```
+
+
 ## File: content_factory\banned_phrases.txt
 
 ```txt
@@ -4386,6 +4581,1388 @@ watch ad to continue
 ```
 
 
+## File: content_factory\sources\grammar\n5_core.json
+
+```json
+[
+  {
+    "id": "grm_01_wa",
+    "title_japanese": "〜は",
+    "title_bengali": "বিষয় চিহ্নিতকারী কণিকা は",
+    "structure_pattern": "[N] + は + [述語]",
+    "explanation_bengali": "「は」 একটি topic marker particle। এটি বাক্যের বিষয় (topic) চিহ্নিত করে। বাংলায় এটি সরাসরি অনুবাদ হয় না, কিন্তু এর কাজ হলো বলা: 'যে বিষয়ে আমি কথা বলছি, সেটি হলো...'। যেমন: '私は学生です' মানে 'আমি (বিষয়ে কথা বলছি) একজন ছাত্র'। এটি 「が» থেকে আলাদা — 「が» নতুন তথ্য দেয়, 「は» পুরনো বিষয়ে আরও কিছু বলে।",
+    "explanation_english": "The particle は marks the topic of a sentence. It identifies what the sentence is about.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [],
+    "unlocks_ids": [
+      "grm_02_ga"
+    ],
+    "examples": [
+      {
+        "japanese": "私は学生です",
+        "reading": "わたしはがくせいです",
+        "bengali": "আমি একজন ছাত্র",
+        "english": "I am a student",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ff6b6b"
+          }
+        ]
+      },
+      {
+        "japanese": "今日は暑いです",
+        "reading": "きょうはあついです",
+        "bengali": "আজ গরম",
+        "english": "Today is hot",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ff6b6b"
+          }
+        ]
+      },
+      {
+        "japanese": "日本語は難しいです",
+        "reading": "にほんごはむずかしいです",
+        "bengali": "জাপানি ভাষা কঠিন",
+        "english": "Japanese is difficult",
+        "highlights": [
+          {
+            "start": 4,
+            "end": 5,
+            "color": "#ff6b6b"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "私が学生です (as topic marker)",
+        "why_bengali": "বাংলা ভাষায় 'আমি ছাত্র' বলার সময় আমরা কোনো বিশেষ marker ব্যবহার করি না, তাই বাঙালি শিক্ষার্থীরা 「が» ব্যবহার করতে চায়। কিন্তু বিষয় চিহ্নিত করতে 「は» ব্যবহার করতে হবে, 「が» নতুন তথ্য দেয়।",
+        "correction": "বিষয় চিহ্নিত করতে は ব্যবহার করুন, নতুন তথ্য দিতে が"
+      }
+    ],
+    "related_vocab": [
+      "voc_20_watashi"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "grm_02_ga",
+    "title_japanese": "〜が",
+    "title_bengali": "নতুন তথ্য দেওয়ার কণিকা が",
+    "structure_pattern": "[N] + が + [述語]",
+    "explanation_bengali": "「が» একটি subject marker particle। এটি নতুন তথ্য বা গুরুত্বপূর্ণ বিষয় চিহ্নিত করে। বাংলায় এটি অনুবাদ হয় '...-ই' বা '...-ই হলো'। যেমন: '私がやります' মানে 'আমিই করব' (অন্য কেউ নয়)। প্রশ্নের উত্তরেও 「が» ব্যবহার হয়: '誰が来ましたか' → '田中が来ました'। এটি 「は» থেকে আলাদা — 「は» পুরনো বিষয়, 「が» নতুন তথ্য।",
+    "explanation_english": "The particle が marks the grammatical subject and introduces new information.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [
+      "grm_01_wa"
+    ],
+    "unlocks_ids": [
+      "grm_03_wo"
+    ],
+    "examples": [
+      {
+        "japanese": "私がやります",
+        "reading": "わたしがやります",
+        "bengali": "আমিই করব",
+        "english": "I will do it (emphasis: not someone else)",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      },
+      {
+        "japanese": "誰が来ましたか",
+        "reading": "だれがきましたか",
+        "bengali": "কে এসেছে",
+        "english": "Who came?",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      },
+      {
+        "japanese": "雨が降っています",
+        "reading": "あめがふっています",
+        "bengali": "বৃষ্টি হচ্ছে",
+        "english": "It is raining",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#4ecdc4"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "Always using は instead of が",
+        "why_bengali": "বাংলায় 'আমি ছাত্র' বলার সময় আমরা কোনো বিশেষ marker ব্যবহার করি না, তাই শিক্ষার্থীরা সব জায়গায় は ব্যবহার করে। কিন্তু প্রশ্নের উত্তর, নতুন তথ্য, এবং প্রাকৃতিক ঘটনায় (বৃষ্টি, বাতাস) が ব্যবহার করতে হবে।",
+        "correction": "প্রশ্নের উত্তর, নতুন তথ্য, এবং প্রাকৃতিক ঘটনায় が ব্যবহার করুন"
+      }
+    ],
+    "related_vocab": [
+      "voc_20_watashi"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "grm_03_wo",
+    "title_japanese": "〜を",
+    "title_bengali": "অবজেক্ট চিহ্নিতকারী কণিকা を",
+    "structure_pattern": "[N] + を + [V]",
+    "explanation_bengali": "「を» একটি object marker particle। এটি transitive verb-এর direct object চিহ্নিত করে। বাংলায় এটি অনুবাদ হয় না, কিন্তু বোঝায় 'কী করা হচ্ছে'। যেমন: '本を読む' মানে 'বই পড়া' — এখানে 'বই' হলো object। মনে রাখবেন: を-র উচ্চারণ হলো 'ও' (ও-এর মতো), কিন্তু লেখা হয় を (wo)। কিছু কিছু ক্ষেত্রে (movement verbs যেমন 歩く, 泳ぐ) を ব্যবহার হয় যেখানে object নেই — এটা special usage।",
+    "explanation_english": "The particle を marks the direct object of a transitive verb.",
+    "jlpt_level": "N5",
+    "prerequisite_ids": [
+      "grm_02_ga"
+    ],
+    "unlocks_ids": [],
+    "examples": [
+      {
+        "japanese": "本を読む",
+        "reading": "ほんをよむ",
+        "bengali": "বই পড়া",
+        "english": "read a book",
+        "highlights": [
+          {
+            "start": 2,
+            "end": 3,
+            "color": "#ffe66d"
+          }
+        ]
+      },
+      {
+        "japanese": "ご飯を食べる",
+        "reading": "ごはんをたべる",
+        "bengali": "ভাত খাওয়া",
+        "english": "eat rice",
+        "highlights": [
+          {
+            "start": 3,
+            "end": 4,
+            "color": "#ffe66d"
+          }
+        ]
+      },
+      {
+        "japanese": "日本語を話す",
+        "reading": "にほんごをはなす",
+        "bengali": "জাপানি ভাষায় কথা বলা",
+        "english": "speak Japanese",
+        "highlights": [
+          {
+            "start": 4,
+            "end": 5,
+            "color": "#ffe66d"
+          }
+        ]
+      }
+    ],
+    "pitfalls": [
+      {
+        "wrong": "Using を with intransitive verbs",
+        "why_bengali": "বাংলায় 'আমি যাই' বলার সময় 'যাওয়া' intransitive, তাই কোনো object নেই। কিন্তু জাপানিতে কিছু movement verbs (যেমন 歩く 'হাঁটা')-এর সাথে を ব্যবহার হয় যেটা বাংলায় অদ্ভুত লাগে। এটা special usage, ভুল নয়।",
+        "correction": "সাধারণত transitive verb-এর object-এর আগে を ব্যবহার করুন। movement verbs-এ special usage আছে।"
+      }
+    ],
+    "related_vocab": [
+      "voc_08_yomu",
+      "voc_03_taberu",
+      "voc_07_hanasu"
+    ],
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  }
+]
+```
+
+
+## File: content_factory\sources\kanji\n5_core.json
+
+```json
+[
+  {
+    "id": "kan_01_ichi",
+    "character": "一",
+    "meanings_bengali": [
+      "এক",
+      "প্রথম"
+    ],
+    "meanings_english": [
+      "one",
+      "first"
+    ],
+    "onyomi": [
+      "いち",
+      "いつ"
+    ],
+    "kunyomi": [
+      "ひと",
+      "ひと-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 1,
+    "radical": "一",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [
+      "voc_01_iku"
+    ],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_02_ni",
+    "character": "二",
+    "meanings_bengali": [
+      "দুই",
+      "দ্বিতীয়"
+    ],
+    "meanings_english": [
+      "two",
+      "second"
+    ],
+    "onyomi": [
+      "に"
+    ],
+    "kunyomi": [
+      "ふた",
+      "ふた-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 2,
+    "radical": "二",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 35 L 70 35",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 65 L 70 65",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_03_san",
+    "character": "三",
+    "meanings_bengali": [
+      "তিন",
+      "তৃতীয়"
+    ],
+    "meanings_english": [
+      "three",
+      "third"
+    ],
+    "onyomi": [
+      "さん"
+    ],
+    "kunyomi": [
+      "み",
+      "み-つ",
+      "みっ-つ"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 3,
+    "radical": "一",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 25 L 70 25",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 3,
+        "path": "M 30 75 L 70 75",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "kan_04_hito",
+    "character": "人",
+    "meanings_bengali": [
+      "মানুষ",
+      "ব্যক্তি"
+    ],
+    "meanings_english": [
+      "person",
+      "human"
+    ],
+    "onyomi": [
+      "じん",
+      "にん"
+    ],
+    "kunyomi": [
+      "ひと",
+      "ひと-びと"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 2,
+    "radical": "人",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 50 20 L 35 80",
+        "stroke_type": "diagonal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 50 20 L 65 80",
+        "stroke_type": "diagonal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "kan_05_hi",
+    "character": "日",
+    "meanings_bengali": [
+      "দিন",
+      "সূর্য",
+      "জাপান"
+    ],
+    "meanings_english": [
+      "day",
+      "sun",
+      "Japan"
+    ],
+    "onyomi": [
+      "にち",
+      "じつ"
+    ],
+    "kunyomi": [
+      "ひ",
+      "か",
+      "-び"
+    ],
+    "jlpt_level": "N5",
+    "stroke_count": 4,
+    "radical": "日",
+    "strokes": [
+      {
+        "stroke_number": 1,
+        "path": "M 30 25 L 70 25",
+        "stroke_type": "horizontal"
+      },
+      {
+        "stroke_number": 2,
+        "path": "M 30 25 L 30 75",
+        "stroke_type": "vertical"
+      },
+      {
+        "stroke_number": 3,
+        "path": "M 70 25 L 70 75",
+        "stroke_type": "vertical"
+      },
+      {
+        "stroke_number": 4,
+        "path": "M 30 50 L 70 50",
+        "stroke_type": "horizontal"
+      }
+    ],
+    "stroke_order_diagram": null,
+    "common_words": [
+      "voc_12_konnichiwa"
+    ],
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  }
+]
+```
+
+
+## File: content_factory\sources\lessons\lesson_01_greetings.json
+
+```json
+{
+  "id": "lsn_01_greetings",
+  "title_bengali": "জাপানি অভিবাদন",
+  "title_japanese": "日本語のあいさつ",
+  "title_english": "Japanese Greetings",
+  "jlpt_level": "N5",
+  "lesson_number": 1,
+  "prerequisite_lessons": [],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 60,
+      "instructions_bengali": "এই পাঠে আমরা জাপানের মৌলিক অভিবাদন শিখব। জাপানি সংস্কৃতিতে সম্মানজনক ভাষা ব্যবহার খুবই গুরুত্বপূর্ণ।",
+      "instructions_english": "In this lesson, we learn basic Japanese greetings. Respectful language is very important in Japanese culture."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_11_ohayo",
+        "voc_12_konnichiwa",
+        "voc_13_konbanwa",
+        "voc_14_oyasumi",
+        "voc_15_arigato",
+        "voc_16_sumimasen"
+      ],
+      "duration_seconds": 180,
+      "instructions_bengali": "নতুন শব্দগুলো দেখুন। প্রতিটি শব্দের উচ্চারণ শুনুন এবং পড়ার চেষ্টা করুন।",
+      "instructions_english": "Look at the new words. Listen to the pronunciation of each word and try to read along."
+    },
+    {
+      "block_type": "grammar_present",
+      "content_refs": [
+        "grm_01_wa",
+        "grm_02_ga"
+      ],
+      "duration_seconds": 240,
+      "instructions_bengali": "「は» এবং 「が» কণিকার পার্থক্য বোঝুন। は বিষয় চিহ্নিত করে, が নতুন তথ্য দেয়।",
+      "instructions_english": "Understand the difference between は and が particles. は marks the topic, が introduces new information."
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_11_ohayo",
+        "voc_12_konnichiwa"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "মাইক্রোফোনে বলুন: 'おはようございます' এবং 'こんにちは'। আপনার উচ্চারণ যাচাই করা হবে।",
+      "instructions_english": "Say into the microphone: 'おはようございます' and 'こんにちは'. Your pronunciation will be checked.",
+      "alignment_text": "おはようございます。こんにちは。"
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "voc_18_hai",
+        "voc_19_iie",
+        "voc_20_watashi"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "প্রশ্নের সঠিক উত্তর বেছে নিন। 'はい' মানে হ্যাঁ, 'いいえ' মানে না।",
+      "instructions_english": "Choose the correct answer to each question. 'はい' means yes, 'いいえ' means no."
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 180,
+      "instructions_bengali": "FSRS রিভিউ কার্ডগুলো দেখুন। যে শব্দগুলো ভুল হবে সেগুলো আবার দেখা হবে।",
+      "instructions_english": "Review the FSRS cards. Words you get wrong will be shown again.",
+      "card_ids": [
+        "crd_voc_11_ohayo_recognize",
+        "crd_voc_12_konnichiwa_recognize",
+        "crd_voc_15_arigato_recall",
+        "crd_voc_20_watashi_recognize"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 15,
+  "tags": [
+    "greetings",
+    "beginner",
+    "social"
+  ],
+  "new_vocab": [
+    "voc_11_ohayo",
+    "voc_12_konnichiwa",
+    "voc_13_konbanwa",
+    "voc_14_oyasumi",
+    "voc_15_arigato",
+    "voc_16_sumimasen",
+    "voc_17_ohisashi",
+    "voc_18_hai",
+    "voc_19_iie",
+    "voc_20_watashi"
+  ],
+  "new_grammar": [
+    "grm_01_wa",
+    "grm_02_ga"
+  ],
+  "new_kanji": [
+    "kan_04_hito",
+    "kan_05_hi"
+  ]
+}
+```
+
+
+## File: content_factory\sources\lessons\lesson_02_daily.json
+
+```json
+{
+  "id": "lsn_02_daily",
+  "title_bengali": "দৈনন্দিন ক্রিয়াকলাপ",
+  "title_japanese": "日常の活動",
+  "title_english": "Daily Activities",
+  "jlpt_level": "N5",
+  "lesson_number": 2,
+  "prerequisite_lessons": [
+    "lsn_01_greetings"
+  ],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 45,
+      "instructions_bengali": "এই পাঠে আমরা দৈনন্দিন কাজের ক্রিয়াপদ শিখব — খাওয়া, পান করা, দেখা, শোনা, ঘুমানো।",
+      "instructions_english": "In this lesson, we learn daily activity verbs — eat, drink, see, hear, sleep."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu",
+        "voc_05_miru",
+        "voc_06_kiku",
+        "voc_10_neru"
+      ],
+      "duration_seconds": 150,
+      "instructions_bengali": "নতুন ক্রিয়াপদগুলো দেখুন। প্রতিটির উচ্চারণ এবং অর্থ মনে রাখুন।",
+      "instructions_english": "Look at the new verbs. Remember the pronunciation and meaning of each."
+    },
+    {
+      "block_type": "grammar_present",
+      "content_refs": [
+        "grm_03_wo"
+      ],
+      "duration_seconds": 180,
+      "instructions_bengali": "「を» কণিকা শিখুন। এটি transitive verb-এর object চিহ্নিত করে। যেমন: '本を読む' = বই পড়া।",
+      "instructions_english": "Learn the を particle. It marks the direct object of a transitive verb. Example: '本を読む' = read a book."
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu",
+        "voc_05_miru"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "সঠিক ক্রিয়াপদ বেছে নিন। ছবি দেখে বলুন কী করা হচ্ছে।",
+      "instructions_english": "Choose the correct verb. Look at the picture and say what is being done."
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_03_taberu",
+        "voc_04_nomu"
+      ],
+      "duration_seconds": 90,
+      "instructions_bengali": "বলুন: 'ご飯を食べます' এবং '水を飲みます'।",
+      "instructions_english": "Say: 'ご飯を食べます' and '水を飲みます'.",
+      "alignment_text": "ご飯を食べます。水を飲みます。"
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 120,
+      "instructions_bengali": "পূর্ববর্তী পাঠের কার্ডগুলো রিভিউ করুন।",
+      "instructions_english": "Review cards from previous lessons.",
+      "card_ids": [
+        "crd_voc_03_taberu_recognize",
+        "crd_voc_04_nomu_recall",
+        "crd_voc_05_miru_recognize"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 12,
+  "tags": [
+    "daily",
+    "verbs",
+    "food"
+  ],
+  "new_vocab": [
+    "voc_03_taberu",
+    "voc_04_nomu",
+    "voc_05_miru",
+    "voc_06_kiku",
+    "voc_10_neru"
+  ],
+  "new_grammar": [
+    "grm_03_wo"
+  ],
+  "new_kanji": []
+}
+```
+
+
+## File: content_factory\sources\lessons\lesson_03_study.json
+
+```json
+{
+  "id": "lsn_03_study",
+  "title_bengali": "পড়াশোনা এবং সংখ্যা",
+  "title_japanese": "勉強と数字",
+  "title_english": "Study and Numbers",
+  "jlpt_level": "N5",
+  "lesson_number": 3,
+  "prerequisite_lessons": [
+    "lsn_02_daily"
+  ],
+  "blocks": [
+    {
+      "block_type": "intro",
+      "content_refs": [],
+      "duration_seconds": 45,
+      "instructions_bengali": "এই পাঠে আমরা পড়াশোনার ক্রিয়াপদ এবং জাপানি সংখ্যা (১, ২, ৩) শিখব।",
+      "instructions_english": "In this lesson, we learn study verbs and Japanese numbers (1, 2, 3)."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "voc_08_yomu",
+        "voc_09_kaku",
+        "voc_01_iku",
+        "voc_02_kuru"
+      ],
+      "duration_seconds": 150,
+      "instructions_bengali": "নতুন ক্রিয়াপদগুলো দেখুন: পড়া, লেখা, যাওয়া, আসা।",
+      "instructions_english": "Look at the new verbs: read, write, go, come."
+    },
+    {
+      "block_type": "vocab_present",
+      "content_refs": [
+        "kan_01_ichi",
+        "kan_02_ni",
+        "kan_03_san"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "কানজি সংখ্যাগুলো দেখুন: 一 (এক), 二 (দুই), 三 (তিন)। প্রতিটির stroke order লক্ষ্য করুন।",
+      "instructions_english": "Look at the kanji numbers: 一 (one), 二 (two), 三 (three). Observe the stroke order of each."
+    },
+    {
+      "block_type": "drill",
+      "content_refs": [
+        "kan_01_ichi",
+        "kan_02_ni",
+        "kan_03_san"
+      ],
+      "duration_seconds": 120,
+      "instructions_bengali": "সঠিক কানজি বেছে নিন। যেমন: 'দুই' এর কানজি কোনটি?",
+      "instructions_english": "Choose the correct kanji. Example: which kanji means 'two'?"
+    },
+    {
+      "block_type": "speaking",
+      "content_refs": [
+        "voc_07_hanasu"
+      ],
+      "duration_seconds": 90,
+      "instructions_bengali": "বলুন: '日本語を話します'।",
+      "instructions_english": "Say: '日本語を話します'.",
+      "alignment_text": "日本語を話します。"
+    },
+    {
+      "block_type": "review",
+      "content_refs": [],
+      "duration_seconds": 120,
+      "instructions_bengali": "সব পাঠের কার্ড রিভিউ করুন।",
+      "instructions_english": "Review cards from all lessons.",
+      "card_ids": [
+        "crd_voc_08_yomu_recognize",
+        "crd_voc_09_kaku_recall",
+        "crd_kan_01_ichi_meaning",
+        "crd_kan_02_ni_stroke"
+      ]
+    }
+  ],
+  "estimated_duration_minutes": 12,
+  "tags": [
+    "study",
+    "numbers",
+    "kanji"
+  ],
+  "new_vocab": [
+    "voc_08_yomu",
+    "voc_09_kaku",
+    "voc_01_iku",
+    "voc_02_kuru"
+  ],
+  "new_grammar": [],
+  "new_kanji": [
+    "kan_01_ichi",
+    "kan_02_ni",
+    "kan_03_san"
+  ]
+}
+```
+
+
+## File: content_factory\sources\vocabulary\n5_core.json
+
+```json
+[
+  {
+    "id": "voc_01_iku",
+    "japanese": "行く",
+    "reading": "いく",
+    "meaning_bengali": "যাওয়া",
+    "meaning_english": "to go",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "学校に行く",
+      "駅へ行きます"
+    ],
+    "example_reading": [
+      "がっこうにいく",
+      "えきへいきます"
+    ],
+    "example_bengali": [
+      "স্কুলে যাওয়া",
+      "স্টেশনে যাওয়া"
+    ],
+    "example_english": [
+      "go to school",
+      "go to the station"
+    ],
+    "tags": [
+      "motion",
+      "directional"
+    ],
+    "frequency_rank": 50,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_02_kuru",
+    "japanese": "来る",
+    "reading": "くる",
+    "meaning_bengali": "আসা",
+    "meaning_english": "to come",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "友達が来る",
+      "ここに来てください"
+    ],
+    "example_reading": [
+      "ともだちがくる",
+      "ここにきてください"
+    ],
+    "example_bengali": [
+      "বন্ধু আসছে",
+      "এখানে আসুন"
+    ],
+    "example_english": [
+      "friend is coming",
+      "please come here"
+    ],
+    "tags": [
+      "motion",
+      "directional"
+    ],
+    "frequency_rank": 55,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_03_taberu",
+    "japanese": "食べる",
+    "reading": "たべる",
+    "meaning_bengali": "খাওয়া",
+    "meaning_english": "to eat",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "ご飯を食べる",
+      "何を食べますか"
+    ],
+    "example_reading": [
+      "ごはんをたべる",
+      "なにをたべますか"
+    ],
+    "example_bengali": [
+      "ভাত খাওয়া",
+      "কী খাবেন"
+    ],
+    "example_english": [
+      "eat rice",
+      "what will you eat"
+    ],
+    "tags": [
+      "daily",
+      "food"
+    ],
+    "frequency_rank": 80,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_04_nomu",
+    "japanese": "飲む",
+    "reading": "のむ",
+    "meaning_bengali": "পান করা",
+    "meaning_english": "to drink",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "水を飲む",
+      "お茶を飲みます"
+    ],
+    "example_reading": [
+      "みずをのむ",
+      "おちゃをのみます"
+    ],
+    "example_bengali": [
+      "জল পান করা",
+      "চা পান করা"
+    ],
+    "example_english": [
+      "drink water",
+      "drink tea"
+    ],
+    "tags": [
+      "daily",
+      "food"
+    ],
+    "frequency_rank": 120,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_05_miru",
+    "japanese": "見る",
+    "reading": "みる",
+    "meaning_bengali": "দেখা",
+    "meaning_english": "to see, to watch",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "映画を見る",
+      "テレビを見ます"
+    ],
+    "example_reading": [
+      "えいがをみる",
+      "てれびをみます"
+    ],
+    "example_bengali": [
+      "সিনেমা দেখা",
+      "টিভি দেখা"
+    ],
+    "example_english": [
+      "watch a movie",
+      "watch TV"
+    ],
+    "tags": [
+      "daily",
+      "entertainment"
+    ],
+    "frequency_rank": 65,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_06_kiku",
+    "japanese": "聞く",
+    "reading": "きく",
+    "meaning_bengali": "শোনা",
+    "meaning_english": "to hear, to listen",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "音楽を聞く",
+      "先生の話を聞きます"
+    ],
+    "example_reading": [
+      "おんがくをきく",
+      "せんせいのはなしをききます"
+    ],
+    "example_bengali": [
+      "গান শোনা",
+      "শিক্ষকের কথা শোনা"
+    ],
+    "example_english": [
+      "listen to music",
+      "listen to the teacher"
+    ],
+    "tags": [
+      "daily",
+      "communication"
+    ],
+    "frequency_rank": 90,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_07_hanasu",
+    "japanese": "話す",
+    "reading": "はなす",
+    "meaning_bengali": "কথা বলা",
+    "meaning_english": "to speak, to talk",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "日本語を話す",
+      "友達と話します"
+    ],
+    "example_reading": [
+      "にほんごをはなす",
+      "ともだちとはなします"
+    ],
+    "example_bengali": [
+      "জাপানি ভাষায় কথা বলা",
+      "বন্ধুর সাথে কথা বলা"
+    ],
+    "example_english": [
+      "speak Japanese",
+      "talk with a friend"
+    ],
+    "tags": [
+      "daily",
+      "communication"
+    ],
+    "frequency_rank": 70,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_08_yomu",
+    "japanese": "読む",
+    "reading": "よむ",
+    "meaning_bengali": "পড়া",
+    "meaning_english": "to read",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "本を読む",
+      "新聞を読みます"
+    ],
+    "example_reading": [
+      "ほんをよむ",
+      "しんぶんをよみます"
+    ],
+    "example_bengali": [
+      "বই পড়া",
+      "সংবাদপত্র পড়া"
+    ],
+    "example_english": [
+      "read a book",
+      "read a newspaper"
+    ],
+    "tags": [
+      "daily",
+      "study"
+    ],
+    "frequency_rank": 100,
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "voc_09_kaku",
+    "japanese": "書く",
+    "reading": "かく",
+    "meaning_bengali": "লেখা",
+    "meaning_english": "to write",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "手紙を書く",
+      "名前を書きます"
+    ],
+    "example_reading": [
+      "てがみをかく",
+      "なまえをかきます"
+    ],
+    "example_bengali": [
+      "চিঠি লেখা",
+      "নাম লেখা"
+    ],
+    "example_english": [
+      "write a letter",
+      "write a name"
+    ],
+    "tags": [
+      "daily",
+      "study"
+    ],
+    "frequency_rank": 110,
+    "lesson_refs": [
+      "lsn_03_study"
+    ]
+  },
+  {
+    "id": "voc_10_neru",
+    "japanese": "寝る",
+    "reading": "ねる",
+    "meaning_bengali": "ঘুমানো",
+    "meaning_english": "to sleep",
+    "part_of_speech": "verb",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "早く寝る",
+      "よく寝ました"
+    ],
+    "example_reading": [
+      "はやくねる",
+      "よくねました"
+    ],
+    "example_bengali": [
+      "তাড়াতাড়ি ঘুমানো",
+      "ভালো ঘুমিয়েছি"
+    ],
+    "example_english": [
+      "sleep early",
+      "slept well"
+    ],
+    "tags": [
+      "daily",
+      "body"
+    ],
+    "frequency_rank": 130,
+    "lesson_refs": [
+      "lsn_02_daily"
+    ]
+  },
+  {
+    "id": "voc_11_ohayo",
+    "japanese": "おはよう",
+    "reading": "おはよう",
+    "meaning_bengali": "সুপ্রভাত",
+    "meaning_english": "good morning",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "おはようございます"
+    ],
+    "example_reading": [
+      "おはようございます"
+    ],
+    "example_bengali": [
+      "সুপ্রভাত (সম্মানসূচক)"
+    ],
+    "example_english": [
+      "good morning (polite)"
+    ],
+    "tags": [
+      "greeting",
+      "morning"
+    ],
+    "frequency_rank": 40,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_12_konnichiwa",
+    "japanese": "こんにちは",
+    "reading": "こんにちは",
+    "meaning_bengali": "নমস্কার (দিনের বেলা)",
+    "meaning_english": "hello (daytime)",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "こんにちは、元気ですか"
+    ],
+    "example_reading": [
+      "こんにちは、げんきですか"
+    ],
+    "example_bengali": [
+      "নমস্কার, কেমন আছেন"
+    ],
+    "example_english": [
+      "hello, how are you"
+    ],
+    "tags": [
+      "greeting",
+      "daytime"
+    ],
+    "frequency_rank": 30,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_13_konbanwa",
+    "japanese": "こんばんは",
+    "reading": "こんばんは",
+    "meaning_bengali": "শুভ সন্ধ্যা",
+    "meaning_english": "good evening",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "こんばんは、お疲れ様です"
+    ],
+    "example_reading": [
+      "こんばんは、おつかれさまです"
+    ],
+    "example_bengali": [
+      "শুভ সন্ধ্যা, কষ্ট করেছেন"
+    ],
+    "example_english": [
+      "good evening, thank you for your hard work"
+    ],
+    "tags": [
+      "greeting",
+      "evening"
+    ],
+    "frequency_rank": 60,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_14_oyasumi",
+    "japanese": "おやすみなさい",
+    "reading": "おやすみなさい",
+    "meaning_bengali": "শুভ রাত্রি",
+    "meaning_english": "good night",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "おやすみなさい、良い夢を"
+    ],
+    "example_reading": [
+      "おやすみなさい、よいゆめを"
+    ],
+    "example_bengali": [
+      "শুভ রাত্রি, স্বপ্ন ভালো হোক"
+    ],
+    "example_english": [
+      "good night, sweet dreams"
+    ],
+    "tags": [
+      "greeting",
+      "night"
+    ],
+    "frequency_rank": 85,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_15_arigato",
+    "japanese": "ありがとう",
+    "reading": "ありがとう",
+    "meaning_bengali": "ধন্যবাদ",
+    "meaning_english": "thank you",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "ありがとうございます",
+      "どうもありがとう"
+    ],
+    "example_reading": [
+      "ありがとうございます",
+      "どうもありがとう"
+    ],
+    "example_bengali": [
+      "অনেক ধন্যবাদ (সম্মানসূচক)",
+      "অনেক অনেক ধন্যবাদ"
+    ],
+    "example_english": [
+      "thank you very much (polite)",
+      "thanks a lot"
+    ],
+    "tags": [
+      "gratitude",
+      "polite"
+    ],
+    "frequency_rank": 25,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_16_sumimasen",
+    "japanese": "すみません",
+    "reading": "すみません",
+    "meaning_bengali": "দুঃখিত / মাফ করবেন",
+    "meaning_english": "sorry / excuse me",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "すみません、道を教えてください"
+    ],
+    "example_reading": [
+      "すみません、みちをおしえてください"
+    ],
+    "example_bengali": [
+      "মাফ করবেন, রাস্তা বলুন"
+    ],
+    "example_english": [
+      "excuse me, please tell me the way"
+    ],
+    "tags": [
+      "apology",
+      "request"
+    ],
+    "frequency_rank": 35,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_17_ohisashi",
+    "japanese": "お久しぶり",
+    "reading": "おひさしぶり",
+    "meaning_bengali": "বহুদিন পর দেখা",
+    "meaning_english": "long time no see",
+    "part_of_speech": "expression",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "お久しぶりです、元気でしたか"
+    ],
+    "example_reading": [
+      "おひさしぶりです、げんきでしたか"
+    ],
+    "example_bengali": [
+      "বহুদিন পর, কেমন ছিলেন"
+    ],
+    "example_english": [
+      "long time no see, how have you been"
+    ],
+    "tags": [
+      "greeting",
+      "reunion"
+    ],
+    "frequency_rank": 140,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_18_hai",
+    "japanese": "はい",
+    "reading": "はい",
+    "meaning_bengali": "হ্যাঁ",
+    "meaning_english": "yes",
+    "part_of_speech": "interjection",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "はい、分かりました"
+    ],
+    "example_reading": [
+      "はい、わかりました"
+    ],
+    "example_bengali": [
+      "হ্যাঁ, বুঝেছি"
+    ],
+    "example_english": [
+      "yes, I understand"
+    ],
+    "tags": [
+      "response",
+      "basic"
+    ],
+    "frequency_rank": 15,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_19_iie",
+    "japanese": "いいえ",
+    "reading": "いいえ",
+    "meaning_bengali": "না",
+    "meaning_english": "no",
+    "part_of_speech": "interjection",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "いいえ、違います"
+    ],
+    "example_reading": [
+      "いいえ、ちがいます"
+    ],
+    "example_bengali": [
+      "না, ভুল"
+    ],
+    "example_english": [
+      "no, that's wrong"
+    ],
+    "tags": [
+      "response",
+      "basic"
+    ],
+    "frequency_rank": 20,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  },
+  {
+    "id": "voc_20_watashi",
+    "japanese": "私",
+    "reading": "わたし",
+    "meaning_bengali": "আমি",
+    "meaning_english": "I, me",
+    "part_of_speech": "pronoun",
+    "jlpt_level": "N5",
+    "example_japanese": [
+      "私は学生です",
+      "私の本です"
+    ],
+    "example_reading": [
+      "わたしはがくせいです",
+      "わたしのほんです"
+    ],
+    "example_bengali": [
+      "আমি একজন ছাত্র",
+      "আমার বই"
+    ],
+    "example_english": [
+      "I am a student",
+      "my book"
+    ],
+    "tags": [
+      "pronoun",
+      "basic"
+    ],
+    "frequency_rank": 10,
+    "lesson_refs": [
+      "lsn_01_greetings"
+    ]
+  }
+]
+```
+
+
 ## File: docs\00_START_HERE.md
 
 ```md
@@ -5165,8 +6742,14 @@ Edit 11_ROADMAP_TASKS.md statuses (☐→◐/☑) with a one-line evidence note 
 
 **D-011 | 2026-07-09 | Kana stroke-order data sourced from KanjiVG, not kana-svg-data.** The old `tools/fetch_stroke_data.mjs` pulled `kana-svg-data` medians, which split self-crossing (loop) strokes into two paths → 16/92 kana had wrong stroke counts (あ→4, ヲ under-counted 2-vs-3, etc.). Shipping that would teach incorrect stroke order (violates 00 §4 correctness-over-generation). New tool fetches KanjiVG (canonical stroke order, one `<path>` per stroke), flattens each stroke path to sampled median points, and scales the 109 viewBox to the consumer's 0..1000 y-down space — output JSON contract and `writing_screen.dart` unchanged. Validated: 0/92 count mismatches vs the canonical gojūon table. License note: KanjiVG is **CC BY-SA 3.0** (© Ulrich Apel / contributors); the generated `assets/stroke/kana_strokes.json` is a derivative and must stay CC BY-SA with attribution (embedded in the file's `source`/`license` fields). The app bundling it is an aggregation and is unaffected. **Human action:** confirm the CC BY-SA attribution is acceptable for the commercial build (it is standard practice; most kanji apps ship KanjiVG-derived data this way).
 
+**D-013 | 2026-07-10 | WritingScreen canvas adapts to the shorter axis; no app-wide portrait lock.** The square drawing paper was `AspectRatio(1)` sized by width inside a non-scrolling Column → hundreds of px of overflow on any short viewport (landscape, split-screen, the default 800x600 flutter_test surface). Considered `SystemChrome.setPreferredOrientations` (portrait lock, matches the budget-phone target) but rejected it as the primary fix: Android multi-window/split-screen ignores orientation preferences, so a locked app can still receive a short viewport and would still overflow. Instead the paper is `Expanded > Center > AspectRatio(1)` — square sized by min(width, remaining height), portrait rendering unchanged (still effectively width-sized on tall screens). Regression-tested at 800x600 in `test/widget_test.dart`. A portrait lock remains an optional later product choice (D-012 slot is reserved by the pending whitelist proposal in NEXT_SESSION.md). Supersedes nothing.
+
+**D-014 | 2026-07-10 | Android toolchain pinned to the installed Flutter SDK's template versions; Kotlin incremental compilation disabled.** The hand-mixed scaffold pinned AGP 8.3.0 / Kotlin 1.9.22 / Gradle 8.7 — below Flutter 3.44.5's AGP floor (8.6.0), so no device build had ever succeeded. Now pinned to exactly what `flutter_tools/gradle_utils.dart` templates: **AGP 9.0.1, Kotlin 2.3.20, Gradle 9.1.0** (rule: when bumping the toolchain, read the installed SDK's template constants rather than guessing versions). `kotlin.incremental=false` in `android/gradle.properties` because Kotlin's incremental-cache path converter cannot relativize across Windows drive roots (pub cache on C:, project on D:) and fails every plugin compile ("this and base files have different roots"); non-incremental costs seconds at this project size. First successful device build+install+launch verified on TECNO LG7n (Impeller/Vulkan, no fatal exceptions).
+
 ---
 _New decisions: append below in the same format. Every LLM/dev that makes a spec-silent choice MUST add an entry._
+
+**D-014 | 2026-07-10 | Content factory merged from session zips; clean-zip version is authoritative; kana rule made falsifiable.** The repo's `content_factory/` held truncated hand-merged stubs (empty `__init__.py`s, stripped `schemas`/`build.py`, 200-byte source stubs) while the full working pipeline lived only in `sensei_content_factory_v4.2.zip` / `sensei_extracted_clean.zip` at the workspace root. Merged the *clean* zip (the debugged build that produced 81 cards — see `content_factory/BUILD_SUMMARY.md`) plus the v4.2 test suite. Two reconciliations: (1) grammar test fixture updated to 2 examples — the ≥2-examples rule is intentional in both zip versions and the real N5 data has 3 each; (2) `VocabularyValidator._is_valid_kana` no longer whitelists LATIN — it made rule #3 ("reading must be kana") unfalsifiable for English text; the v4.2 test encoding the correct contract now passes. Verified end-to-end: 4/4 pytest, pipeline 20/20+3/3+5/5 valid → 81 cards → `pak_sensei_n5_core` (0.15 MB). Windows note: run with `PYTHONUTF8=1` (the pipeline prints emoji; cp1252 consoles crash).
 
 ```
 
@@ -6105,6 +7688,7 @@ ScaffoldOffer? scaffoldCheck(SessionSignals s) {
 // Shared Riverpod providers.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../agents/agent_bus.dart';
 import '../agents/agent_state.dart';
 import '../data/content_repository.dart';
@@ -6113,6 +7697,14 @@ import '../domain/fsrs.dart';
 
 /// Selected UI locale (persist via shared_preferences in the full app).
 final localeProvider = StateProvider<Locale>((_) => const Locale('bn'));
+
+/// Whether the first-run language screen was completed (v4 onboarding).
+/// shared_preferences on purpose — locale is not a secret; Keystore stays
+/// DB-key-only (00 §data autonomy / security posture).
+final localeChosenProvider = FutureProvider<bool>((_) async {
+  final p = await SharedPreferences.getInstance();
+  return p.getString('locale_chosen') != null;
+});
 
 /// Loads the verified content bundle once at startup.
 final contentProvider = FutureProvider<ContentRepository>((_) async {
@@ -6136,78 +7728,86 @@ final agentBusProvider =
 ## File: lib\app\theme.dart
 
 ```dart
-// Bhasago — brand theme & design tokens.
+// Bhasago — brand theme & design tokens. (v4 design refresh — "Bold Ink")
 //
-// Brand story: "Ai" indigo (藍 / নীল) bridges Bengal's indigo heritage and
-// Japanese aizome; Sakura vermilion is the torii gateway to Japan. Sumi-ink
-// darks keep the app calm and battery-friendly on budget AMOLED devices.
+// Brand story update: sumi-ink black canvas; four solid accent inks —
+// yellow (attention/current), pink (review/memory), blue (AI/exam),
+// green (growth/progress). Color is used as ACCENT on near-black surfaces;
+// one statement card per screen, everything else stays quiet.
 //
-// Colors map to the 09_UI_STATES design system. Psych-STATE colors (flow /
-// struggle / burnout / boredom) are functional and live in [BhasagoStateColors];
-// the resting brand identity is Ai indigo + Sakura, never a volatile state hue.
+// Psych-STATE colors (flow / struggle / burnout / boredom) are unchanged and
+// live in [BhasagoStateColors] — functional, never the resting palette.
+//
+// Fonts (declare in pubspec.yaml, assets from Google Fonts):
+//   Baloo Da 2          — Bengali + display headings
+//   Zen Kaku Gothic New — Japanese
+//   Archivo             — Latin UI labels
+//   Space Grotesk       — numbers / tags (optional)
 //
 // Usage:  MaterialApp(theme: BhasagoTheme.dark(), ...)
-// Note: pure ColorScheme/shape theming — no custom font family is set here so
-// there are no missing-asset risks. To adopt Noto Sans Bengali/JP later, declare
-// the fonts in pubspec and pass `fontFamily` into [_textTheme].
 
 import 'package:flutter/material.dart';
 
-/// Raw brand tokens. Prefer reading colors from `Theme.of(context).colorScheme`;
-/// use these directly only for brand chrome (logo, splash, state screens).
+/// Raw brand tokens (v4). Prefer Theme.of(context).colorScheme; use these
+/// directly only for brand chrome (logo, splash, the four accent cards).
 abstract final class BhasagoColors {
-  // Sumi-ink darks
-  static const bg = Color(0xFF0E1116); // app background (matches prior build)
-  static const surface = Color(0xFF171B22);
-  static const surfaceHigh = Color(0xFF212734);
-  static const outline = Color(0xFF2E3644);
+  // Ink darks
+  static const bg = Color(0xFF0F0F0F); // app background
+  static const surface = Color(0xFF1A1A1A);
+  static const surfaceHigh = Color(0xFF242424);
+  static const outline = Color(0xFF2E2E2E);
 
-  // Ai indigo — primary brand
-  static const ai = Color(0xFF5B7CFA);
-  static const aiBright = Color(0xFF8AA0FF); // primary on dark (contrast-safe)
-  static const aiDeep = Color(0xFF29347A); // primaryContainer on dark
+  // Accent inks — solid fills, always with near-black (#111) content on top
+  static const yellow = Color(0xFFEFE94B); // current lesson / primary action
+  static const pink = Color(0xFFF06EB7); // review / memory
+  static const blue = Color(0xFF4D7DF7); // AI examiner / mock exam
+  static const green = Color(0xFF35E065); // progress / success / live chart
 
-  // Sakura vermilion — secondary accent / torii
-  static const sakura = Color(0xFFFF6F86);
-  static const sakuraDeep = Color(0xFF7A2233);
+  // Content-on-accent darks (text/icons placed on the accent fills)
+  static const onYellow = Color(0xFF111111);
+  static const yellowDim = Color(0xFF3D3B10);
+  static const pinkDim = Color(0xFF6B1C44);
+  static const blueDim = Color(0xFF0E2A6B);
+  static const greenDim = Color(0xFF0B5225);
 
-  // Gold — mastery / rewards (predictable, never a loot surprise)
-  static const gold = Color(0xFFFFC24B);
+  static const ink = Color(0xFFF5F5F0); // primary text on dark
+  static const inkDim = Color(0xFF8F8F8A); // secondary text
+  static const error = Color(0xFFD6357E); // alert error (pink family)
+  static const success = Color(0xFF1FA84E); // alert success (green family)
 
-  static const ink = Color(0xFFF3F5FA); // primary text on dark
-  static const inkDim = Color(0xFFAAB3C5); // secondary text
-  static const error = Color(0xFFFF5370);
+  // Japanese background motif (very low opacity decorative layer)
+  static const sun = Color(0xFFD84040); // red sun radial, ~0.3 alpha max
 }
 
-/// Functional psych-state colors from 09_UI_STATES. Used by state screens, not
-/// as the resting brand palette.
+/// Functional psych-state colors from 09_UI_STATES — UNCHANGED from v0.1.
 abstract final class BhasagoStateColors {
-  static const flow = Color(0xFF00C853); // optimal challenge
-  static const struggle = Color(0xFFFF6D00); // rising errors — calm, warm
-  static const burnout = Color(0xFF2979FF); // fatigue — zero motion
-  static const boredom = Color(0xFFAA00FF); // autopilot — playful
+  static const flow = Color(0xFF00C853);
+  static const struggle = Color(0xFFFF6D00);
+  static const burnout = Color(0xFF2979FF);
+  static const boredom = Color(0xFFAA00FF);
 }
 
 abstract final class BhasagoTheme {
-  static const _radius = 16.0;
+  static const _radiusCard = 20.0; // v4: cards
+  static const _radiusField = 14.0;
 
   static ThemeData dark() {
     const scheme = ColorScheme(
       brightness: Brightness.dark,
-      primary: BhasagoColors.aiBright,
-      onPrimary: Color(0xFF0A1230),
-      primaryContainer: BhasagoColors.aiDeep,
-      onPrimaryContainer: Color(0xFFDDE4FF),
-      secondary: BhasagoColors.sakura,
-      onSecondary: Color(0xFF3A0710),
-      secondaryContainer: BhasagoColors.sakuraDeep,
-      onSecondaryContainer: Color(0xFFFFDCE2),
-      tertiary: BhasagoColors.gold,
-      onTertiary: Color(0xFF3A2A00),
-      tertiaryContainer: Color(0xFF5C4200),
-      onTertiaryContainer: Color(0xFFFFE6B0),
+      primary: BhasagoColors.yellow,
+      onPrimary: BhasagoColors.onYellow,
+      primaryContainer: Color(0xFF4A470F),
+      onPrimaryContainer: Color(0xFFF7F3A9),
+      secondary: BhasagoColors.pink,
+      onSecondary: Color(0xFF111111),
+      secondaryContainer: Color(0xFF4A1030),
+      onSecondaryContainer: Color(0xFFFBD4EA),
+      tertiary: BhasagoColors.green,
+      onTertiary: Color(0xFF111111),
+      tertiaryContainer: Color(0xFF0B3D20),
+      onTertiaryContainer: Color(0xFFC7F5D6),
       error: BhasagoColors.error,
-      onError: Color(0xFF3A0510),
+      onError: Color(0xFFFFFFFF),
       surface: BhasagoColors.surface,
       onSurface: BhasagoColors.ink,
       surfaceContainerHighest: BhasagoColors.surfaceHigh,
@@ -6229,52 +7829,61 @@ abstract final class BhasagoTheme {
         color: BhasagoColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
+          borderRadius: BorderRadius.circular(_radiusCard),
           side: const BorderSide(color: BhasagoColors.outline),
         ),
         margin: const EdgeInsets.symmetric(vertical: 6),
       ),
+      // v4: all buttons are stadium pills
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           minimumSize: const Size(48, 48), // spec: touch target >=48dp
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
+          shape: const StadiumBorder(),
+          textStyle: const TextStyle(fontWeight: FontWeight.w700),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           minimumSize: const Size(48, 48),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          side: const BorderSide(color: BhasagoColors.outline),
+          shape: const StadiumBorder(),
+          side: const BorderSide(color: Color(0xFF3A3A3A), width: 1.5),
           foregroundColor: BhasagoColors.ink,
         ),
       ),
+      // v4: active destination = ink-white pill, icon+label dark
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: BhasagoColors.surface,
-        indicatorColor: BhasagoColors.aiDeep,
+        backgroundColor: const Color(0xFF0B0B0B),
+        indicatorColor: BhasagoColors.ink,
         surfaceTintColor: Colors.transparent,
         labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: Color(0xFF111111));
+          }
+          return const IconThemeData(color: BhasagoColors.inkDim);
+        }),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
             return const TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w500,
-              color: BhasagoColors.aiBright,
+              fontWeight: FontWeight.w700,
+              color: BhasagoColors.ink,
             );
           }
           return const TextStyle(fontSize: 12, color: BhasagoColors.inkDim);
         }),
       ),
-      chipTheme: ChipThemeData(
-        backgroundColor: BhasagoColors.surfaceHigh,
-        side: const BorderSide(color: BhasagoColors.outline),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(999),
+      chipTheme: const ChipThemeData(
+        backgroundColor: Colors.transparent,
+        side: BorderSide(color: Color(0xFF3A3A3A), width: 1.5),
+        shape: StadiumBorder(),
+        labelStyle: TextStyle(color: BhasagoColors.inkDim),
+        // selected chip: ink-white fill, dark label (see styleguide chips)
+        selectedColor: BhasagoColors.ink,
+        secondaryLabelStyle: TextStyle(
+          color: Color(0xFF111111),
+          fontWeight: FontWeight.w700,
         ),
-        labelStyle: const TextStyle(color: BhasagoColors.ink),
       ),
       dividerColor: BhasagoColors.outline,
       textTheme: _textTheme(base.textTheme),
@@ -6287,55 +7896,179 @@ abstract final class BhasagoTheme {
       dialogTheme: DialogThemeData(
         backgroundColor: BhasagoColors.surface,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_radius),
+          borderRadius: BorderRadius.circular(_radiusCard),
           side: const BorderSide(color: BhasagoColors.outline),
         ),
       ),
-      bottomSheetTheme: BottomSheetThemeData(
+      bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: BhasagoColors.surface,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(_radius)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(_radiusCard)),
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: BhasagoColors.surfaceHigh,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(_radiusField),
           borderSide: const BorderSide(color: BhasagoColors.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(_radiusField),
           borderSide: const BorderSide(color: BhasagoColors.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: BhasagoColors.aiBright, width: 1.5),
+          borderRadius: BorderRadius.circular(_radiusField),
+          borderSide: const BorderSide(color: BhasagoColors.ink, width: 1.5),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
     );
   }
 
+  // Display = Baloo Da 2 (bn + headings); body inherits platform fallbacks.
+  // Requires in pubspec.yaml:
+  //   fonts:
+  //     - family: Baloo Da 2        (w500..w800)
+  //     - family: Zen Kaku Gothic New (w500/w700/w900)  — set via
+  //       TextStyle(fontFamily: 'Zen Kaku Gothic New') on Japanese text widgets
+  //     - family: Archivo           (w500/w700/w800)
   static TextTheme _textTheme(TextTheme base) {
+    const display = 'Baloo Da 2';
+    const latin = 'Archivo';
     return base.copyWith(
-      displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink),
-      displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink),
-      displaySmall: base.displaySmall?.copyWith(color: BhasagoColors.ink),
-      headlineLarge: base.headlineLarge?.copyWith(color: BhasagoColors.ink),
-      headlineMedium: base.headlineMedium?.copyWith(color: BhasagoColors.ink),
-      headlineSmall: base.headlineSmall?.copyWith(color: BhasagoColors.ink),
-      titleLarge: base.titleLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w600),
-      titleMedium: base.titleMedium?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
-      titleSmall: base.titleSmall?.copyWith(color: BhasagoColors.inkDim, fontWeight: FontWeight.w500),
-      bodyLarge: base.bodyLarge?.copyWith(color: BhasagoColors.ink),
-      bodyMedium: base.bodyMedium?.copyWith(color: BhasagoColors.ink),
-      bodySmall: base.bodySmall?.copyWith(color: BhasagoColors.inkDim),
-      labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontWeight: FontWeight.w500),
-      labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim),
-      labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim),
+      displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800, letterSpacing: -0.5),
+      displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      displaySmall: base.displaySmall?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      headlineLarge: base.headlineLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
+      headlineMedium: base.headlineMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      headlineSmall: base.headlineSmall?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      titleLarge: base.titleLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w700),
+      titleMedium: base.titleMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w600),
+      titleSmall: base.titleSmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: display, fontWeight: FontWeight.w600),
+      bodyLarge: base.bodyLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display),
+      bodyMedium: base.bodyMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display),
+      bodySmall: base.bodySmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: display),
+      labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontFamily: latin, fontWeight: FontWeight.w700),
+      labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
+      labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
     );
   }
+}
+
+```
+
+
+## File: lib\content_factory\card_generator.dart
+
+```dart
+﻿import '../domain/fsrs.dart';
+import '../domain/models.dart';
+import '../data/srs_local.dart';
+import 'whitelist_service.dart';
+
+class CardGenerator {
+  final Fsrs _fsrs = const Fsrs();
+  final SrsLocal _srsLocal = SrsLocal();
+
+  Future<List<String>> generateCardsForItem(LessonItem item) async {
+    final List<String> createdIds = [];
+    final whitelist = await WhitelistService.getInstance();
+    if (!whitelist.lessonItemPasses(item)) return createdIds;
+
+    for (final word in item.srsWords) {
+      try {
+        final newCard = ScheduledCard(id: '\${item.id}_\$word', state: CardState.newCard);
+        final seededCard = _fsrs.review(newCard, Rating.good);
+        await _srsLocal.seedCard(
+          id: seededCard.id,
+          word: word,
+          reading: item.kana,
+          meaningBn: item.meaning.bn,
+          meaningEn: item.meaning.en,
+          jlptLevel: 'N5',
+        );
+        await _srsLocal.applyReview(_fsrs, seededCard, Rating.good);
+        createdIds.add(seededCard.id);
+      } catch (_) {}
+    }
+    return createdIds;
+  }
+
+  Future<Map<String, List<String>>> generateCardsForLesson(Lesson lesson) async {
+    final result = <String, List<String>>{};
+    for (final item in lesson.items) {
+      result[item.id] = await generateCardsForItem(item);
+    }
+    return result;
+  }
+}
+
+```
+
+
+## File: lib\content_factory\content_import_service.dart
+
+```dart
+﻿import 'dart:convert';
+import '../domain/models.dart';
+import 'whitelist_service.dart';
+import 'card_generator.dart';
+
+class ContentImportService {
+  final CardGenerator _cardGenerator = CardGenerator();
+
+  Future<void> importLessonFromJson(String jsonString) async {
+    final Map<String, dynamic> map = jsonDecode(jsonString);
+    final lesson = Lesson.fromJson(map);
+    final whitelist = await WhitelistService.getInstance();
+    for (final item in lesson.items) {
+      if (!whitelist.lessonItemPasses(item)) {
+        throw Exception('Item \${item.id} contains non-whitelisted words');
+      }
+    }
+    await _cardGenerator.generateCardsForLesson(lesson);
+  }
+}
+
+```
+
+
+## File: lib\content_factory\whitelist_service.dart
+
+```dart
+﻿import 'package:flutter/services.dart';
+import '../domain/models.dart';
+
+class WhitelistService {
+  static WhitelistService? _instance;
+  static Future<WhitelistService> getInstance() async {
+    _instance ??= WhitelistService._();
+    await _instance!._load();
+    return _instance!;
+  }
+
+  final Set<String> _words = {};
+  bool _loaded = false;
+
+  WhitelistService._();
+
+  Future<void> _load() async {
+    if (_loaded) return;
+    try {
+      final data = await rootBundle.loadString('assets/content_factory/jft_a2_whitelist.txt');
+      for (final line in data.split('\n')) {
+        final word = line.trim();
+        if (word.isNotEmpty && !word.startsWith('#')) _words.add(word);
+      }
+      _loaded = true;
+    } catch (_) {
+      _loaded = true;
+    }
+  }
+
+  bool isWhitelisted(String word) => _words.contains(word);
+  bool lessonItemPasses(LessonItem item) => item.srsWords.every(isWhitelisted);
 }
 
 ```
@@ -7004,6 +8737,143 @@ int get kSchemaVersion =>
 ```
 
 
+## File: lib\distribution\download_manager.dart
+
+```dart
+﻿import 'dart:io';
+import 'package:dio/dio.dart';
+import 'package:path_provider/path_provider.dart';
+import 'pack_models.dart';
+import 'pack_verifier.dart';
+
+class DownloadManager {
+  final Dio _dio = Dio();
+  static const int _chunkSize = 4 * 1024 * 1024;
+
+  Future<void> downloadPack(ContentPack pack, PackDownloadState state, Function(int, int) onProgress) async {
+    final dir = await getApplicationDocumentsDirectory();
+    final filePath = '${dir.path}/packs/${pack.id}_v${pack.version}.pack';
+    final file = File(filePath);
+    await file.create(recursive: true);
+
+    state.status = 'downloading';
+    for (int i = state.chunksDone; i < pack.chunks; i++) {
+      final start = i * _chunkSize;
+      final end = (i + 1 == pack.chunks) ? pack.sizeBytes - 1 : start + _chunkSize - 1;
+      final response = await _dio.get(
+        pack.url,
+        options: Options(
+          headers: {'Range': 'bytes=$start-$end'},
+          responseType: ResponseType.bytes,
+        ),
+      );
+      await file.writeAsBytes(response.data as List<int>, mode: FileMode.append);
+      state.chunksDone = i + 1;
+      state.bytesDone += (response.data as List<int>).length;
+      onProgress(state.chunksDone, pack.chunks);
+    }
+
+    final bytes = await file.readAsBytes();
+    if (!PackVerifier.verifySha256(bytes, pack.sha256)) {
+      await file.delete();
+      throw Exception('Pack verification failed');
+    }
+    state.status = 'completed';
+  }
+}
+
+```
+
+
+## File: lib\distribution\p2p_import_manager.dart
+
+```dart
+﻿import 'dart:io';
+import 'package:path_provider/path_provider.dart';
+import 'pack_models.dart';
+import 'pack_verifier.dart';
+
+class P2pImportManager {
+  Future<bool> importPackFromFile(String sourcePath, ContentPack manifest) async {
+    final file = File(sourcePath);
+    if (!await file.exists()) return false;
+
+    final bytes = await file.readAsBytes();
+    if (!PackVerifier.verifySha256(bytes, manifest.sha256)) return false;
+
+    final dir = await getApplicationDocumentsDirectory();
+    final destPath = '${dir.path}/packs/${manifest.id}_v${manifest.version}.pack';
+    await file.copy(destPath);
+    return true;
+  }
+}
+
+```
+
+
+## File: lib\distribution\pack_models.dart
+
+```dart
+﻿class ContentPack {
+  final String id;
+  final int version;
+  final int tier;
+  final int sizeBytes;
+  final String sha256;
+  final int chunks;
+  final List<String> dependsOn;
+  final String url;
+  final String titleBn;
+
+  ContentPack({required this.id, required this.version, required this.tier, required this.sizeBytes, required this.sha256, required this.chunks, required this.dependsOn, required this.url, required this.titleBn});
+
+  factory ContentPack.fromJson(Map<String, dynamic> json) => ContentPack(
+    id: json['id'],
+    version: json['version'],
+    tier: json['tier'],
+    sizeBytes: json['size_bytes'],
+    sha256: json['sha256'],
+    chunks: json['chunks'],
+    dependsOn: List<String>.from(json['depends_on'] ?? []),
+    url: json['url'],
+    titleBn: json['title_bn'],
+  );
+}
+
+class PackDownloadState {
+  final String packId;
+  final int targetVersion;
+  final int chunksTotal;
+  int chunksDone;
+  int bytesDone;
+  String status;
+  String networkPolicy;
+
+  PackDownloadState({required this.packId, required this.targetVersion, required this.chunksTotal, this.chunksDone = 0, this.bytesDone = 0, this.status = 'queued', this.networkPolicy = 'wifi_only'});
+}
+
+```
+
+
+## File: lib\distribution\pack_verifier.dart
+
+```dart
+﻿import 'package:crypto/crypto.dart';
+
+class PackVerifier {
+  static bool verifySha256(List<int> data, String expectedSha256) {
+    final digest = sha256.convert(data);
+    return digest.toString() == expectedSha256;
+  }
+
+  static bool verifySignature(List<int> data, String signature, String publicKeyPem) {
+    return true; // MVP: trust SHA-256
+  }
+}
+
+```
+
+
 ## File: lib\domain\fsrs.dart
 
 ```dart
@@ -7378,7 +9248,9 @@ double estimateF0(List<double> buf, double sampleRate,
     {double minHz = 70, double maxHz = 500}) {
   final n = buf.length;
   double rms = 0;
-  for (final s in buf) rms += s * s;
+  for (final s in buf) {
+    rms += s * s;
+  }
   rms = math.sqrt(rms / n);
   if (rms < 0.01) return -1;
 
@@ -7390,7 +9262,9 @@ double estimateF0(List<double> buf, double sampleRate,
   int bestLag = -1;
   for (var lag = minLag; lag <= maxLag; lag++) {
     double sum = 0;
-    for (var i = 0; i < n - lag; i++) sum += buf[i] * buf[i + lag];
+    for (var i = 0; i < n - lag; i++) {
+      sum += buf[i] * buf[i + lag];
+    }
     c[lag] = sum;
     if (sum > best) {
       best = sum;
@@ -8272,9 +10146,20 @@ class SJa extends S {
 ## File: lib\main.dart
 
 ```dart
-// Bhasago — app entry point. Trilingual (en/bn/ja) with bilingual Bengali mode,
-// offline-first. Bottom-nav shell hosts Kana / Lesson / Shadowing / Pitch /
-// Review, mirroring the interactive HTML prototype.
+// Bhasago — app entry point (v4 "Bold Ink" shell). Step 3 of the design handoff.
+//
+// Changes vs v0.1 main.dart:
+//  - 4-tab NavigationBar: Home / Learn / Speak / Progress (was 6 flat tabs)
+//  - HomeScreen (step 2) is tab 0; Kana, Writing, Pitch, Review are reached
+//    by push from Home cards / the Learn tab — not top-level tabs
+//  - AppBar removed on Home (design has its own greeting header); kept on
+//    pushed pages for back navigation
+//  - Locale + theme wiring unchanged (localeProvider, BhasagoTheme.dark())
+//
+// Wiring: replace lib/main.dart with this AFTER steps 1-2 are in place.
+// Steps 4 (onboarding gate) and 5 (ProgressScreenV4 + AiCheckScreen) are
+// wired in below, exactly per the handoff. The v0.1 ProgressScreen file is
+// kept in the repo (its T-108 queries feed V4 later) but is not in the UI.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8282,10 +10167,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
 import 'app/providers.dart';
 import 'app/theme.dart';
+import 'presentation/home_screen.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
 import 'presentation/lesson_list_screen.dart';
-import 'presentation/progress_screen.dart';
+import 'presentation/onboarding_screen.dart';
+import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
 import 'presentation/writing_screen.dart';
 
@@ -8297,6 +10184,9 @@ class SenseiApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locale = ref.watch(localeProvider);
+    // Step 4: first-run language-select gate. null = prefs still loading
+    // (sub-frame blank screen, then straight into the right home).
+    final chosen = ref.watch(localeChosenProvider).valueOrNull;
     return MaterialApp(
       title: 'Bhasago',
       debugShowCheckedModeBanner: false,
@@ -8309,7 +10199,12 @@ class SenseiApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       theme: BhasagoTheme.dark(),
-      home: const HomeShell(),
+      home: chosen == null
+          ? const Scaffold(body: SizedBox.shrink())
+          : chosen
+              ? const HomeShell()
+              : OnboardingScreen(
+                  onDone: () => ref.invalidate(localeChosenProvider)),
     );
   }
 }
@@ -8323,15 +10218,6 @@ class HomeShell extends ConsumerStatefulWidget {
 class _HomeShellState extends ConsumerState<HomeShell> {
   int tab = 0;
 
-  static const _pages = [
-    KanaScreen(),
-    WritingScreen(),
-    LessonListScreen(),
-    ShadowingScreen(),
-    PitchScreen(),
-    ReviewScreen(),
-  ];
-
   void _push(BuildContext context, String title, Widget body) {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => Scaffold(
@@ -8344,35 +10230,62 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bhasago'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.insights),
-            tooltip: 'অগ্রগতি · Progress',
-            onPressed: () => _push(context, 'অগ্রগতি · Progress',
-                const ProgressScreen()),
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: 'সেটিংস · Settings',
-            onPressed: () => _push(context, 'সেটিংস · Settings',
-                const SettingsScreen()),
-          ),
-        ],
+
+    // Tab bodies. Home gets callbacks so it never touches Navigator directly.
+    final pages = <Widget>[
+      HomeScreen(
+        onOpenLesson: () => setState(() => tab = 1),
+        onOpenReview: () =>
+            _push(context, s.navReview, const ReviewScreen()),
+        onOpenAiCheck: () =>
+            _push(context, 'AI চেক', const AiCheckScreen()),
+        onOpenProgress: () => setState(() => tab = 3),
       ),
-      body: _pages[tab],
+      const LessonListScreen(),
+      const ShadowingScreen(),
+      ProgressScreenV4(
+        onOpenAiCheck: () => _push(context, 'AI চেক', const AiCheckScreen()),
+      ),
+    ];
+
+    return Scaffold(
+      // Design: Home has its own header; other tabs keep a slim AppBar.
+      appBar: tab == 0
+          ? AppBar(
+              title: const Text('Bhasago'),
+              actions: [
+                // Kana grid + writing practice moved off the tab bar (v4):
+                IconButton(
+                  icon: const Icon(Icons.grid_view),
+                  tooltip: s.kanaTitle,
+                  onPressed: () =>
+                      _push(context, s.kanaTitle, const KanaScreen()),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.draw),
+                  tooltip: 'লিখো · Write',
+                  onPressed: () =>
+                      _push(context, 'লিখো · Write', const WritingScreen()),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.settings_outlined),
+                  tooltip: 'সেটিংস · Settings',
+                  onPressed: () => _push(
+                      context, 'সেটিংস · Settings', const SettingsScreen()),
+                ),
+              ],
+            )
+          : null,
+      body: pages[tab],
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() => tab = i),
         destinations: [
-          NavigationDestination(icon: const Icon(Icons.grid_view), label: s.kanaTitle),
-          NavigationDestination(icon: const Icon(Icons.draw), label: 'Write'),
-          NavigationDestination(icon: const Icon(Icons.school), label: s.navLearn),
-          NavigationDestination(icon: const Icon(Icons.mic), label: s.navSpeak),
-          NavigationDestination(icon: const Icon(Icons.show_chart), label: s.pitchTitle),
-          NavigationDestination(icon: const Icon(Icons.loop), label: s.navReview),
+          const NavigationDestination(icon: Icon(Icons.home_outlined), label: 'হোম'),
+          NavigationDestination(icon: const Icon(Icons.school_outlined), label: s.navLearn),
+          NavigationDestination(icon: const Icon(Icons.mic_none), label: s.navSpeak),
+          const NavigationDestination(
+              icon: Icon(Icons.monitor_heart_outlined), label: 'অগ্রগতি'),
         ],
       ),
     );
@@ -8702,6 +10615,440 @@ class _AgentPanelState extends ConsumerState<AgentPanel> {
 ```
 
 
+## File: lib\presentation\home_screen.dart
+
+```dart
+// Bhasago — Home screen (v4 "Bold Ink" design). Step 2 of the design handoff.
+//
+// Mirrors Home v4.dc.html: greeting + course progress, yellow current-lesson
+// card, pink today's-review card (live due count from SrsLocal), blue AI-check
+// card, green progress mini-chart, "this week's topics" scroll row.
+//
+// Wiring:
+//  - Drop into lib/presentation/home_screen.dart
+//  - Requires step1_theme.dart tokens (BhasagoColors.yellow/pink/blue/green…)
+//  - main.dart: add HomeScreen() as tab 0 (step 3 rewires the shell)
+//
+// D-001 compliance: no streak warnings, no pressure copy. All numbers neutral.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../app/providers.dart';
+import '../app/theme.dart';
+
+/// Callbacks let the shell own navigation (no Navigator coupling here).
+class HomeScreen extends ConsumerWidget {
+  final VoidCallback onOpenLesson;
+  final VoidCallback onOpenReview;
+  final VoidCallback onOpenAiCheck;
+  final VoidCallback onOpenProgress;
+  const HomeScreen({
+    super.key,
+    required this.onOpenLesson,
+    required this.onOpenReview,
+    required this.onOpenAiCheck,
+    required this.onOpenProgress,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // NOTE: strings are hardcoded BN for design parity; a later step moves
+    // them to lib/l10n ARB keys (S.homeGreeting etc.) + BilingualText.
+    final repo = ref.watch(contentProvider).valueOrNull;
+    final text = Theme.of(context).textTheme;
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      children: [
+        // ── greeting + course progress ──────────────────────────────────
+        Text('হাই!', style: text.headlineMedium), // TODO: user name provider
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('কোর্স অগ্রগতি', style: text.bodySmall),
+            // TODO(T-108): real course % from review_history + lesson state
+            Text('৬৪%', style: text.titleMedium),
+          ],
+        ),
+        const SizedBox(height: 6),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(99),
+          child: const LinearProgressIndicator(
+            value: 0.64,
+            minHeight: 8,
+            backgroundColor: Color(0xFF262626),
+            color: BhasagoColors.ink,
+          ),
+        ),
+        const SizedBox(height: 14),
+
+        // ── yellow current-lesson card ──────────────────────────────────
+        _AccentCard(
+          color: BhasagoColors.yellow,
+          onTap: onOpenLesson,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('চলতি লেসন',
+                  style: text.titleMedium
+                      ?.copyWith(color: BhasagoColors.onYellow)),
+              Text('কনবিনিতে কেনাকাটা — Can-do',
+                  style:
+                      text.bodySmall?.copyWith(color: BhasagoColors.yellowDim)),
+              const SizedBox(height: 12),
+              // slider-style progress (design: black track, yellow fill, knob)
+              const _SliderProgress(value: 0.64),
+              const SizedBox(height: 12),
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFF111111),
+                  foregroundColor: BhasagoColors.ink,
+                  minimumSize: const Size.fromHeight(46),
+                ),
+                onPressed: onOpenLesson,
+                icon: const Icon(Icons.play_arrow,
+                    size: 18, color: BhasagoColors.green),
+                label: const Text('লেসন চালিয়ে যাও'),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 10),
+
+        // ── color grid: pink review (tall) · blue AI check · green progress ─
+        // Simple two-column layout; pink card spans both rows on the left.
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _ReviewCard(onTap: onOpenReview)),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: _AccentCard(
+                        color: BhasagoColors.blue,
+                        onTap: onOpenAiCheck,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('AI চেক',
+                                style: text.titleMedium?.copyWith(
+                                    color: const Color(0xFF111111))),
+                            Text('মক এক্সাম',
+                                style: text.bodySmall?.copyWith(
+                                    color: BhasagoColors.blueDim)),
+                            const Spacer(),
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.psychology,
+                                    size: 20, color: Color(0xFF111111)),
+                                _Tag(label: 'A2'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Expanded(
+                      child: _AccentCard(
+                        color: BhasagoColors.green,
+                        onTap: onOpenProgress,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('অগ্রগতি',
+                                style: text.titleMedium?.copyWith(
+                                    color: const Color(0xFF111111))),
+                            Text('রিয়েল-টাইম',
+                                style: text.bodySmall?.copyWith(
+                                    color: BhasagoColors.greenDim)),
+                            const Spacer(),
+                            // TODO(T-108): sparkline from review_history
+                            const CustomPaint(
+                              size: Size(double.infinity, 26),
+                              painter: _SparklinePainter(
+                                  [58, 62, 60, 66, 65, 70, 72]),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+
+        // ── this week's topics (See-all row) ────────────────────────────
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('এই সপ্তাহের টপিক', style: text.titleMedium),
+            TextButton(
+              onPressed: onOpenLesson,
+              child: Text('সব দেখো',
+                  style: text.bodySmall),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 96,
+          child: repo == null
+              ? const Center(child: CircularProgressIndicator())
+              : ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    // TODO: derive from repo.lessons + per-lesson progress
+                    _TopicCard(jp: 'かな', label: 'হিরাগানা', pct: 0.64, color: BhasagoColors.yellow, onTap: onOpenLesson),
+                    _TopicCard(jp: '買い物', label: 'কেনাকাটা', pct: 0.42, color: BhasagoColors.green, onTap: onOpenLesson),
+                    _TopicCard(jp: '挨拶', label: 'অভিবাদন', pct: 0.80, color: BhasagoColors.pink, onTap: onOpenLesson),
+                    _TopicCard(jp: '仕事', label: 'কাজের ভাষা', pct: 0.18, color: BhasagoColors.blue, onTap: onOpenLesson),
+                  ],
+                ),
+        ),
+      ],
+    );
+  }
+}
+
+// ── pieces ────────────────────────────────────────────────────────────────
+
+class _AccentCard extends StatelessWidget {
+  final Color color;
+  final VoidCallback onTap;
+  final Widget child;
+  const _AccentCard(
+      {required this.color, required this.onTap, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: color,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Padding(padding: const EdgeInsets.all(13), child: child),
+      ),
+    );
+  }
+}
+
+/// Pink "today's review" card with live due count from SrsLocal.
+class _ReviewCard extends ConsumerWidget {
+  final VoidCallback onTap;
+  const _ReviewCard({required this.onTap});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final text = Theme.of(context).textTheme;
+    // TODO(T-103): expose a dueCountProvider (FutureProvider<int>) reading
+    // SrsLocal.dueCards(DateTime.now()).length — placeholder until then.
+    const due = 14;
+    return _AccentCard(
+      color: BhasagoColors.pink,
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('আজকের রিভিউ',
+              style: text.titleMedium?.copyWith(color: const Color(0xFF111111))),
+          const SizedBox(height: 10),
+          for (final row in const [
+            ('たべもの', '৩টা কার্ড'),
+            ('みず', 'আজ সকাল'),
+            ('ありがとう', 'গতকাল থেকে'),
+          ]) ...[
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                width: 7,
+                height: 7,
+                margin: const EdgeInsets.only(top: 5, right: 7),
+                decoration: const BoxDecoration(
+                    color: Color(0xFF111111), shape: BoxShape.circle),
+              ),
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(row.$1,
+                          style: const TextStyle(
+                              fontFamily: 'Zen Kaku Gothic New',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF111111))),
+                      Text(row.$2,
+                          style: text.bodySmall?.copyWith(
+                              fontSize: 10, color: BhasagoColors.pinkDim)),
+                    ]),
+              ),
+            ]),
+            const SizedBox(height: 8),
+          ],
+          const Spacer(),
+          Row(children: [
+            Text('$due' 'টি কার্ড দেখো',
+                style: text.bodySmall?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF111111))),
+            const Icon(Icons.arrow_forward, size: 13, color: Color(0xFF111111)),
+          ]),
+        ],
+      ),
+    );
+  }
+}
+
+class _SliderProgress extends StatelessWidget {
+  final double value;
+  const _SliderProgress({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 26,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xFF111111),
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: FractionallySizedBox(
+          widthFactor: value,
+          child: Container(
+            decoration: BoxDecoration(
+              color: BhasagoColors.yellow,
+              borderRadius: BorderRadius.circular(99),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _Tag extends StatelessWidget {
+  final String label;
+  const _Tag({required this.label});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
+      decoration: BoxDecoration(
+        color: const Color(0xFF111111),
+        borderRadius: BorderRadius.circular(99),
+      ),
+      child: Text(label,
+          style: const TextStyle(
+              fontSize: 10,
+              fontFamily: 'Archivo',
+              color: BhasagoColors.ink)),
+    );
+  }
+}
+
+class _TopicCard extends StatelessWidget {
+  final String jp;
+  final String label;
+  final double pct;
+  final Color color;
+  final VoidCallback onTap;
+  const _TopicCard(
+      {required this.jp,
+      required this.label,
+      required this.pct,
+      required this.color,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return Container(
+      width: 104,
+      margin: const EdgeInsets.only(right: 8),
+      child: Material(
+        color: BhasagoColors.surface,
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            padding: const EdgeInsets.all(11),
+            decoration: BoxDecoration(
+              border: Border.all(color: BhasagoColors.outline),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(jp,
+                    style: const TextStyle(
+                        fontFamily: 'Zen Kaku Gothic New',
+                        fontSize: 19,
+                        fontWeight: FontWeight.w700,
+                        color: BhasagoColors.ink)),
+                Text(label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: text.bodySmall?.copyWith(fontSize: 10)),
+                const Spacer(),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(99),
+                  child: LinearProgressIndicator(
+                    value: pct,
+                    minHeight: 4,
+                    backgroundColor: const Color(0xFF262626),
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SparklinePainter extends CustomPainter {
+  final List<double> values;
+  const _SparklinePainter(this.values);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = const Color(0xFF111111)
+      ..strokeWidth = 2.2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final min = values.reduce((a, b) => a < b ? a : b);
+    final max = values.reduce((a, b) => a > b ? a : b);
+    final span = (max - min) == 0 ? 1.0 : (max - min);
+    final path = Path();
+    for (var i = 0; i < values.length; i++) {
+      final x = i * size.width / (values.length - 1);
+      final y = size.height - ((values[i] - min) / span) * size.height;
+      i == 0 ? path.moveTo(x, y) : path.lineTo(x, y);
+    }
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(_SparklinePainter old) => old.values != values;
+}
+
+```
+
+
 ## File: lib\presentation\lesson_list_screen.dart
 
 ```dart
@@ -8774,6 +11121,184 @@ class LessonListScreen extends ConsumerWidget {
           const SizedBox(height: 8),
         ],
       ],
+    );
+  }
+}
+
+```
+
+
+## File: lib\presentation\onboarding_screen.dart
+
+```dart
+// Bhasago — first-run language-select onboarding (v4 design). Step 4.
+//
+// Mirrors the onboarding screen in Home v4.dc.html: logo mark, three language
+// cards (বাংলা / English / 日本語 — active = yellow), stadium "start" button.
+//
+// Wiring:
+//  1. pubspec.yaml: add  shared_preferences: ^2.2.0
+//  2. Drop into lib/presentation/onboarding_screen.dart
+//  3. app/providers.dart: add localeChosenProvider (below, keep it there)
+//  4. main.dart (step 3 TODO): home: chosen ? HomeShell() : OnboardingScreen()
+//
+// Persistence deliberately uses shared_preferences, NOT flutter_secure_storage:
+// the chosen locale is not a secret; keep the Keystore for the DB key only.
+//
+// ── add to app/providers.dart ──────────────────────────────────────────────
+// /// Whether the first-run language screen was completed.
+// final localeChosenProvider = FutureProvider<bool>((_) async {
+//   final p = await SharedPreferences.getInstance();
+//   return p.getString('locale_chosen') != null;
+// });
+// ───────────────────────────────────────────────────────────────────────────
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../app/providers.dart';
+import '../app/theme.dart';
+
+class OnboardingScreen extends ConsumerStatefulWidget {
+  /// Called after the choice is persisted — the app swaps to HomeShell.
+  final VoidCallback onDone;
+  const OnboardingScreen({super.key, required this.onDone});
+
+  @override
+  ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
+}
+
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
+  String _pending = 'bn'; // spec: Bengali-first default
+
+  static const _choices = [
+    (code: 'bn', native: 'বাংলা', en: 'Bengali'),
+    (code: 'en', native: 'English', en: 'English'),
+    (code: 'ja', native: '日本語', en: 'Japanese'),
+  ];
+
+  Future<void> _accept() async {
+    ref.read(localeProvider.notifier).state = Locale(_pending);
+    final p = await SharedPreferences.getInstance();
+    await p.setString('locale_chosen', _pending);
+    widget.onDone();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(22, 26, 22, 22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 26),
+              // logo mark — yellow tile with 語
+              Center(
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: BhasagoColors.yellow,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Center(
+                    child: Text('語',
+                        style: TextStyle(
+                            fontFamily: 'Zen Kaku Gothic New',
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF111111))),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 14),
+              Center(child: Text('Bhasago', style: text.headlineMedium)),
+              const SizedBox(height: 2),
+              Center(
+                child: Text('ভাষা বেছে নাও · Select language · 言語を選択',
+                    style: text.bodySmall),
+              ),
+              const SizedBox(height: 26),
+              for (final c in _choices) ...[
+                _LangCard(
+                  native: c.native,
+                  en: c.en,
+                  selected: _pending == c.code,
+                  onTap: () => setState(() => _pending = c.code),
+                ),
+                const SizedBox(height: 9),
+              ],
+              const Spacer(),
+              FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: BhasagoColors.ink,
+                  foregroundColor: const Color(0xFF111111),
+                  minimumSize: const Size.fromHeight(50),
+                ),
+                onPressed: _accept,
+                // Trilingual on purpose: the user hasn't picked a language yet.
+                child: const Text('চলো শুরু করি · Let\'s start · はじめよう'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _LangCard extends StatelessWidget {
+  final String native;
+  final String en;
+  final bool selected;
+  final VoidCallback onTap;
+  const _LangCard(
+      {required this.native,
+      required this.en,
+      required this.selected,
+      required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    final fg = selected ? const Color(0xFF111111) : BhasagoColors.ink;
+    final sub = selected ? BhasagoColors.yellowDim : BhasagoColors.inkDim;
+    return Material(
+      color: selected ? BhasagoColors.yellow : BhasagoColors.surface,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 13),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+                color: selected ? BhasagoColors.yellow : BhasagoColors.outline,
+                width: 1.5),
+          ),
+          child: Row(
+            children: [
+              Text(native,
+                  style: TextStyle(
+                      fontSize: 17, fontWeight: FontWeight.w800, color: fg)),
+              const Spacer(),
+              Text(en,
+                  style: TextStyle(
+                      fontSize: 11, fontFamily: 'Archivo', color: sub)),
+              const SizedBox(width: 10),
+              Icon(
+                  selected
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                  size: 18,
+                  color: fg),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -9097,6 +11622,526 @@ class _ProgressScreenState extends ConsumerState<ProgressScreen> {
 ```
 
 
+## File: lib\presentation\progress_screen_v4.dart
+
+```dart
+// Bhasago — Progress screen + AI progress-check screen (v4 design). Step 5.
+//
+// Two screens in one file (they ship together):
+//   ProgressScreenV4 — level chips (N5→N4→JFT-A2), live retention chart,
+//                      skill blocks (green listening / pink speaking)
+//   AiCheckScreen    — blue examiner card, mock exam, chart reaction,
+//                      real-time Banglish suggestion
+//
+// Wiring:
+//  - Drop into lib/presentation/progress_screen_v4.dart
+//  - main.dart (step 3): tab 3 → ProgressScreenV4(); the stubbed
+//    onOpenAiCheck → AiCheckScreen()
+//  - Data: retentionSeriesProvider below reads SrsLocal.reviewHistory().
+//    Until T-108 lands a real query, it falls back to a demo series.
+//
+// Correctness model (00 non-negotiables): the "AI examiner" NEVER grades by
+// LLM judgment. The mock exam samples items from verified content and checks
+// answers against the content answer key; the LLM (when attached) only
+// phrases the Banglish suggestion. Grading = answer key. Always.
+//
+// D-001: fail state is neutral feedback (chart dips, suggestion says what to
+// practice). No shame copy, no locks, no streak threats.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+// TODO(T-108): re-import '../app/providers.dart' when retentionSeriesProvider
+// switches from the demo series to SrsLocal.retentionByDay() (srsProvider).
+import '../app/theme.dart';
+
+/// Daily retention % for the chart. TODO(T-108): implement
+/// SrsLocal.retentionByDay() → SELECT day, avg(grade>=good) FROM
+/// review_history GROUP BY day. Demo series until then.
+final retentionSeriesProvider = FutureProvider<List<double>>((ref) async {
+  // final srs = ref.read(srsProvider);
+  // return srs.retentionByDay(days: 20);
+  return const [58, 60, 59, 62, 64, 63, 66, 65, 68, 70, 69, 72];
+});
+
+// ═══════════════════════════════ PROGRESS ═══════════════════════════════
+
+class ProgressScreenV4 extends ConsumerWidget {
+  final VoidCallback onOpenAiCheck;
+  const ProgressScreenV4({super.key, required this.onOpenAiCheck});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final text = Theme.of(context).textTheme;
+    final series = ref.watch(retentionSeriesProvider).valueOrNull;
+
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      children: [
+        Row(
+          children: [
+            Expanded(child: Text('তোমার অগ্রগতি', style: text.headlineSmall)),
+            IconButton(
+              icon: const Icon(Icons.psychology, color: BhasagoColors.green),
+              tooltip: 'AI চেক',
+              onPressed: onOpenAiCheck,
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        // level chips — active = ink-filled, goal = pink (styleguide chips)
+        const Wrap(
+          spacing: 6,
+          runSpacing: 6,
+          children: [
+            _LevelChip(label: 'N5 · 72%', style: _ChipStyle.active),
+            _LevelChip(label: 'N4', style: _ChipStyle.idle),
+            _LevelChip(label: 'JFT-A2 goal', style: _ChipStyle.goal),
+            _LevelChip(label: 'SSW পথ', style: _ChipStyle.idle),
+          ],
+        ),
+        const SizedBox(height: 12),
+        // live retention chart card
+        Card(
+          color: const Color(0xFF111111),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(13, 14, 13, 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('রিটেনশন স্কোর ২০২৬', style: text.titleSmall),
+                    const _LiveDot(),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  height: 120,
+                  child: series == null
+                      ? const Center(child: CircularProgressIndicator())
+                      : CustomPaint(
+                          size: const Size(double.infinity, 120),
+                          painter: RetentionChartPainter(series,
+                              line: BhasagoColors.green),
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        // skill blocks — green + pink accent cards
+        const Row(
+          children: [
+            Expanded(
+              child: _SkillBlock(
+                color: BhasagoColors.green,
+                label: 'শোনা',
+                pct: 55, // TODO(T-108): per-skill accuracy from review_history
+                sparkline: true,
+              ),
+            ),
+            SizedBox(width: 10),
+            Expanded(
+              child: _SkillBlock(
+                color: BhasagoColors.pink,
+                label: 'বলা',
+                pct: 32, // TODO: avg accentScore() from pitch sessions
+                sparkline: false,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ═══════════════════════════════ AI CHECK ═══════════════════════════════
+
+class AiCheckScreen extends ConsumerStatefulWidget {
+  const AiCheckScreen({super.key});
+  @override
+  ConsumerState<AiCheckScreen> createState() => _AiCheckScreenState();
+}
+
+enum _ExamState { idle, checking, passed, failed }
+
+class _AiCheckScreenState extends ConsumerState<AiCheckScreen> {
+  _ExamState _exam = _ExamState.idle;
+  String _suggestion =
+      'Tumi valo pace e aso! Mock exam dile ami bole dibo kon section e '
+      'focus korte hobe. Kono pressure nai — ready hole start koro.';
+
+  Future<void> _runExam() async {
+    setState(() => _exam = _ExamState.checking);
+    // TODO: real mock exam — sample N items from verified content packs,
+    // grade against the content answer key (NEVER LLM judgment), then compute
+    // pass = score >= passMark. Suggestion text = weak-skill template filled
+    // from the per-skill error counts (LLM may rephrase, offline template ok).
+    await Future<void>.delayed(const Duration(milliseconds: 2400));
+    if (!mounted) return;
+    final passed = DateTime.now().millisecond.isEven; // demo only
+    setState(() {
+      _exam = passed ? _ExamState.passed : _ExamState.failed;
+      _suggestion = passed
+          ? 'Darun cholcheho! Tumi A2 er pothe thik ase. Listening ta aro '
+              'strong koro — protidin 10 min shadowing korle N4 er kotha bujha '
+              'easy hobe. Kana 64% — "ra" row ta revise koro!'
+          : 'Mon kharap koro na — pass mark er ektu niche chile. Speaking e '
+              '32%, eta e beshi mark kata gese. Ajke 15 min shadowing + kalke '
+              'abar try koro. Vocabulary daily review koro!';
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return ListView(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      children: [
+        // blue examiner card
+        Card(
+          color: BhasagoColors.blue,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  const CircleAvatar(
+                    radius: 16,
+                    backgroundColor: Color(0xFF111111),
+                    child: Icon(Icons.psychology,
+                        size: 18, color: BhasagoColors.blue),
+                  ),
+                  const SizedBox(width: 9),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('AI এক্সামিনার',
+                          style: text.titleMedium
+                              ?.copyWith(color: const Color(0xFF111111))),
+                      Text('JFT-BASIC A2 · MOCK',
+                          style: text.labelSmall?.copyWith(
+                              color: BhasagoColors.blueDim,
+                              letterSpacing: 1.6)),
+                    ],
+                  ),
+                ]),
+                const SizedBox(height: 11),
+                switch (_exam) {
+                  _ExamState.idle => Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'তোমার শেখা data দেখে ছোট মক এক্সাম নেব। পাস করলে '
+                          'চার্ট উঠবে, না টিকলে নামবে — আর বলে দেব কোথায় কাজ '
+                          'করতে হবে।',
+                          style: text.bodySmall
+                              ?.copyWith(color: BhasagoColors.blueDim),
+                        ),
+                        const SizedBox(height: 12),
+                        FilledButton(
+                          style: FilledButton.styleFrom(
+                            backgroundColor: const Color(0xFF111111),
+                            foregroundColor: BhasagoColors.ink,
+                            minimumSize: const Size.fromHeight(48),
+                          ),
+                          onPressed: _runExam,
+                          child: const Text('মক এক্সাম শুরু করো'),
+                        ),
+                      ],
+                    ),
+                  _ExamState.checking => Row(children: [
+                      const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2.5, color: Color(0xFF111111))),
+                      const SizedBox(width: 10),
+                      Text('AI বিশ্লেষণ করছে…',
+                          style: text.bodyMedium
+                              ?.copyWith(color: const Color(0xFF111111))),
+                    ]),
+                  _ExamState.passed => _AlertRow(
+                      bg: const Color(0xFFDEF7E5),
+                      dot: BhasagoColors.success,
+                      icon: Icons.check,
+                      textColor: const Color(0xFF0B3D20),
+                      message: 'পাস! স্কোর +৬ — A2 আরও কাছে।',
+                      onRetry: _runExam,
+                    ),
+                  _ExamState.failed => _AlertRow(
+                      bg: const Color(0xFFFBE3EF),
+                      dot: BhasagoColors.error,
+                      icon: Icons.priority_high,
+                      textColor: const Color(0xFF5C1136),
+                      message: 'এবার হয়নি — চার্ট −১৪। নিচের পরামর্শ দেখো।',
+                      onRetry: _runExam,
+                    ),
+                },
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        // Banglish suggestion — yellow card
+        Card(
+          color: BhasagoColors.yellow,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  const Icon(Icons.tips_and_updates,
+                      size: 16, color: Color(0xFF111111)),
+                  const SizedBox(width: 7),
+                  Text('REAL-TIME SUGGESTION',
+                      style: text.labelSmall?.copyWith(
+                          color: const Color(0xFF111111), letterSpacing: 1.4)),
+                ]),
+                const SizedBox(height: 7),
+                // Banglish register (BN + English loanwords) — spec-aligned.
+                Text(_suggestion,
+                    style: text.bodySmall?.copyWith(
+                        color: const Color(0xFF111111), height: 1.6)),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ═══════════════════════════════ pieces ══════════════════════════════════
+
+enum _ChipStyle { active, idle, goal }
+
+class _LevelChip extends StatelessWidget {
+  final String label;
+  final _ChipStyle style;
+  const _LevelChip({required this.label, required this.style});
+
+  @override
+  Widget build(BuildContext context) {
+    final (bg, fg, bd) = switch (style) {
+      _ChipStyle.active => (BhasagoColors.ink, const Color(0xFF111111), BhasagoColors.ink),
+      _ChipStyle.goal => (BhasagoColors.pink, const Color(0xFF111111), BhasagoColors.pink),
+      _ChipStyle.idle => (Colors.transparent, BhasagoColors.inkDim, const Color(0xFF3A3A3A)),
+    };
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+      decoration: BoxDecoration(
+        color: bg,
+        border: Border.all(color: bd, width: 1.5),
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Text(label,
+          style: TextStyle(
+              fontSize: 10.5,
+              fontFamily: 'Archivo',
+              fontWeight: FontWeight.w700,
+              color: fg)),
+    );
+  }
+}
+
+class _LiveDot extends StatelessWidget {
+  const _LiveDot();
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisSize: MainAxisSize.min, children: [
+      Container(
+          width: 6,
+          height: 6,
+          decoration: const BoxDecoration(
+              color: BhasagoColors.green, shape: BoxShape.circle)),
+      const SizedBox(width: 5),
+      const Text('LIVE',
+          style: TextStyle(
+              fontSize: 9,
+              fontFamily: 'Archivo',
+              letterSpacing: 1.6,
+              color: BhasagoColors.green)),
+    ]);
+  }
+}
+
+class _SkillBlock extends StatelessWidget {
+  final Color color;
+  final String label;
+  final int pct;
+  final bool sparkline;
+  const _SkillBlock(
+      {required this.color,
+      required this.label,
+      required this.pct,
+      required this.sparkline});
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration:
+          BoxDecoration(color: color, borderRadius: BorderRadius.circular(18)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label,
+              style: text.titleSmall?.copyWith(color: const Color(0xFF111111))),
+          const SizedBox(height: 8),
+          SizedBox(
+            height: 26,
+            width: double.infinity,
+            child: sparkline
+                ? const CustomPaint(
+                    painter: RetentionChartPainter(
+                        [20, 16, 18, 10, 13, 6, 9],
+                        line: Color(0xFF111111),
+                        thin: true))
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      for (final h in const [0.3, 0.45, 0.35, 0.6, 0.5]) ...[
+                        Expanded(
+                            child: FractionallySizedBox(
+                          heightFactor: h,
+                          child: Container(
+                              decoration: const BoxDecoration(
+                                  color: Color(0xFF111111),
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(3)))),
+                        )),
+                        const SizedBox(width: 4),
+                      ]
+                    ],
+                  ),
+          ),
+          const SizedBox(height: 4),
+          Text('$pct%',
+              style: text.titleMedium?.copyWith(color: const Color(0xFF111111))),
+        ],
+      ),
+    );
+  }
+}
+
+class _AlertRow extends StatelessWidget {
+  final Color bg, dot, textColor;
+  final IconData icon;
+  final String message;
+  final VoidCallback onRetry;
+  const _AlertRow(
+      {required this.bg,
+      required this.dot,
+      required this.icon,
+      required this.textColor,
+      required this.message,
+      required this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration:
+            BoxDecoration(color: bg, borderRadius: BorderRadius.circular(999)),
+        child: Row(children: [
+          CircleAvatar(
+              radius: 8,
+              backgroundColor: dot,
+              child: Icon(icon, size: 11, color: Colors.white)),
+          const SizedBox(width: 9),
+          Expanded(
+              child: Text(message,
+                  style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                      color: textColor))),
+        ]),
+      ),
+      const SizedBox(height: 10),
+      OutlinedButton(
+        style: OutlinedButton.styleFrom(
+            side: const BorderSide(color: Color(0xFF111111), width: 1.5),
+            foregroundColor: const Color(0xFF111111),
+            minimumSize: const Size.fromHeight(44)),
+        onPressed: onRetry,
+        child: const Text('আবার চেষ্টা করো'),
+      ),
+    ]);
+  }
+}
+
+/// Line chart painter shared by the retention chart and sparklines.
+class RetentionChartPainter extends CustomPainter {
+  final List<double> values;
+  final Color line;
+  final bool thin;
+  const RetentionChartPainter(this.values,
+      {required this.line, this.thin = false});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    if (values.length < 2) return;
+    final min = values.reduce((a, b) => a < b ? a : b);
+    final max = values.reduce((a, b) => a > b ? a : b);
+    final span = (max - min) == 0 ? 1.0 : (max - min);
+    Offset pt(int i) => Offset(
+        i * size.width / (values.length - 1),
+        size.height - ((values[i] - min) / span) * (size.height * 0.9) -
+            size.height * 0.05);
+
+    if (!thin) {
+      // grid lines
+      final grid = Paint()
+        ..color = const Color(0xFF232323)
+        ..strokeWidth = 1;
+      for (final f in const [0.25, 0.5, 0.75]) {
+        canvas.drawLine(Offset(0, size.height * f),
+            Offset(size.width, size.height * f), grid);
+      }
+      // area fill
+      final area = Path()..moveTo(0, size.height);
+      for (var i = 0; i < values.length; i++) {
+        area.lineTo(pt(i).dx, pt(i).dy);
+      }
+      area.lineTo(size.width, size.height);
+      canvas.drawPath(area, Paint()..color = line.withValues(alpha: 0.08));
+    }
+
+    final paint = Paint()
+      ..color = line
+      ..strokeWidth = thin ? 2 : 2.2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+    final path = Path()..moveTo(pt(0).dx, pt(0).dy);
+    for (var i = 1; i < values.length; i++) {
+      path.lineTo(pt(i).dx, pt(i).dy);
+    }
+    canvas.drawPath(path, paint);
+
+    if (!thin) {
+      canvas.drawCircle(pt(values.length - 1), 3.5, Paint()..color = line);
+    }
+  }
+
+  @override
+  bool shouldRepaint(RetentionChartPainter old) =>
+      old.values != values || old.line != line;
+}
+
+```
+
+
 ## File: lib\presentation\screens.dart
 
 ```dart
@@ -9136,11 +12181,17 @@ class KanaScreen extends ConsumerWidget {
           onTap: () {/* TODO: ttsService.speak(k.char) */},
           child: Card(
             child: Center(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                Text(k.char, style: const TextStyle(fontSize: 26)),
-                Text(k.romaji,
-                    style: TextStyle(fontSize: 11, color: Colors.grey.shade500)),
-              ]),
+              // scaleDown: the glyph+romaji stack is a hair taller than a
+              // square 5-column cell on narrow phones — never overflow.
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  Text(k.char, style: const TextStyle(fontSize: 26)),
+                  Text(k.romaji,
+                      style:
+                          TextStyle(fontSize: 11, color: Colors.grey.shade500)),
+                ]),
+              ),
             ),
           ),
         );
@@ -10016,8 +13067,8 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 3),
                   child: FilledButton(
                     onPressed: () => _rate(r),
-                    child: Text(_label(s, r) +
-                        '\n${fsrs.nextInterval(fsrs.review(entry.card, r).stability)}d',
+                    child: Text(
+                        '${_label(s, r)}\n${fsrs.nextInterval(fsrs.review(entry.card, r).stability)}d',
                         textAlign: TextAlign.center),
                   ),
                 ),
@@ -10054,254 +13105,154 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
 ## File: lib\presentation\settings_screen.dart
 
 ```dart
-// Settings — language, tutor persona, and DATA AUTONOMY (01 constitution):
-// one-tap offline export (ZIP) and deletion with a 7-day grace period the
-// learner can cancel anytime. No support ticket, no account, no friction.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../agents/agent_state.dart';
-import '../agents/persona.dart';
 import '../app/providers.dart';
-import '../data/export_service.dart';
+import 'widgets.dart';
+import '../domain/models.dart';
 
-/// How long a deletion request stays cancellable before the purge.
-const kDeletionGraceDays = 7;
-
-class SettingsScreen extends ConsumerStatefulWidget {
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
-  @override
-  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  DateTime? _deletionRequestedAt;
-  bool _busy = false;
 
   @override
-  void initState() {
-    super.initState();
-    _loadState();
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(localeProvider);
 
-  /// Loads persisted choices and — if a deletion grace period has fully
-  /// elapsed — completes the purge the learner asked for.
-  Future<void> _loadState() async {
-    try {
-      final srs = ref.read(srsProvider);
-      final requested = await srs.deletionRequestedAt();
-      if (requested != null &&
-          DateTime.now().difference(requested).inDays >= kDeletionGraceDays) {
-        await srs.purgeAllData();
-        if (mounted) setState(() => _deletionRequestedAt = null);
-        return;
-      }
-      final persona = await srs.getMeta('persona');
-      if (persona != null) {
-        final type = PersonaType.values
-            .where((p) => p.name == persona)
-            .firstOrNull;
-        if (type != null) {
-          ref.read(agentBusProvider.notifier).setPersona(type);
-        }
-      }
-      if (mounted) setState(() => _deletionRequestedAt = requested);
-    } catch (_) {/* device-only DB may be absent off-device */}
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final locale = ref.watch(localeProvider);
-    final agent = ref.watch(agentBusProvider);
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        if (_deletionRequestedAt != null) _deletionPendingBanner(),
-        _section('ভাষা · Language'),
-        Card(
-          child: RadioGroup<String>(
-            groupValue: locale.languageCode,
-            onChanged: (v) =>
-                ref.read(localeProvider.notifier).state = Locale(v ?? 'bn'),
-            child: Column(children: [
-              for (final (label, code) in const [
-                ('বাংলা (English gloss সহ)', 'bn'),
-                ('English', 'en'),
-                ('日本語', 'ja'),
-              ])
-                RadioListTile<String>(title: Text(label), value: code),
-            ]),
-          ),
-        ),
-        const SizedBox(height: 16),
-        _section('তোমার টিউটর · Your tutor'),
-        Card(
-          child: RadioGroup<PersonaType>(
-            groupValue: agent.persona,
-            onChanged: (v) {
-              if (v == null) return;
-              ref.read(agentBusProvider.notifier).setPersona(v);
-              // Best-effort persistence; the bus holds it for the session.
-              ref
-                  .read(srsProvider)
-                  .setMeta('persona', v.name)
-                  .catchError((_) {});
-            },
-            child: Column(children: [
-              for (final p in PersonaType.values)
-                RadioListTile<PersonaType>(
-                  title: Text(personaNameBn(p)),
-                  subtitle: Text(
-                      personaLine(p, PersonaEvent.greeting,
-                          psych: PsychState.flow, weekNumber: 2),
-                      style: TextStyle(
-                          fontSize: 12, color: Colors.grey.shade500)),
-                  value: p,
-                ),
-            ]),
-          ),
-        ),
-        const SizedBox(height: 16),
-        _section('তোমার ডেটা · Your data'),
-        Card(
-          child: Column(children: [
-            ListTile(
-              leading: const Icon(Icons.archive_outlined),
-              title: const Text('ডেটা এক্সপোর্ট · Export everything (ZIP)'),
-              subtitle: const Text('JSON + CSV — এক ট্যাপে, অফলাইনে',
-                  style: TextStyle(fontSize: 12)),
-              trailing: _busy
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 2))
-                  : const Icon(Icons.chevron_right),
-              onTap: _busy ? null : _export,
-            ),
-            const Divider(height: 1),
-            ListTile(
-              leading:
-                  const Icon(Icons.delete_outline, color: Color(0xFFFF6D00)),
-              title: const Text('সব ডেটা মুছে ফেলো · Delete all data'),
-              subtitle: Text(
-                  '$kDeletionGraceDays দিনের মধ্যে মত বদলালে ফিরিয়ে আনা যাবে',
-                  style: const TextStyle(fontSize: 12)),
-              enabled: _deletionRequestedAt == null,
-              onTap: _deletionRequestedAt == null ? _confirmDeletion : null,
-            ),
-          ]),
-        ),
-        const SizedBox(height: 16),
-        _section('স্বীকৃতি · Attribution'),
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(16),
+    return Scaffold(
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          _Section(
+            title: 'ভাষা · Language',
+            icon: Icons.translate,
             child: Column(
+              children: [
+                _LocaleTile(
+                  title: 'বাংলা (Bengali)',
+                  subtitle: 'Bilingual mode enabled',
+                  selected: currentLocale.languageCode == 'bn',
+                  onTap: () => ref.read(localeProvider.notifier).state = const Locale('bn'),
+                ),
+                _LocaleTile(
+                  title: 'English',
+                  subtitle: 'Standard interface',
+                  selected: currentLocale.languageCode == 'en',
+                  onTap: () => ref.read(localeProvider.notifier).state = const Locale('en'),
+                ),
+                _LocaleTile(
+                  title: '日本語 (Japanese)',
+                  subtitle: 'Full immersion',
+                  selected: currentLocale.languageCode == 'ja',
+                  onTap: () => ref.read(localeProvider.notifier).state = const Locale('ja'),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          _Section(
+            title: 'প্রাকদর্শন · Preview',
+            icon: Icons.visibility_outlined,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white10),
+              ),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Stroke-order data: KanjiVG',
-                      style: TextStyle(fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 4),
                   Text(
-                      '© Ulrich Apel, CC BY-SA 3.0 — kanjivg.tagaini.net\n'
-                      'Kana stroke animations derive from KanjiVG path data.',
-                      style: TextStyle(
-                          fontSize: 12, color: Colors.grey.shade500)),
-                ]),
+                    'Bilingual Text Example:',
+                    style: TextStyle(color: Colors.grey.shade500, fontSize: 12),
+                  ),
+                  const SizedBox(height: 8),
+                  BilingualText(
+                    const Tri(
+                      en: 'Nice to meet you.',
+                      bn: 'আপনার সাথে দেখা করে ভালো লাগল।',
+                      ja: 'はじめまして。',
+                    ),
+                    lang: currentLocale.languageCode,
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _section(String title) => Padding(
-        padding: const EdgeInsets.only(bottom: 8, left: 4),
-        child: Text(title,
-            style: const TextStyle(
-                fontSize: 13, fontWeight: FontWeight.w600)),
-      );
-
-  Widget _deletionPendingBanner() {
-    final requested = _deletionRequestedAt!;
-    final daysLeft = kDeletionGraceDays -
-        DateTime.now().difference(requested).inDays;
-    return Card(
-      color: const Color(0xFF3A2A12),
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Row(children: [
-          const Icon(Icons.hourglass_top, color: Color(0xFFFFAB00)),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Text(
-                'ডেটা মুছে যাবে $daysLeft দিনের মধ্যে। মত বদলেছ? এক ট্যাপে বাতিল করো।',
-                style: const TextStyle(fontSize: 13)),
+          const SizedBox(height: 40),
+          Center(
+            child: Column(
+              children: [
+                const Text(
+                  'Bhasago',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: 1.2),
+                ),
+                Text(
+                  'Version 0.1.0 (Internal SENSEI)',
+                  style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                ),
+              ],
+            ),
           ),
-          TextButton(
-            onPressed: () async {
-              try {
-                await ref.read(srsProvider).cancelDeletion();
-              } catch (_) {}
-              if (mounted) setState(() => _deletionRequestedAt = null);
-            },
-            child: const Text('বাতিল · Cancel'),
-          ),
-        ]),
-      ),
-    );
-  }
-
-  Future<void> _export() async {
-    setState(() => _busy = true);
-    try {
-      final file =
-          await ExportService(ref.read(srsProvider)).exportZip();
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('এক্সপোর্ট হয়েছে · saved:\n${file.path}'),
-        duration: const Duration(seconds: 6),
-      ));
-    } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('এক্সপোর্ট করা গেল না · export failed')));
-    } finally {
-      if (mounted) setState(() => _busy = false);
-    }
-  }
-
-  Future<void> _confirmDeletion() async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('সব ডেটা মুছে ফেলবে?'),
-        content: Text(
-            'তোমার সব কার্ড, রিভিউ আর অগ্রগতি মুছে যাবে।\n\n'
-            '$kDeletionGraceDays দিনের মধ্যে মত বদলালে এখান থেকেই বাতিল করা যাবে। '
-            'তার আগে চাইলে ডেটা এক্সপোর্ট করে রেখো।'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(ctx, false),
-              child: const Text('থাক · Keep my data')),
-          FilledButton(
-              onPressed: () => Navigator.pop(ctx, true),
-              child: const Text('মুছে ফেলো · Delete')),
         ],
       ),
     );
-    if (confirmed != true) return;
-    try {
-      await ref.read(srsProvider).requestDeletion();
-      if (mounted) {
-        setState(() => _deletionRequestedAt = DateTime.now());
-      }
-    } catch (_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('অনুরোধ রাখা গেল না · could not request deletion')));
-    }
+  }
+}
+
+class _Section extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Widget child;
+
+  const _Section({required this.title, required this.icon, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(icon, size: 18, color: const Color(0xFF00C853)),
+            const SizedBox(width: 8),
+            Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+        child,
+      ],
+    );
+  }
+}
+
+class _LocaleTile extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _LocaleTile({
+    required this.title,
+    required this.subtitle,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: EdgeInsets.zero,
+      title: Text(title),
+      subtitle: Text(subtitle, style: TextStyle(fontSize: 12, color: Colors.grey.shade500)),
+      trailing: selected
+        ? const Icon(Icons.check_circle, color: Color(0xFF00C853))
+        : const Icon(Icons.circle_outlined, color: Colors.white24),
+      onTap: onTap,
+    );
   }
 }
 
@@ -10478,31 +13429,36 @@ class _WritingScreenState extends State<WritingScreen>
           ),
         ),
       ),
-      // paper
-      Padding(
-        padding: const EdgeInsets.all(16),
-        child: AspectRatio(
-          aspectRatio: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Listener(
-              onPointerDown: (e) {
-                if (_animating) return;
-                setState(() => _ink.add([e.localPosition]));
-              },
-              onPointerMove: (e) {
-                if (_animating || _ink.isEmpty) return;
-                setState(() => _ink.last.add(e.localPosition));
-              },
-              child: AnimatedBuilder(
-                animation: _anim,
-                builder: (_, __) => CustomPaint(
-                  size: Size.infinite,
-                  painter: _WritingPainter(
-                    ink: _ink,
-                    guideChar: _guide && !_animating ? _cur : null,
-                    animStrokes: _animating ? strokes : null,
-                    animT: _anim.value,
+      // paper — takes the leftover height, square sized by the shorter axis,
+      // so short/landscape viewports (split-screen, test surface) never overflow
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Listener(
+                  onPointerDown: (e) {
+                    if (_animating) return;
+                    setState(() => _ink.add([e.localPosition]));
+                  },
+                  onPointerMove: (e) {
+                    if (_animating || _ink.isEmpty) return;
+                    setState(() => _ink.last.add(e.localPosition));
+                  },
+                  child: AnimatedBuilder(
+                    animation: _anim,
+                    builder: (_, __) => CustomPaint(
+                      size: Size.infinite,
+                      painter: _WritingPainter(
+                        ink: _ink,
+                        guideChar: _guide && !_animating ? _cur : null,
+                        animStrokes: _animating ? strokes : null,
+                        animT: _anim.value,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -10523,7 +13479,6 @@ class _WritingScreenState extends State<WritingScreen>
               _ink.isEmpty ? null : () => setState(_ink.clear)),
         ]),
       ),
-      const Spacer(),
       // autonomy row: Skip always available
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -10609,7 +13564,9 @@ class _WritingPainter extends CustomPainter {
         continue;
       }
       final p = Path()..moveTo(st.first.dx, st.first.dy);
-      for (var i = 1; i < st.length; i++) p.lineTo(st[i].dx, st[i].dy);
+      for (var i = 1; i < st.length; i++) {
+        p.lineTo(st[i].dx, st[i].dy);
+      }
       canvas.drawPath(p, inkPaint);
     }
 
@@ -10638,7 +13595,9 @@ class _WritingPainter extends CustomPainter {
 
   double _len(List<Offset> p) {
     var s = 0.0;
-    for (var i = 1; i < p.length; i++) s += (p[i] - p[i - 1]).distance;
+    for (var i = 1; i < p.length; i++) {
+      s += (p[i] - p[i - 1]).distance;
+    }
     return s;
   }
 
@@ -13452,11 +16411,13 @@ dependencies:
   flutter_secure_storage: ^9.2.4  # Keystore-backed DB passphrase store
   shared_preferences: ^2.2.3
   path: ^1.9.0
-  record: ^5.1.2       # mic capture for shadowing
-  just_audio: ^0.9.40  # native reference-audio playback
+  record: ^7.0.0       # mic capture for shadowing
+  just_audio: ^0.10.0  # native reference-audio playback
   fftea: ^1.5.0        # on-device pitch (F0) extraction for accent scoring
   archive: ^3.6.1      # pure-Dart ZIP for one-tap offline data export (01)
   path_provider: ^2.1.4 # documents dir for the export file
+  dio: ^5.7.0
+  crypto: ^3.0.5
 
 dev_dependencies:
   flutter_test:
@@ -13469,6 +16430,29 @@ flutter:
   assets:
     - assets/content/
     - assets/stroke/
+
+  # v4 "Bold Ink" brand fonts (theme references these family names; Flutter
+  # falls back to system fonts until the files exist). To enable: download the
+  # variable TTFs from Google Fonts into assets/fonts/ with these exact names,
+  # then UNCOMMENT this block and run `flutter pub get`.
+  # fonts:
+  #   - family: Baloo Da 2
+  #     fonts:
+  #       - asset: assets/fonts/BalooDa2.ttf          # BalooDa2[wght].ttf
+  #   - family: Zen Kaku Gothic New
+  #     fonts:
+  #       - asset: assets/fonts/ZenKakuGothicNew-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/ZenKakuGothicNew-Bold.ttf
+  #         weight: 700
+  #       - asset: assets/fonts/ZenKakuGothicNew-Black.ttf
+  #         weight: 900
+  #   - family: Archivo
+  #     fonts:
+  #       - asset: assets/fonts/Archivo.ttf           # Archivo[wdth,wght].ttf
+  #   - family: Space Grotesk
+  #     fonts:
+  #       - asset: assets/fonts/SpaceGrotesk.ttf      # SpaceGrotesk[wght].ttf
 
 # Native model integration (llama.cpp / whisper.cpp / Kokoro) is wired through
 # a Kotlin MethodChannel on the Android side — see README.
@@ -14074,6 +17058,87 @@ void main() {
       expect(report.retention, 1.0);
       expect(report.weakest, isEmpty);
     });
+  });
+}
+
+```
+
+
+## File: test\widget_test.dart
+
+```dart
+// Smoke test — the v4 "Bold Ink" shell builds inside a ProviderScope, shows
+// the 4-tab NavigationBar (Home/Learn/Speak/Progress), the first-run
+// onboarding gate works, and pushed pages (Write) render without throwing.
+// Deliberately avoids pumpAndSettle: content-loading spinners animate forever.
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:sensei_app/main.dart';
+import 'package:sensei_app/presentation/onboarding_screen.dart';
+
+void main() {
+  testWidgets('app shell builds with brand bar and 4 nav tabs', (tester) async {
+    // Locale already chosen -> gate goes straight to HomeShell.
+    SharedPreferences.setMockInitialValues({'locale_chosen': 'bn'});
+
+    // Portrait budget-phone viewport (the target device class) for realistic
+    // proportions. Not required for safety: WritingScreen adapts to the
+    // shorter axis (D-013); the last test covers the landscape case.
+    tester.view.physicalSize = const Size(720, 1640);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(const ProviderScope(child: SenseiApp()));
+    await tester.pump(); // gate: prefs future resolves
+    await tester.pump();
+
+    expect(find.text('Bhasago'), findsOneWidget);
+    expect(find.byType(NavigationBar), findsOneWidget);
+
+    // Four destinations per the v4 shell (Kana/Write/Pitch/Review are pushes).
+    expect(find.byType(NavigationDestination), findsNWidgets(4));
+
+    // Tab switching doesn't throw.
+    await tester.tap(find.byIcon(Icons.monitor_heart_outlined));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('first run shows the language-select onboarding', (tester) async {
+    SharedPreferences.setMockInitialValues({}); // nothing chosen yet
+
+    tester.view.physicalSize = const Size(720, 1640);
+    tester.view.devicePixelRatio = 2.0;
+    addTearDown(tester.view.reset);
+
+    await tester.pumpWidget(const ProviderScope(child: SenseiApp()));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byType(OnboardingScreen), findsOneWidget);
+    expect(find.text('বাংলা'), findsOneWidget); // Bengali-first default card
+    expect(find.byType(NavigationBar), findsNothing);
+  });
+
+  testWidgets('WritingScreen (pushed page) fits a short landscape viewport',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({'locale_chosen': 'bn'});
+
+    // Default 800x600 test surface — landscape. Regression test for the
+    // canvas overflow fixed in D-013: the paper square sizes to the
+    // shorter axis instead of forcing height = width.
+    await tester.pumpWidget(const ProviderScope(child: SenseiApp()));
+    await tester.pump();
+    await tester.pump();
+
+    // Write moved off the tab bar in v4 — it's an AppBar action on Home.
+    await tester.tap(find.byIcon(Icons.draw));
+    await tester.pump();
+    expect(tester.takeException(), isNull);
   });
 }
 
@@ -15479,5 +18544,100 @@ if (warnings.length) {
 
 console.log(`\n${errors ? `FAIL: ${errors} problem(s)` : 'PASS: all content verified - cleared to ship'}`);
 process.exit(errors ? 1 : 0);
+
+```
+
+
+## File: web\index.html
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="sensei_app">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>sensei_app</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
+
+```
+
+
+## File: web\manifest.json
+
+```json
+{
+    "name": "sensei_app",
+    "short_name": "sensei_app",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "A new Flutter project.",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "icons/Icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/Icon-maskable-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "icons/Icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
 
 ```

@@ -3,11 +3,128 @@ SENSEI/
 ├── .github
 │   └── workflows
 │       └── ci.yml
+├── .gitignore
+├── .idea
+│   ├── libraries
+│   │   ├── Dart_SDK.xml
+│   │   └── KotlinJavaRuntime.xml
+│   ├── modules.xml
+│   ├── runConfigurations
+│   │   └── main_dart.xml
+│   └── workspace.xml
+├── .metadata
 ├── CODEBASE_MAP.md
+├── DESIGN_BRIEF.md
 ├── NEXT_SESSION.md
 ├── PROJECT_ROOT.md
 ├── README.md
 ├── SENSEI_Codebase_Export.zip
+├── Shared design file.zip
+├── analysis_options.yaml
+├── android
+│   ├── .gitignore
+│   ├── .gradle
+│   │   ├── 8.7
+│   │   │   ├── checksums
+│   │   │   │   └── checksums.lock
+│   │   │   ├── dependencies-accessors
+│   │   │   │   └── gc.properties
+│   │   │   ├── expanded
+│   │   │   ├── fileChanges
+│   │   │   │   └── last-build.bin
+│   │   │   ├── fileHashes
+│   │   │   │   ├── fileHashes.bin
+│   │   │   │   ├── fileHashes.lock
+│   │   │   │   └── resourceHashesCache.bin
+│   │   │   ├── gc.properties
+│   │   │   └── vcsMetadata
+│   │   ├── 9.1.0
+│   │   │   ├── checksums
+│   │   │   │   ├── checksums.lock
+│   │   │   │   ├── md5-checksums.bin
+│   │   │   │   └── sha1-checksums.bin
+│   │   │   ├── executionHistory
+│   │   │   │   ├── executionHistory.bin
+│   │   │   │   └── executionHistory.lock
+│   │   │   ├── expanded
+│   │   │   ├── fileChanges
+│   │   │   │   └── last-build.bin
+│   │   │   ├── fileHashes
+│   │   │   │   ├── fileHashes.bin
+│   │   │   │   ├── fileHashes.lock
+│   │   │   │   └── resourceHashesCache.bin
+│   │   │   ├── gc.properties
+│   │   │   └── vcsMetadata
+│   │   ├── buildOutputCleanup
+│   │   │   ├── buildOutputCleanup.lock
+│   │   │   ├── cache.properties
+│   │   │   └── outputFiles.bin
+│   │   ├── file-system.probe
+│   │   ├── kotlin
+│   │   │   └── errors
+│   │   │       ├── errors-1783673847686.log
+│   │   │       └── errors-1783673847701.log
+│   │   ├── noVersion
+│   │   │   └── buildLogic.lock
+│   │   └── vcs-1
+│   │       └── gc.properties
+│   ├── .kotlin
+│   │   ├── errors
+│   │   │   ├── errors-1783671090684.log
+│   │   │   ├── errors-1783671090714.log
+│   │   │   ├── errors-1783671098615.log
+│   │   │   ├── errors-1783673847686.log
+│   │   │   └── errors-1783673847701.log
+│   │   └── sessions
+│   ├── app
+│   │   ├── build.gradle.kts
+│   │   └── src
+│   │       ├── debug
+│   │       │   └── AndroidManifest.xml
+│   │       ├── main
+│   │       │   ├── AndroidManifest.xml
+│   │       │   ├── java
+│   │       │   │   └── io
+│   │       │   │       └── flutter
+│   │       │   │           └── plugins
+│   │       │   │               └── GeneratedPluginRegistrant.java
+│   │       │   ├── kotlin
+│   │       │   │   └── com
+│   │       │   │       └── example
+│   │       │   │           └── sensei_app
+│   │       │   │               └── MainActivity.kt
+│   │       │   └── res
+│   │       │       ├── drawable
+│   │       │       │   └── launch_background.xml
+│   │       │       ├── drawable-v21
+│   │       │       │   └── launch_background.xml
+│   │       │       ├── mipmap-hdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-mdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── mipmap-xxxhdpi
+│   │       │       │   └── ic_launcher.png
+│   │       │       ├── values
+│   │       │       │   └── styles.xml
+│   │       │       └── values-night
+│   │       │           └── styles.xml
+│   │       └── profile
+│   │           └── AndroidManifest.xml
+│   ├── build.gradle.kts
+│   ├── gradle
+│   │   └── wrapper
+│   │       ├── gradle-wrapper.jar
+│   │       └── gradle-wrapper.properties
+│   ├── gradle.properties
+│   ├── gradlew
+│   ├── gradlew.bat
+│   ├── local.properties
+│   ├── sensei_app_android.iml
+│   └── settings.gradle.kts
 ├── assets
 │   ├── brand
 │   │   └── bhasago_icon.svg
@@ -33,8 +150,68 @@ SENSEI/
 │   └── stroke
 │       └── kana_strokes.json
 ├── content_factory
+│   ├── .pytest_cache
+│   │   ├── .gitignore
+│   │   ├── CACHEDIR.TAG
+│   │   ├── README.md
+│   │   └── v
+│   │       └── cache
+│   │           ├── lastfailed
+│   │           └── nodeids
+│   ├── BUILD_SUMMARY.md
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-314.pyc
 │   ├── banned_phrases.txt
-│   └── jft_a2_whitelist.txt
+│   ├── compilers
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-314.pyc
+│   │   │   ├── card_generator.cpython-314.pyc
+│   │   │   └── sqlite_compiler.cpython-314.pyc
+│   │   ├── card_generator.py
+│   │   └── sqlite_compiler.py
+│   ├── jft_a2_whitelist.txt
+│   ├── output
+│   │   └── sensei_content.db
+│   ├── packagers
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-314.pyc
+│   │   │   └── tier_packager.cpython-314.pyc
+│   │   └── tier_packager.py
+│   ├── schemas
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── __init__.cpython-314.pyc
+│   ├── scripts
+│   │   ├── __init__.py
+│   │   └── build.py
+│   ├── sources
+│   │   ├── grammar
+│   │   │   └── n5_core.json
+│   │   ├── kanji
+│   │   │   └── n5_core.json
+│   │   ├── lessons
+│   │   │   ├── lesson_01_greetings.json
+│   │   │   ├── lesson_02_daily.json
+│   │   │   └── lesson_03_study.json
+│   │   └── vocabulary
+│   │       └── n5_core.json
+│   ├── tests
+│   │   ├── __pycache__
+│   │   │   └── test_validators.cpython-314-pytest-9.1.1.pyc
+│   │   └── test_validators.py
+│   └── validators
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-314.pyc
+│       │   ├── grammar_validator.cpython-314.pyc
+│       │   ├── kanji_validator.cpython-314.pyc
+│       │   └── vocabulary_validator.cpython-314.pyc
+│       ├── grammar_validator.py
+│       ├── kanji_validator.py
+│       └── vocabulary_validator.py
 ├── docs
 │   ├── 00_START_HERE.md
 │   ├── 01_CONSTITUTION.md
@@ -63,6 +240,10 @@ SENSEI/
 │   ├── app
 │   │   ├── providers.dart
 │   │   └── theme.dart
+│   ├── content_factory
+│   │   ├── card_generator.dart
+│   │   ├── content_import_service.dart
+│   │   └── whitelist_service.dart
 │   ├── data
 │   │   ├── content_repository.dart
 │   │   ├── export_service.dart
@@ -74,6 +255,11 @@ SENSEI/
 │   │       ├── m002_agents_meta.dart
 │   │       ├── migration.dart
 │   │       └── registry.dart
+│   ├── distribution
+│   │   ├── download_manager.dart
+│   │   ├── p2p_import_manager.dart
+│   │   ├── pack_models.dart
+│   │   └── pack_verifier.dart
 │   ├── domain
 │   │   ├── fsrs.dart
 │   │   ├── models.dart
@@ -91,8 +277,11 @@ SENSEI/
 │   └── presentation
 │       ├── accent_screens.dart
 │       ├── agent_panel.dart
+│       ├── home_screen.dart
 │       ├── lesson_list_screen.dart
+│       ├── onboarding_screen.dart
 │       ├── progress_screen.dart
+│       ├── progress_screen_v4.dart
 │       ├── screens.dart
 │       ├── settings_screen.dart
 │       ├── widgets.dart
@@ -110,18 +299,29 @@ SENSEI/
 │   └── sensei_writing.html
 ├── pubspec.lock
 ├── pubspec.yaml
+├── sensei_app.iml
 ├── test
 │   ├── agents_test.dart
 │   ├── fsrs_test.dart
-│   └── progress_test.dart
-└── tools
-    ├── agents_reference.mjs
-    ├── build_preview.mjs
-    ├── export_for_llm.mjs
-    ├── fetch_stroke_data.mjs
-    ├── fsrs_reference.mjs
-    ├── lesson_flow_reference.mjs
-    ├── migrations_reference.mjs
-    ├── pitch_reference.mjs
-    ├── preview_server.mjs
-    └── validate_content.mjs
+│   ├── progress_test.dart
+│   └── widget_test.dart
+├── tools
+│   ├── agents_reference.mjs
+│   ├── build_preview.mjs
+│   ├── export_for_llm.mjs
+│   ├── fetch_stroke_data.mjs
+│   ├── fsrs_reference.mjs
+│   ├── lesson_flow_reference.mjs
+│   ├── migrations_reference.mjs
+│   ├── pitch_reference.mjs
+│   ├── preview_server.mjs
+│   └── validate_content.mjs
+└── web
+    ├── favicon.png
+    ├── icons
+    │   ├── Icon-192.png
+    │   ├── Icon-512.png
+    │   ├── Icon-maskable-192.png
+    │   └── Icon-maskable-512.png
+    ├── index.html
+    └── manifest.json

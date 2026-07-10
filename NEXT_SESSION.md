@@ -1,43 +1,43 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
-You are an AI continuing work on **SENSEI**. Read order:
-1. `docs/00_START_HERE.md` — the router + NON-NEGOTIABLES (never violate).
-2. `CODEBASE_MAP.md` (this repo root) — what actually exists vs the spec. Refresh it if >2 weeks old.
+You are an AI continuing work on **SENSEI/Bhasago**. Read order:
+1. `docs/00_START_HERE.md` — router + NON-NEGOTIABLES (never violate).
+2. `CODEBASE_MAP.md` — what exists vs spec (2026-07-09; still mostly accurate, see delta below).
 3. This file — what the last session did and what to do next.
 
-## Last session (2026-07-09, Claude Opus 4.8) — cleared all four prior DO-NEXT items
-1. **Stroke data (T-102 / FIX-B):** running the old fetch tool exposed a data-quality bug — `kana-svg-data` split looping strokes, so **16/92 kana had wrong stroke counts** (あ→4, ヲ→2…). Rewrote `tools/fetch_stroke_data.mjs` to source **KanjiVG** (canonical order, one `<path>`/stroke), flattening each stroke to sampled points scaled into the consumer's 0..1000 space. `assets/stroke/kana_strokes.json` regenerated → **0/92 mismatches**; `writing_screen.dart` unchanged. Logged **99 D-011** (incl. CC BY-SA attribution — human to confirm).
-2. **FIX-C — DB encryption (T-101):** swapped `sqflite`→`sqflite_sqlcipher` + added `flutter_secure_storage`. New `lib/db/migrations/` framework (immutable numbered migrations + registry + baseline `m001`), Keystore-backed key in `lib/db/db_key.dart`, `lib/data/srs_local.dart` opens with `password:` + `onCreate/onUpgrade` runner. Migration selection proven `10/10`.
-3. **FIX-D — lesson micro-loop (T-106):** rewrote `LessonScreen` as **Intro→Recognition→Production→Context→SRS**, with the **[Skip][Hint][Quit] autonomy invariant** visible+enabled every step, ≤1 tap, no penalty, no auto-advance (01/09). State machine proven `19/19`.
-4. **T-104 — validator + CI:** `tools/validate_content.mjs` now enforces rules **1,5,6,7 (half-width katakana), 12 (banned copy)** as blocking and scaffolds **3 (whitelist), 4 (prereqs), 11 (pack_id/acyclic)**; added `content_factory/banned_phrases.txt`. New **`.github/workflows/ci.yml`** runs the validator + all proofs (Node job) and `pub get→gen-l10n→analyze→test` (Flutter job).
-5. **SRS wired into the app (T-103/T-106):** added `fsrsProvider`/`srsProvider` (`lib/app/providers.dart`); the lesson SRS step now seeds the item as an FSRS card + logs the rating via `SrsLocal` (fire-and-forget, error-swallowed so the device-only DB never blocks the UI); `ReviewScreen` now reads **due cards from `SrsLocal.dueForReview()`** with a loading/empty/error state instead of the in-memory demo. New `SrsLocal.dueForReview()` + `seedCard()`.
-6. **Content:** added `pack_id` + a DAG `depends_on` (basics←daily←work) to all 7 lessons and a `prerequisites:[kana_hiragana]` on work_intro → validator now **0 warnings**, and rules 4/11 are exercised (cycle-detection verified).
-7. **Interactive preview (to see the app w/o a device):** `tools/build_preview.mjs` renders the real content + stroke data into `preview/index.html` (+ `sensei_body.html`), served via `.claude/launch.json` (`sensei-preview`). Published as an Artifact. Faithful to the Flutter UI incl. live KanjiVG stroke animation + the 5-step micro-loop.
+## Last session (2026-07-10, Claude Fable 5) — first real compile + agents + dashboard + autonomy UI + content ×5
+**Flutter 3.44.5 IS INSTALLED on this machine (`C:\flutter\bin\flutter.bat`, not on PATH).** All checks run for real now.
+1. **First-ever compile check (DO-NEXT #1 done):** fixed 12 analyzer issues — `nullable-getter: false` added to `l10n.yaml` (S.of non-null), kata-shadowing bug in `writing_screen.dart`, `List<double>` contour in `accent_screens.dart`. `flutter analyze` clean, `flutter test` 45/45.
+2. **Four-agent system built (T-401–405):** `lib/agents/` — `agent_state.dart` (contract), `director.dart` + `scaffold_agent.dart` (pure decision fns w/ named thresholds), `persona.dart` (4 voices, deterministic rotation, struggle-softening), `feedback.dart` (fixed rewards: 10 XP/lesson, milestone/10 lessons, level/50 retained words), `agent_bus.dart` (Riverpod StateNotifier, injectable clock, agent_log ring buffer). Wired into LessonScreen (grades recognition+context, hesitation timing, hint/skip signals) + `agent_panel.dart` (psych strip w/ 09 colors, dismissible advice, scaffold offers). Proofs: `test/agents_test.dart` + `tools/agents_reference.mjs` (17/17, added to CI).
+3. **Progress dashboard (T-108):** `lib/domain/progress.dart` (pure; buckets/weakness/forecast/retention, `test/progress_test.dart`) + `lib/presentation/progress_screen.dart` (memory map, weak list framed as "focus next", 7-day forecast, neutral activity count). AppBar → insights icon.
+4. **Settings + data autonomy (T-602/603 core):** `settings_screen.dart` (locale — moved out of AppBar; persona picker persisted to app_meta; KanjiVG attribution) + `export_service.dart` (ZIP: JSON+CSV+summary via new `archive`+`path_provider` deps) + deletion w/ 7-day grace (request/cancel/purge in SrsLocal; purge check on settings load). **PDF in export still TODO.**
+5. **DB migration m002** (`lesson_completions` + `app_meta`) + SrsLocal: srsContext/recentRatings/allCards/activityDays/retainedWordCount/lessonCompletionCount/meta/deletion/exportAll.
+6. **Content ×5 (12→76 items):** 8 new lessons (greetings, directions, shopping, transport, emergency, smalltalk, work_safety, work_requests; 8 items each, packs match basics←daily←work DAG) + `lesson_list_screen.dart` (Learn tab now lists ALL lessons grouped by pack; was hardcoded to one lesson). `Lesson.packId` added to models.
+7. **Repairs of export-roundtrip damage in working tree:** `tools/validate_content.mjs` was a broken CJS rewrite → restored from HEAD (broken copy in scratchpad); content JSONs had lost `"type"` and kana `verified/source` → restored. Whitelist: +65 A2 surface forms (te/masu/desu forms, loanwords) appended w/ marker comment — existing lessons also needed them.
+8. **CI:** agents proof step added; flutter pin 3.24.5→3.44.5 (theme uses DialogThemeData/WidgetState — won't compile on 3.24). NOTE: `.github/workflows/ci.yml` is untracked locally (push token lacked workflow scope — see git log).
 
-## Green (runnable proofs, no device needed) — all pass
-`node tools/validate_content.mjs` (PASS, **0 warnings**) · `fsrs_reference.mjs` 11/11 · `pitch_reference.mjs` 8/8 · `migrations_reference.mjs` 10/10 · `lesson_flow_reference.mjs` 19/19. Preview: `node tools/build_preview.mjs` → open `preview/index.html`.
-⚠️ **Flutter/Dart is NOT compiled here (no SDK in this sandbox).** The new Dart (SQLCipher wiring, lesson loop) is written against pinned package APIs and hand-reviewed but UNVERIFIED by a compiler — the CI `flutter` job (or a local `flutter analyze && flutter test`) is the first real compile check.
+## Green (all verified this session, on this machine)
+`flutter analyze` 0 issues · `flutter test` 45/45 · validator **PASS 0 warnings** · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8.
 
-## DO NEXT — in this order
-1. **Compile-check the new Dart (do this first):** on a real machine run `flutter pub get && flutter gen-l10n && flutter analyze && flutter test`. Fix anything the analyzer flags in `srs_local.dart`, `lib/db/**`, `screens.dart`. (CI does this on push, but verify locally.)
-2. **Android scaffold gotcha:** there is no `android/` folder yet. When `flutter create . --platforms=android` runs, set **`minSdkVersion >= 23`** — required by BOTH SQLCipher and `flutter_secure_storage`'s `encryptedSharedPreferences`. Build will fail below 23.
-3. **Author the JFT-A2 whitelist:** create `content_factory/jft_a2_whitelist.txt` (the 1,200-word list) to activate blocking rule 3. Note: the validator matches `srs_words` against it, so seed it from a real list, not from current content.
-4. **SRS card granularity:** the lesson SRS step currently seeds one card per *phrase* (item.jp). If you want per-*word* cards, add reading/meaning to each `srs_words` entry in the content schema, then seed those. Also wire the full `jsonschema` (rule 6) + real audio/image checks (2/8/9) once packs exist.
-5. **Branding:** `pubspec.yaml` description now says **"Bhasago"** but all UI/preview still says "SENSEI". If Bhasago is the new name, rename across `main.dart`, l10n, and the preview.
+## DO NEXT
+1. **Commit!** Working tree has ~40 files of unverified-by-git work (this + prior session). Nothing is committed since `9087281`.
+2. **Android scaffold:** no `android/` yet → `flutter create . --platforms=android`, set **minSdkVersion ≥ 23** (SQLCipher + secure storage), then native bridge stubs (MethodChannel: TTS/STT/LLM/thermal) per 02/08.
+3. **Audio pipeline (T-107):** wire `record`/`just_audio` in production step + ShadowingScreen (TODOs marked); OPUS later.
+4. **Native-review pass on new lessons:** 64 new phrases are standard textbook Japanese but 05 rule 10 wants human review — log reviewer sign-off, then also record audio.
+5. **Persona persistence at startup:** persona loads from app_meta only when Settings opens; load it in main() bootstrap too. Deletion-grace purge check likewise runs only on Settings load — move to app start.
+6. **PDF in export ZIP** (`pdf` package) + share sheet (`share_plus`) once android/ exists.
 
-## Deferred (need hardware)
-- T-000a STT spike + T-000b inference spike — need the Tecno Pova 4 + ~20 Bengali test speakers.
+## Open decisions for a human (99_DECISIONS format)
+- **D-012 (proposed, this session):** whitelist may be extended with A2-level conjugated surface forms used by verified lessons (validator matches surface forms, not lemmas). Confirm or replace with a lemmatizing validator.
+- Confirm D-011 KanjiVG CC BY-SA attribution (now also shown in Settings › Attribution).
+- Keep/kill pitch pillar (recommend KEEP).
 
-## Open decisions for a human to log in 99_DECISIONS.md
-- **Confirm D-011's KanjiVG CC BY-SA attribution** is acceptable for the commercial build (standard practice; attribution embedded in the JSON).
-- **Keep/kill the accent–pitch pillar** (`lib/domain/pitch.dart`, `pitch_accent.json`, PitchScreen). Recommend KEEP.
+## Guardrails (00 + 99 D-001) — unchanged
+Recommend never force · no dark patterns · offline-first · deterministic grading · Bengali-first · data autonomy. Agent system enforces these structurally (advice is always dismissible; rewards fixed; streak = neutral count).
 
-## Guardrails (never break — 00 + 99 D-001)
-Recommend, never force. No dark patterns (no streak-saves/loss copy, no forced locks, no hidden skip, no loot/variable rewards). Offline-first. Correctness over generation (graded = deterministic; grammar = retrieved, never invented). Bengali-first (Banglish register OK; EN/JA optional, not default).
-
-## Build commands (on a real machine, Flutter 3.22+)
+## Build commands (this machine)
 ```
-# run from the repo root — this folder IS the Flutter app root
-node tools/fetch_stroke_data.mjs   # one-time; already run, stroke data committed
-flutter pub get && flutter gen-l10n && flutter analyze && flutter test && flutter run
+& C:\flutter\bin\flutter.bat pub get; & C:\flutter\bin\flutter.bat gen-l10n
+& C:\flutter\bin\flutter.bat analyze; & C:\flutter\bin\flutter.bat test
+node tools/validate_content.mjs   # + all *_reference.mjs proofs
 ```

@@ -5,10 +5,12 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/persona.dart';
 import '../app/providers.dart';
 import '../domain/fsrs.dart';
 import '../domain/models.dart';
 import '../l10n/app_localizations.dart';
+import 'agent_panel.dart';
 import 'widgets.dart';
 
 /// Kana grid — tap a character to hear it (TTS hook).
@@ -81,7 +83,28 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   final List<String> _built = [];
   List<String> _bank = [];
 
+  // agent signals: when the current step appeared (hesitation) and whether
+  // this step's first graded interaction was already timed.
+  DateTime _stepShownAt = DateTime.now();
+  bool _stepTimed = false;
+
+  // per-lesson bookkeeping for the Feedback agent's completion record.
+  int _lessonAnswers = 0, _lessonCorrect = 0, _lessonHints = 0, _lessonSkips = 0;
+
   _Phase get _phase => _Phase.values[_phaseIx];
+
+  /// Milliseconds the learner looked at this step before first acting on it.
+  /// Reported once per step so retries don't read as hesitation.
+  double? _takeHesitation() {
+    if (_stepTimed) return null;
+    _stepTimed = true;
+    return DateTime.now().difference(_stepShownAt).inMilliseconds.toDouble();
+  }
+
+  void _markStepShown() {
+    _stepShownAt = DateTime.now();
+    _stepTimed = false;
+  }
 
   void _resetStep() {
     _hint = false;
@@ -95,13 +118,32 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     _bank = [];
   }
 
-  void _start() => setState(() {
-        _started = true;
-        _done = false;
-        _item = 0;
-        _phaseIx = 0;
-        _resetStep();
-      });
+  void _start() {
+    setState(() {
+      _started = true;
+      _done = false;
+      _item = 0;
+      _phaseIx = 0;
+      _lessonAnswers = 0;
+      _lessonCorrect = 0;
+      _lessonHints = 0;
+      _lessonSkips = 0;
+      _resetStep();
+      _markStepShown();
+    });
+    // Wake the agent bus and feed it the SRS context (retention, days away,
+    // due load) as soon as the encrypted store answers. Fire-and-forget: the
+    // agents degrade to in-session signals if the DB is unavailable.
+    final bus = ref.read(agentBusProvider.notifier);
+    bus.startSession();
+    ref.read(srsProvider).srsContext().then((c) {
+      bus.updateSrsContext(
+        retention: c.retention,
+        daysSinceLastSession: c.daysSinceLastSession,
+        dueLoad: c.dueLoad,
+      );
+    }).catchError((_) {/* device-only DB may be absent off-device */});
+  }
 
   void _quit() => setState(() {
         _started = false;
@@ -113,6 +155,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
   void _advance(int itemCount) => setState(() {
         _resetStep();
+        _markStepShown();
         if (_phaseIx < _Phase.values.length - 1) {
           _phaseIx++;
         } else if (_item < itemCount - 1) {
@@ -121,8 +164,40 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         } else {
           _started = false;
           _done = true;
+          _recordCompletion();
         }
       });
+
+  /// One graded answer → both the agent bus (adaptation) and the per-lesson
+  /// counters (Feedback agent's completion record).
+  void _gradeAnswer({
+    required bool correct,
+    required String patternKey,
+    required String itemId,
+  }) {
+    _lessonAnswers++;
+    if (correct) _lessonCorrect++;
+    final bus = ref.read(agentBusProvider.notifier);
+    if (!correct) bus.recordItemMiss(itemId);
+    bus.recordAnswer(
+      correct: correct,
+      patternKey: patternKey,
+      hesitationMs: _takeHesitation(),
+    );
+  }
+
+  /// Persists the finished lesson (fixed-XP mastery record). Fire-and-forget.
+  Future<void> _recordCompletion() async {
+    try {
+      await ref.read(srsProvider).recordLessonCompletion(
+            lessonId: widget.lessonId,
+            items: _lessonAnswers,
+            correct: _lessonCorrect,
+            hints: _lessonHints,
+            skips: _lessonSkips,
+          );
+    } catch (_) {/* DB unavailable off-device; completion UI still shows */}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +219,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           _header(context, lesson, lang),
           const SizedBox(height: 10),
           _controls(lang, n), // [Skip] [Hint] [Quit] — present in every step
-          const SizedBox(height: 12),
+          const SizedBox(height: 8),
+          // The agents' visible face: psych strip, rationale, offers (04/09).
+          AgentPanel(onAcceptHint: () => setState(() => _hint = true)),
+          const SizedBox(height: 8),
           Expanded(
             child: SingleChildScrollView(
               child: _phaseBody(context, lesson, item, lang, n),
@@ -186,10 +264,19 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           ),
         );
     return Row(children: [
-      btn(Icons.lightbulb_outline, 'ইঙ্গিত', 'Show a hint',
-          () => setState(() => _hint = !_hint)),
+      btn(Icons.lightbulb_outline, 'ইঙ্গিত', 'Show a hint', () {
+        if (!_hint) {
+          _lessonHints++;
+          ref.read(agentBusProvider.notifier).recordHint();
+        }
+        setState(() => _hint = !_hint);
+      }),
       const SizedBox(width: 8),
-      btn(Icons.skip_next, 'বাদ', 'Skip this step', () => _advance(itemCount)),
+      btn(Icons.skip_next, 'বাদ', 'Skip this step', () {
+        _lessonSkips++;
+        ref.read(agentBusProvider.notifier).recordSkip();
+        _advance(itemCount);
+      }),
       const SizedBox(width: 8),
       btn(Icons.close, 'বন্ধ', 'Quit the lesson', _quit),
     ]);
@@ -343,25 +430,31 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
       for (var k = 0; k < _opts.length; k++)
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
-          child: _optionTile(context, lang, k),
+          child: _optionTile(context, lang, k, item),
         ),
       const SizedBox(height: 4),
       if (picked && correct)
         Row(children: [
           const Icon(Icons.check_circle, color: Color(0xFF00C853), size: 20),
           const SizedBox(width: 6),
-          const Text('ঠিক! · Correct'),
-          const Spacer(),
+          // Instant positive feedback in the learner's chosen tutor voice.
+          Expanded(
+            child: Text(ref
+                .read(agentBusProvider.notifier)
+                .personaSay(PersonaEvent.correctAnswer)),
+          ),
           FilledButton(
               onPressed: () => _advance(n), child: const Text('পরের · Next')),
         ])
       else if (picked && !correct)
-        Text('আবার দেখো · Not quite — try another',
+        Text(
+            '${ref.read(agentBusProvider.notifier).personaSay(PersonaEvent.wrongAnswer)} · try another',
             style: TextStyle(color: Colors.amber.shade300, fontSize: 13)),
     ]);
   }
 
-  Widget _optionTile(BuildContext context, String lang, int k) {
+  Widget _optionTile(
+      BuildContext context, String lang, int k, LessonItem item) {
     final opt = _opts[k];
     final isPick = _pick == k;
     // Reveal correctness only for the tapped option; a hint highlights the answer.
@@ -371,7 +464,16 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
     final hinted = _hint && opt.correct;
     return InkWell(
-      onTap: () => setState(() => _pick = k),
+      onTap: () {
+        if (_pick != k) {
+          // A changed pick is a fresh graded attempt (deterministic key match).
+          _gradeAnswer(
+              correct: opt.correct,
+              patternKey: 'recognition',
+              itemId: item.id);
+        }
+        setState(() => _pick = k);
+      },
       borderRadius: BorderRadius.circular(12),
       child: Container(
         constraints: const BoxConstraints(minHeight: 48),
@@ -508,6 +610,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
               ActionChip(
                 label: Text(_built[k], style: const TextStyle(fontSize: 18)),
                 onPressed: () => setState(() {
+                  ref.read(agentBusProvider.notifier).recordInteraction();
                   _bank.add(_built.removeAt(k)); // tap to send back
                 }),
               ),
@@ -525,7 +628,17 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           for (var k = 0; k < _bank.length; k++)
             ActionChip(
               label: Text(_bank[k], style: const TextStyle(fontSize: 18)),
-              onPressed: () => setState(() => _built.add(_bank.removeAt(k))),
+              onPressed: () => setState(() {
+                ref.read(agentBusProvider.notifier).recordInteraction();
+                _built.add(_bank.removeAt(k));
+                if (_built.length == tokens.length) {
+                  // Placing the last block completes one graded attempt.
+                  _gradeAnswer(
+                      correct: _listEq(_built, tokens),
+                      patternKey: 'context',
+                      itemId: item.id);
+                }
+              }),
             ),
         ],
       ),
@@ -654,9 +767,18 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         children: [
           const Icon(Icons.check_circle, color: Color(0xFF00C853), size: 48),
           const SizedBox(height: 12),
-          const Text('লেসন শেষ · Lesson complete',
+          Text(
+              ref
+                  .read(agentBusProvider.notifier)
+                  .personaSay(PersonaEvent.lessonComplete),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          // Fixed, predictable XP — never randomized (D-001 reward schedule).
+          Text('+১০ XP · প্রতি লেসনে নির্দিষ্ট',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.grey.shade400, fontSize: 13)),
           const SizedBox(height: 8),
           Text('আরেকটা? · Another round?',
               textAlign: TextAlign.center,
@@ -676,6 +798,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   // forget: the encrypted DB is device-only, so a failure here (e.g. running
   // without the SQLCipher plugin) never blocks the lesson flow.
   Future<void> _seedAndReview(LessonItem item, Rating r) async {
+    ref.read(agentBusProvider.notifier).recordLearned(item.id);
     try {
       final srs = ref.read(srsProvider);
       await srs.seedCard(

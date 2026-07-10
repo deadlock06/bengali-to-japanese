@@ -1,6 +1,8 @@
 // Shared Riverpod providers.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/agent_bus.dart';
+import '../agents/agent_state.dart';
 import '../data/content_repository.dart';
 import '../data/srs_local.dart';
 import '../domain/fsrs.dart';
@@ -18,3 +20,8 @@ final contentProvider = FutureProvider<ContentRepository>((_) async {
 /// The FSRS scheduler (pure, stateless) and the encrypted SRS store.
 final fsrsProvider = Provider<Fsrs>((_) => const Fsrs());
 final srsProvider = Provider<SrsLocal>((_) => SrsLocal());
+
+/// The four-agent state bus (04). One per app; sessions restart via
+/// [AgentBus.startSession]. UI reads the merged [AgentState] only.
+final agentBusProvider =
+    StateNotifierProvider<AgentBus, AgentState>((_) => AgentBus());

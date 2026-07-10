@@ -69,7 +69,7 @@ class LessonItem {
 class Lesson {
   final String id;
   final Tri canDo;
-  final String jftLevel, source;
+  final String jftLevel, source, packId;
   final bool verified;
   final List<LessonItem> items;
 
@@ -80,6 +80,7 @@ class Lesson {
     required this.source,
     required this.verified,
     required this.items,
+    this.packId = '',
   });
 
   factory Lesson.fromJson(Map<String, dynamic> j) => Lesson(
@@ -87,6 +88,7 @@ class Lesson {
         canDo: Tri.fromJson(j['can_do']),
         jftLevel: j['jlpt_or_jft'] ?? '',
         source: j['source'] ?? '',
+        packId: j['pack_id'] ?? '',
         verified: j['verified'] == true,
         items: (j['items'] as List)
             .map((e) => LessonItem.fromJson(e))

@@ -10,6 +10,9 @@ import 'app/providers.dart';
 import 'app/theme.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
+import 'presentation/lesson_list_screen.dart';
+import 'presentation/progress_screen.dart';
+import 'presentation/settings_screen.dart';
 import 'presentation/writing_screen.dart';
 
 void main() => runApp(const ProviderScope(child: SenseiApp()));
@@ -49,11 +52,20 @@ class _HomeShellState extends ConsumerState<HomeShell> {
   static const _pages = [
     KanaScreen(),
     WritingScreen(),
-    LessonScreen(lessonId: 'work_intro_01'),
+    LessonListScreen(),
     ShadowingScreen(),
     PitchScreen(),
     ReviewScreen(),
   ];
+
+  void _push(BuildContext context, String title, Widget body) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: body,
+      ),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +74,18 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       appBar: AppBar(
         title: const Text('Bhasago'),
         actions: [
-          for (final l in const [('EN', 'en'), ('বাংলা', 'bn'), ('日本語', 'ja')])
-            TextButton(
-              onPressed: () =>
-                  ref.read(localeProvider.notifier).state = Locale(l.$2),
-              child: Text(l.$1),
-            ),
+          IconButton(
+            icon: const Icon(Icons.insights),
+            tooltip: 'অগ্রগতি · Progress',
+            onPressed: () => _push(context, 'অগ্রগতি · Progress',
+                const ProgressScreen()),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            tooltip: 'সেটিংস · Settings',
+            onPressed: () => _push(context, 'সেটিংস · Settings',
+                const SettingsScreen()),
+          ),
         ],
       ),
       body: _pages[tab],

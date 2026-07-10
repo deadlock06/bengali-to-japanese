@@ -2,7 +2,7 @@
 <!-- READ WHEN: deciding what to build next. Keep statuses updated here — this file is the single source of truth for progress. DEPENDS: 00. ~1.6K tokens -->
 
 ## STATUS LEGEND: ☐ todo · ◐ in-progress · ☑ done · ⊘ blocked
-## ▶ CURRENT POINTER: **CODEBASE_MAP.md generated 2026-07-09 (see CODEBASE_MAP.md at repo root). Next real gap: FIX-B + T-102 (bundle kana stroke data offline + port writing board to Flutter).**
+## ▶ CURRENT POINTER: **2026-07-10 — compile verified (analyze+45 tests green); T-401–405 agents ☑, T-108 dashboard ☑, T-602/603 export+deletion ◐ (PDF/share pending), content 12→76 items. Next real gap: COMMIT the working tree, then android/ scaffold (minSdk≥23) + T-107 audio. See NEXT_SESSION.md.**
 
 ## Phase FIX — reconciliation fixes (from 2026-07-09 audit)
 - ☐ FIX-A (LOW) Keep streak as neutral history only when porting premium UI (D-001). Prototype-only today.

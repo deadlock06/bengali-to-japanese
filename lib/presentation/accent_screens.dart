@@ -4,7 +4,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
-import '../domain/models.dart';
 import '../domain/pitch.dart';
 import 'widgets.dart';
 
@@ -116,7 +115,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
       if (recording) {
         recording = false;
         // TODO: stop `record`, decode PCM, learner = f0Contour(pcm, 16000).
-        final learner = const [178, 205, 232, 248, 246, 238]; // demo capture
+        const learner = <double>[178, 205, 232, 248, 246, 238]; // demo capture
         score = accentScore(_referenceContour, learner);
       } else {
         recording = true;

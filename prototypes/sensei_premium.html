@@ -246,7 +246,7 @@ const L={
   reviewH:"Review",reviewSub:"Shown right before you'd forget",
   navHome:"Home",navLearn:"Learn",navSpeak:"Speak",navReview:"Review",
   greet:"Good to see you 👋",ringL:"today",ctaSm:"continue",ctaT:"Resume lesson",
-  secPath:"your path",lStreak:"day streak",lWords:"words",lDue:"to review",xptxt:"Level 3 · 640 / 1000 XP",
+  secPath:"your path",lStreak:"day streak",lWords:"words",lDue:"to review",xptxt:"A1 level · 8/20 Can-do done",
   recStart:"🎙️ Record",recStop:"⏹ Stop & score",recAgain:"🎙️ Record again",
   hintStart:"Tap record and repeat the phrase",hintRec:"🎙️ Recording… match the melody",
   hintDone:"✅ Compare your recording with the native below",hintPerm:"⚠️ Mic permission needed (open in a browser)",
@@ -262,7 +262,7 @@ const L={
   reviewH:"Review",reviewSub:"ঠিক ভুলে যাওয়ার আগে দেখাবে",
   navHome:"হোম",navLearn:"শেখো",navSpeak:"বলো",navReview:"Review",
   greet:"আবার দেখা হলো 👋",ringL:"আজ",ctaSm:"continue",ctaT:"Lesson চালিয়ে যাও",
-  secPath:"তোমার path",lStreak:"দিন streak",lWords:"words",lDue:"review বাকি",xptxt:"Level 3 · 640 / 1000 XP",
+  secPath:"তোমার path",lStreak:"দিন streak",lWords:"words",lDue:"review বাকি",xptxt:"A1 level · 8/20 Can-do done",
   recStart:"🎙️ Record",recStop:"⏹ থামাও ও score",recAgain:"🎙️ আবার record",
   hintStart:"record চেপে phrase-টা বলো",hintRec:"🎙️ Record হচ্ছে… সুরের সাথে মেলাও",
   hintDone:"✅ নিচে native-এর সাথে নিজের recording মিলাও",hintPerm:"⚠️ Mic permission দরকার (browser-এ খোলো)",
@@ -278,7 +278,7 @@ const L={
   reviewH:"復習",reviewSub:"忘れる直前に出題",
   navHome:"ホーム",navLearn:"学ぶ",navSpeak:"話す",navReview:"復習",
   greet:"おかえりなさい 👋",ringL:"今日",ctaSm:"つづき",ctaT:"レッスンを再開",
-  secPath:"学習の道",lStreak:"日連続",lWords:"語",lDue:"復習",xptxt:"レベル3 · 640 / 1000 XP",
+  secPath:"学習の道",lStreak:"日連続",lWords:"語",lDue:"復習",xptxt:"A1 · 8/20 Can-do",
   recStart:"🎙️ 録音",recStop:"⏹ 停止して採点",recAgain:"🎙️ もう一度",
   hintStart:"録音を押してフレーズを言う",hintRec:"🎙️ 録音中… 高さに合わせて",
   hintDone:"✅ 下でネイティブと聞き比べよう",hintPerm:"⚠️ マイク許可が必要（ブラウザで開く）",
@@ -361,14 +361,19 @@ let jaV=null;function pv(){const v=speechSynthesis.getVoices();jaV=v.find(x=>x.l
 if('speechSynthesis'in window){pv();speechSynthesis.onvoiceschanged=pv;}
 function speak(x,r){if(!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(x);u.lang='ja-JP';u.rate=r||.9;if(jaV)u.voice=jaV;speechSynthesis.speak(u);}
 
-const ICONS=["🈁","🏪","🍜","💼","🏥","🚉"];
+const CURRIC=[
+ {lv:"L0 · Foundations",u:[["হিরাগানা","done"],["কাতাকানা","done"],["সংখ্যা ও সময়","done"]]},
+ {lv:"A1 · Survival",u:[["Greeting ও self-intro","done"],["নাম, দেশ, কাজ","current"],["Konbini","done"],["Restaurant","done"]]},
+ {lv:"A2 · JFT-Basic target",u:[["কাজ ও ছুটি","done"],["ক্লিনিক ও স্বাস্থ্য","done"],["রাস্তা ও যাতায়াত","todo"],["অনুমতি ও অনুরোধ","todo"],["অতীত ও পরিকল্পনা","todo"],["সমস্যা ও ক্ষমা","todo"],["JFT-Basic Mock","lock"]]},
+ {lv:"N4 · JLPT N4",u:[["て-form","lock"],["Plain form","lock"],["Potential","lock"],["দেওয়া-নেওয়া","lock"],["Keigo","lock"],["N4 Mock","lock"]]}
+];
+const BADGE={done:'<span class="badge v">✓</span>',current:'<span class="badge new">now</span>',todo:'<span style="color:var(--dim);font-size:11px">soon</span>',lock:'<span class="lock">🔒</span>'};
 function renderPath(){
- $('pathList').innerHTML=LESSONS.map((L,i)=>`<div class="glass lrow" onclick="openLesson(${i})">
-  <div class="ic ${i===0?'g':'g2'}">${ICONS[i]||"📖"}</div>
-  <div><div class="t">${L.t[lang]}</div><div class="d">${L.items.length} ${lang==='bn'?'টি phrase':lang==='ja'?'文':'phrases'}</div></div>
-  <div class="prog"><span class="badge ${i===0?'v':'new'}">${i===0?'✓':'new'}</span><div class="dot3">${L.items.map((_,k)=>`<i class="${i===0?'f':''}"></i>`).join('')}</div></div>
- </div>`).join('')+
- `<div class="glass lrow" style="opacity:.55"><div class="ic">🔒</div><div><div class="t">${lang==='bn'?'আরও lesson আসছে':lang==='ja'?'次のレッスン':'More lessons'}</div><div class="d">${lang==='bn'?'Restaurant, clinic, station…':'Restaurant, clinic, station…'}</div></div><div class="lock">🔒</div></div>`;
+ $('pathList').innerHTML=CURRIC.map(g=>`<div class="sec-t" style="margin:18px 4px 8px">${g.lv}</div>`+
+  g.u.map(([t,st])=>`<div class="glass lrow" onclick="${st==='done'||st==='current'?'openLesson(0)':''}" style="${st==='lock'?'opacity:.5':''}">
+   <div class="ic ${st==='done'?'g':st==='current'?'g2':''}">${st==='lock'?'🔒':'📘'}</div>
+   <div><div class="t">${t}</div><div class="d">Can-do</div></div>
+   <div class="prog">${BADGE[st]}</div></div>`).join('')).join('');
 }
 function openLesson(i){curL=i;ci=0;go('learn');lseg('lesson');renderPills();renderCard();}
 

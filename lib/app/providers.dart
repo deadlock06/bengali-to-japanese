@@ -30,6 +30,11 @@ final contentProvider = FutureProvider<ContentRepository>((_) async {
 final fsrsProvider = Provider<Fsrs>((_) => const Fsrs());
 final srsProvider = Provider<SrsLocal>((_) => SrsLocal());
 
+/// Number of cards currently due for review (drives the Home review card).
+final dueCountProvider = FutureProvider<int>((ref) async {
+  return ref.read(srsProvider).dueCount();
+});
+
 /// The four-agent state bus (04). One per app; sessions restart via
 /// [AgentBus.startSession]. UI reads the merged [AgentState] only.
 final agentBusProvider =

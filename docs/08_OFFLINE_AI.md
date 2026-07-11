@@ -73,3 +73,6 @@ Dropped from v4.1 prompt (moved to deterministic layers): confidence estimation,
 
 ## Validation gates before any model ships in a pack
 >85% on 1K held-out · 0 invented grammar rules on 500 trick questions (violation = falls back to retrieval, counts as pass only if fallback fired) · <3s/response · <3GB RAM in 100-conversation soak · 30-min thermal soak with ≤2 throttles.
+
+## CURRICULUM LAYER (added 2026-07-11) — the curriculum bounds the AI
+The per-level whitelist from `curriculum.json` is compiled into the **GBNF grammar + whitelist enforcer**: the on-device LLM literally cannot generate words above the learner's level or outside the verified set. RAG retrieves only level-scoped verified notes; explanations are selected, never invented. The deterministic grader uses Can-do answer keys. FSRS deck membership and unlock order come from curriculum prerequisites (selection only — rating stays pure, D-003). LoRA fine-tune trains on curriculum-derived data so default output is level-correct + Bengali-first. Net: **the curriculum is the fence that makes a 1.7B on-device model safe.**

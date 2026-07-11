@@ -147,6 +147,7 @@ SENSEI/
 │   │   ├── lesson_work_safety.json
 │   │   ├── lesson_workplace.json
 │   │   └── pitch_accent.json
+│   ├── fonts
 │   └── stroke
 │       └── kana_strokes.json
 ├── content_factory
@@ -304,6 +305,7 @@ SENSEI/
 │   ├── agents_test.dart
 │   ├── fsrs_test.dart
 │   ├── progress_test.dart
+│   ├── user_journey_test.dart
 │   └── widget_test.dart
 ├── tools
 │   ├── agents_reference.mjs

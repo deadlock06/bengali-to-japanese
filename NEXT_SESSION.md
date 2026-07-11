@@ -3,7 +3,8 @@
 You are an AI continuing work on **SENSEI/Bhasago**. Read order:
 1. `docs/00_START_HERE.md` — router + NON-NEGOTIABLES (never violate).
 2. `CODEBASE_MAP.md` — what exists vs spec (2026-07-09; still mostly accurate, see delta below).
-3. This file — what the last session did and what to do next.
+3. `docs/CURRICULUM_MAP.md` + `docs/DESIGN_HANDOFF.md` — the curriculum backbone + buildable screen specs.
+4. This file — what the last session did and what to do next.
 
 ## Last session (2026-07-10, Claude Fable 5 & Antigravity) — first real compile + agents + dashboard + autonomy UI + content ×5
 **Flutter 3.44.5 IS INSTALLED on this machine (`D:\flutter\bin\flutter.bat`).** All checks run for real now.

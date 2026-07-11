@@ -26,25 +26,43 @@ Lesson player, Review (SRS), Learn tab (lesson list), Speak tab (shadowing),
 Pitch, Kana grid, Writing practice, Settings/export/deletion, agent psych
 strip, and all empty/error/offline states.
 
-## 2. Design next — priority order
-1. **Lesson player** (`lib/presentation/screens.dart` → LessonScreen) — the
-   core loop: exercise card, answer states, agent psych strip + dismissible
-   advice (persona voice), fixed rewards (10 XP/lesson). MUST keep visible,
-   penalty-free **Skip / Hint / Quit** at all times (spec invariant).
-2. **Speak tab** (ShadowingScreen) — record/playback vs reference audio,
-   alignment-based score, text-input fallback always offered, **plus the
-   Pitch entry card** (Pitch currently has no route in the v4 shell).
-3. **Learn tab** (LessonListScreen) — lessons grouped by pack
-   (basics ← daily ← work DAG), per-lesson progress, downloadable-pack
-   affordance (03: tiered packs, P2P share).
-4. **Review** (ReviewScreen) — SRS card flow in the pink family; neutral
-   "N cards due today" framing (never guilt/streak pressure).
-5. **Kana grid + Writing practice** — stroke-order playback, square canvas
-   adapts to shorter axis (D-013 — don't design a fixed-portrait canvas).
-6. **Settings + data autonomy** — locale, persona picker, one-tap export
-   (ZIP), delete with 7-day grace, KanjiVG CC BY-SA attribution line.
-7. **State pack** — loading / empty / error / offline / first-use for every
-   screen above (offline is the NORMAL state, not an error).
+## 2. Design next — priority order (v2, owner's direction 2026-07-11)
+The Learn experience is being re-architected as **goal-based journey maps +
+AI classrooms** (proposed D-015 in 99_DECISIONS.md). Design these in order:
+
+1. **Goal select (onboarding step 2)** — after language: "তুমি কেন শিখছ?"
+   Three goal cards: SSW কাজের ভিসা / JLPT পরীক্ষা / জাপানে দৈনন্দিন জীবন.
+   Picks the map; changeable later in Settings, never locked in.
+2. **Journey map (Learn tab)** — a stylized Japan map per goal. Regions =
+   content packs (airport/greetings → neighborhood/konbini → city/transport →
+   clinic/emergency → workplace). Nodes = lessons/scenarios. Director's
+   recommended path is drawn; **every node stays tappable** — a hard one just
+   says neutrally "এটা এখনো কঠিন হতে পারে". Progress = regions filling in +
+   passport stamps at FIXED milestones (10 lessons / 50 retained words —
+   never random rewards). SSW map surfaces work regions early; study map
+   goes deeper into reading/writing; life map leads with daily scenarios.
+3. **AI Classroom (lesson player)** — each node opens a staged classroom
+   scene: the Persona teacher avatar runs the 5-phase micro-loop (intro →
+   recognition → production → context → SRS). The agent state bus drives the
+   staging continuously: FLOW = warm, gently animated room (green family) ·
+   STRUGGLE = motion stops, teacher steps closer, hint ladder slides up ·
+   BURNOUT = lights dim, teacher recommends a break (both buttons enabled) ·
+   BOREDOM = challenge door appears. Skip/Hint/Quit = fixed toolbar, always
+   visible. Design ONE classroom scene + all four state variants first.
+4. **Speak tab** (ShadowingScreen + Pitch entry card) — can be a classroom
+   "conversation corner" scene.
+5. **Review** — pink family; neutral "N cards due" framing; could be the
+   classroom's "notebook" scene.
+6. **Kana grid + Writing practice** — square canvas adapts to shorter axis
+   (D-013); could be the classroom's "blackboard" scene.
+7. **Settings + data autonomy** — locale, goal, persona picker, export ZIP,
+   delete w/ 7-day grace, KanjiVG attribution.
+8. **State pack** — loading / empty / error / offline for every screen
+   (offline is NORMAL, not an error).
+
+Animation budget (hard): Tecno-class devices, battery <15%/hr, reduced-motion
+mode must kill ALL animation (accessibility gate). Vector/state-driven tweens
+only — no video backgrounds, no particle storms. All assets ship offline.
 
 ## 3. Hard constraints (00_START_HERE non-negotiables — design MUST honor)
 - **Recommend, never force**: no locks, no forced sessions; Skip/Hint/Quit

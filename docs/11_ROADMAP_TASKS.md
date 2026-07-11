@@ -67,3 +67,22 @@ Exit: 2-device sync without loss · router splits correctly · everything option
 Exit: guardrails verified · NPS>50 · crash-free>99% · approved.
 
 **Total: ~29 weeks to MVP.** Content factory MVP budget $12–18K (5K pairs + 2K audio); full 50K target $40–60K over 12 months (99 D-006).
+
+## CURRICULUM LAYER (added 2026-07-11) — added tasks
+- ☐ T-C01 Adopt `assets/curriculum/curriculum.json` as source of truth; add the 5 curriculum fields to lesson/card schema (05) + validator rules #3/#4/#11.
+- ☐ T-C02 Author the remaining units to complete the JFT-Basic A2 path (A1.2, A2.3–A2.6, A2.M) per CURRICULUM_MAP.md.
+- ☐ T-C03 Compile per-level whitelist → GBNF for the LLM (08); Director reads the prerequisite graph.
+
+## AI CLASSROOM (added 2026-07-11)
+- ☑ T-CL0 Install `lesson_screen_v4.dart` (AI Classroom adaptive lesson, 5 moods) — file in repo.
+- ☐ T-112 `SrsLocal.nextLessonBatch()` → replace step-6 demo word list with SRS-selected, curriculum-scoped items (whitelist-bounded).
+- ☐ T-CL1 Home: replace yellow "current lesson" card with the blood-red **AI Classroom** card; `onOpenLesson` → `Navigator.push(LessonScreenV4())`. Add token `aiClassroomRed #B3121B` to theme (exclusive to this section).
+- ☐ T-CL2 l10n: add keys (aiClassroom, senseiName, askLabel, chatPh, listenLabel, showAns, skipBtn, hintBtn, closeBtn, lessonDone*, practiceAgain, backHome + mood labels/messages) to `app_{en,bn,ja}.arb`.
+- ☐ T-CL3 Ambient animation controllers (lanternSway/dust motes/shimmer) gated by `MediaQuery.disableAnimations`; burnout state stays still.
+- ☐ T-CL4 Sensei chat sheet → wire to the AI tutor service (explanatory only; grading stays answer-key).
+
+## AI CLASSROOM HUB (added 2026-07-11)
+- ☐ T-CL5 Classroom **Curriculum section**: ladder browser over `curriculum.json` (level → unit → "Sensei, teach this").
+- ☐ T-CL6 Classroom **Book section**: offline reference reader of verified, Irodori-aligned content (own text; whitelist-tagged).
+- ☐ T-CL7 **Sensei chat/talk tutor**: voice(STT)+chat UI; replies retrieval-grounded + whitelist-bounded; grading stays answer-key; offline-first, cloud opt-in.
+- ☐ T-CL8 **Teaching-logic engine**: Director sequences i+1 comprehensible input from the curriculum graph; Scaffold gives hints from the current Can-do; Feedback maps errors → remediation unit.

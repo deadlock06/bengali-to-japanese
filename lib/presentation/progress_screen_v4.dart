@@ -23,17 +23,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// TODO(T-108): re-import '../app/providers.dart' when retentionSeriesProvider
-// switches from the demo series to SrsLocal.retentionByDay() (srsProvider).
+import '../app/providers.dart';
 import '../app/theme.dart';
 
 /// Daily retention % for the chart. TODO(T-108): implement
 /// SrsLocal.retentionByDay() → SELECT day, avg(grade>=good) FROM
 /// review_history GROUP BY day. Demo series until then.
 final retentionSeriesProvider = FutureProvider<List<double>>((ref) async {
-  // final srs = ref.read(srsProvider);
-  // return srs.retentionByDay(days: 20);
-  return const [58, 60, 59, 62, 64, 63, 66, 65, 68, 70, 69, 72];
+  final daily = await ref.read(srsProvider).retentionByDay(20); // 0..1 per day
+  final pct = daily.map((r) => r * 100).toList();
+  // Handoff demo fallback: a brand-new user has no review history (all zeros) —
+  // keep the chart alive until real reviews land, then show real data.
+  if (pct.every((v) => v == 0)) {
+    return const [58, 60, 59, 62, 64, 63, 66, 65, 68, 70, 69, 72];
+  }
+  return pct;
 });
 
 // ═══════════════════════════════ PROGRESS ═══════════════════════════════
@@ -82,9 +86,13 @@ class ProgressScreenV4 extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('রিটেনশন স্কোর ২০২৬', style: text.titleSmall),
+                    Expanded(
+                      child: Text('রিটেনশন স্কোর ২০২৬',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: text.titleSmall),
+                    ),
                     const _LiveDot(),
                   ],
                 ),

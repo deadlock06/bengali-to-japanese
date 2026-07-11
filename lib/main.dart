@@ -23,6 +23,7 @@ import 'presentation/home_screen.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
 import 'presentation/lesson_list_screen.dart';
+import 'presentation/lesson_screen_v4.dart';
 import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
@@ -86,7 +87,9 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     // Tab bodies. Home gets callbacks so it never touches Navigator directly.
     final pages = <Widget>[
       HomeScreen(
-        onOpenLesson: () => setState(() => tab = 1),
+        // AI Classroom card → push the adaptive lesson (its own close/back pops).
+        onOpenLesson: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => LessonScreenV4())),
         onOpenReview: () =>
             _push(context, s.navReview, const ReviewScreen()),
         onOpenAiCheck: () =>

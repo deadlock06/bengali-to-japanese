@@ -40,3 +40,7 @@ Branching dialogue: characters (id, name, role, keigo_level, personality), initi
 
 ## Content factory pipeline (phased: 5K MVP → 15K → 30K → 50K pairs)
 GPT-4o drafts → human review (2 Bengali-Japanese experts + 1 native JP + 1 JFT examiner) → LoRA fine-tune (rank 64, alpha 128, ~12h on 8GB GPU) → validate on 1K held-out (>85% accuracy, 0 invented grammar rules on 500 trick questions) → bundle to packs. Budget honestly: $40–60K to 50K pairs incl. 10K audio recordings (99 D-006); MVP scope $12–18K for 5K pairs + 2K audio.
+
+## CURRICULUM LAYER (added 2026-07-11) — required fields on every lesson & card
+`level` (L0|A1|A2|N4) · `can_do_id` (FK → curriculum.json) · `prerequisites[]` · `whitelist_ref` (jft_a2|n4) · `card_type` (recognition|production).
+CI additions (T-104): enforce rule #3 whitelist (no learner-facing JP word outside `whitelist_ref`), rule #4 prerequisite IDs resolve, rule #11 pack dependency graph acyclic.

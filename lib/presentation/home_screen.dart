@@ -16,6 +16,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 
+/// Blood-red section ink — EXCLUSIVE to the AI Classroom surface (do not reuse).
+const _aiClassroomRed = Color(0xFFB3121B);
+
 /// Callbacks let the shell own navigation (no Navigator coupling here).
 class HomeScreen extends ConsumerWidget {
   final VoidCallback onOpenLesson;
@@ -63,33 +66,43 @@ class HomeScreen extends ConsumerWidget {
         ),
         const SizedBox(height: 14),
 
-        // ── yellow current-lesson card ──────────────────────────────────
+        // ── AI Classroom card (flagship, blood-red section ink) ─────────
         _AccentCard(
-          color: BhasagoColors.yellow,
+          color: _aiClassroomRed,
           onTap: onOpenLesson,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('চলতি লেসন',
-                  style: text.titleMedium
-                      ?.copyWith(color: BhasagoColors.onYellow)),
+              Row(children: [
+                const Icon(Icons.auto_awesome,
+                    size: 18, color: Color(0xFFF5F5F0)),
+                const SizedBox(width: 7),
+                Expanded(
+                  child: Text('AI ক্লাসরুম',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: text.titleMedium?.copyWith(
+                          color: const Color(0xFFF5F5F0),
+                          fontWeight: FontWeight.w800)),
+                ),
+              ]),
               Text('কনবিনিতে কেনাকাটা — Can-do',
-                  style:
-                      text.bodySmall?.copyWith(color: BhasagoColors.yellowDim)),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.bodySmall?.copyWith(color: const Color(0xFFF5B8BC))),
               const SizedBox(height: 12),
-              // slider-style progress (design: black track, yellow fill, knob)
               const _SliderProgress(value: 0.64),
               const SizedBox(height: 12),
               FilledButton.icon(
                 style: FilledButton.styleFrom(
                   backgroundColor: const Color(0xFF111111),
-                  foregroundColor: BhasagoColors.ink,
+                  foregroundColor: const Color(0xFFF5F5F0),
                   minimumSize: const Size.fromHeight(46),
                 ),
                 onPressed: onOpenLesson,
                 icon: const Icon(Icons.play_arrow,
-                    size: 18, color: BhasagoColors.green),
-                label: const Text('লেসন চালিয়ে যাও'),
+                    size: 18, color: Color(0xFFF5F5F0)),
+                label: const Text('ক্লাসে ঢোকো'),
               ),
             ],
           ),
@@ -168,13 +181,16 @@ class HomeScreen extends ConsumerWidget {
 
         // ── this week's topics (See-all row) ────────────────────────────
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text('এই সপ্তাহের টপিক', style: text.titleMedium),
+            Expanded(
+              child: Text('এই সপ্তাহের টপিক',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.titleMedium),
+            ),
             TextButton(
               onPressed: onOpenLesson,
-              child: Text('সব দেখো',
-                  style: text.bodySmall),
+              child: Text('সব দেখো', style: text.bodySmall),
             ),
           ],
         ),
@@ -229,9 +245,7 @@ class _ReviewCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final text = Theme.of(context).textTheme;
-    // TODO(T-103): expose a dueCountProvider (FutureProvider<int>) reading
-    // SrsLocal.dueCards(DateTime.now()).length — placeholder until then.
-    const due = 14;
+    final due = ref.watch(dueCountProvider).valueOrNull ?? 0;
     return _AccentCard(
       color: BhasagoColors.pink,
       onTap: onTap,
@@ -240,44 +254,61 @@ class _ReviewCard extends ConsumerWidget {
         children: [
           Text('আজকের রিভিউ',
               style: text.titleMedium?.copyWith(color: const Color(0xFF111111))),
-          const SizedBox(height: 10),
-          for (final row in const [
-            ('たべもの', '৩টা কার্ড'),
-            ('みず', 'আজ সকাল'),
-            ('ありがとう', 'গতকাল থেকে'),
-          ]) ...[
-            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(
-                width: 7,
-                height: 7,
-                margin: const EdgeInsets.only(top: 5, right: 7),
-                decoration: const BoxDecoration(
-                    color: Color(0xFF111111), shape: BoxShape.circle),
-              ),
-              Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(row.$1,
-                          style: const TextStyle(
-                              fontFamily: 'Zen Kaku Gothic New',
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFF111111))),
-                      Text(row.$2,
-                          style: text.bodySmall?.copyWith(
-                              fontSize: 10, color: BhasagoColors.pinkDim)),
-                    ]),
-              ),
-            ]),
-            const SizedBox(height: 8),
-          ],
-          const Spacer(),
+          const SizedBox(height: 8),
+          // Expanded + non-scrolling ListView: rows flex to the card height set
+          // by IntrinsicHeight, so they never RenderFlex-overflow vertically.
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                for (final row in const [
+                  ('たべもの', '৩টা কার্ড'),
+                  ('みず', 'আজ সকাল'),
+                  ('ありがとう', 'গতকাল থেকে'),
+                ]) ...[
+                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Container(
+                      width: 7,
+                      height: 7,
+                      margin: const EdgeInsets.only(top: 5, right: 7),
+                      decoration: const BoxDecoration(
+                          color: Color(0xFF111111), shape: BoxShape.circle),
+                    ),
+                    Expanded(
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(row.$1,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                    fontFamily: 'Zen Kaku Gothic New',
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF111111))),
+                            Text(row.$2,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: text.bodySmall?.copyWith(
+                                    fontSize: 10, color: BhasagoColors.pinkDim)),
+                          ]),
+                    ),
+                  ]),
+                  const SizedBox(height: 8),
+                ],
+              ],
+            ),
+          ),
           Row(children: [
-            Text('$due' 'টি কার্ড দেখো',
-                style: text.bodySmall?.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: const Color(0xFF111111))),
+            Flexible(
+              child: Text('$due' 'টি কার্ড দেখো',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: const Color(0xFF111111))),
+            ),
             const Icon(Icons.arrow_forward, size: 13, color: Color(0xFF111111)),
           ]),
         ],

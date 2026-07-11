@@ -213,6 +213,41 @@ class SrsLocal {
     return rows.map((r) => r['rating'] as int).toList();
   }
 
+  /// Number of cards currently due (raw count, unbounded by page limit).
+  Future<int> dueCount({DateTime? now}) async {
+    final db = await _open();
+    final t = (now ?? DateTime.now()).millisecondsSinceEpoch;
+    final r = await db
+        .rawQuery('SELECT COUNT(*) c FROM srs_cards WHERE due <= ?', [t]);
+    return (r.first['c'] as int?) ?? 0;
+  }
+
+  /// Daily recall-success rate for the last [days] days (chronological,
+  /// oldest → newest). A day is retention = (ratings > 1) / total that day;
+  /// days with no reviews are 0.0. Feeds the progress retention chart (T-108).
+  Future<List<double>> retentionByDay([int days = 20]) async {
+    final db = await _open();
+    final now = DateTime.now();
+    final startDay =
+        DateTime(now.year, now.month, now.day).subtract(Duration(days: days - 1));
+    final rows = await db.query('review_history',
+        columns: ['rating', 'reviewed_at'],
+        where: 'reviewed_at >= ?',
+        whereArgs: [startDay.millisecondsSinceEpoch],
+        orderBy: 'reviewed_at ASC');
+    final ok = List<int>.filled(days, 0);
+    final total = List<int>.filled(days, 0);
+    for (final r in rows) {
+      final d = DateTime.fromMillisecondsSinceEpoch(r['reviewed_at'] as int);
+      final idx = DateTime(d.year, d.month, d.day).difference(startDay).inDays;
+      if (idx < 0 || idx >= days) continue;
+      total[idx]++;
+      if ((r['rating'] as int) > 1) ok[idx]++;
+    }
+    return List<double>.generate(
+        days, (i) => total[i] == 0 ? 0.0 : ok[i] / total[i]);
+  }
+
   /// Every card with its display fields — the progress dashboard's raw input.
   Future<List<({ScheduledCard card, String word, String meaningBn})>>
       allCards() async {

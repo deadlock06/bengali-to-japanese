@@ -25,3 +25,14 @@ riverpod ^2.5, sqflite ^2.3 (+SQLCipher), shared_preferences, record ^5, just_au
 
 ## Performance budgets (Tecno Pova 4, Helio G99)
 Model load <3s · inference >8 tok/s · RAM peak <6.5GB in 20-min session · cold start <2s · STT→TTS latency <1.5s · battery <15%/hr · ≤2 thermal throttle events per 30 min. Thermal monitor reduces ctx/threads under load.
+
+## CURRICULUM LAYER (added 2026-07-11) — single source of truth
+The curriculum ontology `assets/curriculum/curriculum.json` sits ABOVE the content store and is read by every layer. Levels: L0 Foundations → A1 Survival → **A2 (JFT-Basic target)** → N4 (JLPT). Each unit = a Can-do with `prerequisites[]` + `whitelist_ref`.
+Data flow (curriculum → consumers):
+- RAG store → retrieval scoped to the learner's level (higher accuracy).
+- **LLM** → per-level whitelist becomes the GBNF grammar + whitelist enforcer (model cannot emit above-level/unverified words).
+- Deterministic grader → Can-do answer keys.
+- FSRS → per-level word deck + prerequisite unlock order.
+- Director agent → 'what next?' from the prerequisite graph.
+- Pack system → level = pack boundary (acyclic graph, rule #11).
+See CURRICULUM_MAP.md and DESIGN_HANDOFF.md §0 for the full mapping.

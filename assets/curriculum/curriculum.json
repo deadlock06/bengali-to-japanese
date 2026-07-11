@@ -58,7 +58,7 @@
       },
       "prerequisites": [],
       "exam_tag": "foundation",
-      "lesson_id": "hiragana",
+      "lesson_id": "kana_hiragana",
       "target_word_count": 46
     },
     {
@@ -78,7 +78,7 @@
         "L0.1"
       ],
       "exam_tag": "foundation",
-      "lesson_id": "katakana",
+      "lesson_id": "kana_katakana",
       "target_word_count": 46
     },
     {
@@ -98,7 +98,7 @@
         "L0.1"
       ],
       "exam_tag": "foundation",
-      "lesson_id": "numbers_01,time_01",
+      "lesson_id": "lesson_numbers,lesson_time",
       "target_word_count": 40
     },
     {
@@ -138,7 +138,7 @@
         "A1.1"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": null,
+      "lesson_id": "lesson_intro_qa",
       "target_word_count": 35
     },
     {
@@ -158,7 +158,7 @@
         "L0.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "konbini_01",
+      "lesson_id": "lesson_konbini",
       "target_word_count": 40
     },
     {
@@ -178,7 +178,7 @@
         "A1.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "restaurant_01",
+      "lesson_id": "lesson_restaurant",
       "target_word_count": 40
     },
     {
@@ -198,7 +198,7 @@
         "A1.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "workplace_01",
+      "lesson_id": "lesson_workplace",
       "target_word_count": 45
     },
     {
@@ -218,7 +218,7 @@
         "A1.2"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "clinic_01",
+      "lesson_id": "lesson_clinic",
       "target_word_count": 45
     },
     {
@@ -278,7 +278,7 @@
         "A2.4"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_smalltalk",
+      "lesson_id": "lesson_smalltalk,lesson_past_plans",
       "target_word_count": 45
     },
     {
@@ -298,7 +298,7 @@
         "A2.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_safety",
+      "lesson_id": "lesson_work_safety,lesson_apology",
       "target_word_count": 40
     },
     {

@@ -72,13 +72,20 @@ Static audit + node proofs (no Flutter in sandbox). Results:
 ## PROJECT STATE (audit estimate, JFT-usable-beta scope)
 Engine/data ~90% · v4 UI shell ~80% (screens built; data-wiring T-108/120/121 + l10n pending) · Content: book 20/20 ✓, lessons 12/20, audio 0% · Native AI bridges 0% (stubs pending) · Overall ≈ **60–65%**. Biggest rocks left: T-120/121 wiring, mock engine, lesson JSONs ×8, audio pipeline, native bridges, l10n.
 
+## Later session (2026-07-11 night, Claude Fable 5 / Cowork) — 3 lessons authored + T-120 CURRICULUM SERVICE WIRED
+1. **Content +3 (validator PASS):** `lesson_intro_qa` (A1.2), `lesson_past_plans` (A2.5), `lesson_apology` (A2.6) — 8 items each, trilingual notes, full schema; whitelist +24 A2 surface forms (D-012 batch-2 marker); registered in content_repository manifest. **Native review pending on all 24 items.**
+2. **curriculum.json id-normalization:** lesson_id values now match REAL lesson JSON ids (kana_hiragana/kana_katakana for kana screens; lesson_numbers,lesson_time; lesson_konbini; lesson_restaurant; lesson_workplace; lesson_clinic; +new 3 wired). 13/20 units now have resolvable lesson_ids.
+3. **T-120 DONE (static+proof):** new `lib/data/curriculum_service.dart` (pure `derive()`: ontology+completed→states, D-001 no-locks) · `SrsLocal.completedLessonIds()` · `curriculumProvider` in providers.dart · `CurriculumScreenV4` → ConsumerWidget on live data (demo list kept as load/error fallback for design parity) · pubspec assets +`assets/curriculum/` +`classroom/BOOK.md` (T-121 prep).
+4. **New proof `tools/curriculum_reference.mjs` — 14/14** (DAG resolve/acyclic, lesson_id↔real-id resolution, empty/partial/full progress states, pct math) + added to CI after agents proof.
+5. **NOT run:** flutter analyze/test (Windows) — REQUIRED before trusting the Dart edits (theme fallback + this session's 4 Dart files).
+
 ## DO NEXT (priority order, post-audit)
 1. **Windows checks:** `flutter pub get; flutter gen-l10n; flutter analyze; flutter test` — verify theme fontFamilyFallback edit + rev-3/4 code. Expect green.
-2. **T-120 curriculum service:** replace CurriculumScreenV4 demo units with assets/curriculum/curriculum.json (now lesson_id-complete for authored units); statuses from lesson_completions; "চালিয়ে যাও" → Director recommendation. Spec: classroom/CURRICULUM.md §3/§6/§10.
+2. ~~T-120 curriculum service~~ **DONE** (verify via analyze/test; then point "চালিয়ে যাও" at Director recommendation — currently pops to lesson).
 3. **T-121 book reader:** BookScreenV4 → render classroom/BOOK.md (chapters keyed `unit:`); add to assets in pubspec; deep-link lesson↔chapter.
 4. **Real mock in AiCheckScreen:** implement A2.M spec (classroom/CURRICULUM.md §6/§8): 4×12 CBT sampler from verified content, answer-key grading, band estimate + weakest-2 can_dos → Director.
 5. **l10n migration:** v4 hardcoded BN strings → arb (keys listed handoff rev-2 §3 + rev-3 §3).
-6. **Author lesson JSONs** (briefs = book chapters): A1.2 → A2.5-past → A2.6-apology, then N4 set. Native review batch after.
+6. **Author N4 lesson JSONs** (A-level 3 DONE this session): N4.1–N4.5 need `n4_whitelist.txt` + validator whitelist_ref support (T-104) first. Native review batch: 24 new items + book.
 7. Carry-overs: T-107 audio · native bridge stubs (TTS/STT/LLM/thermal) · T-108 data into ProgressV4 · persona+purge bootstrap in main() · PDF export · Speak-tab design (DESIGN_BRIEF item 2).
 
 ## Open decisions for a human (99_DECISIONS format)

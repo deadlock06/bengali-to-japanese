@@ -27,6 +27,7 @@ jobs:
         run: node tools/lesson_flow_reference.mjs
       - name: Agent system proof (Director + Scaffold decision tables)
         run: node tools/agents_reference.mjs
+      - run: node tools/curriculum_reference.mjs
 
   # Compiles and tests the Flutter app. gen-l10n MUST run before analyze/test
   # because app_localizations.dart is generated, not committed.

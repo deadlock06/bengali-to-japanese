@@ -1,0 +1,173 @@
+{
+  "type": "lesson",
+  "id": "lesson_apology",
+  "pack_id": "work",
+  "depends_on": [
+    "lesson_work_safety"
+  ],
+  "can_do": {
+    "en": "Report a work problem and apologize",
+    "bn": "কাজের সমস্যা জানানো ও ক্ষমা চাওয়া",
+    "ja": "問題を報告して謝る"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Elementary (structure only)",
+  "verified": true,
+  "prerequisites": [
+    "kana_hiragana"
+  ],
+  "items": [
+    {
+      "id": "ap_01",
+      "jp": "もうしわけありません",
+      "kana": "もうしわけありません",
+      "romaji": "moushiwake arimasen",
+      "meaning": {
+        "en": "I am very sorry (formal)",
+        "bn": "গভীরভাবে দুঃখিত (আনুষ্ঠানিক)",
+        "ja": "もうしわけありません"
+      },
+      "note": {
+        "en": "Work-grade apology to boss/customer",
+        "bn": "boss/customer-এর কাছে কাজের ভুলের ক্ষমা",
+        "ja": "職場での正式な謝罪"
+      },
+      "srs_words": [
+        "もうしわけありません"
+      ]
+    },
+    {
+      "id": "ap_02",
+      "jp": "まちがえました",
+      "kana": "まちがえました",
+      "romaji": "machigaemashita",
+      "meaning": {
+        "en": "I made a mistake",
+        "bn": "ভুল করে ফেলেছি",
+        "ja": "まちがえました"
+      },
+      "note": {
+        "en": "Say it first, explain after",
+        "bn": "আগে স্বীকার, ব্যাখ্যা পরে — জাপানি নিয়ম",
+        "ja": "先に認めて、説明は後で"
+      },
+      "srs_words": [
+        "まちがえました"
+      ]
+    },
+    {
+      "id": "ap_03",
+      "jp": "こわれました",
+      "kana": "こわれました",
+      "romaji": "kowaremashita",
+      "meaning": {
+        "en": "It broke",
+        "bn": "ভেঙে গেছে",
+        "ja": "こわれました"
+      },
+      "note": {
+        "en": "Intransitive — thing broke by itself",
+        "bn": "জিনিসটা ভেঙেছে — নিজের দোষ বলা হচ্ছে না",
+        "ja": "自動詞:物が自然に壊れた"
+      },
+      "srs_words": [
+        "こわれました"
+      ]
+    },
+    {
+      "id": "ap_04",
+      "jp": "おとしました",
+      "kana": "おとしました",
+      "romaji": "otoshimashita",
+      "meaning": {
+        "en": "I dropped it",
+        "bn": "ফেলে দিয়েছি",
+        "ja": "おとしました"
+      },
+      "note": {
+        "en": "Transitive — I did it",
+        "bn": "আমি ফেলেছি — দায় স্বীকার",
+        "ja": "他動詞:自分が落とした"
+      },
+      "srs_words": [
+        "おとしました"
+      ]
+    },
+    {
+      "id": "ap_05",
+      "jp": "わすれました",
+      "kana": "わすれました",
+      "romaji": "wasuremashita",
+      "meaning": {
+        "en": "I forgot",
+        "bn": "ভুলে গেছি",
+        "ja": "わすれました"
+      },
+      "note": {
+        "en": "Works for things and tasks",
+        "bn": "জিনিস বা কাজ — দুটোতেই চলে",
+        "ja": "物にも用事にも使える"
+      },
+      "srs_words": [
+        "わすれました"
+      ]
+    },
+    {
+      "id": "ap_06",
+      "jp": "すぐなおします",
+      "kana": "すぐなおします",
+      "romaji": "sugu naoshimasu",
+      "meaning": {
+        "en": "I will fix it right away",
+        "bn": "এক্ষুনি ঠিক করছি",
+        "ja": "すぐなおします"
+      },
+      "note": {
+        "en": "Recovery promise after apology",
+        "bn": "ক্ষমার পরে সমাধানের প্রতিশ্রুতি",
+        "ja": "謝罪の後の回復の約束"
+      },
+      "srs_words": [
+        "すぐなおします"
+      ]
+    },
+    {
+      "id": "ap_07",
+      "jp": "つぎからきをつけます",
+      "kana": "つぎからきをつけます",
+      "romaji": "tsugi kara ki o tsukemasu",
+      "meaning": {
+        "en": "I will be careful from now on",
+        "bn": "এরপর থেকে সাবধান থাকব",
+        "ja": "つぎからきをつけます"
+      },
+      "note": {
+        "en": "Standard closing of an apology",
+        "bn": "ক্ষমা চাওয়ার মানক শেষ-বাক্য",
+        "ja": "謝罪の定番の締めくくり"
+      },
+      "srs_words": [
+        "つぎからきをつけます"
+      ]
+    },
+    {
+      "id": "ap_08",
+      "jp": "ごめいわくをおかけしました",
+      "kana": "ごめいわくをおかけしました",
+      "romaji": "gomeiwaku o okake shimashita",
+      "meaning": {
+        "en": "Sorry for the trouble caused",
+        "bn": "ঝামেলায় ফেলার জন্য দুঃখিত",
+        "ja": "ごめいわくをおかけしました"
+      },
+      "note": {
+        "en": "Heavier apology when others were affected",
+        "bn": "অন্যদের ক্ষতি হলে ভারী ক্ষমা",
+        "ja": "他の人に影響が出たときの重い謝罪"
+      },
+      "srs_words": [
+        "ごめいわくをおかけしました"
+      ]
+    }
+  ]
+}

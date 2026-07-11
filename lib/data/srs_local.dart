@@ -162,6 +162,13 @@ class SrsLocal {
     });
   }
 
+  /// Distinct lesson ids with at least one completion (T-120 curriculum).
+  Future<Set<String>> completedLessonIds() async {
+    final db = await _open();
+    final r = await db.rawQuery('SELECT DISTINCT lesson_id FROM lesson_completions');
+    return r.map((row) => row['lesson_id'] as String).toSet();
+  }
+
   Future<int> lessonCompletionCount() async {
     final db = await _open();
     final r = await db.rawQuery('SELECT COUNT(*) c FROM lesson_completions');

@@ -1,0 +1,173 @@
+{
+  "type": "lesson",
+  "id": "lesson_past_plans",
+  "pack_id": "daily",
+  "depends_on": [
+    "lesson_smalltalk"
+  ],
+  "can_do": {
+    "en": "Talk about what you did and will do",
+    "bn": "কী করেছি ও কী করব বলা",
+    "ja": "したこと・する予定を話す"
+  },
+  "jlpt_or_jft": "JFT-Basic A2",
+  "source": "Irodori Elementary 1 (structure only)",
+  "verified": true,
+  "prerequisites": [
+    "kana_hiragana"
+  ],
+  "items": [
+    {
+      "id": "pp_01",
+      "jp": "きのうかいものをしました",
+      "kana": "きのうかいものをしました",
+      "romaji": "kinou kaimono o shimashita",
+      "meaning": {
+        "en": "I went shopping yesterday",
+        "bn": "কাল কেনাকাটা করলাম",
+        "ja": "きのうかいものをしました"
+      },
+      "note": {
+        "en": "-mashita = polite past",
+        "bn": "ました মানেই অতীত — সবার জন্য এক রূপ",
+        "ja": "「ました」はていねいな過去形"
+      },
+      "srs_words": [
+        "きのうかいものをしました"
+      ]
+    },
+    {
+      "id": "pp_02",
+      "jp": "せんしゅうえいがをみました",
+      "kana": "せんしゅうえいがをみました",
+      "romaji": "senshuu eiga o mimashita",
+      "meaning": {
+        "en": "I watched a movie last week",
+        "bn": "গত সপ্তাহে সিনেমা দেখলাম",
+        "ja": "せんしゅうえいがをみました"
+      },
+      "note": {
+        "en": "Time word first is natural",
+        "bn": "সময়-শব্দ আগে বসালে স্বাভাবিক শোনায়",
+        "ja": "時間のことばは文の最初が自然"
+      },
+      "srs_words": [
+        "せんしゅうえいがをみました"
+      ]
+    },
+    {
+      "id": "pp_03",
+      "jp": "なにもしませんでした",
+      "kana": "なにもしませんでした",
+      "romaji": "nani mo shimasen deshita",
+      "meaning": {
+        "en": "I did not do anything",
+        "bn": "কিছুই করিনি",
+        "ja": "なにもしませんでした"
+      },
+      "note": {
+        "en": "nani mo + negative = nothing",
+        "bn": "なにも + না-বাচক = কিছুই না",
+        "ja": "「なにも」+否定=何も~ない"
+      },
+      "srs_words": [
+        "なにもしませんでした"
+      ]
+    },
+    {
+      "id": "pp_04",
+      "jp": "あしたともだちにあいます",
+      "kana": "あしたともだちにあいます",
+      "romaji": "ashita tomodachi ni aimasu",
+      "meaning": {
+        "en": "I will meet a friend tomorrow",
+        "bn": "কাল বন্ধুর সাথে দেখা করব",
+        "ja": "あしたともだちにあいます"
+      },
+      "note": {
+        "en": "au takes ni, not o",
+        "bn": "あう-এর সাথে に বসে, を না",
+        "ja": "「あう」は「に」をとる"
+      },
+      "srs_words": [
+        "あしたともだちにあいます"
+      ]
+    },
+    {
+      "id": "pp_05",
+      "jp": "らいしゅうやすみをとります",
+      "kana": "らいしゅうやすみをとります",
+      "romaji": "raishuu yasumi o torimasu",
+      "meaning": {
+        "en": "I will take leave next week",
+        "bn": "আগামী সপ্তাহে ছুটি নেব",
+        "ja": "らいしゅうやすみをとります"
+      },
+      "note": {
+        "en": "yasumi o toru = take leave",
+        "bn": "ছুটি নেওয়া = やすみをとる",
+        "ja": "休みを取るときの言い方"
+      },
+      "srs_words": [
+        "らいしゅうやすみをとります"
+      ]
+    },
+    {
+      "id": "pp_06",
+      "jp": "しゅうまつはなにをしますか",
+      "kana": "しゅうまつはなにをしますか",
+      "romaji": "shuumatsu wa nani o shimasu ka",
+      "meaning": {
+        "en": "What will you do this weekend?",
+        "bn": "সপ্তাহান্তে কী করবেন?",
+        "ja": "しゅうまつはなにをしますか"
+      },
+      "note": {
+        "en": "Small-talk opener at work",
+        "bn": "কাজের ফাঁকে আড্ডার দরজা-খোলা প্রশ্ন",
+        "ja": "週末の予定を聞く定番の質問"
+      },
+      "srs_words": [
+        "しゅうまつはなにをしますか"
+      ]
+    },
+    {
+      "id": "pp_07",
+      "jp": "クリケットをしました",
+      "kana": "クリケットをしました",
+      "romaji": "kuriketto o shimashita",
+      "meaning": {
+        "en": "I played cricket",
+        "bn": "ক্রিকেট খেললাম",
+        "ja": "クリケットをしました"
+      },
+      "note": {
+        "en": "Sports take suru",
+        "bn": "খেলাধুলায় する বসে",
+        "ja": "スポーツは「する」を使う"
+      },
+      "srs_words": [
+        "クリケットをしました"
+      ]
+    },
+    {
+      "id": "pp_08",
+      "jp": "とてもたのしかったです",
+      "kana": "とてもたのしかったです",
+      "romaji": "totemo tanoshikatta desu",
+      "meaning": {
+        "en": "It was a lot of fun",
+        "bn": "খুব মজা হয়েছিল",
+        "ja": "とてもたのしかったです"
+      },
+      "note": {
+        "en": "i-adjective past: -katta",
+        "bn": "い-বিশেষণের অতীত: 〜かった",
+        "ja": "い形容詞の過去は「~かった」"
+      },
+      "srs_words": [
+        "とてもたのしかったです"
+      ]
+    }
+  ]
+}

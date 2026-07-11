@@ -1,0 +1,174 @@
+{
+  "type": "lesson",
+  "id": "lesson_intro_qa",
+  "pack_id": "basics",
+  "depends_on": [
+    "lesson_greetings"
+  ],
+  "can_do": {
+    "en": "Ask and give name, country, occupation",
+    "bn": "নাম, দেশ ও পেশা জিজ্ঞেস ও বলা",
+    "ja": "名前・国・仕事について話す"
+  },
+  "jlpt_or_jft": "JFT-Basic A1",
+  "source": "Irodori Starter L2 (structure only)",
+  "verified": true,
+  "prerequisites": [
+    "kana_hiragana"
+  ],
+  "items": [
+    {
+      "id": "iq_01",
+      "jp": "おなまえは",
+      "kana": "おなまえは",
+      "romaji": "onamae wa",
+      "meaning": {
+        "en": "Your name?",
+        "bn": "আপনার নাম?",
+        "ja": "おなまえは"
+      },
+      "note": {
+        "en": "Rising tone; polite short form",
+        "bn": "শেষে সুর উঠবে; ভদ্র ছোট রূপ",
+        "ja": "名前をたずねる短いていねいな形"
+      },
+      "srs_words": [
+        "おなまえは"
+      ]
+    },
+    {
+      "id": "iq_02",
+      "jp": "おくにはどちらですか",
+      "kana": "おくにはどちらですか",
+      "romaji": "okuni wa dochira desu ka",
+      "meaning": {
+        "en": "Where is your country?",
+        "bn": "আপনার দেশ কোথায়?",
+        "ja": "おくにはどちらですか"
+      },
+      "note": {
+        "en": "dochira is politer than doko",
+        "bn": "どこ-র চেয়ে どちら বেশি ভদ্র",
+        "ja": "「どちら」は「どこ」よりていねい"
+      },
+      "srs_words": [
+        "おくにはどちらですか"
+      ]
+    },
+    {
+      "id": "iq_03",
+      "jp": "おしごとはなんですか",
+      "kana": "おしごとはなんですか",
+      "romaji": "oshigoto wa nan desu ka",
+      "meaning": {
+        "en": "What is your job?",
+        "bn": "আপনার কাজ কী?",
+        "ja": "おしごとはなんですか"
+      },
+      "note": {
+        "en": "o- prefix softens the question",
+        "bn": "শুরুর お প্রশ্নটা নরম করে",
+        "ja": "「お」をつけるとやわらかい質問になる"
+      },
+      "srs_words": [
+        "おしごとはなんですか"
+      ]
+    },
+    {
+      "id": "iq_04",
+      "jp": "かいしゃいんです",
+      "kana": "かいしゃいんです",
+      "romaji": "kaishain desu",
+      "meaning": {
+        "en": "I am a company employee",
+        "bn": "আমি কোম্পানির কর্মী",
+        "ja": "かいしゃいんです"
+      },
+      "note": {
+        "en": "Generic safe answer about work",
+        "bn": "কাজ নিয়ে সবচেয়ে সাধারণ নিরাপদ উত্তর",
+        "ja": "仕事の一番よくある答え方"
+      },
+      "srs_words": [
+        "かいしゃいんです"
+      ]
+    },
+    {
+      "id": "iq_05",
+      "jp": "こうじょうではたらいています",
+      "kana": "こうじょうではたらいています",
+      "romaji": "koujou de hataraite imasu",
+      "meaning": {
+        "en": "I work at a factory",
+        "bn": "আমি কারখানায় কাজ করি",
+        "ja": "こうじょうではたらいています"
+      },
+      "note": {
+        "en": "de marks where the action happens",
+        "bn": "কাজ যেখানে ঘটে সেখানে で বসে",
+        "ja": "動作をする場所には「で」を使う"
+      },
+      "srs_words": [
+        "こうじょうではたらいています"
+      ]
+    },
+    {
+      "id": "iq_06",
+      "jp": "はい、そうです",
+      "kana": "はい、そうです",
+      "romaji": "hai, sou desu",
+      "meaning": {
+        "en": "Yes, that is right",
+        "bn": "হ্যাঁ, তাই",
+        "ja": "はい、そうです"
+      },
+      "note": {
+        "en": "Standard yes-confirmation",
+        "bn": "হ্যাঁ-সূচক সাধারণ উত্তর",
+        "ja": "はいと確認する言い方"
+      },
+      "srs_words": [
+        "はい、そうです"
+      ]
+    },
+    {
+      "id": "iq_07",
+      "jp": "いいえ、ちがいます",
+      "kana": "いいえ、ちがいます",
+      "romaji": "iie, chigaimasu",
+      "meaning": {
+        "en": "No, that is not right",
+        "bn": "না, তা না",
+        "ja": "いいえ、ちがいます"
+      },
+      "note": {
+        "en": "Soft correction, not rude",
+        "bn": "নরমভাবে ভুল শুধরে দেওয়া",
+        "ja": "やわらかく違うと伝える言い方"
+      },
+      "srs_words": [
+        "いいえ、ちがいます"
+      ]
+    },
+    {
+      "id": "iq_08",
+      "jp": "わたしのなまえはラキブです",
+      "kana": "わたしのなまえはラキブです",
+      "romaji": "watashi no namae wa Rakibu desu",
+      "meaning": {
+        "en": "My name is Rakib",
+        "bn": "আমার নাম রাকিব",
+        "ja": "わたしのなまえはラキブです"
+      },
+      "note": {
+        "en": "no links owner and thing, like Bengali -r",
+        "bn": "の মানে বাংলার '-র' — আমার, তোমার",
+        "ja": "「の」は持ち主を表す"
+      },
+      "srs_words": [
+        "わたしの",
+        "なまえ"
+      ]
+    }
+  ]
+}

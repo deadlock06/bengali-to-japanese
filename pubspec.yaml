@@ -39,6 +39,8 @@ flutter:
   assets:
     - assets/content/
     - assets/stroke/
+    - assets/curriculum/
+    - classroom/BOOK.md
 
   # v4 "Bold Ink" brand fonts (TTFs live in assets/fonts/).
   fonts:

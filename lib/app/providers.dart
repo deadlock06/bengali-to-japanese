@@ -6,6 +6,7 @@ import '../agents/agent_bus.dart';
 import '../agents/agent_state.dart';
 import '../data/content_repository.dart';
 import '../data/srs_local.dart';
+import '../data/curriculum_service.dart';
 import '../domain/fsrs.dart';
 
 /// Selected UI locale (persist via shared_preferences in the full app).
@@ -39,3 +40,9 @@ final dueCountProvider = FutureProvider<int>((ref) async {
 /// [AgentBus.startSession]. UI reads the merged [AgentState] only.
 final agentBusProvider =
     StateNotifierProvider<AgentBus, AgentState>((_) => AgentBus());
+
+/// T-120 — curriculum ladder w/ per-unit progress (classroom/CURRICULUM.md §3).
+final curriculumProvider = FutureProvider<List<CurriculumUnit>>((ref) async {
+  final completed = await ref.read(srsProvider).completedLessonIds();
+  return CurriculumService.load(completed);
+});

@@ -6,7 +6,10 @@
 // D-001: no locks — upcoming units are visible and neutral, never gated.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/curriculum_service.dart';
 
 const _red = Color(0xFFB3121B);
 const _redSub = Color(0xFFF5B8BC);
@@ -20,8 +23,9 @@ class _Unit {
   final double pct;
 }
 
-// TODO(T-120): replace with the curriculum service.
-const _units = [
+// Demo fallback — shown only while the ontology loads (or on error), so the
+// screen keeps design parity. Live data: curriculumProvider (T-120, wired).
+const _demoUnits = [
   _Unit('হিরাগানা', '৪৬ অক্ষর · লেখা + পড়া', _UnitState.done),
   _Unit('কাতাকানা', '৪৬ অক্ষর · বিদেশি শব্দ', _UnitState.done),
   _Unit('অভিবাদন ও পরিচয়', 'あいさつ · নিজের কথা বলা', _UnitState.done),
@@ -31,12 +35,30 @@ const _units = [
   _Unit('কাজের ভাষা', 'しごと · নিরাপত্তা + অনুরোধ', _UnitState.upcoming),
 ];
 
-class CurriculumScreenV4 extends StatelessWidget {
+class CurriculumScreenV4 extends ConsumerWidget {
   const CurriculumScreenV4({super.key});
 
+  static _UnitState _viewState(UnitProgress p) => switch (p) {
+        UnitProgress.done => _UnitState.done,
+        UnitProgress.current => _UnitState.current,
+        UnitProgress.upcoming => _UnitState.upcoming,
+      };
+
   @override
-  Widget build(BuildContext context) {
-    const overall = 3.45 / 7; // demo: 3 done + 45% of unit 4
+  Widget build(BuildContext context, WidgetRef ref) {
+    final async = ref.watch(curriculumProvider);
+    final units = async.maybeWhen(
+      data: (list) => [
+        for (final u in list)
+          _Unit(u.titleBn, u.canDoBn, _viewState(u.state), u.pct),
+      ],
+      orElse: () => _demoUnits,
+    );
+    final overall = units.isEmpty
+        ? 0.0
+        : units.fold<double>(
+              0, (s, u) => s + (u.state == _UnitState.done ? 1 : u.pct)) /
+            units.length;
     return Scaffold(
       backgroundColor: BhasagoTheme.bg,
       body: SafeArea(
@@ -68,21 +90,21 @@ class CurriculumScreenV4 extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(99),
-              child: const SizedBox(
+              child: SizedBox(
                 height: 4,
                 child: LinearProgressIndicator(
                     value: overall,
-                    backgroundColor: Color(0xFF242424),
-                    valueColor: AlwaysStoppedAnimation(_red)),
+                    backgroundColor: const Color(0xFF242424),
+                    valueColor: const AlwaysStoppedAnimation(_red)),
               ),
             ),
           ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-              itemCount: _units.length,
+              itemCount: units.length,
               itemBuilder: (context, i) =>
-                  _row(context, _units[i], last: i == _units.length - 1),
+                  _row(context, units[i], last: i == units.length - 1),
             ),
           ),
         ]),

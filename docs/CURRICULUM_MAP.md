@@ -18,7 +18,7 @@ Status: ☑ authored (lesson exists) · ◐ partial · ☐ to author.
 | Unit | Can-do (BN) | Prereq | Status |
 |---|---|---|---|
 | A1.1 Greeting ও self-intro | কর্মস্থলে নিজের পরিচয় দেওয়া | L0.1 | ☑ work_intro_01 |
-| A1.2 নাম, দেশ, কাজ | নাম/দেশ/পেশা জিজ্ঞেস ও বলা | A1.1 | ☐ |
+| A1.2 নাম, দেশ, কাজ | নাম/দেশ/পেশা জিজ্ঞেস ও বলা | A1.1 | ☑ intro_qa |
 | A1.3 Konbini | দোকানে কেনাকাটা | L0.3 | ☑ konbini_01 |
 | A1.4 Restaurant | খাবার order, বিল চাওয়া | A1.3 | ☑ restaurant_01 |
 
@@ -29,8 +29,8 @@ Status: ☑ authored (lesson exists) · ◐ partial · ☐ to author.
 | A2.2 ক্লিনিক ও স্বাস্থ্য | অসুস্থতা বোঝানো, জরুরি সাহায্য | A1.2 | ☑ clinic_01 |
 | A2.3 রাস্তা ও যাতায়াত | রাস্তা জিজ্ঞেস, ট্রেন/স্টেশন | L0.3 | ☑ directions,transport |
 | A2.4 অনুমতি ও অনুরোধ | 〜てもいいですか / 〜てください | A2.1 | ☑ work_requests |
-| A2.5 অতীত ও পরিকল্পনা | 〜ました / 〜ます দিয়ে বলা | A2.4 | ◐ smalltalk (past-drill baki) |
-| A2.6 সমস্যা ও ক্ষমা | কাজের সমস্যা বোঝানো, ক্ষমা | A2.1 | ◐ work_safety (apology baki) |
+| A2.5 অতীত ও পরিকল্পনা | 〜ました / 〜ます দিয়ে বলা | A2.4 | ☑ smalltalk,past_plans |
+| A2.6 সমস্যা ও ক্ষমা | কাজের সমস্যা বোঝানো, ক্ষমা | A2.1 | ☑ work_safety,apology |
 | A2.M **JFT-Basic Mock** | আসল CBT format-এ mock | all A2 | ☐ |
 
 ## N4 · Expanded grammar (JLPT N4 — care/food/hospitality track)
@@ -44,7 +44,7 @@ Status: ☑ authored (lesson exists) · ◐ partial · ☐ to author.
 | N4.M **JLPT N4 Mock** | N4 format mock | all N4 | ☐ |
 
 ## Progress today
-**12 / 20 units authored or partial (☑10 ◐2).** Book chapters exist for all 20 (classroom/BOOK.md). A learner can currently reach ~half of JFT-Basic A2. Priority to author next:
+**13 / 20 units authored (baki: A2.M mock + N4.1–N4.5 + N4.M).** Book chapters exist for all 20 (classroom/BOOK.md). A learner can currently reach ~half of JFT-Basic A2. Priority to author next:
 A1.2 → A2.3 → A2.4 → A2.5 → A2.6 → A2.M (completes the JFT-Basic path end-to-end).
 
 ## Every unit must carry (for the AI + validators)

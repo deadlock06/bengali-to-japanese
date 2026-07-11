@@ -37,6 +37,9 @@ class ContentRepository {
       'assets/content/lesson_workplace.json',
       'assets/content/lesson_work_safety.json',
       'assets/content/lesson_work_requests.json',
+      'assets/content/lesson_intro_qa.json',
+      'assets/content/lesson_past_plans.json',
+      'assets/content/lesson_apology.json',
     ]) {
       final lesson = Lesson.fromJson(json.decode(await rootBundle.loadString(file)));
       assert(lesson.verified, 'Refusing to load unverified lesson ${lesson.id}');

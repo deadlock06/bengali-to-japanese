@@ -1,4 +1,12 @@
 # CODEBASE MAP — generated 2026-07-09 by Claude (Opus 4.8)
+
+> **AUDIT 2026-07-11 (Cowork, static+proofs — Flutter checks pending on Windows):**
+> Engine GREEN: validator PASS · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8.
+> Fonts bundled+wired ✓ (Baloo Da 2 / Zen Kaku ×2 names / Archivo; Space Grotesk bundled-unused — reserved).
+> FIXED this audit: (1) theme.dart — app-wide `fontFamilyFallback: Zen Kaku` so ALL JP glyphs (incl. mixed BN+JP strings) render in brand JP face, no more platform-font fallback; (2) curriculum.json — lesson_id wired A2.3/A2.4 (full) + A2.5/A2.6 (partial); (3) CURRICULUM_MAP statuses → 12/20 authored-or-partial.
+> NEW since map: classroom/ (BOOK.md 20-chapter Bhasha Go + CURRICULUM.md 20-unit teaching spec + README) — content source for T-120/T-121.
+> Off-palette Color() literals in v4 screens are design-sourced (rev-2/3 handoffs) — promote to theme tokens when convenient, NOT visual bugs. Legacy screens (progress_screen v0.1, accent_screens, agent_panel) unrouted — ignore their palette.
+
 **New session? Read NEXT_SESSION.md first.** Bridge between the v4.2 spec pack and the real repo. Read this INSTEAD of re-exploring (refresh if >2 weeks old or after big changes).
 
 ## Stack found

@@ -215,6 +215,9 @@ abstract final class BhasagoTheme {
   static TextTheme _textTheme(TextTheme base) {
     const display = 'Baloo Da 2';
     const latin = 'Archivo';
+    // JP glyphs are absent from Baloo/Archivo; fall back to the brand JP face
+    // app-wide (incl. mixed BN+JP strings) instead of the platform default.
+    const jpFallback = ['Zen Kaku Gothic New', 'ZenKakuGothicNew'];
     return base.copyWith(
       displayLarge: base.displayLarge?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800, letterSpacing: -0.5),
       displayMedium: base.displayMedium?.copyWith(color: BhasagoColors.ink, fontFamily: display, fontWeight: FontWeight.w800),
@@ -231,6 +234,6 @@ abstract final class BhasagoTheme {
       labelLarge: base.labelLarge?.copyWith(color: BhasagoColors.ink, fontFamily: latin, fontWeight: FontWeight.w700),
       labelMedium: base.labelMedium?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
       labelSmall: base.labelSmall?.copyWith(color: BhasagoColors.inkDim, fontFamily: latin),
-    );
+    ).apply(fontFamilyFallback: jpFallback);
   }
 }

@@ -55,14 +55,31 @@ Source: `Load existing design 2.zip` → handoff rev-4 (prose deltas; step files
 7. **NOT run:** `flutter analyze` / `flutter test` (no Flutter in sandbox) — run first. l10n of new strings still hardcoded BN (design parity), keys listed in handoff rev-2 §3 + rev-3 §3 pending.
 Commits: `64a0a07` (pre-rev3/4 checkpoint incl. 4-5AM rev-2 work) → this session's rev-3/4 commit.
 
-## DO NEXT
-1. **Run the real checks** (sandbox couldn't): `flutter pub get; flutter gen-l10n; flutter analyze; flutter test`. Expect green; fix anything the static pass missed.
-2. **Fonts:** download Baloo Da 2, Zen Kaku Gothic New (Medium/Bold/Black), Archivo, Space Grotesk from Google Fonts → `assets/fonts/` with the exact names in pubspec's commented block → uncomment → `flutter pub get`. The design's whole feel depends on these.
-3. **l10n:** new v4 strings are hardcoded BN for design parity — move to `lib/l10n/app_{en,bn,ja}.arb` (add `navHome`, `navProgress`, `home*`, onboarding + progress/AI-check keys) and swap in `S.of` lookups.
-4. **PitchScreen entry point:** card inside the Speak tab (waiting on the Speak-tab design — `DESIGN_BRIEF.md` item 2; don't improvise it).
-5. **T-108 data into V4:** implement `SrsLocal.retentionByDay()` + per-skill accuracy; point `retentionSeriesProvider` at it (re-import `app/providers.dart` in progress_screen_v4 — TODO marked); add `dueCountProvider` for the pink Home card; real course % on Home. Reuse `lib/domain/progress.dart` (already pure + tested).
-6. **Real mock exam in AiCheckScreen:** sample from verified content, grade vs answer key ONLY (00 non-negotiable #4); Banglish suggestion from weak-skill template. Currently a demo coin-flip, clearly TODO-marked.
-7. Carry-overs: audio pipeline (T-107) · native bridge stubs (MethodChannel TTS/STT/LLM/thermal) · native-review sign-off on the 64 new phrases · persona + purge-check bootstrap in `main()` · PDF in export ZIP + `share_plus`.
+## Later session (2026-07-11, Claude Fable 5 / Cowork) — classroom/ content: Bhasha Go BOOK + teaching CURRICULUM
+1. **`classroom/BOOK.md` (new, ~1,890 lines):** the full Bengali→Japanese book ("Bhasha Go", matches BookScreenV4's cover) — 5 parts, 20 chapters mapped 1:1 to curriculum.json units (header `unit:` keys), 10 appendices (kana/conjugation/particles/counters/keigo/kanji-100/pronunciation-clinic/exam cards/grammar index/answer key). Chapter anatomy mirrors the 09 five-phase loop. Grounded in the verified lesson JSONs (all app phrases appear as-is, marked ★app verified). Register: Bengali script + natural English mixing per owner direction. Research: JFT-Basic CBT format + **Aug-2026 A1/A2.1/A2.2 band change**, JLPT N4 format, Irodori structure, BN-speaker phonology traps (ざ行/つ/ふ/long vowels/pitch).
+2. **`classroom/CURRICULUM.md` (new, ~300 lines):** teaching curriculum for the AI classroom — 10 binding rules distilled from 00/01/04/05/09 + D-001/004/012/013/015; ladder w/ exam facts; 5-phase staging + session templates + Director sequencing algorithm; deterministic psych-state playbook with pre-authored Banglish copy pools (LLM selects, never invents); **all 20 unit specs** (grammar, mistake_patterns briefs, scaffold, deterministic assessments incl. 100% safety-critical bars); FSRS/reward policy; mock specs (A2.M CBT 4-section, N4.M 3-section); Sensei chat quick-chip contracts + off-scope redirect; integration map (T-120/T-121/Director/validator); authoring pipeline for the 8 missing lesson JSONs (priority A1.2→A2.5→A2.6→A2.M→N4.x).
+3. **`classroom/README.md`:** wiring summary. Files written via shell (mount rule). Verified: all 20 unit ids in both files ✓ · banned-pattern scan CLEAN ✓ · chapter anatomy complete ✓ · no half-width katakana ✓ · stray-script artifacts cleaned ✓. NOT run: flutter checks (content-only session, no Dart touched).
+4. **Curriculum.json sync TODO noted (§10):** A2.3/A2.4/A2.6 lesson_id links exist as files but null in ontology — wire in one commit at T-120.
+
+## Later session (2026-07-11 PM, Claude Fable 5 / Cowork) — FULL-ARCHITECTURE AUDIT + fixes
+Static audit + node proofs (no Flutter in sandbox). Results:
+1. **Engine proofs all GREEN** (validator/agents/fsrs/lesson_flow/migrations/pitch = 65/65 + PASS).
+2. **UI/UX-fonts:** bundled fonts ✓ pubspec ✓ theme wired ✓. **FIX:** `theme.dart` `_textTheme` now chains `.apply(fontFamilyFallback: ['Zen Kaku Gothic New','ZenKakuGothicNew'])` — JP glyphs everywhere (incl. mixed BN+JP unit subtitles in curriculum_screen_v4) render in brand JP face instead of platform fallback. writing_screen `0xFF14141F` refs are stroke-INK color (by design, not bg) — left alone.
+3. **Wiring verified:** lesson header → CurriculumScreenV4/BookScreenV4 ✓ · sensei sprite → SenseiChatSheet ✓ · Home onOpenBook ✓ · onboarding gate ✓. Off-palette literals in v4 screens = design-sourced (token-promotion tech debt only).
+4. **FIX curriculum.json:** lesson_id A2.3=lesson_directions,lesson_transport · A2.4=lesson_work_requests · A2.5=lesson_smalltalk(part) · A2.6=lesson_work_safety(part). Validator re-run PASS. CURRICULUM_MAP → 12/20.
+5. **NOT run:** flutter analyze/test (Windows-only here) — FIRST THING next session; the one Dart edit is small + paren-balanced but must be compiler-verified.
+
+## PROJECT STATE (audit estimate, JFT-usable-beta scope)
+Engine/data ~90% · v4 UI shell ~80% (screens built; data-wiring T-108/120/121 + l10n pending) · Content: book 20/20 ✓, lessons 12/20, audio 0% · Native AI bridges 0% (stubs pending) · Overall ≈ **60–65%**. Biggest rocks left: T-120/121 wiring, mock engine, lesson JSONs ×8, audio pipeline, native bridges, l10n.
+
+## DO NEXT (priority order, post-audit)
+1. **Windows checks:** `flutter pub get; flutter gen-l10n; flutter analyze; flutter test` — verify theme fontFamilyFallback edit + rev-3/4 code. Expect green.
+2. **T-120 curriculum service:** replace CurriculumScreenV4 demo units with assets/curriculum/curriculum.json (now lesson_id-complete for authored units); statuses from lesson_completions; "চালিয়ে যাও" → Director recommendation. Spec: classroom/CURRICULUM.md §3/§6/§10.
+3. **T-121 book reader:** BookScreenV4 → render classroom/BOOK.md (chapters keyed `unit:`); add to assets in pubspec; deep-link lesson↔chapter.
+4. **Real mock in AiCheckScreen:** implement A2.M spec (classroom/CURRICULUM.md §6/§8): 4×12 CBT sampler from verified content, answer-key grading, band estimate + weakest-2 can_dos → Director.
+5. **l10n migration:** v4 hardcoded BN strings → arb (keys listed handoff rev-2 §3 + rev-3 §3).
+6. **Author lesson JSONs** (briefs = book chapters): A1.2 → A2.5-past → A2.6-apology, then N4 set. Native review batch after.
+7. Carry-overs: T-107 audio · native bridge stubs (TTS/STT/LLM/thermal) · T-108 data into ProgressV4 · persona+purge bootstrap in main() · PDF export · Speak-tab design (DESIGN_BRIEF item 2).
 
 ## Open decisions for a human (99_DECISIONS format)
 - **D-012 (proposed, this session):** whitelist may be extended with A2-level conjugated surface forms used by verified lessons (validator matches surface forms, not lemmas). Confirm or replace with a lemmatizing validator.

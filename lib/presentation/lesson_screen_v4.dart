@@ -21,8 +21,12 @@
 // - prefers-reduced-motion: gate _AmbientClassroom animations with
 //   MediaQuery.of(context).disableAnimations.
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import '../app/theme.dart';
+import 'book_screen_v4.dart';
+import 'curriculum_screen_v4.dart';
 
 /// Adaptive mood of the classroom. One accent dominates per state.
 enum LessonMood { neutral, flow, struggle, burnout, boredom }
@@ -133,6 +137,14 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
   Widget _header(BuildContext context) => Row(children: [
         IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back, size: 20, color: BhasagoTheme.muted)),
         const Expanded(child: Text('পাঠ ৩ · রেস্টুরেন্টে', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15))),
+        // Rev-4: section entries — curriculum map + book. 19px glyphs, 44px
+        // hit area, muted base; section tints on press (red / green).
+        _headerIcon(Icons.map_outlined, const Color(0xFFE8515A),
+            () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => const CurriculumScreenV4()))),
+        _headerIcon(Icons.auto_stories, const Color(0xFF35E065),
+            () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (_) => const BookScreenV4()))),
         Container( // mood pill
           padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 4),
           decoration: BoxDecoration(border: Border.all(color: m.color, width: 1.5), borderRadius: BorderRadius.circular(999)),
@@ -143,6 +155,15 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
           ]),
         ),
       ]);
+
+  Widget _headerIcon(IconData ic, Color tint, VoidCallback onTap) => IconButton(
+        onPressed: onTap,
+        icon: Icon(ic, size: 19),
+        color: BhasagoTheme.muted,
+        highlightColor: tint.withValues(alpha: .18),
+        constraints: const BoxConstraints.tightFor(width: 44, height: 44),
+        padding: const EdgeInsets.all(4),
+      );
 
   Widget _progressBar(double p) => ClipRRect(
         borderRadius: BorderRadius.circular(99),
@@ -194,8 +215,23 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
         ]),
       );
 
+  // Rev-2 §4: tapping the sensei opens the chat/talk sheet.
+  void _openChat(BuildContext context) => showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => SenseiChatSheet(accent: m.color, moodLabel: m.label),
+      );
+
   Widget _teacherRow() => Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
-        _TeacherSprite(accent: m.color), // 64x78 CustomPainter port of the SVG sensei
+        GestureDetector(
+          onTap: () => _openChat(context),
+          child: Semantics(
+            button: true,
+            label: 'Talk to sensei',
+            child: _TeacherSprite(accent: m.color),
+          ),
+        ), // 64x78 CustomPainter port of the SVG sensei
         const SizedBox(width: 10),
         Flexible(child: Container(
           margin: const EdgeInsets.only(bottom: 8),
@@ -344,4 +380,281 @@ class _TeacherPainter extends CustomPainter {
   }
   @override
   bool shouldRepaint(_TeacherPainter old) => old.accent != accent;
+}
+
+
+// ═══════════════ Sensei chat/talk sheet (rev-2 §4) ═══════════════
+// DEMO-CANNED: production wires the AI tutor service. The chat is
+// explanatory only — grading stays answer-key (D-001 / 00 §4).
+
+class SenseiChatSheet extends StatefulWidget {
+  const SenseiChatSheet({super.key, required this.accent, required this.moodLabel});
+  final Color accent;
+  final String moodLabel;
+  @override
+  State<SenseiChatSheet> createState() => _SenseiChatSheetState();
+}
+
+class _ChatMsg {
+  const _ChatMsg(this.mine, this.text);
+  final bool mine;
+  final String text;
+}
+
+class _SenseiChatSheetState extends State<SenseiChatSheet>
+    with SingleTickerProviderStateMixin {
+  final _input = TextEditingController();
+  final List<_ChatMsg> _msgs = [
+    const _ChatMsg(false, 'কিছু জিজ্ঞেস করতে চাও? আমি আছি — যেকোনো শব্দ বা বাক্য নিয়ে প্রশ্ন করো।'),
+  ];
+  bool _typing = false, _listening = false;
+  late final AnimationController _anim =
+      AnimationController(vsync: this, duration: const Duration(milliseconds: 900))
+        ..repeat();
+  int _cannedIdx = 0;
+
+  // TODO(tutor-service): canned replies for design parity only.
+  static const _canned = [
+    '「水 · みず」মানে পানি। মনে রাখো: み(mi) দিয়ে শুরু — যেটা তুমি পান করো। উদাহরণ: 水をください — একটু পানি দিন।',
+    'ভালো প্রশ্ন! উচ্চারণটা ভেঙে বলি: go-HAN — দ্বিতীয় অংশে একটু জোর। আস্তে আস্তে ৩ বার বলো।',
+    'উদাহরণ বাক্য: お茶をのみます — আমি চা খাই। のみます মানে পান করা।',
+  ];
+
+  @override
+  void dispose() {
+    _anim.dispose();
+    _input.dispose();
+    super.dispose();
+  }
+
+  void _send(String text) {
+    final t = text.trim();
+    if (t.isEmpty || _typing) return;
+    _input.clear();
+    setState(() {
+      _msgs.insert(0, _ChatMsg(true, t));
+      _typing = true;
+    });
+    Future.delayed(const Duration(milliseconds: 900), () {
+      if (!mounted) return;
+      setState(() {
+        _msgs.insert(0, _ChatMsg(false, _canned[_cannedIdx % _canned.length]));
+        _cannedIdx++;
+        _typing = false;
+      });
+    });
+  }
+
+  void _toggleMic() {
+    if (_listening) {
+      setState(() => _listening = false);
+      return;
+    }
+    setState(() => _listening = true);
+    // Demo voice mode: "listen" then transcribe a canned utterance and send.
+    Future.delayed(const Duration(milliseconds: 1800), () {
+      if (!mounted || !_listening) return;
+      setState(() => _listening = false);
+      _send('「ご飯」মানে কী আবার বুঝিয়ে দাও');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final h = MediaQuery.of(context).size.height * .76;
+    final kb = MediaQuery.of(context).viewInsets.bottom;
+    final a = widget.accent;
+    return Padding(
+      padding: EdgeInsets.only(bottom: kb),
+      child: Container(
+        height: h,
+        decoration: const BoxDecoration(
+          color: Color(0xFF141414),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          border: Border(top: BorderSide(color: Color(0xFF2E2E2E))),
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 10, 16, 12),
+        child: Column(children: [
+          Container(width: 40, height: 4,
+              decoration: BoxDecoration(color: const Color(0xFF2E2E2E),
+                  borderRadius: BorderRadius.circular(99))),
+          const SizedBox(height: 12),
+          Row(children: [
+            Container(
+              width: 38, height: 38, alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: const Color(0xFF1A1A1A), shape: BoxShape.circle,
+                  border: Border.all(color: a, width: 2)),
+              child: Text('先', style: TextStyle(fontFamily: 'ZenKakuGothicNew',
+                  fontSize: 16, fontWeight: FontWeight.w900, color: a)),
+            ),
+            const SizedBox(width: 10),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('সেনসেই', style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
+              Row(children: [
+                Container(width: 6, height: 6,
+                    decoration: BoxDecoration(color: a, shape: BoxShape.circle)),
+                const SizedBox(width: 5),
+                Text(widget.moodLabel,
+                    style: TextStyle(color: a, fontSize: 10.5, fontWeight: FontWeight.w700)),
+              ]),
+            ]),
+            const Spacer(),
+            IconButton(onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.close, size: 20, color: BhasagoTheme.muted)),
+          ]),
+          const SizedBox(height: 6),
+          Expanded(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: _msgs.length + (_typing ? 1 : 0),
+              itemBuilder: (context, i) {
+                if (_typing && i == 0) return _typingBubble();
+                final msg = _msgs[_typing ? i - 1 : i];
+                return _bubble(msg);
+              },
+            ),
+          ),
+          if (_listening) _waveform(a) else _chips(),
+          const SizedBox(height: 10),
+          Row(children: [
+            Expanded(
+              child: Container(
+                height: 44,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                    color: const Color(0xFF1A1A1A),
+                    borderRadius: BorderRadius.circular(99),
+                    border: Border.all(color: const Color(0xFF2E2E2E))),
+                child: TextField(
+                  controller: _input,
+                  onSubmitted: _send,
+                  style: const TextStyle(fontSize: 13),
+                  decoration: const InputDecoration(
+                      isCollapsed: true, border: InputBorder.none,
+                      hintText: 'সেনসেইকে জিজ্ঞেস করো…',
+                      hintStyle: TextStyle(color: BhasagoTheme.muted, fontSize: 13)),
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            _roundBtn(Icons.mic_none, _listening ? a : const Color(0xFF1A1A1A),
+                _listening ? const Color(0xFF111111) : BhasagoTheme.muted, _toggleMic),
+            const SizedBox(width: 8),
+            _roundBtn(Icons.send, a, const Color(0xFF111111), () => _send(_input.text)),
+          ]),
+        ]),
+      ),
+    );
+  }
+
+  Widget _roundBtn(IconData ic, Color bg, Color fg, VoidCallback onTap) =>
+      SizedBox(
+        width: 44, height: 44,
+        child: Material(
+          color: bg, shape: const CircleBorder(
+              side: BorderSide(color: Color(0xFF2E2E2E))),
+          child: InkWell(customBorder: const CircleBorder(), onTap: onTap,
+              child: Icon(ic, size: 19, color: fg)),
+        ),
+      );
+
+  Widget _bubble(_ChatMsg msg) {
+    final a = widget.accent;
+    final mine = msg.mine;
+    return Align(
+      alignment: mine ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        constraints: const BoxConstraints(maxWidth: 280),
+        padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 9),
+        decoration: BoxDecoration(
+          color: mine ? a : const Color(0xFF1A1A1A),
+          border: mine ? null : Border.all(color: const Color(0xFF2E2E2E)),
+          borderRadius: BorderRadius.only(
+            topLeft: const Radius.circular(16),
+            topRight: const Radius.circular(16),
+            bottomLeft: Radius.circular(mine ? 16 : 4),
+            bottomRight: Radius.circular(mine ? 4 : 16),
+          ),
+        ),
+        child: Text(msg.text,
+            style: TextStyle(fontSize: 12.5, height: 1.5,
+                color: mine ? const Color(0xFF111111) : BhasagoTheme.text)),
+      ),
+    );
+  }
+
+  Widget _typingBubble() => Align(
+        alignment: Alignment.centerLeft,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 4),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+              color: const Color(0xFF1A1A1A),
+              border: Border.all(color: const Color(0xFF2E2E2E)),
+              borderRadius: BorderRadius.circular(16)),
+          child: AnimatedBuilder(
+            animation: _anim,
+            builder: (context, child) => Row(mainAxisSize: MainAxisSize.min,
+                children: List.generate(3, (i) {
+              final t = (_anim.value + i / 3) % 1.0;
+              final o = 0.25 + 0.75 * math.sin(t * math.pi);
+              return Container(
+                width: 6, height: 6,
+                margin: const EdgeInsets.symmetric(horizontal: 2.5),
+                decoration: BoxDecoration(
+                    color: BhasagoTheme.muted.withValues(alpha: o),
+                    shape: BoxShape.circle),
+              );
+            })),
+          ),
+        ),
+      );
+
+  Widget _chips() {
+    const labels = ['আবার বুঝিয়ে দাও', 'একটা উদাহরণ', 'উচ্চারণ'];
+    return SizedBox(
+      height: 34,
+      child: ListView(scrollDirection: Axis.horizontal, children: [
+        for (final l in labels)
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: OutlinedButton(
+              onPressed: () => _send(l),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 34),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  side: const BorderSide(color: Color(0xFF2E2E2E)),
+                  shape: const StadiumBorder(),
+                  foregroundColor: BhasagoTheme.muted,
+                  textStyle: const TextStyle(fontSize: 11.5, fontWeight: FontWeight.w700)),
+              child: Text(l),
+            ),
+          ),
+      ]),
+    );
+  }
+
+  Widget _waveform(Color a) => SizedBox(
+        height: 34,
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          AnimatedBuilder(
+            animation: _anim,
+            builder: (context, child) => Row(
+                children: List.generate(5, (i) {
+              final t = (_anim.value + i / 5) % 1.0;
+              final hgt = 8 + 18 * math.sin(t * math.pi);
+              return Container(
+                width: 4, height: hgt,
+                margin: const EdgeInsets.symmetric(horizontal: 3),
+                decoration: BoxDecoration(color: a,
+                    borderRadius: BorderRadius.circular(99)),
+              );
+            })),
+          ),
+          const SizedBox(width: 10),
+          Text('শুনছি…', style: TextStyle(color: a, fontSize: 12, fontWeight: FontWeight.w700)),
+        ]),
+      );
 }

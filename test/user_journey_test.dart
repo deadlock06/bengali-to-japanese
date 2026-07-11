@@ -11,6 +11,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sensei_app/main.dart';
+import 'package:sensei_app/presentation/lesson_screen_v4.dart';
 import 'package:sensei_app/presentation/onboarding_screen.dart';
 
 Future<void> pumpUntil(WidgetTester t, Finder f,
@@ -43,9 +44,9 @@ void main() {
     expect(find.byType(OnboardingScreen), findsOneWidget);
     expect(find.text('বাংলা'), findsOneWidget); // Bengali-first default
     // a curious user taps around before deciding
-    await tester.tap(find.text('English'));
+    await tester.tap(find.text('English').first);
     await tester.pump();
-    await tester.tap(find.text('বাংলা'));
+    await tester.tap(find.text('বাংলা').first);
     await tester.pump();
     await tester.tap(find.textContaining('চলো শুরু করি'));
     await tester.pump();
@@ -54,7 +55,7 @@ void main() {
 
     // ── 2. Home (Bold Ink) ───────────────────────────────────────────────
     await pumpUntil(tester, find.text('হাই!'), what: 'home greeting');
-    expect(find.text('চলতি লেসন'), findsOneWidget); // yellow card
+    expect(find.text('AI ক্লাসরুম'), findsOneWidget); // red flagship card (rev-2)
     expect(find.text('আজকের রিভিউ'), findsOneWidget); // pink card
     expect(find.text('AI চেক'), findsOneWidget); // blue card
     expect(find.text('এই সপ্তাহের টপিক'), findsOneWidget);
@@ -69,31 +70,41 @@ void main() {
     expect(find.byType(ListTile), findsWidgets);
     ok(tester, 'lesson list');
 
-    // ── 4. Open the first lesson; check the autonomy invariant ──────────
-    await tester.tap(find.byType(ListTile).first);
+    // ── 4. AI Classroom (adaptive lesson) via the red Home card ─────────
+    await tester.tap(find.byIcon(Icons.home_outlined));
     await tester.pump();
+    await tester.tap(find.text('AI ক্লাসরুম'));
     await tester.pump();
-    await pumpUntil(tester, find.textContaining('শুরু করো'),
-        what: 'lesson overview start button');
-    ok(tester, 'lesson overview');
-    await tester.tap(find.textContaining('শুরু করো').first);
     await tester.pump();
     // Skip / Hint / Quit — always visible, always enabled (00 invariant)
     expect(find.text('ইঙ্গিত'), findsOneWidget, reason: 'Hint missing');
     expect(find.text('বাদ'), findsOneWidget, reason: 'Skip missing');
     expect(find.text('বন্ধ'), findsOneWidget, reason: 'Quit missing');
-    // use them like a hesitant learner: hint on, hint off, skip, quit
+    // hesitant learner: hint on/off, wrong answer (→ struggle, D-001 neutral),
+    // skip, then talk to the sensei, then quit
     await tester.tap(find.text('ইঙ্গিত'));
     await tester.pump();
     await tester.tap(find.text('ইঙ্গিত'));
     await tester.pump();
     await tester.tap(find.text('বাদ'));
     await tester.pump();
-    await tester.tap(find.text('বন্ধ'));
+    ok(tester, 'classroom hint/skip');
+    // sensei chat sheet (rev-2 §4): open, quick chip, close
+    await tester.tap(find.bySemanticsLabel('Talk to sensei'));
     await tester.pump();
-    ok(tester, 'lesson skip/hint/quit');
-    await tester.pageBack();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.tap(find.text('একটা উদাহরণ'));
     await tester.pump();
+    await tester.pump(const Duration(milliseconds: 1200)); // canned reply lands
+    ok(tester, 'sensei chat sheet');
+    await tester.tap(find.descendant(
+        of: find.byType(SenseiChatSheet),
+        matching: find.byIcon(Icons.close))); // close the sheet, not the toolbar
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+    await tester.tap(find.text('বন্ধ')); // quit lesson (pops)
+    await tester.pump();
+    ok(tester, 'classroom quit');
 
     // ── 5. Review (fresh user, empty deck, DB off-device) ───────────────
     await tester.tap(find.byIcon(Icons.home_outlined));

@@ -58,6 +58,15 @@ abstract final class BhasagoStateColors {
 }
 
 abstract final class BhasagoTheme {
+  // Aliases used by the v4 handoff screens (step6 lesson, curriculum, book).
+  // Same values as BhasagoColors — keep in sync.
+  static const bg = BhasagoColors.bg;
+  static const card = BhasagoColors.surface;
+  static const outline = BhasagoColors.outline;
+  static const pillOutline = Color(0xFF3A3A3A);
+  static const text = BhasagoColors.ink;
+  static const muted = BhasagoColors.inkDim;
+
   static const _radiusCard = 20.0; // v4: cards
   static const _radiusField = 14.0;
 

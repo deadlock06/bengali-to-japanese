@@ -23,6 +23,7 @@ import 'presentation/home_screen.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
 import 'presentation/lesson_list_screen.dart';
+import 'presentation/book_screen_v4.dart';
 import 'presentation/lesson_screen_v4.dart';
 import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
@@ -95,6 +96,9 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         onOpenAiCheck: () =>
             _push(context, 'AI চেক', const AiCheckScreen()),
         onOpenProgress: () => setState(() => tab = 3),
+        // Book has its own header/back — plain push, no _push scaffold.
+        onOpenBook: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (_) => const BookScreenV4())),
       ),
       const LessonListScreen(),
       const ShadowingScreen(),

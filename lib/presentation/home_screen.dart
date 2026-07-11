@@ -25,12 +25,14 @@ class HomeScreen extends ConsumerWidget {
   final VoidCallback onOpenReview;
   final VoidCallback onOpenAiCheck;
   final VoidCallback onOpenProgress;
+  final VoidCallback onOpenBook;
   const HomeScreen({
     super.key,
     required this.onOpenLesson,
     required this.onOpenReview,
     required this.onOpenAiCheck,
     required this.onOpenProgress,
+    required this.onOpenBook,
   });
 
   @override
@@ -177,6 +179,10 @@ class HomeScreen extends ConsumerWidget {
             ],
           ),
         ),
+        const SizedBox(height: 16),
+
+        // ── book entry (rev-3 §2: mini cover + progress, green section) ──
+        _BookEntryCard(onTap: onOpenBook),
         const SizedBox(height: 16),
 
         // ── this week's topics (See-all row) ────────────────────────────
@@ -455,4 +461,65 @@ class _SparklinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_SparklinePainter old) => old.values != values;
+}
+
+
+/// Rev-3 §2: Home entry to the Bhasha Go book (green section ink).
+class _BookEntryCard extends StatelessWidget {
+  const _BookEntryCard({required this.onTap});
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    const green = Color(0xFF35E065);
+    final text = Theme.of(context).textTheme;
+    return Material(
+      color: BhasagoColors.surface,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: BhasagoColors.outline)),
+          child: Row(children: [
+            Container( // 34×44 mini cover
+              width: 34, height: 44,
+              clipBehavior: Clip.antiAlias,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                gradient: const LinearGradient(
+                    begin: Alignment.topLeft, end: Alignment.bottomRight,
+                    colors: [Color(0xFF2E7D5B), Color(0xFF1F5C42)]),
+              ),
+              child: Row(children: [
+                Container(width: 4, color: const Color(0xFF174632)),
+                const Expanded(
+                  child: Center(
+                    child: Text('語', style: TextStyle(
+                        fontFamily: 'ZenKakuGothicNew', fontSize: 15,
+                        fontWeight: FontWeight.w900, color: Color(0xFFF5F5F0))),
+                  ),
+                ),
+              ]),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('ভাষা গো — বাংলায় জাপানি শেখো',
+                    maxLines: 1, overflow: TextOverflow.ellipsis,
+                    style: text.titleSmall?.copyWith(color: BhasagoColors.ink)),
+                const SizedBox(height: 2),
+                Text('অধ্যায় ২ চলছে · ২২% পড়া হয়েছে',
+                    style: text.bodySmall?.copyWith(fontSize: 11)),
+              ]),
+            ),
+            const Icon(Icons.chevron_right, size: 20, color: green),
+          ]),
+        ),
+      ),
+    );
+  }
 }

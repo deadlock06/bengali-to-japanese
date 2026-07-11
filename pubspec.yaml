@@ -59,6 +59,15 @@ flutter:
     - family: Space Grotesk
       fonts:
         - asset: assets/fonts/SpaceGrotesk.ttf
+    # Alias — step-6 handoff code uses the no-space family name.
+    - family: ZenKakuGothicNew
+      fonts:
+        - asset: assets/fonts/ZenKakuGothicNew-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/ZenKakuGothicNew-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/ZenKakuGothicNew-Black.ttf
+          weight: 900
 
 # Native model integration (llama.cpp / whisper.cpp / Kokoro) is wired through
 # a Kotlin MethodChannel on the Android side — see README.

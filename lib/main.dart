@@ -81,6 +81,15 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     ));
   }
 
+  void _push(BuildContext context, String title, Widget body) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: Text(title)),
+        body: body,
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);

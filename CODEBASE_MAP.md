@@ -1,6 +1,8 @@
 # CODEBASE MAP — refreshed 2026-07-12 by Claude (Fable 5, Cowork/Linux sandbox — static audit + node proofs; Flutter checks still pending on Windows)
 
-> **SAME-DAY UPDATE (2026-07-12 PM):** handoff follow-ups implemented — **T-112 ☑** (lesson_batch.dart + classroomBatchProvider + proof 11/11 in CI), LessonScreenV4 = live batches + agent-bus staging + note.bn reasoning, ambiance loops animated (reduced-motion/burnout freeze), WritingScreen kana sound-context + intro card, Speak-tab pitch entry, Home course % live. l10n + শোনা/বলা pcts intentionally open. See NEXT_SESSION.md 07-12 PM entry. Flutter checks still pending — now ~9 unverified Dart files.
+> **SAME-DAY UPDATE (2026-07-12 PM):** handoff follow-ups implemented — **T-112 ☑** (lesson_batch.dart + classroomBatchProvider + proof 11/11 in CI), LessonScreenV4 = live batches + agent-bus staging + note.bn reasoning, ambiance loops animated (reduced-motion/burnout freeze), WritingScreen kana sound-context + intro card, Speak-tab pitch entry, Home course % live. l10n + শোনা/বলা pcts intentionally open. See NEXT_SESSION.md 07-12 PM entry.
+>
+> **NIGHT UPDATE (2026-07-12, final):** everything above + Home v4.dc.html full fidelity **COMMITTED** — `61b10f8` / `5d08ce4` / `4bef534`, tree clean. **T-121 ☑ (static):** BookReaderScreen written (was a MISSING import — would have failed analyze), mark-read persists `book_read_ch`, lesson→chapter deep-link (20/20 units↔chapters resolve). **Data autonomy (00 §5) restored in Settings** (export ZIP / delete w/ 7-day grace / persona picker / KanjiVG attribution) + boot purge-check & persona restore in HomeShell. `collection` dep added (book_repository needed it). The stale "uncommitted slice" wording below is historical. **Flutter analyze/test still the gate — owner installing SDK locally.**
 
 > **AUDIT 2026-07-12 RESULTS (all runnable checks GREEN):**
 > Proofs 79/79: validator **PASS 0 warnings** · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8 · curriculum 14/14. Book builder: `assets/book/book.json` = 32 entries (20 numbered chapters), 876 blocks.
@@ -30,7 +32,7 @@
 | T-107 audio pipeline | ◐ | record/just_audio deps, stubs | OPUS, real record/playback — **biggest untouched rock** |
 | T-108 progress dashboard | ◑ | progress.dart proven, v0.1 screen built | **unrouted**; ProgressScreenV4 shows demo data — wire T-108 logic in |
 | T-120 curriculum service | ☑ | curriculum_service.dart, proof 14/14, live in CurriculumScreenV4 | "চালিয়ে যাও" → Director recommendation still pending |
-| T-121 book reader | ◐ | **uncommitted slice** (see header) | verify w/ analyze/test, commit; lesson↔chapter deep-link |
+| T-121 book reader | ☑ (static) | book_repository + BookReaderScreen + deep-link, committed `4bef534` | compiler-verify on Windows; reader polish later |
 | T-401–405 agents | ☑ | lib/agents/ 17/17, wired into lesson | — |
 | T-602/603 export+deletion | ◑ | export_service.dart ZIP, 7-day grace | PDF in export; persona+purge bootstrap in main() |
 | Native bridges | ✗ | no cpp/, no MethodChannel | 0% — device-gated work |
@@ -47,7 +49,7 @@
 ## P0 blockers
 - None for the sandbox-checkable surface. The only unverified risk: ~5 Dart files changed since the last successful `flutter analyze/test` (07-10). **Run the Windows checks before trusting them.**
 
-## Recommended next 3 tasks (post-audit, matches NEXT_SESSION DO-NEXT)
-1. **Windows:** `flutter pub get; gen-l10n; analyze; test` → then COMMIT the T-121 slice (and normalize the CRLF-only churn in theme/main).
-2. **T-121 finish:** BookScreenV4 reader polish + lesson↔chapter deep-link; mark-read writes `book_read_ch` meta (provider already reads it).
+## Recommended next 3 tasks (updated 2026-07-12 night)
+1. **Flutter gate:** `flutter pub get; flutter gen-l10n; flutter analyze; flutter test` (SDK being installed) — ~14 Dart files changed since the last compile; fix whatever it surfaces.
+2. **l10n migration** (handoff follow-up 1): v4 hardcoded BN strings → arb keys (lists in handoff rev-2 §3 + rev-3 §3), then gen-l10n regenerates.
 3. **A2.M mock engine** in AiCheckScreen per classroom/CURRICULUM.md §6/§8 (4×12 CBT sampler, answer-key grading, band estimate → Director) — unblocks the A2.M curriculum row.

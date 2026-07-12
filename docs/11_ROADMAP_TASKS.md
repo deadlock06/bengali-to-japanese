@@ -2,7 +2,7 @@
 <!-- READ WHEN: deciding what to build next. Keep statuses updated here — this file is the single source of truth for progress. DEPENDS: 00. ~1.6K tokens -->
 
 ## STATUS LEGEND: ☐ todo · ◐ in-progress · ☑ done · ⊘ blocked
-## ▶ CURRENT POINTER: **2026-07-12 evening — Home v4.dc.html implemented to full fidelity (top row/star/knob/sensei pill/depth field) on top of the PM handoff follow-ups (T-112 ☑, agent staging, kana context). Next real gap: Windows `flutter pub get; gen-l10n; analyze; test` (~12 Dart files unverified) → commit → l10n migration → A2.M mock + T-121 finish. See NEXT_SESSION.md.**
+## ▶ CURRENT POINTER: **2026-07-12 night — day's work COMMITTED (`61b10f8`/`5d08ce4`/`4bef534`, tree clean): T-112 ☑, T-121 ☑ (static — reader+deep-link+mark-read), Home v4 full fidelity, data-autonomy UI restored (00 §5), boot purge/persona carry-over done. Next real gap: `flutter pub get; gen-l10n; analyze; test` (SDK installing; ~14 files unverified) → l10n migration → A2.M mock engine → N4 lessons. See NEXT_SESSION.md.**
 
 ## Phase FIX — reconciliation fixes (from 2026-07-09 audit)
 - ☐ FIX-A (LOW) Keep streak as neutral history only when porting premium UI (D-001). Prototype-only today.

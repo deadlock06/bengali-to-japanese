@@ -69,8 +69,8 @@ Static audit + node proofs (no Flutter in sandbox). Results:
 4. **FIX curriculum.json:** lesson_id A2.3=lesson_directions,lesson_transport · A2.4=lesson_work_requests · A2.5=lesson_smalltalk(part) · A2.6=lesson_work_safety(part). Validator re-run PASS. CURRICULUM_MAP → 12/20.
 5. **NOT run:** flutter analyze/test (Windows-only here) — FIRST THING next session; the one Dart edit is small + paren-balanced but must be compiler-verified.
 
-## PROJECT STATE (audit estimate, JFT-usable-beta scope)
-Engine/data ~90% · v4 UI shell ~80% (screens built; data-wiring T-108/120/121 + l10n pending) · Content: book 20/20 ✓, lessons 12/20, audio 0% · Native AI bridges 0% (stubs pending) · Overall ≈ **60–65%**. Biggest rocks left: T-120/121 wiring, mock engine, lesson JSONs ×8, audio pipeline, native bridges, l10n.
+## PROJECT STATE (updated 2026-07-12 night, JFT-usable-beta scope)
+Engine/data ~90% · v4 UI shell ~90% (T-112/120/121 wired live; l10n + T-108-into-V4 pending) · Content: book 20/20 ✓, lessons 15/20 authored (13/20 units wired; native review pending on 24 items), audio 0% · Native AI bridges 0% · Overall ≈ **65–70%** (compiler-unverified until the Flutter gate). Biggest rocks left: mock engine, N4 lessons ×5 + whitelist, audio pipeline, native bridges, l10n, remaining designs (journey map / Speak / Review / state pack).
 
 ## Later session (2026-07-11 night, Claude Fable 5 / Cowork) — 3 lessons authored + T-120 CURRICULUM SERVICE WIRED
 1. **Content +3 (validator PASS):** `lesson_intro_qa` (A1.2), `lesson_past_plans` (A2.5), `lesson_apology` (A2.6) — 8 items each, trilingual notes, full schema; whitelist +24 A2 surface forms (D-012 batch-2 marker); registered in content_repository manifest. **Native review pending on all 24 items.**

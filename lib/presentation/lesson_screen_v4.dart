@@ -28,7 +28,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../agents/agent_state.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/book_repository.dart';
 import '../data/lesson_batch.dart';
+import 'book_reader_screen.dart';
 import 'book_screen_v4.dart';
 import 'curriculum_screen_v4.dart';
 
@@ -98,6 +100,25 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     Future.microtask(() {
       if (mounted) ref.read(agentBusProvider.notifier).startSession();
     });
+  }
+
+  /// Chapter mapped to the live lesson via curriculum unit ids (`unit:` keys
+  /// in book.json). null when providers/mapping aren't resolved — caller
+  /// falls back to the book cover.
+  BookChapter? _chapterForLesson() {
+    final lessonId = _batch?.lessonId;
+    if (lessonId == null) return null;
+    final units = ref.read(curriculumProvider).valueOrNull;
+    final book = ref.read(bookProvider).valueOrNull;
+    if (units == null || book == null) return null;
+    for (final u in units) {
+      if (u.lessonIds.contains(lessonId)) {
+        for (final c in book.chapters) {
+          if (c.unit == u.id) return c;
+        }
+      }
+    }
+    return null;
   }
 
   double? _takeHesitation() {
@@ -255,9 +276,15 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         _headerIcon(Icons.map_outlined, const Color(0xFFE8515A),
             () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (_) => const CurriculumScreenV4()))),
-        _headerIcon(Icons.auto_stories, const Color(0xFF35E065),
-            () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (_) => const BookScreenV4()))),
+        // T-121 deep-link: jump straight to THIS lesson's book chapter when
+        // the unit↔chapter mapping resolves; otherwise the book cover.
+        _headerIcon(Icons.auto_stories, const Color(0xFF35E065), () {
+          final ch = _chapterForLesson();
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => ch == null
+                  ? const BookScreenV4()
+                  : BookReaderScreen(chapter: ch)));
+        }),
         Container( // mood pill
           padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 4),
           decoration: BoxDecoration(border: Border.all(color: m.color, width: 1.5), borderRadius: BorderRadius.circular(999)),

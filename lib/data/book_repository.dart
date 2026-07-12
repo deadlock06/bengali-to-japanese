@@ -4,6 +4,7 @@
 // verified:false until native BN-JP review (05 rule #10) — meta carries it.
 import 'dart:convert';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/services.dart' show rootBundle;
 
 class BookBlock {

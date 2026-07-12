@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'l10n/app_localizations.dart';
+import 'agents/agent_state.dart';
 import 'app/providers.dart';
 import 'app/theme.dart';
 import 'presentation/home_screen.dart';
@@ -73,6 +74,32 @@ class HomeShell extends ConsumerStatefulWidget {
 
 class _HomeShellState extends ConsumerState<HomeShell> {
   int tab = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Boot carry-overs (00 §5 + 04): honour an elapsed 7-day deletion grace,
+    // then restore the learner's persisted persona into the agent bus.
+    Future.microtask(() async {
+      try {
+        final srs = ref.read(srsProvider);
+        final requested = await srs.deletionRequestedAt();
+        if (requested != null &&
+            DateTime.now().difference(requested).inDays >= 7) {
+          await srs.purgeAllData();
+        }
+        final saved = await srs.getMeta('persona');
+        if (saved != null && mounted) {
+          for (final p in PersonaType.values) {
+            if (p.name == saved) {
+              ref.read(agentBusProvider.notifier).setPersona(p);
+              break;
+            }
+          }
+        }
+      } catch (_) {/* off-device DB (widget tests) — defaults apply */}
+    });
+  }
 
   void _push(BuildContext context, String title, Widget body) {
     Navigator.of(context).push(MaterialPageRoute(

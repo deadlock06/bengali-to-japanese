@@ -97,6 +97,14 @@ Owner direction: "complete those all following the design documents (handoff)". 
 6. **Verified from sandbox:** batch 11/11 · validator PASS · all prior proofs green · bracket-balance clean on 7 edited Dart files · test-critical strings (ইঙ্গিত/বাদ/বন্ধ/Talk to sensei/chips) preserved. **flutter analyze/test NOT run (no SDK here) — REQUIRED first on Windows; ~9 Dart files now unverified.**
 7. Still open from handoff: l10n migration (follow-up 1, Windows), tutor-service for SenseiChat (canned), T-121 finish, A2.M mock.
 
+## Later session (2026-07-12 night, Claude Fable 5 / Cowork) — apply-everything: commits + T-121 reader + data-autonomy restore
+1. **Committed the day's work:** `61b10f8` (T-112 classroom/agents/kana/T-121 slice/audit docs) + `5d08ce4` (Home v4 fidelity + preview) + this batch. CRLF-only churn + build artifacts excluded.
+2. **CRITICAL fixes found while applying:** `book_screen_v4.dart` imported `book_reader_screen.dart` that DID NOT EXIST (T-121 slice was incomplete — instant analyze failure) → **wrote BookReaderScreen** (renders h/p/li/q/table blocks, green ink, "পড়া শেষ" persists `book_read_ch`). Also `book_repository.dart` used `.firstOrNull` without the `package:collection` import → fixed + `collection: ^1.18.0` added to pubspec.
+3. **Data autonomy RESTORED in Settings (00 §5 non-negotiable was unrouted!):** export ZIP (ExportService), delete w/ 7-day grace (request/confirm/cancel UI), persona picker (persists app_meta `persona` → agent bus), KanjiVG CC BY-SA attribution (D-011).
+4. **main() bootstrap carry-over DONE:** HomeShell initState → elapsed-grace purge check + persona restore from app_meta.
+5. **T-121 deep-link DONE:** lesson header book icon → BookReaderScreen of the CURRENT lesson's chapter via unit↔chapter map (verified: all 20 book chapters resolve to curriculum ids); falls back to the cover.
+6. Static checks green (balance/proofs/mapping). **Flutter analyze/test still pending — owner is installing the SDK locally; run `flutter pub get; gen-l10n; analyze; test` next.** l10n migration (handoff follow-up 1) remains the top deferred item after that.
+
 ## Later session (2026-07-12 evening, Claude Fable 5 / Cowork) — Home v4.dc.html full-fidelity pass (new design bundle)
 Source: fresh `Shared design file.zip` → `load-existing-design/` (design project export, README-first). Diffed `Home v4.dc.html` vs implementation; closed every Home/shell gap:
 1. **Home top row** (lang pill cycling bn→en→ja persisted to `locale_chosen` + yellow avatar w/ initial) · greeting now "হাই, {name}" (`userNameProvider`, shared_prefs `user_name`, design default 'রাফি').

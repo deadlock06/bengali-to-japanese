@@ -79,6 +79,34 @@ Engine/data ~90% · v4 UI shell ~80% (screens built; data-wiring T-108/120/121 +
 4. **New proof `tools/curriculum_reference.mjs` — 14/14** (DAG resolve/acyclic, lesson_id↔real-id resolution, empty/partial/full progress states, pct math) + added to CI after agents proof.
 5. **NOT run:** flutter analyze/test (Windows) — REQUIRED before trusting the Dart edits (theme fallback + this session's 4 Dart files).
 
+## Later session (2026-07-12, Claude Fable 5 / Cowork) — FULL-PROJECT AUDIT (90_EXISTING_CODEBASE protocol)
+Static audit + node proofs (Linux sandbox, no Flutter). Results:
+1. **All 79/79 proofs GREEN:** validator PASS 0 warnings · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8 · curriculum 14/14. Book builder OK (32 entries / 20 chapters / 876 blocks).
+2. **Risk sweeps CLEAN:** D-001 banned patterns 0 hits · no secrets · no FSRS mood-coupling (D-003).
+3. **Found an UNCOMMITTED, undocumented T-121 slice in the tree** (post-dates the last entry above): `book_repository.dart`, `tools/build_book_json.mjs`, `assets/book/book.json`, providers (+bookProvider/+bookReadChapterProvider, curriculumProvider try/catch), book_screen_v4 on live data, pubspec `assets/book/`. Statically coherent (symbols/assets resolve). `theme.dart`/`main.dart` diffs are **CRLF-only** — content identical to HEAD.
+4. **CODEBASE_MAP.md fully refreshed (was 07-09)** + roadmap ▶ pointer moved to 07-12. Curriculum wiring: 13/20 units; null lesson_id = A2.M, N4.1–5, N4.M (mock engine + N4 authoring pending, as planned).
+5. **NOT run:** flutter analyze/test (Windows) — still gate #1 below; the uncommitted T-121 Dart must pass it before committing.
+
+## Later session (2026-07-12, Claude Fable 5 / Cowork) — HANDOFF FOLLOW-UPS: T-112 live classroom + agent staging + kana context
+Owner direction: "complete those all following the design documents (handoff)". Implemented every code follow-up the rev-2/3/4 handoff authorizes (l10n deferred — needs gen-l10n on Windows). NO new visual design improvised.
+1. **T-112 DONE (static+proof):** new `lib/data/lesson_batch.dart` — pure deterministic batch builder (next uncompleted lesson in curriculum order per rev-3 rule; answer-key MC from verified meanings only, D-001/00§4) + `classroomBatchProvider` (providers.dart, demo fallback off-device) + **proof `tools/batch_reference.mjs` 11/11, added to CI**.
+2. **LessonScreenV4 → live classroom:** ConsumerStatefulWidget on real batches (title = can_do.bn — the "why"); demo batch kept as fallback/free-practice; batch never swaps mid-lesson (rev-4 §2). **Agent bus wired** (startSession/recordAnswer+hesitation/recordHint/recordSkip/recordLearned): once out of calibrating, bus psych state drives the mood staging (brief §2.3); handoff local rules stand in during cold-start. Correct answer → sensei bubble shows note.bn (reasoning layer, never generated). Completion → recordLessonCompletion + seedCard×items + invalidate curriculum/due/batch providers.
+3. **Ambiance loops (handoff follow-up 6):** _AmbientClassroom now animates per HANDOFF §Motion (lantern ±2° 6s, 6 dust motes 7–9s, 18s master loop); burnout still + disableAnimations freeze ALL.
+4. **WritingScreen meaning layer (owner direction):** per-char strip "char · romaji · উচ্চারণ: <BN>" (46-entry gojūon maps, BOOK.md Ch.1) + first-open "এটা কী শিখছ?" intro card (condensed PART 0, shared_prefs `kana_intro_seen`) + reduced-motion gate (stroke demo renders statically). Marked interim until the blackboard-scene design.
+5. **Smaller handoff follow-ups:** Speak tab = pitch entry card + shadowing (follow-up 2) · Home course % = live mean unit pct from curriculumProvider (T-108 hookup; real 0% for fresh user) · agent_panel psych strip snaps under reduced-motion. ProgressV4 শোনা/বলা pcts left demo ON PURPOSE — no truthful listening/pitch history source exists yet (correctness over fake data).
+6. **Verified from sandbox:** batch 11/11 · validator PASS · all prior proofs green · bracket-balance clean on 7 edited Dart files · test-critical strings (ইঙ্গিত/বাদ/বন্ধ/Talk to sensei/chips) preserved. **flutter analyze/test NOT run (no SDK here) — REQUIRED first on Windows; ~9 Dart files now unverified.**
+7. Still open from handoff: l10n migration (follow-up 1, Windows), tutor-service for SenseiChat (canned), T-121 finish, A2.M mock.
+
+## Later session (2026-07-12 evening, Claude Fable 5 / Cowork) — Home v4.dc.html full-fidelity pass (new design bundle)
+Source: fresh `Shared design file.zip` → `load-existing-design/` (design project export, README-first). Diffed `Home v4.dc.html` vs implementation; closed every Home/shell gap:
+1. **Home top row** (lang pill cycling bn→en→ja persisted to `locale_chosen` + yellow avatar w/ initial) · greeting now "হাই, {name}" (`userNameProvider`, shared_prefs `user_name`, design default 'রাফি').
+2. **Red AI Classroom card to spec:** spinning 4-point star (5s, reduced-motion-gated), subtitle = LIVE current curriculum unit, progress pill = #111 track/white fill/red knob (design §108-109), extra non-design button REMOVED — whole card taps.
+3. **Green card sparkline → live `retentionSeriesProvider`** (was hardcoded) · **topics + "সব দেখো" → Learn tab** via new `onOpenLearn` (was mis-wired to classroom).
+4. **AI sensei outline pill (new):** pulsing dot + 30ms typed greeting naming the real next batch ("আজ (title) — Nটা নতুন শব্দ"); tap retypes; reduced-motion = static full text.
+5. **_DepthField backdrop (new, main.dart):** red sun pulse + seigaiha arcs + floating 語/あ/ん behind all tabs, 20s loop, frozen under reduced-motion. Nav already matched (white pill, onlyShowSelected).
+6. Tests: `find.text('হাই!')` → `textContaining('হাই')` ×2. Preview regenerated to match (backdrop/top row/star/knob/sensei pill). Repaired a mount-duplicated `_push` in main.dart.
+7. **NOT run:** flutter analyze/test (no SDK) — Windows gate now covers home_screen/main/providers on top of the earlier list.
+
 ## DO NEXT (priority order, post-audit)
 1. **Windows checks:** `flutter pub get; flutter gen-l10n; flutter analyze; flutter test` — verify theme fontFamilyFallback edit + rev-3/4 code. Expect green.
 2. ~~T-120 curriculum service~~ **DONE** (verify via analyze/test; then point "চালিয়ে যাও" at Director recommendation — currently pops to lesson).

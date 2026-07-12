@@ -6,9 +6,36 @@ import 'dart:convert';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:shared_preferences/shared_preferences.dart';
 
 const _hiraChars = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
 const _kataChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+
+// Same gojūon order as the char strings above — so the learner always sees
+// WHAT sound they are tracing (romaji + Bengali equivalent), never a bare
+// glyph. Bengali mapping follows classroom/BOOK.md Ch.1 (আ ই উ এ ও …).
+const _romaji = [
+  'a','i','u','e','o','ka','ki','ku','ke','ko','sa','shi','su','se','so',
+  'ta','chi','tsu','te','to','na','ni','nu','ne','no','ha','hi','fu','he','ho',
+  'ma','mi','mu','me','mo','ya','yu','yo','ra','ri','ru','re','ro','wa','wo','n',
+];
+const _bnSound = [
+  'আ','ই','উ','এ','ও','কা','কি','কু','কে','কো','সা','শি','সু','সে','সো',
+  'তা','চি','ৎসু','তে','তো','না','নি','নু','নে','নো','হা','হি','ফু','হে','হো',
+  'মা','মি','মু','মে','মো','ইয়া','ইউ','ইয়ো','রা','রি','রু','রে','রো','ওয়া','ও','ন',
+];
+
+// First-open explainer — condensed from classroom/BOOK.md PART 0 (verified
+// content, not generated). Interim UI until the "blackboard scene" design.
+const _kanaIntroBn =
+    'হিরাগানা আর কাতাকানা হলো জাপানি "বর্ণমালা" — বাংলার মতোই sound-based, '
+    'যুক্তবর্ণের জঙ্গল নেই।\n\n'
+    '• হিরাগানা (৪৬টা): জাপানি শব্দ ও grammar লেখা হয় — আগে এটা শেখো।\n'
+    '• কাতাকানা: same ৪৬টা sound, আলাদা চেহারা — বিদেশি শব্দ আর তোমার '
+    'নিজের নাম লিখতে লাগে।\n\n'
+    'পুরো system ৫টা vowel এর উপর দাঁড়িয়ে: あ(আ) い(ই) う(উ) え(এ) お(ও) — '
+    'বাকি সব consonant + এই ৫ vowel। সঠিক stroke order এ লেখো — জাপানিরা '
+    'এক নজরেই চেনে (ফর্ম, নাম-ট্যাগ, daily report এ কাজে লাগবে)।';
 
 class WritingScreen extends StatefulWidget {
   const WritingScreen({super.key});
@@ -26,6 +53,8 @@ class _WritingScreenState extends State<WritingScreen>
   late final AnimationController _anim =
       AnimationController(vsync: this, duration: const Duration(milliseconds: 600));
   bool _animating = false;
+  bool _staticStrokes = false; // reduced-motion: full character, no animation
+  bool _showIntro = false; // "what is kana?" — first open only
 
   String get _script => _kata ? 'katakana' : 'hiragana';
   String get _chars => _kata ? _kataChars : _hiraChars;
@@ -37,6 +66,17 @@ class _WritingScreenState extends State<WritingScreen>
     rootBundle.loadString('assets/stroke/kana_strokes.json').then((s) {
       setState(() => _data = json.decode(s) as Map<String, dynamic>);
     });
+    SharedPreferences.getInstance().then((p) {
+      if (mounted && p.getBool('kana_intro_seen') != true) {
+        setState(() => _showIntro = true);
+      }
+    });
+  }
+
+  void _dismissIntro() {
+    setState(() => _showIntro = false);
+    SharedPreferences.getInstance()
+        .then((p) => p.setBool('kana_intro_seen', true));
   }
 
   @override
@@ -57,8 +97,18 @@ class _WritingScreenState extends State<WritingScreen>
 
   void _play() {
     if (_strokes() == null || _animating) return;
+    // Accessibility gate (DESIGN_BRIEF §2): reduced-motion kills ALL
+    // animation — show the finished character statically instead.
+    if (MediaQuery.of(context).disableAnimations) {
+      setState(() {
+        _ink.clear();
+        _staticStrokes = true;
+      });
+      return;
+    }
     setState(() {
       _ink.clear();
+      _staticStrokes = false;
       _animating = true;
     });
     _anim.forward(from: 0).whenComplete(() => setState(() => _animating = false));
@@ -68,6 +118,7 @@ class _WritingScreenState extends State<WritingScreen>
         _idx = i;
         _ink.clear();
         _animating = false;
+        _staticStrokes = false;
         _anim.reset();
       });
 
@@ -75,6 +126,31 @@ class _WritingScreenState extends State<WritingScreen>
   Widget build(BuildContext context) {
     final strokes = _strokes();
     return Column(children: [
+      // First open: what kana IS and why it's learned first (BOOK.md PART 0) —
+      // the learner should never trace glyphs without knowing what they are.
+      if (_showIntro)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Text('এটা কী শিখছ?',
+                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 13.5)),
+              const SizedBox(height: 6),
+              const Text(_kanaIntroBn, style: TextStyle(fontSize: 12, height: 1.5)),
+              const SizedBox(height: 8),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                    onPressed: _dismissIntro, child: const Text('বুঝেছি')),
+              ),
+            ]),
+          ),
+        ),
       // script toggle
       Padding(
         padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
@@ -113,6 +189,17 @@ class _WritingScreenState extends State<WritingScreen>
           ),
         ),
       ),
+      // sound context: WHAT you are tracing — romaji + Bengali equivalent
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Text(_cur, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const SizedBox(width: 8),
+          Text('${_romaji[_idx]} · উচ্চারণ: ${_bnSound[_idx]}',
+              style: TextStyle(fontSize: 13.5,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant)),
+        ]),
+      ),
       // paper — takes the leftover height, square sized by the shorter axis,
       // so short/landscape viewports (split-screen, test surface) never overflow
       Expanded(
@@ -126,7 +213,10 @@ class _WritingScreenState extends State<WritingScreen>
                 child: Listener(
                   onPointerDown: (e) {
                     if (_animating) return;
-                    setState(() => _ink.add([e.localPosition]));
+                    setState(() {
+                      _staticStrokes = false; // start drawing over the model
+                      _ink.add([e.localPosition]);
+                    });
                   },
                   onPointerMove: (e) {
                     if (_animating || _ink.isEmpty) return;
@@ -138,9 +228,9 @@ class _WritingScreenState extends State<WritingScreen>
                       size: Size.infinite,
                       painter: _WritingPainter(
                         ink: _ink,
-                        guideChar: _guide && !_animating ? _cur : null,
-                        animStrokes: _animating ? strokes : null,
-                        animT: _anim.value,
+                        guideChar: _guide && !_animating && !_staticStrokes ? _cur : null,
+                        animStrokes: _animating || _staticStrokes ? strokes : null,
+                        animT: _animating ? _anim.value : 1.0,
                       ),
                     ),
                   ),

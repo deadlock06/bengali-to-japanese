@@ -50,8 +50,11 @@ class _AgentPanelState extends ConsumerState<AgentPanel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         // Psych strip + one-line Bengali rationale (always explainable — 04).
+        // Reduced-motion: color snaps instead of tweening (accessibility gate).
         AnimatedContainer(
-          duration: const Duration(milliseconds: 400),
+          duration: MediaQuery.of(context).disableAnimations
+              ? Duration.zero
+              : const Duration(milliseconds: 400),
           height: 3,
           decoration: BoxDecoration(
             color: color,

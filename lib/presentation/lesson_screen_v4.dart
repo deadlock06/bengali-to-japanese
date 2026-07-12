@@ -24,7 +24,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../agents/agent_state.dart';
+import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/lesson_batch.dart';
 import 'book_screen_v4.dart';
 import 'curriculum_screen_v4.dart';
 
@@ -46,48 +50,96 @@ const moodSpecs = {
   LessonMood.boredom:  MoodSpec(Color(0xFFA78BF7), 'খুব সহজ লাগছে?', 'সহজ লাগছে? আরও কঠিন আসছে।'),
 };
 
-class LessonItem {
-  const LessonItem(this.jp, this.yomi, this.options, this.answerIndex, this.hint);
-  final String jp, yomi, hint;
-  final List<String> options;
-  final int answerIndex;
-}
-
-// TODO(T-112): replace with SRS-selected batch.
+// Design-parity fallback (also serves widget tests / all-lessons-done free
+// practice). Real batches come from classroomBatchProvider (T-112).
 const demoBatch = [
-  LessonItem('水', 'みず · mizu', ['পানি', 'আগুন', 'গাছ', 'ভাত'], 0, '「み」 দিয়ে শুরু — যেটা তুমি পান করো।'),
-  LessonItem('火', 'ひ · hi', ['পাহাড়', 'আগুন', 'চাঁদ', 'নদী'], 1, 'গরম, জ্বলে — রান্নায় লাগে।'),
-  LessonItem('木', 'き · ki', ['পাথর', 'মাছ', 'গাছ', 'পাখি'], 2, 'ডালপালা আছে, বাগানে জন্মায়।'),
-  LessonItem('ご飯', 'ごはん · gohan', ['ভাত', 'চা', 'দুধ', 'রুটি'], 0, 'প্রতিদিনের প্রধান খাবার।'),
-  LessonItem('お茶', 'おちゃ · ocha', ['কফি', 'জুস', 'চা', 'পানি'], 2, 'গরম পানীয় — বিকেলে খাওয়া হয়।'),
+  ClassroomQuestion(itemId: 'demo_mizu', jp: '水', yomi: 'みず · mizu', options: ['পানি', 'আগুন', 'গাছ', 'ভাত'], answerIndex: 0, hint: '「み」 দিয়ে শুরু — যেটা তুমি পান করো।', noteBn: 'প্রতিদিনের শব্দ — দোকানে お水ください বলা যায়।'),
+  ClassroomQuestion(itemId: 'demo_hi', jp: '火', yomi: 'ひ · hi', options: ['পাহাড়', 'আগুন', 'চাঁদ', 'নদী'], answerIndex: 1, hint: 'গরম, জ্বলে — রান্নায় লাগে।', noteBn: 'রান্না ও সাবধানতার সাইনে দেখা যায়।'),
+  ClassroomQuestion(itemId: 'demo_ki', jp: '木', yomi: 'き · ki', options: ['পাথর', 'মাছ', 'গাছ', 'পাখি'], answerIndex: 2, hint: 'ডালপালা আছে, বাগানে জন্মায়।', noteBn: 'সপ্তাহের দিন 木よう日 (বৃহস্পতিবার) এও আছে।'),
+  ClassroomQuestion(itemId: 'demo_gohan', jp: 'ご飯', yomi: 'ごはん · gohan', options: ['ভাত', 'চা', 'দুধ', 'রুটি'], answerIndex: 0, hint: 'প্রতিদিনের প্রধান খাবার।', noteBn: 'ご飯 মানে ভাত, আবার "খাবার"ও বোঝায়।'),
+  ClassroomQuestion(itemId: 'demo_ocha', jp: 'お茶', yomi: 'おちゃ · ocha', options: ['কফি', 'জুস', 'চা', 'পানি'], answerIndex: 2, hint: 'গরম পানীয় — বিকেলে খাওয়া হয়।', noteBn: 'কাজের বিরতিতে お茶 অফার করা ভদ্রতা।'),
 ];
 
-class LessonScreenV4 extends StatefulWidget {
+String _bnNum(int n) =>
+    n.toString().split('').map((d) => '০১২৩৪৫৬৭৮৯'[int.parse(d)]).join();
+
+class LessonScreenV4 extends ConsumerStatefulWidget {
   const LessonScreenV4({super.key});
   @override
-  State<LessonScreenV4> createState() => _LessonScreenV4State();
+  ConsumerState<LessonScreenV4> createState() => _LessonScreenV4State();
 }
 
-class _LessonScreenV4State extends State<LessonScreenV4> {
-  int idx = 0, streak = 0, wrongs = 0, picked = -1;
-  bool hintOpen = false, done = false;
+class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
+  int idx = 0, streak = 0, wrongs = 0, picked = -1, correctCount = 0;
+  int hintsUsed = 0, skipsUsed = 0;
+  bool hintOpen = false, done = false, completionSaved = false;
   LessonMood mood = LessonMood.neutral;
+  String? teacherNote; // reasoning line (note.bn) after a correct answer
 
-  LessonItem get q => demoBatch[idx.clamp(0, demoBatch.length - 1)];
+  // T-112: once the real batch arrives (and the lesson hasn't started) it
+  // replaces the demo. Cached so lesson state survives push/pop (rev-4 §2).
+  ClassroomBatch? _batch;
+
+  // Agents: when the current question appeared, for the hesitation signal —
+  // reported once per question so retries don't read as hesitation (04).
+  DateTime _shownAt = DateTime.now();
+  bool _hesitationTaken = false;
+
+  List<ClassroomQuestion> get qs => _batch?.questions ?? demoBatch;
+  String get lessonTitle => _batch?.titleBn ?? 'পাঠ ৩ · রেস্টুরেন্টে';
+  ClassroomQuestion get q => qs[idx.clamp(0, qs.length - 1)];
   MoodSpec get m => moodSpecs[mood]!;
+
+  @override
+  void initState() {
+    super.initState();
+    // New classroom session for the agent bus (04) — after the first frame so
+    // provider state isn't mutated during build.
+    Future.microtask(() {
+      if (mounted) ref.read(agentBusProvider.notifier).startSession();
+    });
+  }
+
+  double? _takeHesitation() {
+    if (_hesitationTaken) return null;
+    _hesitationTaken = true;
+    return DateTime.now().difference(_shownAt).inMilliseconds.toDouble();
+  }
+
+  void _nextQuestion() {
+    _shownAt = DateTime.now();
+    _hesitationTaken = false;
+  }
 
   void pick(int i) {
     if (done || picked == i) return;
-    if (i == q.answerIndex) {
-      final last = idx >= demoBatch.length - 1;
-      setState(() { picked = i; mood = LessonMood.flow; });
+    final correct = i == q.answerIndex;
+    // Deterministic key-match grading feeds the agent bus (adaptation only —
+    // never the answer path).
+    ref.read(agentBusProvider.notifier).recordAnswer(
+        correct: correct, patternKey: q.itemId, hesitationMs: _takeHesitation());
+    if (correct) {
+      final last = idx >= qs.length - 1;
+      setState(() {
+        picked = i;
+        mood = LessonMood.flow;
+        teacherNote = q.noteBn; // the "why/when" from the verified content
+      });
       Future.delayed(const Duration(milliseconds: 600), () {
         if (!mounted) return;
         setState(() {
           streak += 1;
+          correctCount += 1;
           mood = streak >= 3 ? LessonMood.boredom : LessonMood.flow;
-          if (last) { done = true; } else { idx += 1; }
-          picked = -1; hintOpen = false;
+          if (last) {
+            done = true;
+            _saveCompletion();
+          } else {
+            idx += 1;
+            _nextQuestion();
+          }
+          picked = -1;
+          hintOpen = false;
         });
       });
     } else {
@@ -98,14 +150,73 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
     }
   }
 
-  void skip() => setState(() { // always available — D-001
-    idx = (idx + 1).clamp(0, demoBatch.length - 1);
-    picked = -1; hintOpen = false; mood = LessonMood.neutral;
-  });
+  void skip() { // always available — D-001
+    ref.read(agentBusProvider.notifier).recordSkip();
+    setState(() {
+      skipsUsed += 1;
+      idx = (idx + 1).clamp(0, qs.length - 1);
+      picked = -1; hintOpen = false; mood = LessonMood.neutral;
+      teacherNote = null;
+      _nextQuestion();
+    });
+  }
+
+  /// Persist the finished lesson: completion row + SRS seeds, then refresh
+  /// curriculum / due-count / next-batch providers. Demo batch (off-device or
+  /// free practice) records nothing. Never throws into the UI.
+  Future<void> _saveCompletion() async {
+    final batch = _batch;
+    if (batch == null || completionSaved) return;
+    completionSaved = true;
+    final bus = ref.read(agentBusProvider.notifier);
+    try {
+      final srs = ref.read(srsProvider);
+      await srs.recordLessonCompletion(
+        lessonId: batch.lessonId,
+        items: qs.length,
+        correct: correctCount,
+        hints: hintsUsed,
+        skips: skipsUsed,
+      );
+      for (final item in batch.questions) {
+        await srs.seedCard(
+          id: item.itemId,
+          word: item.jp,
+          reading: item.yomi,
+          meaningBn: item.options[item.answerIndex],
+          meaningEn: '',
+        );
+        bus.recordLearned(item.itemId);
+      }
+      ref.invalidate(curriculumProvider);
+      ref.invalidate(dueCountProvider);
+      ref.invalidate(classroomBatchProvider);
+    } catch (_) {/* off-device DB — session stays in-memory only */}
+  }
 
   @override
   Widget build(BuildContext context) {
-    final progress = idx / demoBatch.length;
+    // T-112: adopt the real batch only before the first interaction, so an
+    // in-flight lesson never swaps content under the learner (rev-4 §2).
+    final live = ref.watch(classroomBatchProvider).valueOrNull;
+    if (_batch == null && live != null && idx == 0 && picked == -1 &&
+        correctCount == 0 && !done) {
+      _batch = live;
+    }
+    // Agent staging (04 / brief §2.3): once the bus is out of cold-start
+    // calibration its psych state drives the classroom; until then the
+    // handoff's local transition rules stand in.
+    final psych = ref.watch(agentBusProvider).psych;
+    if (psych != PsychState.calibrating) {
+      mood = switch (psych) {
+        PsychState.flow => LessonMood.flow,
+        PsychState.struggle => LessonMood.struggle,
+        PsychState.burnout => LessonMood.burnout,
+        PsychState.boredom => LessonMood.boredom,
+        PsychState.calibrating => mood,
+      };
+    }
+    final progress = idx / qs.length;
     return Scaffold(
       backgroundColor: BhasagoTheme.bg, // #0F0F0F
       body: SafeArea(
@@ -136,7 +247,9 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
 
   Widget _header(BuildContext context) => Row(children: [
         IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back, size: 20, color: BhasagoTheme.muted)),
-        const Expanded(child: Text('পাঠ ৩ · রেস্টুরেন্টে', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15))),
+        // Title = the lesson's can_do.bn: what you'll BE ABLE TO DO (the why).
+        Expanded(child: Text(lessonTitle, maxLines: 1, overflow: TextOverflow.ellipsis,
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15))),
         // Rev-4: section entries — curriculum map + book. 19px glyphs, 44px
         // hit area, muted base; section tints on press (red / green).
         _headerIcon(Icons.map_outlined, const Color(0xFFE8515A),
@@ -239,13 +352,21 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
           decoration: BoxDecoration(color: BhasagoTheme.card,
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14), bottomRight: Radius.circular(14), bottomLeft: Radius.circular(3)),
               border: Border.all(color: BhasagoTheme.outline)),
-          child: Text(m.teacherMsg, style: const TextStyle(fontSize: 12)),
+          // After a correct answer the sensei explains WHY/WHEN the phrase is
+          // used (note.bn from the verified JSON) — never a generated rule.
+          child: Text(teacherNote ?? m.teacherMsg, style: const TextStyle(fontSize: 12)),
         )),
       ]);
 
   Widget _toolbar(BuildContext context) => Row(children: [
         Expanded(child: _pill(icon: Icons.lightbulb_outline, iconColor: m.color, label: 'ইঙ্গিত',
-            onTap: () => setState(() => hintOpen = !hintOpen))),
+            onTap: () {
+              if (!hintOpen) {
+                hintsUsed += 1;
+                ref.read(agentBusProvider.notifier).recordHint();
+              }
+              setState(() => hintOpen = !hintOpen);
+            })),
         const SizedBox(width: 10),
         Expanded(child: _pill(icon: Icons.skip_next, iconColor: BhasagoTheme.muted, label: 'বাদ', onTap: skip)),
         const SizedBox(width: 10),
@@ -278,10 +399,16 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
             const SizedBox(height: 8),
             const Text('পাঠ শেষ!', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
             const SizedBox(height: 4),
-            const Text('৫টি নতুন শব্দ শেখা হলো।', style: TextStyle(fontSize: 12.5, color: BhasagoTheme.muted)),
+            Text('${_bnNum(qs.length)}টি নতুন শব্দ শেখা হলো।', style: const TextStyle(fontSize: 12.5, color: BhasagoTheme.muted)),
             const SizedBox(height: 16),
             FilledButton(
-              onPressed: () => setState(() { idx = 0; streak = 0; wrongs = 0; picked = -1; hintOpen = false; done = false; mood = LessonMood.neutral; }),
+              onPressed: () => setState(() {
+                idx = 0; streak = 0; wrongs = 0; picked = -1; correctCount = 0;
+                hintsUsed = 0; skipsUsed = 0; hintOpen = false; done = false;
+                completionSaved = true; // free practice — count the lesson once
+                mood = LessonMood.neutral; teacherNote = null;
+                _nextQuestion();
+              }),
               style: FilledButton.styleFrom(minimumSize: const Size.fromHeight(48), backgroundColor: const Color(0xFF35E065), foregroundColor: const Color(0xFF111111), shape: const StadiumBorder()),
               child: const Text('আবার অনুশীলন', style: TextStyle(fontWeight: FontWeight.w800))),
             const SizedBox(height: 8),
@@ -297,22 +424,58 @@ class _LessonScreenV4State extends State<LessonScreenV4> {
 /// Mood-tinted classroom backdrop: shoji window grid, swaying lantern,
 /// faint 教室 kanji, tatami floor lines, drifting dust motes.
 /// still=true (burnout) or reduceMotion freezes all loops.
-class _AmbientClassroom extends StatelessWidget {
+class _AmbientClassroom extends StatefulWidget {
   const _AmbientClassroom({required this.accent, this.still = false, this.reduceMotion = false});
   final Color accent; final bool still, reduceMotion;
   @override
+  State<_AmbientClassroom> createState() => _AmbientClassroomState();
+}
+
+class _AmbientClassroomState extends State<_AmbientClassroom>
+    with SingleTickerProviderStateMixin {
+  // HANDOFF §Motion: lanternSway 6s ease-in-out ±2°; dust motes rise 7–9s
+  // linear. One 18s master loop (lcm-ish) drives both via phase math.
+  late final AnimationController _loop =
+      AnimationController(vsync: this, duration: const Duration(seconds: 18));
+
+  bool get _animate => !widget.still && !widget.reduceMotion;
+
+  @override
+  void initState() {
+    super.initState();
+    if (_animate) _loop.repeat();
+  }
+
+  @override
+  void didUpdateWidget(_AmbientClassroom old) {
+    super.didUpdateWidget(old);
+    // Burnout (still) + reduced-motion freeze ALL loops (accessibility gate).
+    if (_animate && !_loop.isAnimating) _loop.repeat();
+    if (!_animate && _loop.isAnimating) _loop.stop();
+  }
+
+  @override
+  void dispose() {
+    _loop.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => IgnorePointer(
-        child: CustomPaint(size: Size.infinite,
-            painter: _ClassroomPainter(accent: accent)), // static paint; add
-        // AnimationController loops (lanternSway 6s, dustFloat 7-9s) in a
-        // StatefulWidget wrapper when !still && !reduceMotion. Kept out of
-        // the handoff diff for brevity — motion values in HANDOFF.md §Motion.
+        child: AnimatedBuilder(
+          animation: _loop,
+          builder: (context, child) => CustomPaint(size: Size.infinite,
+              painter: _ClassroomPainter(accent: widget.accent,
+                  t: _animate ? _loop.value : 0)),
+        ),
       );
 }
 
 class _ClassroomPainter extends CustomPainter {
-  _ClassroomPainter({required this.accent});
+  _ClassroomPainter({required this.accent, this.t = 0});
   final Color accent;
+  final double t; // 0..1 master loop phase (0 = frozen frame)
+
   @override
   void paint(Canvas canvas, Size size) {
     final line = Paint()..color = const Color(0xFF2E2E2E)..strokeWidth = 2;
@@ -325,11 +488,27 @@ class _ClassroomPainter extends CustomPainter {
         canvas.drawRect(Rect.fromLTWH(win.left + 2 + c * 31, win.top + 2 + r * 31, 29, 29), cell);
       }
     }
-    // lantern (top-left)
-    canvas.drawLine(Offset(35, 0), const Offset(35, 46), line);
-    final lantern = Rect.fromLTWH(19, 46, 32, 40);
+    // lantern (top-left) — sways ±2°, 6s ease-in-out (3 sway cycles per loop)
+    final sway = math.sin(t * 3 * 2 * math.pi) * 2 * math.pi / 180;
+    canvas.save();
+    canvas.translate(35, 0);
+    canvas.rotate(sway);
+    canvas.drawLine(Offset.zero, const Offset(0, 46), line);
+    final lantern = Rect.fromLTWH(-16, 46, 32, 40);
     canvas.drawRRect(RRect.fromRectAndRadius(lantern, const Radius.circular(16)),
         Paint()..color = accent.withValues(alpha: .25));
+    canvas.restore();
+    // dust motes — 6 specks rising linearly, 7–9s each, staggered phases
+    final mote = Paint()..color = accent.withValues(alpha: .16);
+    for (var i = 0; i < 6; i++) {
+      final speed = 18 / (7 + (i % 3)); // 7/8/9s rise per 18s master loop
+      final phase = (t * speed + i / 6) % 1.0;
+      final x = size.width * (0.12 + 0.13 * i);
+      final y = size.height * (1 - phase) - 60;
+      if (y > 0 && y < size.height) {
+        canvas.drawCircle(Offset(x, y), 1.6 + (i % 3) * .5, mote);
+      }
+    }
     // tatami floor lines (bottom 110px)
     final floor = Paint()..color = const Color(0x08F5F5F0)..strokeWidth = 1;
     for (double x = 0; x < size.width; x += 58) {
@@ -339,7 +518,7 @@ class _ClassroomPainter extends CustomPainter {
         Paint()..color = const Color(0xFF242424));
   }
   @override
-  bool shouldRepaint(_ClassroomPainter old) => old.accent != accent;
+  bool shouldRepaint(_ClassroomPainter old) => old.accent != accent || old.t != t;
 }
 
 /// Port of the SVG sensei sprite (robe, mood-colored scarf, bun + accent bead).

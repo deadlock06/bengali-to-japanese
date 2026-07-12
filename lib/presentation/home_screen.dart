@@ -11,13 +11,22 @@
 //
 // D-001 compliance: no streak warnings, no pressure copy. All numbers neutral.
 
+import 'dart:async';
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/curriculum_service.dart';
+import 'progress_screen_v4.dart' show retentionSeriesProvider;
 
 /// Blood-red section ink — EXCLUSIVE to the AI Classroom surface (do not reuse).
 const _aiClassroomRed = Color(0xFFB3121B);
+
+String _bnDigits(int n) =>
+    n.toString().split('').map((d) => '০১২৩৪৫৬৭৮৯'[int.parse(d)]).join();
 
 /// Callbacks let the shell own navigation (no Navigator coupling here).
 class HomeScreen extends ConsumerWidget {
@@ -26,6 +35,7 @@ class HomeScreen extends ConsumerWidget {
   final VoidCallback onOpenAiCheck;
   final VoidCallback onOpenProgress;
   final VoidCallback onOpenBook;
+  final VoidCallback onOpenLearn;
   const HomeScreen({
     super.key,
     required this.onOpenLesson,
@@ -33,6 +43,7 @@ class HomeScreen extends ConsumerWidget {
     required this.onOpenAiCheck,
     required this.onOpenProgress,
     required this.onOpenBook,
+    required this.onOpenLearn,
   });
 
   @override
@@ -41,73 +52,93 @@ class HomeScreen extends ConsumerWidget {
     // them to lib/l10n ARB keys (S.homeGreeting etc.) + BilingualText.
     final repo = ref.watch(contentProvider).valueOrNull;
     final text = Theme.of(context).textTheme;
+    // Course % = mean unit progress from the live curriculum ladder (T-120).
+    // 0 for a fresh learner; demo-free.
+    final units = ref.watch(curriculumProvider).valueOrNull;
+    final coursePct = (units == null || units.isEmpty)
+        ? 0.0
+        : units.fold<double>(0, (a, u) => a + u.pct) / units.length;
+    final pctLabel = '${_bnDigits((coursePct * 100).round())}%';
+    // Design top row + greeting personalisation (Home v4 userName prop).
+    final name = ref.watch(userNameProvider).valueOrNull ?? 'রাফি';
+    // Red card mirrors the CURRENT curriculum unit (design lessonTitle + 64%).
+    CurriculumUnit? current;
+    for (final u in units ?? const <CurriculumUnit>[]) {
+      if (u.state == UnitProgress.current) { current = u; break; }
+    }
 
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       children: [
+        // ── top row: language pill + avatar (design chrome) ─────────────
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const _LangPill(),
+            Container(
+              width: 34, height: 34, alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                  color: BhasagoColors.yellow, shape: BoxShape.circle),
+              child: Text(name.isEmpty ? '?' : name.characters.first,
+                  style: const TextStyle(
+                      fontSize: 14, fontWeight: FontWeight.w700,
+                      color: Color(0xFF111111))),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
         // ── greeting + course progress ──────────────────────────────────
-        Text('হাই!', style: text.headlineMedium), // TODO: user name provider
+        Text('হাই, $name', style: text.headlineMedium),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('কোর্স অগ্রগতি', style: text.bodySmall),
-            // TODO(T-108): real course % from review_history + lesson state
-            Text('৬৪%', style: text.titleMedium),
+            Text(pctLabel, style: text.titleMedium),
           ],
         ),
         const SizedBox(height: 6),
         ClipRRect(
           borderRadius: BorderRadius.circular(99),
-          child: const LinearProgressIndicator(
-            value: 0.64,
+          child: LinearProgressIndicator(
+            value: coursePct,
             minHeight: 8,
-            backgroundColor: Color(0xFF262626),
+            backgroundColor: const Color(0xFF262626),
             color: BhasagoColors.ink,
           ),
         ),
         const SizedBox(height: 14),
 
         // ── AI Classroom card (flagship, blood-red section ink) ─────────
+        // Design: spinning 4-point star top-right; subtitle = current unit;
+        // #111 progress pill w/ white fill + red knob; WHOLE card taps.
         _AccentCard(
           color: _aiClassroomRed,
           onTap: onOpenLesson,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: [
-                const Icon(Icons.auto_awesome,
-                    size: 18, color: Color(0xFFF5F5F0)),
-                const SizedBox(width: 7),
-                Expanded(
-                  child: Text('AI ক্লাসরুম',
+          child: Stack(children: [
+            const Positioned(top: 0, right: 0, child: _SpinStar()),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('AI ক্লাসরুম',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: text.titleMedium?.copyWith(
+                        color: const Color(0xFFF5F5F0),
+                        fontWeight: FontWeight.w800)),
+                Padding(
+                  padding: const EdgeInsets.only(right: 38),
+                  child: Text(current?.titleBn ?? 'কনবিনিতে কেনাকাটা — Can-do',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: text.titleMedium?.copyWith(
-                          color: const Color(0xFFF5F5F0),
-                          fontWeight: FontWeight.w800)),
+                      style: text.bodySmall
+                          ?.copyWith(color: const Color(0xFFF5B8BC))),
                 ),
-              ]),
-              Text('কনবিনিতে কেনাকাটা — Can-do',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: text.bodySmall?.copyWith(color: const Color(0xFFF5B8BC))),
-              const SizedBox(height: 12),
-              const _SliderProgress(value: 0.64),
-              const SizedBox(height: 12),
-              FilledButton.icon(
-                style: FilledButton.styleFrom(
-                  backgroundColor: const Color(0xFF111111),
-                  foregroundColor: const Color(0xFFF5F5F0),
-                  minimumSize: const Size.fromHeight(46),
-                ),
-                onPressed: onOpenLesson,
-                icon: const Icon(Icons.play_arrow,
-                    size: 18, color: Color(0xFFF5F5F0)),
-                label: const Text('ক্লাসে ঢোকো'),
-              ),
-            ],
-          ),
+                const SizedBox(height: 12),
+                _SliderProgress(value: current?.pct ?? 0),
+              ],
+            ),
+          ]),
         ),
         const SizedBox(height: 10),
 
@@ -163,12 +194,7 @@ class HomeScreen extends ConsumerWidget {
                                 style: text.bodySmall?.copyWith(
                                     color: BhasagoColors.greenDim)),
                             const Spacer(),
-                            // TODO(T-108): sparkline from review_history
-                            const CustomPaint(
-                              size: Size(double.infinity, 26),
-                              painter: _SparklinePainter(
-                                  [58, 62, 60, 66, 65, 70, 72]),
-                            ),
+                            _MiniRetention(),
                           ],
                         ),
                       ),
@@ -195,7 +221,7 @@ class HomeScreen extends ConsumerWidget {
                   style: text.titleMedium),
             ),
             TextButton(
-              onPressed: onOpenLesson,
+              onPressed: onOpenLearn, // design: goLearn (Learn tab)
               child: Text('সব দেখো', style: text.bodySmall),
             ),
           ],
@@ -208,13 +234,17 @@ class HomeScreen extends ConsumerWidget {
                   scrollDirection: Axis.horizontal,
                   children: [
                     // TODO: derive from repo.lessons + per-lesson progress
-                    _TopicCard(jp: 'かな', label: 'হিরাগানা', pct: 0.64, color: BhasagoColors.yellow, onTap: onOpenLesson),
-                    _TopicCard(jp: '買い物', label: 'কেনাকাটা', pct: 0.42, color: BhasagoColors.green, onTap: onOpenLesson),
-                    _TopicCard(jp: '挨拶', label: 'অভিবাদন', pct: 0.80, color: BhasagoColors.pink, onTap: onOpenLesson),
-                    _TopicCard(jp: '仕事', label: 'কাজের ভাষা', pct: 0.18, color: BhasagoColors.blue, onTap: onOpenLesson),
+                    _TopicCard(jp: 'かな', label: 'হিরাগানা', pct: 0.64, color: BhasagoColors.yellow, onTap: onOpenLearn),
+                    _TopicCard(jp: '買い物', label: 'কেনাকাটা', pct: 0.42, color: BhasagoColors.green, onTap: onOpenLearn),
+                    _TopicCard(jp: '挨拶', label: 'অভিবাদন', pct: 0.80, color: BhasagoColors.pink, onTap: onOpenLearn),
+                    _TopicCard(jp: '仕事', label: 'কাজের ভাষা', pct: 0.18, color: BhasagoColors.blue, onTap: onOpenLearn),
                   ],
                 ),
         ),
+        const SizedBox(height: 12),
+
+        // ── AI sensei outline pill (design: pulsing dot + typed greeting) ─
+        _SenseiPill(),
       ],
     );
   }
@@ -323,31 +353,49 @@ class _ReviewCard extends ConsumerWidget {
   }
 }
 
+/// Design progress pill: #111 track, #F5F5F0 fill, red knob (#111 ring)
+/// riding the fill's right edge.
 class _SliderProgress extends StatelessWidget {
   final double value;
   const _SliderProgress({required this.value});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 26,
-      padding: const EdgeInsets.all(4),
-      decoration: BoxDecoration(
-        color: const Color(0xFF111111),
-        borderRadius: BorderRadius.circular(99),
-      ),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: FractionallySizedBox(
-          widthFactor: value,
-          child: Container(
+      child: LayoutBuilder(builder: (context, box) {
+        final w = box.maxWidth;
+        final fillW = ((w - 8) * value.clamp(0.0, 1.0)).clamp(18.0, w - 8);
+        return Stack(clipBehavior: Clip.none, children: [
+          Container(
             decoration: BoxDecoration(
-              color: BhasagoColors.yellow,
+              color: const Color(0xFF111111),
               borderRadius: BorderRadius.circular(99),
             ),
           ),
-        ),
-      ),
+          Positioned(
+            left: 4, top: 4,
+            child: Container(
+              width: fillW, height: 18,
+              decoration: BoxDecoration(
+                color: const Color(0xFFF5F5F0),
+                borderRadius: BorderRadius.circular(99),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 4 + fillW - 13, top: 0,
+            child: Container(
+              width: 26, height: 26,
+              decoration: BoxDecoration(
+                color: _aiClassroomRed,
+                shape: BoxShape.circle,
+                border: Border.all(color: const Color(0xFF111111), width: 3),
+              ),
+            ),
+          ),
+        ]);
+      }),
     );
   }
 }
@@ -463,6 +511,213 @@ class _SparklinePainter extends CustomPainter {
   bool shouldRepaint(_SparklinePainter old) => old.values != values;
 }
 
+
+/// Design top row: outline pill cycling bn→en→ja, persisted like onboarding.
+class _LangPill extends ConsumerWidget {
+  const _LangPill();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final code = ref.watch(localeProvider).languageCode;
+    const labels = {'bn': 'বাংলা', 'en': 'English', 'ja': '日本語'};
+    return Material(
+      color: Colors.transparent,
+      shape: const StadiumBorder(side: BorderSide(color: Color(0xFF3A3A3A))),
+      child: InkWell(
+        customBorder: const StadiumBorder(),
+        onTap: () async {
+          const order = ['bn', 'en', 'ja'];
+          final next = order[(order.indexOf(code) + 1) % 3];
+          ref.read(localeProvider.notifier).state = Locale(next);
+          final p = await SharedPreferences.getInstance();
+          await p.setString('locale_chosen', next);
+        },
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 6),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            Text(labels[code] ?? 'বাংলা',
+                style: const TextStyle(fontSize: 12)),
+            const SizedBox(width: 6),
+            const Icon(Icons.expand_more, size: 15, color: BhasagoColors.inkDim),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
+/// Design starSpin: 4-point white star, 5s rotate ±12° + scale breathe.
+/// Static under reduced-motion.
+class _SpinStar extends StatefulWidget {
+  const _SpinStar();
+  @override
+  State<_SpinStar> createState() => _SpinStarState();
+}
+
+class _SpinStarState extends State<_SpinStar>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _c =
+      AnimationController(vsync: this, duration: const Duration(seconds: 5));
+
+  @override
+  void dispose() {
+    _c.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.of(context).disableAnimations;
+    if (!reduce && !_c.isAnimating) _c.repeat();
+    if (reduce && _c.isAnimating) _c.stop();
+    return AnimatedBuilder(
+      animation: _c,
+      builder: (context, child) {
+        final t = (1 + math.sin(_c.value * 2 * math.pi)) / 2; // 0..1..0
+        return Transform.rotate(
+          angle: reduce ? 0 : 12 * math.pi / 180 * t,
+          child: Transform.scale(scale: reduce ? 1 : 1 + .08 * t, child: child),
+        );
+      },
+      child: const CustomPaint(size: Size(34, 34), painter: _StarPainter()),
+    );
+  }
+}
+
+class _StarPainter extends CustomPainter {
+  const _StarPainter();
+  @override
+  void paint(Canvas canvas, Size size) {
+    final s = size.width / 34;
+    final p = Path()
+      ..moveTo(17 * s, 0)..lineTo(20 * s, 13 * s)..lineTo(33 * s, 17 * s)
+      ..lineTo(20 * s, 21 * s)..lineTo(17 * s, 34 * s)..lineTo(14 * s, 21 * s)
+      ..lineTo(1 * s, 17 * s)..lineTo(14 * s, 13 * s)..close();
+    canvas.drawPath(p, Paint()..color = const Color(0xFFF5F5F0));
+  }
+
+  @override
+  bool shouldRepaint(_StarPainter old) => false;
+}
+
+/// Green card sparkline on the LIVE retention series (falls back to the
+/// design's demo shape only while loading).
+class _MiniRetention extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final series = ref.watch(retentionSeriesProvider).valueOrNull;
+    final vals = (series == null || series.length < 2)
+        ? const [58.0, 62.0, 60.0, 66.0, 65.0, 70.0, 72.0]
+        : series.sublist(math.max(0, series.length - 8))
+            .map((v) => v * 100).toList();
+    return CustomPaint(
+      size: const Size(double.infinity, 26),
+      painter: _SparklinePainter(vals),
+    );
+  }
+}
+
+/// Design "AI sensei" outline pill: pulsing green dot + greeting typed out
+/// (30ms/2-char cadence). Tap re-types. Reduced-motion shows full text/no pulse.
+class _SenseiPill extends ConsumerStatefulWidget {
+  @override
+  ConsumerState<_SenseiPill> createState() => _SenseiPillState();
+}
+
+class _SenseiPillState extends ConsumerState<_SenseiPill>
+    with SingleTickerProviderStateMixin {
+  String _shown = '';
+  String _full = '';
+  Timer? _timer;
+  late final AnimationController _pulse = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1400));
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  String _greeting() {
+    final batch = ref.read(classroomBatchProvider).valueOrNull;
+    if (batch == null) return 'আজ কনবিনি লেসনে ৩টা নতুন শব্দ — প্রস্তুত?';
+    return 'আজ "${batch.titleBn}" — ${_bnDigits(batch.questions.length)}টা নতুন শব্দ, প্রস্তুত?';
+  }
+
+  void _type(bool reduce) {
+    _timer?.cancel();
+    _full = _greeting();
+    if (reduce) {
+      setState(() => _shown = _full);
+      return;
+    }
+    var i = 0;
+    setState(() => _shown = '');
+    _timer = Timer.periodic(const Duration(milliseconds: 30), (t) {
+      i += 2;
+      if (!mounted) { t.cancel(); return; }
+      setState(() => _shown = _full.substring(0, math.min(i, _full.length)));
+      if (i >= _full.length) t.cancel();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.of(context).disableAnimations;
+    if (!reduce && !_pulse.isAnimating) _pulse.repeat();
+    if (reduce && _pulse.isAnimating) _pulse.stop();
+    // First fill (and refresh when the batch resolves with a new greeting).
+    final live = ref.watch(classroomBatchProvider).valueOrNull;
+    final want = live == null
+        ? 'আজ কনবিনি লেসনে ৩টা নতুন শব্দ — প্রস্তুত?'
+        : 'আজ "${live.titleBn}" — ${_bnDigits(live.questions.length)}টা নতুন শব্দ, প্রস্তুত?';
+    if (_full != want && (_timer == null || !_timer!.isActive)) {
+      // Never setState during build — type on the next frame.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted && _full != want) _type(reduce);
+      });
+    }
+
+    return Material(
+      color: Colors.transparent,
+      shape: const StadiumBorder(
+          side: BorderSide(color: Color(0xFFF5F5F0), width: 1.5)),
+      child: InkWell(
+        customBorder: const StadiumBorder(),
+        onTap: () => _type(reduce),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
+          child: Row(children: [
+            AnimatedBuilder(
+              animation: _pulse,
+              builder: (context, _) => Opacity(
+                opacity: reduce
+                    ? 1
+                    : .25 + .75 *
+                        math.sin(_pulse.value * math.pi).abs(),
+                child: Container(
+                  width: 7, height: 7,
+                  decoration: const BoxDecoration(
+                      color: BhasagoColors.green, shape: BoxShape.circle),
+                ),
+              ),
+            ),
+            const SizedBox(width: 9),
+            Expanded(
+              child: Text(_shown,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      fontSize: 12.5, fontWeight: FontWeight.w600)),
+            ),
+            const Icon(Icons.arrow_forward, size: 17, color: BhasagoColors.ink),
+          ]),
+        ),
+      ),
+    );
+  }
+}
 
 /// Rev-3 §2: Home entry to the Bhasha Go book (green section ink).
 class _BookEntryCard extends StatelessWidget {

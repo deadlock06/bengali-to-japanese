@@ -1,7 +1,7 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
-const dir = path.join(process.cwd(), 'preview');
+const dir = path.join(path.dirname(new URL(import.meta.url).pathname), '..', 'preview');
 http.createServer((req, res) => {
   let f = req.url === '/' ? '/index.html' : req.url.split('?')[0];
   const p = path.join(dir, f);

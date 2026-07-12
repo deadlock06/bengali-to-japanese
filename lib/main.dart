@@ -13,6 +13,8 @@
 // wired in below, exactly per the handoff. The v0.1 ProgressScreen file is
 // kept in the repo (its T-108 queries feed V4 later) but is not in the UI.
 
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -81,15 +83,6 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     ));
   }
 
-  void _push(BuildContext context, String title, Widget body) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: Text(title)),
-        body: body,
-      ),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
@@ -108,9 +101,39 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         // Book has its own header/back — plain push, no _push scaffold.
         onOpenBook: () => Navigator.of(context)
             .push(MaterialPageRoute(builder: (_) => const BookScreenV4())),
+        onOpenLearn: () => setState(() => tab = 1), // design: goLearn
       ),
       const LessonListScreen(),
-      const ShadowingScreen(),
+      // Speak tab: shadowing + pitch entry card (HANDOFF follow-up 2 — the
+      // pitch pillar's route until the Speak-tab "conversation corner" design).
+      Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          child: Material(
+            color: BhasagoTheme.card,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+                side: const BorderSide(color: BhasagoTheme.outline)),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(20),
+              onTap: () => _push(context, 'উচ্চারণ · Pitch', const PitchScreen()),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(16, 14, 12, 14),
+                child: Row(children: [
+                  Icon(Icons.graphic_eq, size: 20, color: BhasagoTheme.muted),
+                  SizedBox(width: 12),
+                  Expanded(
+                      child: Text('পিচ অ্যাকসেন্ট অনুশীলন',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 13.5))),
+                  Icon(Icons.chevron_right, size: 20, color: BhasagoTheme.muted),
+                ]),
+              ),
+            ),
+          ),
+        ),
+        const Expanded(child: ShadowingScreen()),
+      ]),
       ProgressScreenV4(
         onOpenAiCheck: () => _push(context, 'AI চেক', const AiCheckScreen()),
       ),
@@ -144,7 +167,12 @@ class _HomeShellState extends ConsumerState<HomeShell> {
               ],
             )
           : null,
-      body: pages[tab],
+      // Design "Japanese 3D depth field": red sun + seigaiha waves + floating
+      // kana behind every tab. Purely ambient; reduced-motion freezes it.
+      body: Stack(children: [
+        const Positioned.fill(child: _DepthField()),
+        pages[tab],
+      ]),
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() => tab = i),
@@ -158,4 +186,104 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       ),
     );
   }
+}
+
+/// Home v4 design backdrop — "Japanese 3D depth field": pulsing red sun
+/// (top-right), seigaiha wave arcs (bottom), three faint floating kana.
+/// One slow loop; still under reduced-motion (accessibility gate).
+class _DepthField extends StatefulWidget {
+  const _DepthField();
+  @override
+  State<_DepthField> createState() => _DepthFieldState();
+}
+
+class _DepthFieldState extends State<_DepthField>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _loop =
+      AnimationController(vsync: this, duration: const Duration(seconds: 20));
+
+  @override
+  void dispose() {
+    _loop.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final reduce = MediaQuery.of(context).disableAnimations;
+    if (!reduce && !_loop.isAnimating) _loop.repeat();
+    if (reduce && _loop.isAnimating) _loop.stop();
+    return IgnorePointer(
+      child: AnimatedBuilder(
+        animation: _loop,
+        builder: (context, _) => CustomPaint(
+          size: Size.infinite,
+          painter: _DepthFieldPainter(t: reduce ? 0 : _loop.value),
+        ),
+      ),
+    );
+  }
+}
+
+class _DepthFieldPainter extends CustomPainter {
+  _DepthFieldPainter({required this.t});
+  final double t; // 0..1 master phase (0 = frozen)
+
+  void _glyph(Canvas canvas, String ch, double x, double y, double fs,
+      Color color, double dx, double dy) {
+    final tp = TextPainter(
+      text: TextSpan(
+          text: ch,
+          style: TextStyle(
+              fontFamily: 'ZenKakuGothicNew',
+              fontSize: fs,
+              fontWeight: FontWeight.w900,
+              color: color)),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    tp.paint(canvas, Offset(x + dx, y + dy));
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width, h = size.height;
+    // red sun — sunPulse 7s (≈3 cycles per 20s loop)
+    final pulse = math.sin(t * 3 * 2 * math.pi); // -1..1
+    final sunR = 75.0 * (1 + .03 * pulse);
+    final sunC = Offset(w + 34 - 75, 46 + 75);
+    canvas.drawCircle(
+      sunC, sunR,
+      Paint()
+        ..shader = RadialGradient(colors: [
+          const Color(0xFFD84040).withValues(alpha: .30 + .04 * pulse),
+          const Color(0xFFD84040).withValues(alpha: .09),
+          Colors.transparent,
+        ], stops: const [0, .62, .78])
+            .createShader(Rect.fromCircle(center: sunC, radius: sunR)),
+    );
+    // seigaiha arcs above the nav area
+    final wave = Paint()
+      ..color = const Color(0xFFF5F5F0).withValues(alpha: .07)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    final baseY = h - 54;
+    for (final r in [40.0, 28.0]) {
+      for (double cx = -20 + (r == 28 ? 12 : 0); cx < w + 60; cx += 80) {
+        canvas.drawArc(Rect.fromCircle(center: Offset(cx + 40, baseY), radius: r),
+            math.pi, math.pi, false, wave);
+      }
+    }
+    // floating kana — float3d A/B as gentle offsets
+    final a = math.sin(t * 2 * math.pi); // slow drift
+    final b = math.sin(t * 2 * math.pi + math.pi / 2);
+    _glyph(canvas, '語', 8, 120, 64,
+        const Color(0xFFF5F5F0).withValues(alpha: .045), 6 * a, -14 * a.abs());
+    _glyph(canvas, 'あ', w - 56, 300, 50,
+        const Color(0xFFD84040).withValues(alpha: .07), -10 * b, 12 * b.abs());
+    _glyph(canvas, 'ん', 20, h - 260, 40,
+        const Color(0xFFF5F5F0).withValues(alpha: .04), 6 * b, -10 * b.abs());
+  }
+
+  @override
+  bool shouldRepaint(_DepthFieldPainter old) => old.t != t;
 }

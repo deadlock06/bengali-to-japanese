@@ -54,7 +54,7 @@ void main() {
     ok(tester, 'onboarding accept');
 
     // ── 2. Home (Bold Ink) ───────────────────────────────────────────────
-    await pumpUntil(tester, find.text('হাই!'), what: 'home greeting');
+    await pumpUntil(tester, find.textContaining('হাই'), what: 'home greeting');
     expect(find.text('AI ক্লাসরুম'), findsOneWidget); // red flagship card (rev-2)
     expect(find.text('আজকের রিভিউ'), findsOneWidget); // pink card
     expect(find.text('AI চেক'), findsOneWidget); // blue card
@@ -152,7 +152,7 @@ void main() {
     }
 
     // ── 9. Sanity: back home, shell intact ───────────────────────────────
-    await pumpUntil(tester, find.text('হাই!'), what: 'home after tour');
+    await pumpUntil(tester, find.textContaining('হাই'), what: 'home after tour');
     expect(find.byType(NavigationBar), findsOneWidget);
     ok(tester, 'final state');
   });

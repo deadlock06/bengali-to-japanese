@@ -75,6 +75,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   int idx = 0, streak = 0, wrongs = 0, picked = -1, correctCount = 0;
   int hintsUsed = 0, skipsUsed = 0;
   bool hintOpen = false, done = false, completionSaved = false;
+  // Phase 1 of the 09 micro-loop: the sensei PRESENTS the item before asking
+  // (teach → then recognition). false = intro card showing; true = MC showing.
+  bool introSeen = false;
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
 
@@ -130,6 +133,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   void _nextQuestion() {
     _shownAt = DateTime.now();
     _hesitationTaken = false;
+    introSeen = false; // present the next item before asking (Phase 1)
   }
 
   void pick(int i) {
@@ -252,8 +256,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               const SizedBox(height: 10),
               _progressBar(progress),
               const SizedBox(height: 16),
-              _questionCard(),
-              if (hintOpen) ...[const SizedBox(height: 10), _hintCard()],
+              // Phase 1 Intro (present) → Phase 2 Recognition (ask).
+              introSeen ? _questionCard() : _introCard(),
+              if (introSeen && hintOpen) ...[const SizedBox(height: 10), _hintCard()],
               const Spacer(),
               _teacherRow(),
               const SizedBox(height: 12),
@@ -312,14 +317,47 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           valueColor: AlwaysStoppedAnimation(m.color))),
       );
 
+  // Phase 1 — Intro: the sensei PRESENTS the item (reveals the answer + a usage
+  // note) so the learner is taught before being asked. "চিনেছি →" → Recognition.
+  Widget _introCard() => Container(
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
+        decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: BhasagoTheme.outline)),
+        child: Column(children: [
+          Text('চিনে নাও', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+          Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 54, fontWeight: FontWeight.w900, height: 1.15)),
+          if (q.yomi.isNotEmpty)
+            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+          const SizedBox(height: 6),
+          // The answer, revealed (this is teaching, not testing).
+          Text('= ${q.options[q.answerIndex]}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: m.color)),
+          if (q.noteBn.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(q.noteBn, textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 12, height: 1.5, color: BhasagoTheme.muted)),
+          ],
+          const SizedBox(height: 14),
+          FilledButton(
+            onPressed: () => setState(() => introSeen = true),
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(46), backgroundColor: m.color,
+              foregroundColor: const Color(0xFF111111), shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontWeight: FontWeight.w800)),
+            child: const Text('চিনেছি → এবার পরীক্ষা'),
+          ),
+        ]),
+      );
+
   Widget _questionCard() => Container(
         padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
         decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
             border: Border.all(color: BhasagoTheme.outline)),
         child: Column(children: [
-          Text('এর মানে কী?', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+          Text(q.prompt, style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
           Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 54, fontWeight: FontWeight.w900, height: 1.15)),
-          Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+          if (q.yomi.isNotEmpty)
+            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
           const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
@@ -381,7 +419,11 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               border: Border.all(color: BhasagoTheme.outline)),
           // After a correct answer the sensei explains WHY/WHEN the phrase is
           // used (note.bn from the verified JSON) — never a generated rule.
-          child: Text(teacherNote ?? m.teacherMsg, style: const TextStyle(fontSize: 12)),
+          // Sensei teaches first (introBn), then explains after a correct answer
+          // (note.bn) — always the verified line, never generated.
+          child: Text(
+              teacherNote ?? (q.introBn.isNotEmpty ? q.introBn : m.teacherMsg),
+              style: const TextStyle(fontSize: 12)),
         )),
       ]);
 
@@ -427,6 +469,12 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             const Text('পাঠ শেষ!', style: TextStyle(fontSize: 19, fontWeight: FontWeight.w800)),
             const SizedBox(height: 4),
             Text('${_bnNum(qs.length)}টি নতুন শব্দ শেখা হলো।', style: const TextStyle(fontSize: 12.5, color: BhasagoTheme.muted)),
+            const SizedBox(height: 8),
+            // Phase 5 — SRS close (09): sensei tells the learner the cards are
+            // scheduled for spaced review.
+            const Text('আজকের শব্দগুলো review deck-এ ঢুকলো — কালকে আবার দেখা হবে।',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 11.5, height: 1.5, color: Color(0xFF35E065))),
             const SizedBox(height: 16),
             FilledButton(
               onPressed: () => setState(() {
@@ -521,7 +569,7 @@ class _ClassroomPainter extends CustomPainter {
     canvas.translate(35, 0);
     canvas.rotate(sway);
     canvas.drawLine(Offset.zero, const Offset(0, 46), line);
-    final lantern = Rect.fromLTWH(-16, 46, 32, 40);
+    const lantern = Rect.fromLTWH(-16, 46, 32, 40);
     canvas.drawRRect(RRect.fromRectAndRadius(lantern, const Radius.circular(16)),
         Paint()..color = accent.withValues(alpha: .25));
     canvas.restore();

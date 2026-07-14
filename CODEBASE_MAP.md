@@ -1,55 +1,95 @@
-# CODEBASE MAP — refreshed 2026-07-12 by Claude (Fable 5, Cowork/Linux sandbox — static audit + node proofs; Flutter checks still pending on Windows)
+# CODEBASE MAP — full state of the SENSEI/Bhasago build
+`refreshed 2026-07-14 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
 
-> **SAME-DAY UPDATE (2026-07-12 PM):** handoff follow-ups implemented — **T-112 ☑** (lesson_batch.dart + classroomBatchProvider + proof 11/11 in CI), LessonScreenV4 = live batches + agent-bus staging + note.bn reasoning, ambiance loops animated (reduced-motion/burnout freeze), WritingScreen kana sound-context + intro card, Speak-tab pitch entry, Home course % live. l10n + শোনা/বলা pcts intentionally open. See NEXT_SESSION.md 07-12 PM entry.
->
-> **NIGHT UPDATE (2026-07-12, final):** everything above + Home v4.dc.html full fidelity **COMMITTED** — `61b10f8` / `5d08ce4` / `4bef534`, tree clean. **T-121 ☑ (static):** BookReaderScreen written (was a MISSING import — would have failed analyze), mark-read persists `book_read_ch`, lesson→chapter deep-link (20/20 units↔chapters resolve). **Data autonomy (00 §5) restored in Settings** (export ZIP / delete w/ 7-day grace / persona picker / KanjiVG attribution) + boot purge-check & persona restore in HomeShell. `collection` dep added (book_repository needed it). The stale "uncommitted slice" wording below is historical. **Flutter analyze/test still the gate — owner installing SDK locally.**
+**One-line status:** strong scaffolding (design system, deterministic agents, FSRS, curriculum graph, kana-in-classroom teaching) is real and **`flutter analyze` = clean**; but the pieces that make it a finished *AI* app — real audio, a real LLM tutor (offline or online), the journey-map Learn UX, backend/sync, content packs — are **largely unbuilt**. Overall ≈ **60%** toward a usable JFT-A2 beta.
 
-> **AUDIT 2026-07-12 RESULTS (all runnable checks GREEN):**
-> Proofs 79/79: validator **PASS 0 warnings** · agents 17/17 · fsrs 11/11 · lesson_flow 19/19 · migrations 10/10 · pitch 8/8 · curriculum 14/14. Book builder: `assets/book/book.json` = 32 entries (20 numbered chapters), 876 blocks.
-> Risk sweeps CLEAN: banned D-001 patterns (dopamine/loot/streak-save/locks/hidden-skip) 0 hits in lib/+classroom/ · no committed secrets/API keys · no FSRS mood-coupling (D-003 ok).
-> **UNCOMMITTED, UNDOCUMENTED T-121 slice found in the working tree** (not in NEXT_SESSION.md): `lib/data/book_repository.dart` + `tools/build_book_json.mjs` + `assets/book/book.json` (new) · `providers.dart` (+bookProvider, +bookReadChapterProvider, curriculumProvider hardened w/ try/catch) · `book_screen_v4.dart` (live data, +210/−93) · `pubspec.yaml` (`classroom/BOOK.md` asset → `assets/book/`). Coherent + validator-consistent; `getMeta`/asset refs resolve. **Commit it after Flutter checks.** `theme.dart` + `main.dart` diffs are CRLF-only (content identical to HEAD — safe to checkout or commit as-is).
-> **`flutter analyze` / `flutter test` NOT run (no SDK in this sandbox) — still the first thing on Windows.**
+## Environment (verified this session)
+- **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
+- `flutter analyze` → **No issues found** (first real pass ever). `flutter test` → **50 pass / 1 fail** (journey smoke test, see Known Issues).
+- Node 20 present; all engine proofs green (validator, batch 11/11, curriculum 14/14, agents 17/17, fsrs, lesson_flow, migrations, pitch).
+- **Web build works** (`flutter build web`), served at `localhost:5601` via `tools/web_server.mjs` — the real app runs in-browser for demoing.
+- **Android SDK NOT installed** (needs sudo) → no on-device APK build here yet. iOS not targeted. fvm not set up.
+- **Working tree UNCOMMITTED** since the 07-13 commits — this session's kana-in-classroom + 5-phase-intro work is not committed.
 
-**New session? Read NEXT_SESSION.md first.** Bridge between the v4.2 spec pack and the real repo. Read this INSTEAD of re-exploring (refresh if >2 weeks old or after big changes).
+## Stack
+Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore via flutter_secure_storage) · numbered migrations m001–m002 · gen-l10n **disabled** (see Known Issues) · backend: **none** (D-010 open).
 
-## Stack found
-- **Flutter 3.44.5** (installed on the Windows dev machine, `D:\flutter\bin\flutter.bat`; repo root = app root). fvm still NOT set up (spec wants it — low priority now that the SDK is pinned by CI).
-- **State mgmt:** Riverpod (`flutter_riverpod ^2.5`).
-- **DB:** `sqflite_sqlcipher` (AES-256), key in Keystore via `flutter_secure_storage` (`lib/db/db_key.dart`); numbered migrations m001–m002 (`lib/db/migrations/`, proof 10/10).
-- **Android:** real scaffold, **device build + install verified on TECNO LG7n 2026-07-10** — AGP 9.0.1 / Kotlin 2.3.20 / Gradle 9.1.0, minSdk 24 (SQLCipher requirement met). No `cpp/` yet — **native AI bridges (TTS/STT/LLM/thermal) 0%**, MethodChannel stubs pending per 02/08.
-- **CI:** `.github/workflows/ci.yml` (tracked) — analyze+test+validator+all reference proofs incl. curriculum.
-- **i18n:** gen-l10n ARB en/bn/ja; **v4 screens still hardcode BN strings** (l10n migration pending, keys in handoff rev-2 §3 + rev-3 §3).
-- **Backend SDK:** none (D-010 Firebase/Supabase still open).
+---
 
-## Task board reconciliation (IDs mirror 11_ROADMAP_TASKS.md; only rows that changed since 07-09 map)
-| Task | Reality | Evidence | Gap / risk |
-|---|---|---|---|
-| T-101 toolchain/CI/SQLCipher | ☑ | device build 07-10, ci.yml, m001–m002 | fvm only |
-| T-102 kana screens | ☑ | writing_screen + KanjiVG (D-011) | attribution confirm (D-011) |
-| T-103 FSRS engine+UI | ☑ | fsrs.dart 11/11, SrsLocal wired | — |
-| T-104 content validation | ◑ | validator PASS in CI, whitelist +A2 batches (D-012) | N4 whitelist + jsonschema + media rules |
-| T-106 lesson micro-loop | ☑ | lesson_screen_v4 + agents wired | — |
-| T-107 audio pipeline | ◐ | record/just_audio deps, stubs | OPUS, real record/playback — **biggest untouched rock** |
-| T-108 progress dashboard | ◑ | progress.dart proven, v0.1 screen built | **unrouted**; ProgressScreenV4 shows demo data — wire T-108 logic in |
-| T-120 curriculum service | ☑ | curriculum_service.dart, proof 14/14, live in CurriculumScreenV4 | "চালিয়ে যাও" → Director recommendation still pending |
-| T-121 book reader | ☑ (static) | book_repository + BookReaderScreen + deep-link, committed `4bef534` | compiler-verify on Windows; reader polish later |
-| T-401–405 agents | ☑ | lib/agents/ 17/17, wired into lesson | — |
-| T-602/603 export+deletion | ◑ | export_service.dart ZIP, 7-day grace | PDF in export; persona+purge bootstrap in main() |
-| Native bridges | ✗ | no cpp/, no MethodChannel | 0% — device-gated work |
-| Content | ◑ | 19 lesson JSONs + kana×2 + pitch, all verified; book 20/20 ch | **13/20 units wired; null lesson_id: A2.M, N4.1–5, N4.M** (mock engine + N4 authoring); audio 0%; native review pending on 24 newest items |
+## ✅ WHAT'S BUILT (verified, analyze-clean)
 
-## Exists but NOT in spec (keep/kill — human decides)
-- Pitch pillar (8/8 proof, PitchScreen currently unrouted) — recommend KEEP, route as Speak-tab card per handoff.
-- Trilingual UI EN/JA beyond Bengali-first spec — KEEP as optional, BN default (unchanged stance).
-- classroom/ (BOOK.md, CURRICULUM.md) — now load-bearing for T-120/121, effectively in-spec.
+### UI / design
+- **v4 "Bold Ink" design system** — theme.dart tokens, 4 brand fonts bundled + wired.
+- **Home v4** to full fidelity — top row (lang pill + avatar), greeting, red AI-Classroom card (spinning star, live current-unit subtitle, #111/white/red progress pill), pink review card (live due count), blue AI-check, green retention sparkline (live series), book mini-card, week topics, AI-sensei typed-greeting pill, `_DepthField` backdrop (red sun + seigaiha + floating kana), 4-tab shell.
+- **Onboarding** (language select, first-run gate, persisted).
+- **AI Classroom (lesson_screen_v4)** — the sensei classroom: mood ring (psych states), sensei sprite + speech bubble, MC recognition, Hint/Skip/Quit invariant, sensei chat sheet (canned), completion overlay. **NEW this session:** teaches **kana recognition in-classroom** (এটি কোন ধ্বনি? あ→আ) when the current unit is kana, then flows to vocab; **Phase-1 Intro** (sensei presents item before asking) + **Phase-5 SRS-close** line.
+- **Curriculum screen** (red timeline, live from ontology), **Book reader** (T-121, renders book.json chapters, mark-read persists), **Progress v4** (retention chart — শোনা/বলা % still demo), **Review** (v0.1), **Speak** (shadowing + pitch entry, v0.1), **Kana grid + Writing/tracing** (offline stroke animation, sound context, first-open intro), **Settings** (locale, tutor-persona picker, **data autonomy: ZIP export + delete-with-7-day-grace**, KanjiVG attribution).
 
-## Spec violations found
-- **None.** Banned-pattern grep clean; rewards fixed (feedback.dart); skip/hint/quit invariant present; streak = neutral count. FIX-A note (prototype gamification) applies only to `prototypes/` HTML, not the app.
+### Engine / logic (pure, proven by node ports)
+- **FSRS-4.5** scheduler (D-003 compliant, no mood-coupling) · **4-agent system** (Director/Persona/Scaffold/Feedback) on a Riverpod bus — deterministic signals only (taps/timing/accuracy), wired into the classroom · **curriculum service** (T-120, DAG, no locks) · **T-112 classroom batch builder** (answer-key MC from verified content; kana recognition batch) · **pitch** F0 engine · **migrations** framework.
+- **Kana-first sequencing** — numbers requires hiragana (ontology); the classroom teaches kana first.
 
-## P0 blockers
-- None for the sandbox-checkable surface. The only unverified risk: ~5 Dart files changed since the last successful `flutter analyze/test` (07-10). **Run the Windows checks before trusting them.**
+### Content / data
+- 19 verified lesson JSONs + kana×2 + pitch · **Bhasha Go book** 20 chapters (book.json, 876 blocks) · curriculum.json ontology (20 units) · KanjiVG stroke data (offline) · content validator (in CI).
 
-## Recommended next 3 tasks (updated 2026-07-12 night)
-1. **Flutter gate:** `flutter pub get; flutter gen-l10n; flutter analyze; flutter test` (SDK being installed) — ~14 Dart files changed since the last compile; fix whatever it surfaces.
-2. **l10n migration** (handoff follow-up 1): v4 hardcoded BN strings → arb keys (lists in handoff rev-2 §3 + rev-3 §3), then gen-l10n regenerates.
-3. **A2.M mock engine** in AiCheckScreen per classroom/CURRICULUM.md §6/§8 (4×12 CBT sampler, answer-key grading, band estimate → Director) — unblocks the A2.M curriculum row.
+### Platform
+- SQLCipher DB + migrations · one-tap ZIP export + 7-day-grace deletion + boot purge check · persona persistence · device build **verified once** on TECNO (07-10).
+
+---
+
+## ❌ WHAT'S NOT BUILT (the real gaps)
+
+### The "AI" — ~0%
+- **Offline LLM** (llama.cpp + Qwen3 via MethodChannel FFI, GBNF, RAG, whitelist enforcer) — **0%. No native bridges, no android/cpp.**
+- **Online AI API routing** (OpenAI/Anthropic smart-router, ~20% fallback) — **0%. No keys, no http calls.**
+- Sensei chat + AI examiner = **canned/demo replies**, not real AI.
+- **STT** (whisper.cpp) — 0% · **TTS** (Kokoro) — 0% · **RAG/embeddings** — 0%.
+- NOTE: the "content factory" is a **deterministic pipeline** (no LLM by design), NOT an AI generator.
+
+### Audio & speech — ~0%
+- No recorded audio for any word/phrase (can't *hear* Japanese) · no record-and-compare · OPUS not configured · mic buttons are shells.
+
+### Content gaps
+- **Smart Banglish** corporate code-switching content — not built (schema + lessons TODO).
+- Lessons ~15/20 units; numbers/time are stubs; **N4.1–N4.5 not authored** (need N4 whitelist).
+- **Mock exams** A2.M / N4.M — not built (AiCheck is demo).
+- **Scenario mode** (NPC roleplay, 200+ target) — not built.
+- Mistake-pattern remediation (500+ target) — schema only.
+- **Native-speaker review** of content — pending (human-gated).
+
+### Classroom loop (09 5-phase — 3 of 5 done)
+- **Phase 3 Production** (say-it / finger-write inside the lesson) — not built.
+- **Phase 4 Context** (word-block sentence building) — not built.
+- (Intro + Recognition + SRS-close done this session.)
+
+### The Learn experience (owner's own #1 — DESIGN_BRIEF)
+- **Goal-select onboarding** (SSW / JLPT / daily life) — not built.
+- **Journey map** (Learn tab = stylized Japan map, regions, passport stamps) — **not built. Biggest missing UX.**
+- **State pack** (loading/empty/error/offline) — built for **zero** screens.
+- Speak / Review / Settings / Kana screens still v0.1 styling.
+
+### Backend / sync / data
+- **Backend not chosen or built** (Firebase vs Supabase, D-010) — app is offline-only · cloud sync / accounts / social — 0% · PDF export missing (ZIP works) · opt-in analytics (HMAC) — 0%.
+
+### Distribution — ~0%
+- Content **bundled monolithically**; tiered download / content-pack system (03 / D-008) — not built · P2P import + update system — stubs only.
+
+### Business / launch (doc 12)
+- Premium/Pro tiers, payments, SSW agency — 0% · **on-device benchmarks** (Phase-0 spikes: >8 tok/s, thermal, battery) — device-gated, not done · UAT — not done.
+
+### Accessibility
+- reduced-motion — mostly done · screen-reader labels — partial · high-contrast mode — not built.
+
+---
+
+## ⚠️ KNOWN ISSUES / TRAPS (read before touching these)
+1. **l10n is broken + DISABLED.** `lib/l10n/app_*.arb` are EMPTY; `flutter gen-l10n` regenerates `app_localizations.dart` from them and WIPES the hand-maintained getters (navReview/kanaTitle/…). To make the app *build* I set `flutter: generate: false` in pubspec and moved `l10n.yaml` → `l10n.yaml.disabled`. The committed `lib/l10n/app_localizations*.dart` are authoritative. **Do NOT run gen-l10n.** Proper fix = the l10n migration (populate ARBs, then re-enable).
+2. **Journey smoke test is red** (`test/user_journey_test.dart`) — a stray `git checkout` reverted my test edits; the kana-routing test + classroom test + `back()` helper need re-applying (specified in NEXT_SESSION.md). Also a section-8 nav quirk: after visiting KanaScreen and returning, the Home draw icon didn't open Write in the widget test (untested on device; root cause unfound).
+3. **Screenshots of the running web app time out** — canvaskit never idles with the animations, so the automated screenshot tool can't capture it; the app is fine live in the browser.
+4. **Analyze/test don't auto-run gen-l10n; build/run DO** — that's why analyze was green but `flutter build web` first failed on l10n until disabled.
+
+## Recommended next 3 (highest impact on how it *feels*)
+1. **Audio** — bundle/record word audio + playback so learners can hear Japanese (biggest felt gap; some is device/asset work).
+2. **Journey-map Learn tab** + goal-select onboarding (owner's #1 design priority) — design-first, then build.
+3. **Online AI routing** (owner provides a key) — make the sensei chat actually generate (Smart Banglish), SELECT-and-glue only to stay spec-compliant.
+Then: commit the uncommitted work, re-apply the journey test, l10n migration, Phase 3/4 of the classroom, mock-exam engine.

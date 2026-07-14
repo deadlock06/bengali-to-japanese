@@ -112,8 +112,13 @@ class HomeScreen extends ConsumerWidget {
         // ── AI Classroom card (flagship, blood-red section ink) ─────────
         // Design: spinning 4-point star top-right; subtitle = current unit;
         // #111 progress pill w/ white fill + red knob; WHOLE card taps.
+        // Director "what next" (02/04): a kana unit opens the kana screen (so a
+        // beginner meets hiragana first), a vocab unit opens the classroom.
         _AccentCard(
           color: _aiClassroomRed,
+          // Always opens the sensei classroom — which itself teaches the current
+          // unit (kana recognition first, then vocab). One consistent AI-tutor
+          // experience, never a bare tool.
           onTap: onOpenLesson,
           child: Stack(children: [
             const Positioned(top: 0, right: 0, child: _SpinStar()),
@@ -291,51 +296,46 @@ class _ReviewCard extends ConsumerWidget {
           Text('আজকের রিভিউ',
               style: text.titleMedium?.copyWith(color: const Color(0xFF111111))),
           const SizedBox(height: 8),
-          // Expanded + non-scrolling ListView: rows flex to the card height set
-          // by IntrinsicHeight, so they never RenderFlex-overflow vertically.
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              children: [
-                for (final row in const [
-                  ('たべもの', '৩টা কার্ড'),
-                  ('みず', 'আজ সকাল'),
-                  ('ありがとう', 'গতকাল থেকে'),
-                ]) ...[
-                  Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Container(
-                      width: 7,
-                      height: 7,
-                      margin: const EdgeInsets.only(top: 5, right: 7),
-                      decoration: const BoxDecoration(
-                          color: Color(0xFF111111), shape: BoxShape.circle),
-                    ),
-                    Expanded(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(row.$1,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                    fontFamily: 'Zen Kaku Gothic New',
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w600,
-                                    color: Color(0xFF111111))),
-                            Text(row.$2,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: text.bodySmall?.copyWith(
-                                    fontSize: 10, color: BhasagoColors.pinkDim)),
-                          ]),
-                    ),
-                  ]),
-                  const SizedBox(height: 8),
-                ],
-              ],
-            ),
-          ),
+          // Fixed 3-row list as a plain Column — a scrollable (ListView) here
+          // is illegal under the IntrinsicHeight the card grid uses (it can't
+          // compute a viewport's intrinsic height). Rows sit at the top; the
+          // Spacer pushes "see all" to the bottom of the stretched card.
+          for (final row in const [
+            ('たべもの', '৩টা কার্ড'),
+            ('みず', 'আজ সকাল'),
+            ('ありがとう', 'গতকাল থেকে'),
+          ]) ...[
+            Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Container(
+                width: 7,
+                height: 7,
+                margin: const EdgeInsets.only(top: 5, right: 7),
+                decoration: const BoxDecoration(
+                    color: Color(0xFF111111), shape: BoxShape.circle),
+              ),
+              Expanded(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(row.$1,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              fontFamily: 'Zen Kaku Gothic New',
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF111111))),
+                      Text(row.$2,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: text.bodySmall?.copyWith(
+                              fontSize: 10, color: BhasagoColors.pinkDim)),
+                    ]),
+              ),
+            ]),
+            const SizedBox(height: 8),
+          ],
+          const Spacer(),
           Row(children: [
             Flexible(
               child: Text('$due' 'টি কার্ড দেখো',

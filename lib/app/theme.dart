@@ -163,7 +163,6 @@ abstract final class BhasagoTheme {
           color: Color(0xFF111111),
           fontWeight: FontWeight.w700,
         ),
-        labelStyle: const TextStyle(color: BhasagoColors.ink),
       ),
       dividerColor: BhasagoColors.outline,
       textTheme: _textTheme(base.textTheme),

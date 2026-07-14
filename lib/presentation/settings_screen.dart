@@ -85,18 +85,18 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 24),
-          _Section(
+          const _Section(
             title: 'টিউটর · Tutor persona',
             icon: Icons.face_outlined,
-            child: const _PersonaPicker(),
+            child: _PersonaPicker(),
           ),
           const SizedBox(height: 24),
           // Data autonomy is a NON-NEGOTIABLE (00 §5): one-tap export, instant
           // delete with a 7-day grace, no support ticket — first-class UI.
-          _Section(
+          const _Section(
             title: 'তোমার ডেটা · Your data',
             icon: Icons.lock_person_outlined,
-            child: const _DataAutonomy(),
+            child: _DataAutonomy(),
           ),
           const SizedBox(height: 40),
           Center(

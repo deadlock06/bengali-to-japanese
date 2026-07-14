@@ -36,7 +36,11 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true        # enable gen-l10n from lib/l10n/*.arb
+  # gen-l10n DISABLED: the ARBs are empty and lib/l10n/app_localizations*.dart
+  # are hand-maintained + authoritative. With generate:true the build re-runs
+  # gen-l10n and wipes them. Re-enable only after populating the ARBs (the
+  # deferred l10n migration). See NEXT_SESSION.md "l10n TRAP".
+  generate: false
   assets:
     - assets/content/
     - assets/stroke/

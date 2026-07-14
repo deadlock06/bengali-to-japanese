@@ -30,6 +30,17 @@ class CurriculumUnit {
   final List<String> lessonIds;
   final UnitProgress state;
   final double pct;
+
+  /// A kana unit is taught by the finger-draw/kana screen (02 Tier 0 —
+  /// "kana + finger-drawing kana"), NOT the vocab classroom. Detected by the
+  /// `kana_*` lesson id convention (see CODEBASE_MAP: kana_hiragana/katakana
+  /// are SCREENS, not lesson JSONs). The Director routes these to WritingScreen.
+  bool get isKana => lessonIds.any((id) => id.startsWith('kana_'));
+
+  /// The kana lesson id this unit completes ('kana_hiragana' / 'kana_katakana'),
+  /// or empty if this isn't a kana unit.
+  String get kanaLessonId =>
+      lessonIds.firstWhere((id) => id.startsWith('kana_'), orElse: () => '');
 }
 
 class CurriculumService {

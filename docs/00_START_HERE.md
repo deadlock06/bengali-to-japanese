@@ -1,8 +1,16 @@
 # SENSEI v4.2 — LLM ENTRY POINT (READ THIS FILE FIRST, THEN ONLY WHAT YOUR TASK NEEDS)
 
-> **You are an AI assistant working on SENSEI.** This file is your router.
-> Do NOT read the whole spec. Find your task type below, load ONLY the listed files.
-> Total spec ≈ 25K tokens across 13 files. This file ≈ 1.5K tokens.
+> **You are an AI assistant working on SENSEI. The `docs/` folder is your operating manual — always start here.**
+>
+> **Read order, every session:**
+> 1. **THIS file** (`docs/00_START_HERE.md`) — router + the 7 NON-NEGOTIABLES below.
+> 2. **`../CODEBASE_MAP.md`** — what is actually BUILT vs NOT built right now (read instead of re-exploring).
+> 3. **`../NEXT_SESSION.md`** — last session's work + what to do next.
+> Then load ONLY the `docs/NN_*.md` file(s) your task needs (table below).
+>
+> Do NOT read the whole spec (~25K tokens / 13 files). This file ≈ 1.5K tokens.
+> Spec-silent choice? Make the smallest reasonable one and log it in **`docs/99_DECISIONS.md`**.
+> HOW-to-build lives in `docs/` (the spec/target). WHAT-is-built lives in `../CODEBASE_MAP.md`. WHY lives in `docs/99_DECISIONS.md`.
 
 ## WHAT SENSEI IS (30 seconds)
 Offline-first Japanese tutor for Bengali speakers (Bangladesh/Kolkata) targeting JFT-Basic A2 / JLPT N5-N4 for SSW visa job seekers. Runs on budget Android (Tecno Pova 4, 8GB RAM). Flutter + Kotlin + llama.cpp. Core learning works with ZERO internet. Cloud is optional enhancement only.

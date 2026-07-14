@@ -117,9 +117,11 @@ class _HomeShellState extends ConsumerState<HomeShell> {
     // Tab bodies. Home gets callbacks so it never touches Navigator directly.
     final pages = <Widget>[
       HomeScreen(
-        // AI Classroom card → push the adaptive lesson (its own close/back pops).
+        // AI Classroom → the sensei classroom, which teaches the current unit
+        // (kana recognition first, then vocab). Kana WRITING practice stays
+        // available via the Home ✍️ AppBar action.
         onOpenLesson: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (_) => LessonScreenV4())),
+            .push(MaterialPageRoute(builder: (_) => const LessonScreenV4())),
         onOpenReview: () =>
             _push(context, s.navReview, const ReviewScreen()),
         onOpenAiCheck: () =>
@@ -196,7 +198,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
           : null,
       // Design "Japanese 3D depth field": red sun + seigaiha waves + floating
       // kana behind every tab. Purely ambient; reduced-motion freezes it.
-      body: Stack(children: [
+      body: Stack(fit: StackFit.expand, children: [
         const Positioned.fill(child: _DepthField()),
         pages[tab],
       ]),

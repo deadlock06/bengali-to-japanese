@@ -1,5 +1,12 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
+## ⚡ 2026-07-14 (Opus 4.8) — AI Classroom teaches kana in-classroom + 5-phase intro; full gap inventory
+- **CODEBASE_MAP.md fully refreshed 07-14** — the authoritative built-vs-NOT-built inventory. Read it. TL;DR: scaffolding solid + analyze-clean; but AI (offline llama.cpp + online API routing) = 0%, audio = 0%, journey-map Learn tab / goal-select = not built, backend = none, content packs = not built, Smart Banglish content = not built.
+- **This session's code (UNCOMMITTED):** AI ক্লাসরুম card now always opens the sensei classroom (reverted the kana→WritingScreen detour). The classroom TEACHES kana in-format: `buildKanaBatch` (providers route current kana unit → "এটি কোন ধ্বনি? あ→আ" recognition), `ClassroomQuestion.prompt/introBn` added. Added **Phase-1 Intro** (`introSeen` — sensei presents item before asking) + **Phase-5 SRS-close** line. Still MISSING from the 5-phase loop: Phase-3 Production (speak/write), Phase-4 Context (word-blocks).
+- **content-factory analysis:** it is a DETERMINISTIC pipeline (Python compilers/validators + Dart CardGenerator that seeds FSRS) — NO LLM, NO API keys, NO routing. All "AI" (chat, examiner) is canned/demo.
+- **l10n now DISABLED to allow builds:** `generate: false` in pubspec + `l10n.yaml` → `l10n.yaml.disabled`. Committed `lib/l10n/app_localizations*.dart` are authoritative. Do NOT run gen-l10n. (See CODEBASE_MAP Known Issues.)
+- **Verify:** `export PATH="$HOME/flutter/bin:$PATH"; flutter analyze` (clean); web build → `localhost:5601`.
+
 You are an AI continuing work on **SENSEI/Bhasago**. Read order:
 1. `docs/00_START_HERE.md` — router + NON-NEGOTIABLES (never violate).
 2. `CODEBASE_MAP.md` — what exists vs spec (2026-07-09; still mostly accurate, see delta below).
@@ -96,6 +103,40 @@ Owner direction: "complete those all following the design documents (handoff)". 
 5. **Smaller handoff follow-ups:** Speak tab = pitch entry card + shadowing (follow-up 2) · Home course % = live mean unit pct from curriculumProvider (T-108 hookup; real 0% for fresh user) · agent_panel psych strip snaps under reduced-motion. ProgressV4 শোনা/বলা pcts left demo ON PURPOSE — no truthful listening/pitch history source exists yet (correctness over fake data).
 6. **Verified from sandbox:** batch 11/11 · validator PASS · all prior proofs green · bracket-balance clean on 7 edited Dart files · test-critical strings (ইঙ্গিত/বাদ/বন্ধ/Talk to sensei/chips) preserved. **flutter analyze/test NOT run (no SDK here) — REQUIRED first on Windows; ~9 Dart files now unverified.**
 7. Still open from handoff: l10n migration (follow-up 1, Windows), tutor-service for SenseiChat (canned), T-121 finish, A2.M mock.
+
+## ▶▶ 2026-07-13 (Claude Opus 4.8 / Cowork) — FLUTTER INSTALLED + FIRST REAL analyze/test + kana-first routing. READ THIS FIRST.
+**Flutter 3.44.5 is installed at `~/flutter`.** Every command needs `export PATH="$HOME/flutter/bin:$PATH"` first (or add to ~/.bashrc). The archive download is finicky on this connection — if re-needed, use `wget -c` (curl -C - corrupted it twice).
+
+**STATE: `flutter analyze` = "No issues found!" (first real pass ever). LIB CODE is complete + clean. BUT `test/user_journey_test.dart` was ACCIDENTALLY REVERTED to HEAD by a stray `git checkout` late in the session — so the kana-routing test, the direct-pump classroom test, and the `back()` helper I'd added are GONE and must be RE-APPLIED (all fully specified below). The lib/ changes are INTACT. Nothing committed.**
+
+**RE-APPLY these test edits to test/user_journey_test.dart (they made it 51/51 except the one section-8 issue):**
+- Add imports: `app/providers.dart`, `data/curriculum_service.dart`.
+- Add a `back(WidgetTester t)` helper that taps `find.byIcon(Icons.arrow_back).last` (topmost visible arrow — KanaScreen is a Scaffold pushed inside _push's Scaffold = TWO arrows; `.last` = the visible/inner one that pops), else `pageBack()`.
+- Journey section 4: tapping 'AI ক্লাসরুম' with the real (unresolvable-in-test) curriculumProvider → `current`=null → classroom FALLBACK. Assert hint/skip/quit via `find.widgetWithText(OutlinedButton, 'ইঙ্গিত'|'বাদ'|'বন্ধ')` (NOT find.text — 'ইঙ্গিত' also labels the hint card once open → ambiguous). Quit via `find.byIcon(Icons.arrow_back)` (header arrow), not the 'বন্ধ' pill (can be partly offscreen). Move the sensei-chat interaction OUT of the journey into its own direct-pump test (below) — `bySemanticsLabel('Talk to sensei')` needs `tester.ensureSemantics()` + a pump, and the handle must be `.dispose()`d explicitly at the end (addTearDown didn't fire it).
+- Replace all `pageBack()` calls in the journey with `back(tester)`.
+- NEW test "AI Classroom card opens kana screen when a kana unit is current": `ProviderScope(overrides:[curriculumProvider.overrideWith((ref)=>Future.value(const [CurriculumUnit(id:'L0.1',level:'L0',titleBn:'হিরাগানা',canDoBn:'…',prerequisites:[],lessonIds:['kana_hiragana'],state:UnitProgress.current,pct:0)]))], child: const SenseiApp())`. pumpUntil 'AI ক্লাসরুম', **pump ~6×50ms so the override resolves BEFORE tapping** (else current=null→classroom), tap 'AI ক্লাসরুম', pumpUntil 'হিরাগানা শেষ ✓', assert 'ひらがな' present + `widgetWithText(OutlinedButton,'ইঙ্গিত')` findsNothing. (This GREEN test proves the kana-first fix; the DB-backed provider can't resolve under fake-async, which is why the journey sees the classroom fallback.)
+- NEW test "AI Classroom lesson: Skip/Hint/Quit + sensei chat": direct-pump `MaterialApp(home: LessonScreenV4())`, ensureSemantics, hint/skip via widgetWithText, `bySemanticsLabel('Talk to sensei')` → chip 'একটা উদাহরণ' → close via `find.descendant(of: SenseiChatSheet, matching: byIcon(close))`, then `sem.dispose()`.
+
+**⚠️ UNRESOLVED (the reason the journey was still 1-red before the revert) — ROOT CAUSE NOT YET FOUND:** isolated repro (verified): onboard→home→tap grid_view (Kana opens, 1 back arrow, pops fine to home: home_icon/draw_icon/navbar all =1)→ then tap draw ⇒ **the Write screen does NOT open** (title/back/arrow all = 0). So after visiting KanaScreen once and returning home, the Home AppBar's draw IconButton stops opening WritingScreen in the widget test. NOTE: my earlier "KanaScreen is a double Scaffold" guess was WRONG — `KanaScreen` (screens.dart:17) returns a bare `GridView`, no Scaffold. So the cause is something else: possibly the `_DepthField` Stack / an AnimationController, contentProvider state, or a fake-async nav artifact after the GridView route. Next session: repro the isolated case (onboard→grid_view→back→draw), dump the widget tree after the draw tap (`debugDumpApp()` / check `find.byType(AppBar)` count + `tester.takeException()`), and see whether draw's `_push` actually runs. **Real-device impact: untested — could be a genuine bug OR a test-only fake-async artifact; confirm on device.** Test-side workarounds if it's fake-async-only: in section 8 re-tap `home_outlined` + `pumpUntil` a home widget before each icon, or reorder so grid_view (Kana) is last.
+
+**Real pre-existing bugs found & FIXED by the first analyze/test (were invisible without Flutter):**
+1. **l10n TRAP:** `lib/l10n/app_en.arb` is EMPTY (0 bytes). Running `flutter gen-l10n` regenerates `app_localizations.dart` from it → WIPES navReview/kanaTitle/navLearn/navSpeak/reviewDone/showAnswer/rAgain/rHard/rGood/rEasy → build breaks. **DO NOT run gen-l10n.** The committed `lib/l10n/app_localizations*.dart` are hand-maintained + authoritative. (Proper fix later = the l10n migration: populate the .arb files, then gen-l10n is safe.) I restored them via `git checkout HEAD -- lib/l10n/`.
+2. **theme.dart:** duplicate `labelStyle` in the chip theme (compile error) — removed the dupe.
+3. **home_screen.dart:** the pink review card used `Expanded(ListView)` inside the card grid's `IntrinsicHeight` → "can't compute a viewport's intrinsic height" CRASH on first render → killed all 3 shell tests. Fixed to a plain Column + Spacer.
+4. `_DepthField` Stack → `fit: StackFit.expand` (tab bodies need tight constraints).
+
+**KANA-FIRST ROUTING (the sequencing fix the owner asked for) — DONE, analyze-clean:** ontology says numbers(L0.3) requires hiragana(L0.1), but the app dropped beginners into `いち`. Now: `CurriculumUnit.isKana`/`kanaLessonId` (kana_* ids = kana SCREENS per 02 Tier 0); HomeScreen decides from the `current` unit it already renders and calls `onOpenKana` (kana screen) vs `onOpenLesson` (classroom); `main._openKana` pushes Scaffold+WritingScreen(startKatakana,onComplete); WritingScreen gained `startKatakana`+`onComplete` → "হিরাগানা/কাতাকানা শেষ ✓" records completion → ladder advances. Proven by new test `AI Classroom card opens kana screen when a kana unit is current` (GREEN, uses a curriculumProvider override — the real DB-backed one can't resolve under fake-async, which is WHY the journey test sees the classroom fallback; on a real device it routes to kana).
+
+**THE 1 FAILING TEST — `user_journey_test.dart` "new learner…", section 8 loop:** diagnostic showed the 4th `back()` call finds `BackButton=0 arrow=0`. The loop pushes Kana(grid_view)→OK, then **Write(draw icon)→ pushed screen has NO back button**. So either the draw-icon `_push` isn't pushing, or the prior Kana `back()` left a bad nav state. Everything up to there passes. Debug: add prints in `back()` / dump the tree after the draw tap. The kana-routing + classroom(direct-pump) tests in the same file are GREEN — only the big journey smoke test's section 8 is red. Fix it, then `flutter test` should be 51/51 → COMMIT.
+
+**Build/verify commands (this machine):**
+```
+export PATH="$HOME/flutter/bin:$PATH"
+flutter analyze        # expect: No issues found!
+flutter test           # expect: 50/51 until section-8 back-nav fixed
+# DO NOT run flutter gen-l10n (see l10n trap above)
+```
+Android Studio / Android SDK still NOT installed (needs sudo, owner-only) — only needed for `flutter build apk`, not analyze/test.
 
 ## Later session (2026-07-12 night, Claude Fable 5 / Cowork) — apply-everything: commits + T-121 reader + data-autonomy restore
 1. **Committed the day's work:** `61b10f8` (T-112 classroom/agents/kana/T-121 slice/audit docs) + `5d08ce4` (Home v4 fidelity + preview) + this batch. CRLF-only churn + build artifacts excluded.

@@ -38,7 +38,16 @@ const _kanaIntroBn =
     'এক নজরেই চেনে (ফর্ম, নাম-ট্যাগ, daily report এ কাজে লাগবে)।';
 
 class WritingScreen extends StatefulWidget {
-  const WritingScreen({super.key});
+  const WritingScreen({super.key, this.startKatakana = false, this.onComplete});
+
+  /// Open directly on katakana (for the L0.2 curriculum unit).
+  final bool startKatakana;
+
+  /// When set, this screen IS a curriculum unit (L0.1/L0.2): a "কানা শেষ ✓"
+  /// action appears that records the unit complete and pops. D-001: it's an
+  /// offer — Skip/Quit still work, nothing is forced.
+  final VoidCallback? onComplete;
+
   @override
   State<WritingScreen> createState() => _WritingScreenState();
 }
@@ -46,7 +55,7 @@ class WritingScreen extends StatefulWidget {
 class _WritingScreenState extends State<WritingScreen>
     with SingleTickerProviderStateMixin {
   Map<String, dynamic> _data = const {};
-  bool _kata = false;
+  late bool _kata = widget.startKatakana;
   int _idx = 0;
   bool _guide = true;
   final List<List<Offset>> _ink = [];
@@ -77,6 +86,18 @@ class _WritingScreenState extends State<WritingScreen>
     setState(() => _showIntro = false);
     SharedPreferences.getInstance()
         .then((p) => p.setBool('kana_intro_seen', true));
+  }
+
+  /// The sensei's teaching line for the current character — introduces the
+  /// sound BEFORE the learner traces (teach → show → practice). The first 5
+  /// are the vowels everything else is built from.
+  String _senseiLine() {
+    final r = _romaji[_idx], bn = _bnSound[_idx];
+    final head = 'এই যে — 「$_cur」। উচ্চারণ "$bn" (romaji: $r)। ';
+    if (_idx < 5) {
+      return '$head এটি জাপানির ৫টি মূল স্বরের একটি — সব অক্ষর এই স্বরগুলোর উপরে দাঁড়ানো। ভালো করে চিনে নাও।';
+    }
+    return '$head ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর আঙুল দিয়ে নিজে লিখে ফেলো।';
   }
 
   @override
@@ -189,15 +210,35 @@ class _WritingScreenState extends State<WritingScreen>
           ),
         ),
       ),
-      // sound context: WHAT you are tracing — romaji + Bengali equivalent
+      // Sensei teaches THIS character — avatar + speech bubble (classroom feel,
+      // not a bare tool). The line introduces the sound before you practice.
       Padding(
-        padding: const EdgeInsets.fromLTRB(16, 2, 16, 0),
-        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text(_cur, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            width: 34, height: 34, alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: const Color(0xFF1A1A1A), shape: BoxShape.circle,
+              border: Border.all(color: const Color(0xFFF06EB7), width: 2),
+            ),
+            child: const Text('先',
+                style: TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 15,
+                    fontWeight: FontWeight.w900, color: Color(0xFFF06EB7))),
+          ),
           const SizedBox(width: 8),
-          Text('${_romaji[_idx]} · উচ্চারণ: ${_bnSound[_idx]}',
-              style: TextStyle(fontSize: 13.5,
-                  color: Theme.of(context).colorScheme.onSurfaceVariant)),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1A1A1A),
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(4), topRight: Radius.circular(14),
+                    bottomLeft: Radius.circular(14), bottomRight: Radius.circular(14)),
+                border: Border.all(color: const Color(0xFF2E2E2E)),
+              ),
+              child: Text(_senseiLine(), style: const TextStyle(fontSize: 12, height: 1.5)),
+            ),
+          ),
         ]),
       ),
       // paper — takes the leftover height, square sized by the shorter axis,
@@ -273,6 +314,22 @@ class _WritingScreenState extends State<WritingScreen>
           ),
         ]),
       ),
+      // Curriculum-unit completion (L0.1/L0.2): learner marks the set learned,
+      // which advances the ladder to the next unit (numbers). D-001: an offer.
+      if (widget.onComplete != null)
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          child: FilledButton.icon(
+            onPressed: widget.onComplete,
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(48),
+              backgroundColor: const Color(0xFF35E065),
+              foregroundColor: const Color(0xFF111111),
+            ),
+            icon: const Icon(Icons.check, size: 18),
+            label: Text(_kata ? 'কাতাকানা শেষ ✓' : 'হিরাগানা শেষ ✓'),
+          ),
+        ),
     ]);
   }
 

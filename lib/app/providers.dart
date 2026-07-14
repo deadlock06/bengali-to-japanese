@@ -73,6 +73,21 @@ final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
     completed = await ref.read(srsProvider).completedLessonIds();
   } catch (_) {/* device-only DB may be absent off-device */}
 
+  // The classroom teaches the CURRENT unit. A kana unit is taught right here —
+  // sensei-led recognition ("এটি কোন ধ্বনি?") — NOT a separate tool. So a
+  // beginner meets hiragana IN the classroom, then flows into vocab.
+  try {
+    final units = await ref.watch(curriculumProvider.future);
+    for (final u in units) {
+      if (u.state == UnitProgress.current) {
+        if (u.isKana) {
+          return buildKanaBatch(katakana: u.kanaLessonId.contains('katakana'));
+        }
+        break;
+      }
+    }
+  } catch (_) {/* ontology unavailable → fall through to vocab */}
+
   final ordered = <Lesson>[];
   try {
     for (final u in await ref.watch(curriculumProvider.future)) {

@@ -95,7 +95,7 @@ class BookScreenV4 extends ConsumerWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
               child:
                   Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Row(crossAxisAlignment: CrossAxisAlignment.end, children: const [
+                const Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                   Text('語',
                       style: TextStyle(
                           fontFamily: 'ZenKakuGothicNew',

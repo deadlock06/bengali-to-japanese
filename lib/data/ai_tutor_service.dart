@@ -41,11 +41,30 @@ class AiTutorService {
 
   /// Returns the sensei's reply, or null on no-proxy/offline/error (→ caller
   /// uses its canned fallback). [contextJp] is the item under discussion.
-  Future<String?> reply(String userText, {String contextJp = ''}) async {
+  Future<String?> reply(String userText, {String contextJp = ''}) {
+    final ctx = contextJp.isEmpty
+        ? ''
+        : 'শিক্ষার্থী এখন 「$contextJp」 নিয়ে শিখছে। ';
+    return _complete(_system, '$ctx$userText', maxTokens: 300);
+  }
+
+  static const _dictSystem = '''
+তুমি একটি AI অভিধান — বাংলাভাষীদের জন্য। ব্যবহারকারী যে টেক্সট দেবে (সাধারণত জাপানি, কখনো mixed) সেটা বিশ্লেষণ করো এই ফরম্যাটে, Smart Banglish এ (বাংলা + English key words):
+• অর্থ: (বাংলায় মানে)
+• পড়া: (kana + romaji + বাংলা উচ্চারণ)
+• ভাঙা: (শব্দ/particle ধরে ধরে ছোট breakdown — থাকলে)
+• উদাহরণ: (একটা ছোট natural বাক্য + মানে)
+• টিপ: (কখন/কোথায় ব্যবহার হয়)
+নিয়ম: verified, standard তথ্য — কিছু বানিয়ে বলবে না; নিশ্চিত না হলে বলো "এটা এখন level এর বাইরে।" সংক্ষিপ্ত রাখো।''';
+
+  /// AI dictionary — explains arbitrary (usually Japanese) text. null on
+  /// offline / no-key / error (caller shows a gentle offline message).
+  Future<String?> explain(String text) =>
+      _complete(_dictSystem, text.trim(), maxTokens: 400);
+
+  Future<String?> _complete(String system, String user, {int maxTokens = 300}) async {
+    if (user.isEmpty) return null;
     try {
-      final ctx = contextJp.isEmpty
-          ? ''
-          : 'শিক্ষার্থী এখন 「$contextJp」 নিয়ে শিখছে। ';
       final res = await _dio.post(
         _proxyUrl,
         options: Options(
@@ -54,11 +73,11 @@ class AiTutorService {
             validateStatus: (s) => s != null && s < 500),
         data: {
           'model': 'gpt-4o-mini',
-          'temperature': 0.6,
-          'max_tokens': 300,
+          'temperature': 0.5,
+          'max_tokens': maxTokens,
           'messages': [
-            {'role': 'system', 'content': _system},
-            {'role': 'user', 'content': '$ctx$userText'},
+            {'role': 'system', 'content': system},
+            {'role': 'user', 'content': user},
           ],
         },
       );
@@ -66,7 +85,7 @@ class AiTutorService {
           ?.trim();
       return (txt == null || txt.isEmpty) ? null : txt;
     } catch (_) {
-      return null; // offline / no proxy / error → canned fallback
+      return null; // offline / no proxy / error → fallback
     }
   }
 }

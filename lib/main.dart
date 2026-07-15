@@ -31,6 +31,7 @@ import 'presentation/lesson_screen_v4.dart';
 import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
+import 'presentation/dictionary_screen.dart';
 import 'presentation/writing_screen.dart';
 
 void main() => runApp(const ProviderScope(child: SenseiApp()));
@@ -174,6 +175,13 @@ class _HomeShellState extends ConsumerState<HomeShell> {
           ? AppBar(
               title: const Text('Bhasago'),
               actions: [
+                // AI dictionary — explain any copied/typed Japanese text.
+                IconButton(
+                  icon: const Icon(Icons.translate),
+                  tooltip: 'AI অভিধান · Dictionary',
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const DictionaryScreen())),
+                ),
                 // Kana grid + writing practice moved off the tab bar (v4):
                 IconButton(
                   icon: const Icon(Icons.grid_view),

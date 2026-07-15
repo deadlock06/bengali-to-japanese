@@ -44,6 +44,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - **Offline LLM** (llama.cpp + Qwen3 via MethodChannel FFI, GBNF, RAG, whitelist enforcer) — **0%. No native bridges, no android/cpp.**
 - **Online AI (sensei chat)** — ✅ **WIRED** via a secure same-origin proxy (AiTutorService → /ai/chat → OpenAI gpt-4o-mini, Smart Banglish system prompt). Key stays server-side (tools/web_server.mjs, ENV). Offline/no-key → canned fallback. Still ❌: AI examiner, retrieval/RAG grounding.
 - Sensei chat = ✅ real AI (proxy, when key set); AI examiner still canned/demo.
+- **ONE unified sensei chat** (`presentation/sensei_chat_sheet.dart`) — used both in the AI Classroom (tap the sensei) AND from **copy-anywhere ব্যাখ্যা**. Select text on any reading surface → floating sensei button (`selection_explain.dart`, ConsumerWidget) → opens the same chat *seeded* with that text: he explains it (dictionary format for JP, plain explanation for names/Bengali/other — never refuses), then you keep chatting (follow-up chips + per-message Bengali TTS "শুনি"). Passes the learner's **current curriculum unit** as a hint so answers match their level. `explain_sheet.dart` is now a thin launcher for it.
 - **STT** (whisper.cpp) — 0% · **TTS** (Kokoro) — 0% · **RAG/embeddings** — 0%.
 - NOTE: the "content factory" is a **deterministic pipeline** (no LLM by design), NOT an AI generator.
 
@@ -53,7 +54,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 
 ### Content gaps
 - **Smart Banglish** corporate code-switching content — not built (schema + lessons TODO).
-- Lessons ~15/20 units; numbers/time are stubs; **N4.1–N4.5 not authored** (need N4 whitelist).
+- Lessons: L0/A1/A2 all wired (18 content lessons, no orphans left — greetings/shopping/emergency wired into A1.1/A1.3/A2.2 this session); **N4.1–N4.5 + both mocks still not authored** (need N4 whitelist + verified grammar; do NOT auto-generate — D-001 correctness).
 - **Mock exams** A2.M / N4.M — not built (AiCheck is demo).
 - **Scenario mode** (NPC roleplay, 200+ target) — not built.
 - Mistake-pattern remediation (500+ target) — schema only.

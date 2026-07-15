@@ -42,8 +42,8 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 
 ### The "AI" — ~0%
 - **Offline LLM** (llama.cpp + Qwen3 via MethodChannel FFI, GBNF, RAG, whitelist enforcer) — **0%. No native bridges, no android/cpp.**
-- **Online AI API routing** (OpenAI/Anthropic smart-router, ~20% fallback) — **0%. No keys, no http calls.**
-- Sensei chat + AI examiner = **canned/demo replies**, not real AI.
+- **Online AI (sensei chat)** — ✅ **WIRED** via a secure same-origin proxy (AiTutorService → /ai/chat → OpenAI gpt-4o-mini, Smart Banglish system prompt). Key stays server-side (tools/web_server.mjs, ENV). Offline/no-key → canned fallback. Still ❌: AI examiner, retrieval/RAG grounding.
+- Sensei chat = ✅ real AI (proxy, when key set); AI examiner still canned/demo.
 - **STT** (whisper.cpp) — 0% · **TTS** (Kokoro) — 0% · **RAG/embeddings** — 0%.
 - NOTE: the "content factory" is a **deterministic pipeline** (no LLM by design), NOT an AI generator.
 

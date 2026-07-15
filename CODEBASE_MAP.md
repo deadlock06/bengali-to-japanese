@@ -51,6 +51,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 ### Audio & speech — recognition audio ✅, speaking ❌
 - ✅ **Bundled offline Japanese audio** — 238 edge-tts clips (46+46 base kana + 46 voiced/handakuten + lesson words), 🔊 in the classroom + auto-play on Intro (tools/generate_audio.py).
 - ✅ **Kana recognition = full 71** (46 base **+ 25 dakuten ゛/handakuten ゜**, with a teaching note on the mark) — `buildKanaBatch` now meets the L0.1 46+25 assessment (classroom/CURRICULUM.md §6). Still ❌: yōon combos (きゃ), sokuon っ, long-vowel ー; katakana name-builder/shape-family drills.
+- ✅ **Classroom ↔ Writing connected** — a base kana's Intro card shows an interactive **✍️ হাতে লিখে দেখাও** button (`_writeBtn`) that opens `WritingScreen` **focused on that character** (`startChar`). Arch-faithful (02 Tier-0): offline finger-draw + stroke-order animation + **bundled pronunciation 🔊** (deterministic, no network); handwriting is never AI-graded. Plus an **optional online-AI "সেনসেইকে জিজ্ঞেস"** button → the unified sensei chat (mnemonic/stroke/pronunciation help, offline canned fallback) — explanatory only (D-001/D-013).
 - ❌ Still: record-and-compare pronunciation (speaking), OPUS, sentence-level audio.
 
 ### Content gaps

@@ -36,6 +36,7 @@ import '../data/lesson_batch.dart';
 import 'book_reader_screen.dart';
 import 'book_screen_v4.dart';
 import 'curriculum_screen_v4.dart';
+import 'writing_screen.dart';
 
 /// Adaptive mood of the classroom. One accent dominates per state.
 enum LessonMood { neutral, flow, struggle, burnout, boredom }
@@ -88,6 +89,55 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   void _playAudio() {
     if (q.audioKey.isNotEmpty) AudioService.instance.play(q.audioKey);
   }
+
+  // The 46 base kana that have stroke data (kana_strokes.json) — i.e. are
+  // writable. Voiced/handakuten (が, ぱ…) recognise-only for now.
+  static const _writableHira =
+      'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
+  static const _writableKata =
+      'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+  bool get _isKataItem => q.itemId.startsWith('kana_katakana');
+  bool get _canWrite =>
+      q.itemId.startsWith('kana_') &&
+      (_isKataItem ? _writableKata : _writableHira).contains(q.jp);
+
+  /// Interactive ✍️ → the Write screen focused on THIS kana. Offline stroke
+  /// practice + bundled pronunciation + optional sensei help (arch: Tier-0
+  /// core is deterministic; AI is explanatory only).
+  void _openWrite(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => Scaffold(
+        backgroundColor: BhasagoTheme.bg,
+        appBar: AppBar(
+          backgroundColor: BhasagoTheme.bg,
+          elevation: 0,
+          iconTheme: const IconThemeData(color: BhasagoTheme.muted),
+          title: Text('✍️ 「${q.jp}」 লেখা',
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700)),
+        ),
+        body: SafeArea(
+          top: false,
+          child: WritingScreen(startChar: q.jp, startKatakana: _isKataItem),
+        ),
+      ),
+    ));
+  }
+
+  Widget _writeBtn() => Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: OutlinedButton.icon(
+          onPressed: () => _openWrite(context),
+          icon: const Text('✍️', style: TextStyle(fontSize: 15)),
+          label: const Text('হাতে লিখে দেখাও'),
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(0, 40),
+            foregroundColor: BhasagoTheme.text,
+            side: BorderSide(color: m.color, width: 1.4),
+            shape: const StadiumBorder(),
+            textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+          ),
+        ),
+      );
 
   // 🔊 "hear it" button — bundled native-voice audio (offline). Hidden when the
   // item has no clip.
@@ -370,6 +420,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           Text('= ${q.options[q.answerIndex]}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: m.color)),
           _speakerBtn(),
+          if (_canWrite) _writeBtn(),
           if (q.noteBn.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(q.noteBn, textAlign: TextAlign.center,
@@ -397,6 +448,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           if (q.yomi.isNotEmpty)
             Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
           _speakerBtn(),
+          if (_canWrite) _writeBtn(),
           const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),

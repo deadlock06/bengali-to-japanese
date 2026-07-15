@@ -201,7 +201,7 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 71}) {
           : isVoiced
               ? '${isHandakuten ? '"゜" (maru)' : '"゛" (ten-ten)'} চিহ্নে ধ্বনি বদলায় — '
                   'যেমন か→が, は→ば→ぱ। এটাই dakuten/handakuten।'
-              : '「$ch」 = "$correct"। Home এর ✍️ Write স্ক্রিনে হাতে লিখেও অনুশীলন করো।',
+              : '「$ch」 = "$correct"। নিচের ✍️ বাটনে চেপে হাতে লিখো — সেনসেই stroke-order আর উচ্চারণ শিখিয়ে দেবে।',
       audioKey: 'kana_${katakana ? "kata" : "hira"}_${_kanaRomaji[i]}',
     ));
   }

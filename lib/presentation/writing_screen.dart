@@ -8,6 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../app/theme.dart';
+import '../data/audio_service.dart';
+import 'sensei_chat_sheet.dart';
+
 const _hiraChars = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
 const _kataChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
 
@@ -38,10 +42,15 @@ const _kanaIntroBn =
     'এক নজরেই চেনে (ফর্ম, নাম-ট্যাগ, daily report এ কাজে লাগবে)।';
 
 class WritingScreen extends StatefulWidget {
-  const WritingScreen({super.key, this.startKatakana = false, this.onComplete});
+  const WritingScreen(
+      {super.key, this.startKatakana = false, this.startChar = '', this.onComplete});
 
   /// Open directly on katakana (for the L0.2 curriculum unit).
   final bool startKatakana;
+
+  /// Open focused on a specific kana (e.g. 'き' from the classroom "লিখে দেখাও"
+  /// button). Auto-detects script; falls back to the start if not writable.
+  final String startChar;
 
   /// When set, this screen IS a curriculum unit (L0.1/L0.2): a "কানা শেষ ✓"
   /// action appears that records the unit complete and pops. D-001: it's an
@@ -69,9 +78,24 @@ class _WritingScreenState extends State<WritingScreen>
   String get _chars => _kata ? _kataChars : _hiraChars;
   String get _cur => _chars[_idx];
 
+  /// Bundled-audio key for the current kana (Tier-0 offline pronunciation).
+  String get _audioKey => 'kana_${_kata ? "kata" : "hira"}_${_romaji[_idx]}';
+
   @override
   void initState() {
     super.initState();
+    // Open focused on a requested character (from the classroom). Detect script
+    // from which set contains it; ignore if it isn't a writable base kana.
+    final want = widget.startChar;
+    if (want.isNotEmpty) {
+      if (_hiraChars.contains(want)) {
+        _kata = false;
+        _idx = _hiraChars.indexOf(want);
+      } else if (_kataChars.contains(want)) {
+        _kata = true;
+        _idx = _kataChars.indexOf(want);
+      }
+    }
     rootBundle.loadString('assets/stroke/kana_strokes.json').then((s) {
       setState(() => _data = json.decode(s) as Map<String, dynamic>);
     });
@@ -81,6 +105,24 @@ class _WritingScreenState extends State<WritingScreen>
       }
     });
   }
+
+  /// Offline: play the pre-bundled native pronunciation (Tier 0, no network).
+  void _listen() => AudioService.instance.play(_audioKey);
+
+  /// Optional online-AI help (~20% edge cases, D-013): the SAME sensei explains
+  /// this character — mnemonic, stroke tip, how to say it — with an offline
+  /// canned fallback. Explanatory only; it never grades your handwriting.
+  void _askSensei() => showModalBottomSheet<void>(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (_) => SenseiChatSheet(
+          accent: const Color(0xFFF06EB7),
+          moodLabel: 'লেখা',
+          seedText: '「$_cur」 (${_romaji[_idx]}) — এই ${_kata ? "কাতাকানা" : "হিরাগানা"} '
+              'অক্ষরটা কীভাবে সহজে মনে রাখব, লিখব আর উচ্চারণ করব?',
+        ),
+      );
 
   void _dismissIntro() {
     setState(() => _showIntro = false);
@@ -237,6 +279,40 @@ class _WritingScreenState extends State<WritingScreen>
                 border: Border.all(color: const Color(0xFF2E2E2E)),
               ),
               child: Text(_senseiLine(), style: const TextStyle(fontSize: 12, height: 1.5)),
+            ),
+          ),
+        ]),
+      ),
+      // Sensei's two helpers: OFFLINE pronunciation (pre-bundled audio, Tier 0)
+      // and OPTIONAL online-AI explanation (unified chat, offline fallback).
+      // Neither touches handwriting grading — that stays the deterministic
+      // stroke model (D-001 / arch 02 Tier 0).
+      Padding(
+        padding: const EdgeInsets.fromLTRB(58, 8, 16, 0),
+        child: Row(children: [
+          OutlinedButton.icon(
+            onPressed: _listen,
+            icon: const Icon(Icons.volume_up, size: 16),
+            label: const Text('উচ্চারণ'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size(0, 34),
+              foregroundColor: BhasagoTheme.text,
+              side: const BorderSide(color: Color(0xFFF06EB7), width: 1.3),
+              shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
+            ),
+          ),
+          const SizedBox(width: 8),
+          OutlinedButton.icon(
+            onPressed: _askSensei,
+            icon: const Icon(Icons.chat_bubble_outline, size: 15),
+            label: const Text('সেনসেইকে জিজ্ঞেস'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size(0, 34),
+              foregroundColor: BhasagoTheme.muted,
+              side: const BorderSide(color: Color(0xFF2E2E2E), width: 1.3),
+              shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
             ),
           ),
         ]),

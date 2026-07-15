@@ -5,6 +5,8 @@
 // Uses a tap-on-sensei trigger (not the selection toolbar) because on web the
 // browser's own menu overrides Flutter's toolbar. This works everywhere: select
 // or copy any text, then tap the sensei.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,18 +24,48 @@ class SelectionExplain extends StatefulWidget {
 }
 
 class _SelectionExplainState extends State<SelectionExplain> {
-  String _selected = '';
+  String _captured = ''; // last non-empty selection (survives the tap)
+  bool _visible = false;
+  Timer? _hide;
+
+  @override
+  void dispose() {
+    _hide?.cancel();
+    super.dispose();
+  }
+
+  void _onSelection(String t) {
+    final s = t.trim();
+    if (s.isNotEmpty) {
+      _hide?.cancel();
+      if (!_visible || _captured != s) {
+        setState(() {
+          _captured = s;
+          _visible = true;
+        });
+      }
+    } else {
+      // Selection cleared — likely a tap. Keep the sensei briefly so the tap
+      // lands (tapping the button itself clears the selection).
+      _hide?.cancel();
+      _hide = Timer(const Duration(seconds: 4), () {
+        if (mounted) setState(() => _visible = false);
+      });
+    }
+  }
 
   Future<void> _askSensei() async {
-    var t = _selected.trim();
+    _hide?.cancel();
+    var t = _captured.trim();
     if (t.isEmpty) {
       final clip = await Clipboard.getData(Clipboard.kTextPlain);
       t = clip?.text?.trim() ?? '';
     }
     if (!mounted) return;
+    setState(() => _visible = false);
     if (t.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('আগে একটা শব্দ বা বাক্য select বা copy করো — তারপর সেনসেই বুঝিয়ে দেবে।'),
+        content: Text('আগে একটা শব্দ বা বাক্য select করো — তারপর সেনসেই বুঝিয়ে দেবে।'),
         duration: Duration(seconds: 3),
       ));
       return;
@@ -44,21 +76,14 @@ class _SelectionExplainState extends State<SelectionExplain> {
 
   @override
   Widget build(BuildContext context) {
-    final hasSelection = _selected.trim().isNotEmpty;
     return Stack(children: [
       SelectionArea(
-        onSelectionChanged: (c) {
-          final t = c?.plainText ?? '';
-          if (t.trim().isNotEmpty != hasSelection) {
-            setState(() => _selected = t);
-          } else {
-            _selected = t;
-          }
-        },
+        onSelectionChanged: (c) => _onSelection(c?.plainText ?? ''),
         child: widget.child,
       ),
-      // The sensei appears ONLY while text is selected — tap → he explains it.
-      if (hasSelection)
+      // Sensei appears while text is selected (and for a moment after, so the
+      // tap lands). Tap → he explains the captured text.
+      if (_visible)
         Positioned(
           right: 16, bottom: 20,
           child: _SenseiFab(onTap: _askSensei),

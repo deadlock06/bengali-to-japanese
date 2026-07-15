@@ -11,7 +11,7 @@ class AudioService {
   AudioService._();
   static final AudioService instance = AudioService._();
 
-  final AudioPlayer _player = AudioPlayer();
+  AudioPlayer? _player;
   Map<String, String>? _manifest;
 
   Future<Map<String, String>> _load() async {
@@ -29,15 +29,27 @@ class AudioService {
   Future<bool> has(String key) async => (await _load()).containsKey(key);
 
   /// Play the clip for [key]. No-op (never throws) if absent or unplayable
-  /// (e.g. web without the asset). Restarts if already playing.
+  /// (e.g. web without the asset).
+  ///
+  /// A FRESH player per call, disposing the previous one: reusing a single
+  /// just_audio player with rapid setAsset is unreliable on web — it keeps
+  /// replaying the FIRST-loaded clip instead of switching. A new player's
+  /// element only ever holds one source, so the right clip always plays.
+  /// Clips are <1s, so the create/dispose cost is negligible.
   Future<void> play(String key) async {
     final m = await _load();
     final path = m[key];
     if (path == null) return;
+    final old = _player;
+    final p = AudioPlayer();
+    _player = p;
     try {
-      await _player.setAsset('assets/$path');
-      await _player.seek(Duration.zero);
-      await _player.play();
+      if (old != null) {
+        await old.stop();
+        await old.dispose();
+      }
+      await p.setAsset('assets/$path');
+      p.play(); // fire-and-forget; the future completes when the clip ends
     } catch (_) {/* audio backend unavailable — stay silent */}
   }
 }

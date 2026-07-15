@@ -252,9 +252,13 @@ class _Section extends StatelessWidget {
           children: [
             Icon(icon, size: 18, color: const Color(0xFF00C853)),
             const SizedBox(width: 8),
-            Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            Expanded(
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
             ),
           ],
         ),

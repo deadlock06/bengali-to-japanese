@@ -44,16 +44,25 @@ class _SelectionExplainState extends State<SelectionExplain> {
 
   @override
   Widget build(BuildContext context) {
+    final hasSelection = _selected.trim().isNotEmpty;
     return Stack(children: [
       SelectionArea(
-        onSelectionChanged: (c) => _selected = c?.plainText ?? '',
+        onSelectionChanged: (c) {
+          final t = c?.plainText ?? '';
+          if (t.trim().isNotEmpty != hasSelection) {
+            setState(() => _selected = t);
+          } else {
+            _selected = t;
+          }
+        },
         child: widget.child,
       ),
-      // Persistent sensei button — tap to explain selected/copied text.
-      Positioned(
-        right: 16, bottom: 20,
-        child: _SenseiFab(onTap: _askSensei),
-      ),
+      // The sensei appears ONLY while text is selected — tap → he explains it.
+      if (hasSelection)
+        Positioned(
+          right: 16, bottom: 20,
+          child: _SenseiFab(onTap: _askSensei),
+        ),
     ]);
   }
 }

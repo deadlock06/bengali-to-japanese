@@ -212,7 +212,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
       // kana behind every tab. Purely ambient; reduced-motion freezes it.
       body: Stack(fit: StackFit.expand, children: [
         const Positioned.fill(child: _DepthField()),
-        pages[tab],
+        // Select any text in the tabs → the sensei appears to explain it.
+        SelectionExplain(child: pages[tab]),
       ]),
       bottomNavigationBar: NavigationBar(
         selectedIndex: tab,

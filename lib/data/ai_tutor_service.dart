@@ -4,11 +4,12 @@
 // (answer-key only, 00 §4 / D-001). The model SELECTS & GLUES verified facts
 // and explains in "Smart Banglish" — it must NOT invent Japanese grammar.
 //
-// SECURITY: the client holds NO API key. It POSTs the request to a PROXY that
-// injects the key server-side (never shipped to the client, no browser CORS
-// issue). For the local web demo the proxy is tools/web_server.mjs at
-// same-origin '/ai/chat'; for a real device build point AI_PROXY_URL at your
-// deployed proxy:
+// SECURITY: the client holds NO API key and doesn't care which provider is
+// used — it POSTs to a PROXY that picks an OpenAI-compatible provider
+// (DeepSeek / Kimi / OpenAI, whichever key is set, with failover) and injects
+// the key server-side (no key shipped to the client, no browser CORS). The
+// proxy overrides `model` per provider, so the value sent here is a placeholder.
+// Local web demo: tools/web_server.mjs at same-origin '/ai/chat'; device build:
 //   flutter build web                     # uses /ai/chat (run web_server.mjs
 //                                          #   with OPENAI_API_KEY set)
 //   flutter build apk --dart-define=AI_PROXY_URL=https://your-proxy/ai/chat

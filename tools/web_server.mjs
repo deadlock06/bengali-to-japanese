@@ -8,24 +8,48 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'build', 'web');
-const OPENAI_KEY = process.env.OPENAI_API_KEY || '';
 
-// POST /ai/chat → forward the OpenAI chat body with server-side auth.
+// OpenAI-compatible providers. Each is used only if its key env var is set.
+// Tried in order (DeepSeek → Kimi → OpenAI) with automatic failover, so free
+// tiers that rate-limit degrade gracefully. Set one or more:
+//   DEEPSEEK_API_KEY=...  MOONSHOT_API_KEY=...  OPENAI_API_KEY=...
+// Hosts overridable (e.g. MOONSHOT_HOST=api.moonshot.cn for the CN endpoint).
+const PROVIDERS = [
+  { name: 'deepseek', host: process.env.DEEPSEEK_HOST || 'api.deepseek.com',
+    key: process.env.DEEPSEEK_API_KEY, model: 'deepseek-chat' },
+  { name: 'kimi', host: process.env.MOONSHOT_HOST || 'api.moonshot.ai',
+    key: process.env.MOONSHOT_API_KEY || process.env.KIMI_API_KEY, model: 'kimi-latest' },
+  { name: 'openai', host: 'api.openai.com',
+    key: process.env.OPENAI_API_KEY, model: 'gpt-4o-mini' },
+].filter((p) => p.key);
+
+// POST /ai/chat → forward the chat body to the first available provider (with
+// its own model), failing over to the next on any 5xx / network error.
 function aiProxy(req, res) {
-  if (!OPENAI_KEY) { res.writeHead(400); return res.end('{"error":"no key"}'); }
+  if (PROVIDERS.length === 0) { res.writeHead(400); return res.end('{"error":"no provider key set"}'); }
   let body = '';
   req.on('data', (c) => (body += c));
   req.on('end', () => {
-    const upstream = https.request({
-      host: 'api.openai.com', path: '/v1/chat/completions', method: 'POST',
-      headers: { 'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_KEY}`, 'Content-Length': Buffer.byteLength(body) },
-    }, (up) => {
-      res.writeHead(up.statusCode || 502, { 'Content-Type': 'application/json' });
-      up.pipe(res);
-    });
-    upstream.on('error', () => { res.writeHead(502); res.end('{"error":"upstream"}'); });
-    upstream.end(body);
+    let payload;
+    try { payload = JSON.parse(body); } catch { res.writeHead(400); return res.end('{"error":"bad body"}'); }
+    const tryProvider = (i) => {
+      if (i >= PROVIDERS.length) { res.writeHead(502); return res.end('{"error":"all providers failed"}'); }
+      const p = PROVIDERS[i];
+      const out = Buffer.from(JSON.stringify({ ...payload, model: p.model }));
+      const up = https.request({
+        host: p.host, path: '/v1/chat/completions', method: 'POST',
+        headers: { 'Content-Type': 'application/json',
+          'Authorization': `Bearer ${p.key}`, 'Content-Length': out.length },
+      }, (r) => {
+        if ((r.statusCode || 500) >= 500) { r.resume(); return tryProvider(i + 1); }
+        console.log(`ai: ${p.name} → ${r.statusCode}`);
+        res.writeHead(r.statusCode || 502, { 'Content-Type': 'application/json' });
+        r.pipe(res);
+      });
+      up.on('error', () => tryProvider(i + 1));
+      up.end(out);
+    };
+    tryProvider(0);
   });
 }
 const MIME = { '.html':'text/html', '.js':'text/javascript', '.mjs':'text/javascript',

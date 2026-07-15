@@ -22,6 +22,23 @@ def collect():
         script = "hira" if "hira" in f else "kata"
         for k in data.get("items", []):
             items[f"kana_{script}_{k['romaji']}"] = k["char"]
+    # Voiced (dakuten) + semi-voiced (handakuten) — the "+25" set the L0.1
+    # assessment expects (46 base + 25 voiced/combo, classroom/CURRICULUM.md §6).
+    # ぢ/づ reuse じ/ず (じ=ji, ず=zu) — phonetically identical.
+    VOICED = {  # romaji key -> (hiragana, katakana)
+        "ga": ("が", "ガ"), "gi": ("ぎ", "ギ"), "gu": ("ぐ", "グ"),
+        "ge": ("げ", "ゲ"), "go": ("ご", "ゴ"),
+        "za": ("ざ", "ザ"), "ji": ("じ", "ジ"), "zu": ("ず", "ズ"),
+        "ze": ("ぜ", "ゼ"), "zo": ("ぞ", "ゾ"),
+        "da": ("だ", "ダ"), "de": ("で", "デ"), "do": ("ど", "ド"),
+        "ba": ("ば", "バ"), "bi": ("び", "ビ"), "bu": ("ぶ", "ブ"),
+        "be": ("べ", "ベ"), "bo": ("ぼ", "ボ"),
+        "pa": ("ぱ", "パ"), "pi": ("ぴ", "ピ"), "pu": ("ぷ", "プ"),
+        "pe": ("ぺ", "ペ"), "po": ("ぽ", "ポ"),
+    }
+    for r, (hira, kata) in VOICED.items():
+        items[f"kana_hira_{r}"] = hira
+        items[f"kana_kata_{r}"] = kata
     # lesson items: one clip per phrase, keyed by item id
     for p in glob.glob(os.path.join(CONTENT, "lesson_*.json")):
         data = json.load(open(p, encoding="utf-8"))

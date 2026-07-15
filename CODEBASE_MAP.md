@@ -49,7 +49,8 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - NOTE: the "content factory" is a **deterministic pipeline** (no LLM by design), NOT an AI generator.
 
 ### Audio & speech — recognition audio ✅, speaking ❌
-- ✅ **Bundled offline Japanese audio** — 192 edge-tts clips (every kana + lesson word), 🔊 in the classroom + auto-play on Intro (tools/generate_audio.py).
+- ✅ **Bundled offline Japanese audio** — 238 edge-tts clips (46+46 base kana + 46 voiced/handakuten + lesson words), 🔊 in the classroom + auto-play on Intro (tools/generate_audio.py).
+- ✅ **Kana recognition = full 71** (46 base **+ 25 dakuten ゛/handakuten ゜**, with a teaching note on the mark) — `buildKanaBatch` now meets the L0.1 46+25 assessment (classroom/CURRICULUM.md §6). Still ❌: yōon combos (きゃ), sokuon っ, long-vowel ー; katakana name-builder/shape-family drills.
 - ❌ Still: record-and-compare pronunciation (speaking), OPUS, sentence-level audio.
 
 ### Content gaps

@@ -131,24 +131,38 @@ ClassroomBatch? buildClassroomBatch({
 }
 
 // ── KANA teaching (recognition) — taught IN the sensei classroom ─────────────
-// gojūon order, aligned char/romaji/Bengali-sound (matches WritingScreen).
-const _hiraChars = 'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん';
-const _kataChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+// gojūon order (46 base) + the 25 voiced/semi-voiced (dakuten ゛ / handakuten ゜)
+// that the L0.1 assessment expects (46+25, classroom/CURRICULUM.md §6). Aligned
+// char/romaji/Bengali-sound; ぢ/づ reuse じ/ず audio (phonetically identical).
+const _hiraChars =
+    'あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん'
+    'がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ';
+const _kataChars =
+    'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン'
+    'ガギグゲゴザジズゼゾダヂヅデドバビブベボパピプペポ';
 const _kanaRomaji = [
   'a','i','u','e','o','ka','ki','ku','ke','ko','sa','shi','su','se','so',
   'ta','chi','tsu','te','to','na','ni','nu','ne','no','ha','hi','fu','he','ho',
   'ma','mi','mu','me','mo','ya','yu','yo','ra','ri','ru','re','ro','wa','wo','n',
+  // voiced (dakuten) + semi-voiced (handakuten); ぢ→ji, づ→zu reuse clips
+  'ga','gi','gu','ge','go','za','ji','zu','ze','zo','da','ji','zu','de','do',
+  'ba','bi','bu','be','bo','pa','pi','pu','pe','po',
 ];
 const _kanaBnSound = [
   'আ','ই','উ','এ','ও','কা','কি','কু','কে','কো','সা','শি','সু','সে','সো',
   'তা','চি','ৎসু','তে','তো','না','নি','নু','নে','নো','হা','হি','ফু','হে','হো',
   'মা','মি','মু','মে','মো','ইয়া','ইউ','ইয়ো','রা','রি','রু','রে','রো','ওয়া','ও','ন',
+  'গা','গি','গু','গে','গো','জা','জি','জু','জে','জো','দা','জি','জু','দে','দো',
+  'বা','বি','বু','বে','বো','পা','পি','পু','পে','পো',
 ];
+
+/// Index where the voiced/semi-voiced (dakuten ゛/ handakuten ゜) set begins.
+const _kanaVoicedStart = 46;
 
 /// The sensei teaches kana IN the classroom: for each character, an intro
 /// line + a "which sound is this?" recognition question with Bengali-sound
 /// options. Answer-key graded (the correct sound), D-001/00§4. Deterministic.
-ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 46}) {
+ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 71}) {
   final chars = katakana ? _kataChars : _hiraChars;
   final script = katakana ? 'kana_katakana' : 'kana_hiragana';
   final label = katakana ? 'কাতাকানা' : 'হিরাগানা';
@@ -166,6 +180,8 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 46}) {
     final answerIndex = i % 4;
     final options = [...distractors]..insert(answerIndex, correct);
     final isVowel = i < 5;
+    final isVoiced = i >= _kanaVoicedStart; // dakuten ゛/ handakuten ゜ set
+    final isHandakuten = isVoiced && _kanaBnSound[i].startsWith('প'); // ぱ-row
     questions.add(ClassroomQuestion(
       itemId: '${script}_$i',
       jp: ch,
@@ -175,11 +191,17 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 46}) {
       prompt: 'এটি কোন ধ্বনি?',
       introBn: isVowel
           ? 'এই যে — 「$ch」। জাপানির ৫টি মূল স্বরের একটি। বলো "$correct"।'
-          : 'এই যে — 「$ch」। ধ্বনি "$correct" (romaji: ${_kanaRomaji[i]})।',
+          : isVoiced
+              ? 'এই যে — 「$ch」। মূল অক্ষরে ${isHandakuten ? '"゜" (maru)' : '"゛" (ten-ten)'} '
+                  'যোগ হয়ে ধ্বনি "$correct" (romaji: ${_kanaRomaji[i]})।'
+              : 'এই যে — 「$ch」। ধ্বনি "$correct" (romaji: ${_kanaRomaji[i]})।',
       hint: 'মুখে বলো "$correct" — romaji: ${_kanaRomaji[i]}।',
       noteBn: isVowel
           ? 'দারুণ! এই স্বরগুলোই জাপানি সব অক্ষরের ভিত্তি।'
-          : '「$ch」 = "$correct"। Home এর ✍️ Write স্ক্রিনে হাতে লিখেও অনুশীলন করো।',
+          : isVoiced
+              ? '${isHandakuten ? '"゜" (maru)' : '"゛" (ten-ten)'} চিহ্নে ধ্বনি বদলায় — '
+                  'যেমন か→が, は→ば→ぱ। এটাই dakuten/handakuten।'
+              : '「$ch」 = "$correct"। Home এর ✍️ Write স্ক্রিনে হাতে লিখেও অনুশীলন করো।',
       audioKey: 'kana_${katakana ? "kata" : "hira"}_${_kanaRomaji[i]}',
     ));
   }

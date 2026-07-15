@@ -24,6 +24,7 @@ class ClassroomQuestion {
     required this.noteBn,
     this.prompt = 'এর মানে কী?',
     this.introBn = '',
+    this.audioKey = '',
   });
 
   final String itemId, jp, yomi, hint, noteBn;
@@ -36,6 +37,10 @@ class ClassroomQuestion {
 
   /// The sensei's teaching line shown BEFORE the learner answers (teach → ask).
   final String introBn;
+
+  /// assets/audio manifest key for the 🔊 button (lesson item id for vocab,
+  /// 'kana_hira_a' etc. for kana). Empty = no audio.
+  final String audioKey;
 }
 
 class ClassroomBatch {
@@ -113,6 +118,7 @@ ClassroomBatch? buildClassroomBatch({
       answerIndex: answerIndex,
       hint: '「$kanaHead」 দিয়ে শুরু — ${it.note.bn}',
       noteBn: it.note.bn,
+      audioKey: it.id, // lesson audio is keyed by item id
     ));
   }
   if (questions.isEmpty) return null;
@@ -174,6 +180,7 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 46}) {
       noteBn: isVowel
           ? 'দারুণ! এই স্বরগুলোই জাপানি সব অক্ষরের ভিত্তি।'
           : '「$ch」 = "$correct"। Home এর ✍️ Write স্ক্রিনে হাতে লিখেও অনুশীলন করো।',
+      audioKey: 'kana_${katakana ? "kata" : "hira"}_${_kanaRomaji[i]}',
     ));
   }
   return ClassroomBatch(

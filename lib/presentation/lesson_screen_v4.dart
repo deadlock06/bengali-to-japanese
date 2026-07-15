@@ -28,6 +28,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../agents/agent_state.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/audio_service.dart';
 import '../data/book_repository.dart';
 import '../data/lesson_batch.dart';
 import 'book_reader_screen.dart';
@@ -78,8 +79,33 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   // Phase 1 of the 09 micro-loop: the sensei PRESENTS the item before asking
   // (teach → then recognition). false = intro card showing; true = MC showing.
   bool introSeen = false;
+  int _audioPlayedFor = -1; // auto-play each item's audio once when presented
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
+
+  void _playAudio() {
+    if (q.audioKey.isNotEmpty) AudioService.instance.play(q.audioKey);
+  }
+
+  // 🔊 "hear it" button — bundled native-voice audio (offline). Hidden when the
+  // item has no clip.
+  Widget _speakerBtn() => q.audioKey.isEmpty
+      ? const SizedBox.shrink()
+      : Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: OutlinedButton.icon(
+            onPressed: _playAudio,
+            icon: Icon(Icons.volume_up, size: 18, color: m.color),
+            label: const Text('শোনো'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size(0, 36),
+              foregroundColor: BhasagoTheme.text,
+              side: BorderSide(color: m.color, width: 1.3),
+              shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w700),
+            ),
+          ),
+        );
 
   // T-112: once the real batch arrives (and the lesson hasn't started) it
   // replaces the demo. Cached so lesson state survives push/pop (rev-4 §2).
@@ -241,6 +267,12 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         PsychState.calibrating => mood,
       };
     }
+    // Auto-play the item's audio once when it's first presented (Intro phase) —
+    // the sensei "says" it, so the learner hears the sound before answering.
+    if (!done && !introSeen && _audioPlayedFor != idx && q.audioKey.isNotEmpty) {
+      _audioPlayedFor = idx;
+      WidgetsBinding.instance.addPostFrameCallback((_) => _playAudio());
+    }
     final progress = idx / qs.length;
     return Scaffold(
       backgroundColor: BhasagoTheme.bg, // #0F0F0F
@@ -332,6 +364,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           // The answer, revealed (this is teaching, not testing).
           Text('= ${q.options[q.answerIndex]}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: m.color)),
+          _speakerBtn(),
           if (q.noteBn.isNotEmpty) ...[
             const SizedBox(height: 8),
             Text(q.noteBn, textAlign: TextAlign.center,
@@ -358,6 +391,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 54, fontWeight: FontWeight.w900, height: 1.15)),
           if (q.yomi.isNotEmpty)
             Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+          _speakerBtn(),
           const SizedBox(height: 14),
           GridView.count(
             crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),

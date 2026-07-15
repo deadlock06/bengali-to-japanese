@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+# Generates bundled Japanese audio for every lesson word + kana using edge-tts
+# (free Microsoft neural voice, no API key). Runs at BUILD time; the .mp3 files
+# are bundled so the app plays them fully OFFLINE (spec Tier-0 "pre-bundled
+# audio"). Re-run after adding content; existing files are skipped.
+#   ./.venv-tts/bin/python tools/generate_audio.py
+import asyncio, json, os, glob, sys
+import edge_tts
+
+VOICE = "ja-JP-NanamiNeural"   # natural female JP voice
+OUT_DIR = "assets/audio"
+CONTENT = "assets/content"
+
+def collect():
+    """→ list of (key, japanese_text). key = stable filename stem."""
+    items = {}
+    # kana: one clip per character, keyed by romaji (kana_a, kana_ka, …)
+    for f in ("hiragana.json", "katakana.json"):
+        p = os.path.join(CONTENT, f)
+        if not os.path.exists(p): continue
+        data = json.load(open(p, encoding="utf-8"))
+        script = "hira" if "hira" in f else "kata"
+        for k in data.get("items", []):
+            items[f"kana_{script}_{k['romaji']}"] = k["char"]
+    # lesson items: one clip per phrase, keyed by item id
+    for p in glob.glob(os.path.join(CONTENT, "lesson_*.json")):
+        data = json.load(open(p, encoding="utf-8"))
+        for it in data.get("items", []):
+            jp = it.get("jp") or it.get("kana")
+            if jp:
+                items[it["id"]] = jp
+    return items
+
+async def synth(key, text):
+    out = os.path.join(OUT_DIR, f"{key}.mp3")
+    if os.path.exists(out) and os.path.getsize(out) > 0:
+        return "skip"
+    await edge_tts.Communicate(text, VOICE).save(out)
+    return "new"
+
+async def main():
+    os.makedirs(OUT_DIR, exist_ok=True)
+    items = collect()
+    manifest, new, skip = {}, 0, 0
+    for key, text in items.items():
+        try:
+            r = await synth(key, text)
+            manifest[key] = f"audio/{key}.mp3"
+            new += (r == "new"); skip += (r == "skip")
+        except Exception as e:
+            print(f"  FAIL {key} ({text}): {e}", file=sys.stderr)
+    json.dump(manifest, open(os.path.join(OUT_DIR, "manifest.json"), "w",
+              encoding="utf-8"), ensure_ascii=False, indent=0)
+    print(f"audio: {len(manifest)} clips ({new} new, {skip} existing) → {OUT_DIR}/")
+
+if __name__ == "__main__":
+    asyncio.run(main())

@@ -30,6 +30,7 @@ import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/ai_tutor_service.dart';
 import '../data/audio_service.dart';
+import 'selection_explain.dart';
 import '../data/book_repository.dart';
 import '../data/lesson_batch.dart';
 import 'book_reader_screen.dart';
@@ -278,6 +279,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     return Scaffold(
       backgroundColor: BhasagoTheme.bg, // #0F0F0F
       body: SafeArea(
+        // Select any text here (options, note, sensei line) → "ব্যাখ্যা".
+        child: SelectionExplain(
         child: Stack(children: [
           _AmbientClassroom(accent: m.color,
               still: mood == LessonMood.burnout, // burnout = intentionally still
@@ -300,6 +303,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           ),
           if (done) _doneOverlay(context),
         ]),
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/book_repository.dart';
+import 'selection_explain.dart';
 
 const _green = Color(0xFF35E065);
 
@@ -65,7 +66,9 @@ class BookReaderScreen extends ConsumerWidget {
             ]),
           ),
           Expanded(
-            child: ListView(
+            // Select any word/sentence here → "ব্যাখ্যা" → sensei explains it.
+            child: SelectionExplain(
+              child: ListView(
               padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
               children: [
                 for (final b in chapter.blocks) _block(b),
@@ -83,6 +86,7 @@ class BookReaderScreen extends ConsumerWidget {
                         style: TextStyle(fontWeight: FontWeight.w800)),
                   ),
               ],
+            ),
             ),
           ),
         ]),

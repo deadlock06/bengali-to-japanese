@@ -28,6 +28,7 @@ dependencies:
   path_provider: ^2.1.4 # documents dir for the export file
   dio: ^5.7.0
   crypto: ^3.0.5
+  flutter_tts: ^4.2.0  # on-device Bengali TTS for reading AI explanations aloud
 
 dev_dependencies:
   flutter_test:

@@ -32,6 +32,7 @@ import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
 import 'presentation/dictionary_screen.dart';
+import 'presentation/selection_explain.dart';
 import 'presentation/writing_screen.dart';
 
 void main() => runApp(const ProviderScope(child: SenseiApp()));
@@ -48,6 +49,9 @@ class SenseiApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Bhasago',
       debugShowCheckedModeBanner: false,
+      // Root navigator key — lets the in-screen selection toolbar open the
+      // explain sheet on the right overlay (see SelectionExplain).
+      navigatorKey: appNavigatorKey,
       locale: locale,
       supportedLocales: const [Locale('en'), Locale('bn'), Locale('ja')],
       localizationsDelegates: const [

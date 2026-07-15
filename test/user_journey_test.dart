@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:sensei_app/main.dart';
 import 'package:sensei_app/presentation/lesson_screen_v4.dart';
+import 'package:sensei_app/presentation/sensei_chat_sheet.dart';
 import 'package:sensei_app/presentation/onboarding_screen.dart';
 
 Future<void> pumpUntil(WidgetTester t, Finder f,

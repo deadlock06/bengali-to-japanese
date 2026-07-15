@@ -41,10 +41,11 @@ class AiTutorService {
 
   /// Returns the sensei's reply, or null on no-proxy/offline/error (→ caller
   /// uses its canned fallback). [contextJp] is the item under discussion.
-  Future<String?> reply(String userText, {String contextJp = ''}) {
-    final ctx = contextJp.isEmpty
-        ? ''
-        : 'শিক্ষার্থী এখন 「$contextJp」 নিয়ে শিখছে। ';
+  Future<String?> reply(String userText,
+      {String contextJp = '', String curriculumHint = ''}) {
+    final ctx = StringBuffer();
+    if (curriculumHint.isNotEmpty) ctx.write('$curriculumHint ');
+    if (contextJp.isNotEmpty) ctx.write('শিক্ষার্থী এখন 「$contextJp」 নিয়ে কথা বলছে। ');
     return _complete(_system, '$ctx$userText', maxTokens: 300);
   }
 
@@ -66,8 +67,12 @@ class AiTutorService {
 
   /// AI dictionary — explains arbitrary (usually Japanese) text. null on
   /// offline / no-key / error (caller shows a gentle offline message).
-  Future<String?> explain(String text) =>
-      _complete(_dictSystem, text.trim(), maxTokens: 400);
+  /// [curriculumHint] lets the sensei tie the answer to the learner's unit.
+  Future<String?> explain(String text, {String curriculumHint = ''}) {
+    final t = text.trim();
+    final user = curriculumHint.isEmpty ? t : '$curriculumHint\n\nটেক্সট: $t';
+    return _complete(_dictSystem, user, maxTokens: 400);
+  }
 
   Future<String?> _complete(String system, String user, {int maxTokens = 300}) async {
     if (user.isEmpty) return null;

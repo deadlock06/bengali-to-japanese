@@ -118,7 +118,7 @@
         "L0.1"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "work_intro_01",
+      "lesson_id": "lesson_greetings,work_intro_01",
       "target_word_count": 30
     },
     {
@@ -158,7 +158,7 @@
         "L0.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_konbini",
+      "lesson_id": "lesson_konbini,lesson_shopping",
       "target_word_count": 40
     },
     {
@@ -218,7 +218,7 @@
         "A1.2"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_clinic",
+      "lesson_id": "lesson_clinic,lesson_emergency",
       "target_word_count": 45
     },
     {

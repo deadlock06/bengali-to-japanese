@@ -9,21 +9,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../app/providers.dart';
+import '../data/curriculum_service.dart';
 import 'explain_sheet.dart';
 import 'sensei_avatar.dart';
 
 /// Root navigator key (kept for callers that reference it).
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
-class SelectionExplain extends StatefulWidget {
+class SelectionExplain extends ConsumerStatefulWidget {
   const SelectionExplain({super.key, required this.child});
   final Widget child;
   @override
-  State<SelectionExplain> createState() => _SelectionExplainState();
+  ConsumerState<SelectionExplain> createState() => _SelectionExplainState();
 }
 
-class _SelectionExplainState extends State<SelectionExplain> {
+class _SelectionExplainState extends ConsumerState<SelectionExplain> {
   String _captured = ''; // last non-empty selection (survives the tap)
   bool _visible = false;
   Timer? _hide;
@@ -71,7 +74,23 @@ class _SelectionExplainState extends State<SelectionExplain> {
       return;
     }
     if (t.length > 400) t = t.substring(0, 400);
-    showExplainSheet(context, t);
+    showExplainSheet(context, t, curriculumHint: _curriculumHint());
+  }
+
+  /// Ties the explanation to the learner's live curriculum: the unit they're
+  /// on now. Empty when the ontology isn't loaded (off-device / early).
+  String _curriculumHint() {
+    final units = ref.read(curriculumProvider).valueOrNull;
+    if (units == null) return '';
+    for (final u in units) {
+      if (u.state == UnitProgress.current) {
+        final title = u.titleBn.trim();
+        if (title.isEmpty) return '';
+        return 'প্রসঙ্গ: শিক্ষার্থী এখন কোর্সের "$title" (${u.level}) ইউনিটে আছে — '
+            'পারলে ব্যাখ্যাটা সেই লেভেলের সাথে মিলিয়ে দাও।';
+      }
+    }
+    return '';
   }
 
   @override

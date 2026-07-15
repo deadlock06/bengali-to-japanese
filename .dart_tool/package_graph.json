@@ -8,6 +8,7 @@
       "version": "0.1.0+1",
       "dependencies": [
         "archive",
+        "collection",
         "crypto",
         "dio",
         "fftea",
@@ -15,6 +16,7 @@
         "flutter_localizations",
         "flutter_riverpod",
         "flutter_secure_storage",
+        "flutter_tts",
         "intl",
         "just_audio",
         "path",
@@ -192,6 +194,11 @@
       ]
     },
     {
+      "name": "collection",
+      "version": "1.19.1",
+      "dependencies": []
+    },
+    {
       "name": "flutter_localizations",
       "version": "0.0.0",
       "dependencies": [
@@ -227,11 +234,6 @@
     {
       "name": "meta",
       "version": "1.18.0",
-      "dependencies": []
-    },
-    {
-      "name": "collection",
-      "version": "1.19.1",
       "dependencies": []
     },
     {
@@ -852,6 +854,14 @@
         "collection",
         "meta",
         "pub_semver"
+      ]
+    },
+    {
+      "name": "flutter_tts",
+      "version": "4.2.5",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins"
       ]
     }
   ],

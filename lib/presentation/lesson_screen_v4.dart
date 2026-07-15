@@ -28,6 +28,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../agents/agent_state.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
+import '../data/ai_tutor_service.dart';
 import '../data/audio_service.dart';
 import '../data/book_repository.dart';
 import '../data/lesson_batch.dart';
@@ -432,7 +433,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         context: context,
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
-        builder: (_) => SenseiChatSheet(accent: m.color, moodLabel: m.label),
+        builder: (_) => SenseiChatSheet(
+            accent: m.color, moodLabel: m.label, contextJp: q.jp),
       );
 
   Widget _teacherRow() => Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
@@ -676,9 +678,11 @@ class _TeacherPainter extends CustomPainter {
 // explanatory only — grading stays answer-key (D-001 / 00 §4).
 
 class SenseiChatSheet extends StatefulWidget {
-  const SenseiChatSheet({super.key, required this.accent, required this.moodLabel});
+  const SenseiChatSheet(
+      {super.key, required this.accent, required this.moodLabel, this.contextJp = ''});
   final Color accent;
   final String moodLabel;
+  final String contextJp; // the item under discussion (for the AI's context)
   @override
   State<SenseiChatSheet> createState() => _SenseiChatSheetState();
 }
@@ -715,7 +719,7 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
     super.dispose();
   }
 
-  void _send(String text) {
+  void _send(String text) async {
     final t = text.trim();
     if (t.isEmpty || _typing) return;
     _input.clear();
@@ -723,7 +727,19 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
       _msgs.insert(0, _ChatMsg(true, t));
       _typing = true;
     });
-    Future.delayed(const Duration(milliseconds: 900), () {
+    // Online AI (Smart Banglish) if a key is configured; else canned/offline.
+    // Grading never touches this — chat is explanatory only (D-001/00§4).
+    final ai = await AiTutorService.instance
+        .reply(t, contextJp: widget.contextJp);
+    if (!mounted) return;
+    if (ai != null) {
+      setState(() {
+        _msgs.insert(0, _ChatMsg(false, ai));
+        _typing = false;
+      });
+      return;
+    }
+    Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
       setState(() {
         _msgs.insert(0, _ChatMsg(false, _canned[_cannedIdx % _canned.length]));

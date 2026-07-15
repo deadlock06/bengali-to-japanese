@@ -1,15 +1,17 @@
-// Wraps a reading surface so text is selectable, and shows a floating
-// "ব্যাখ্যা করো" button whenever text is selected → the sensei explains it
-// (AI dictionary) in a popup, with Bengali audio.
+// Wraps a reading surface: text is selectable, and a persistent SENSEI button
+// floats in the corner. Tap it → the sensei explains whatever you've SELECTED
+// or COPIED (clipboard) — a popup where he teaches it + reads the Bengali aloud.
 //
-// Uses a floating button (not the selection toolbar) because on web the
-// browser's own context menu overrides Flutter's custom toolbar — the floating
-// button works reliably on web AND mobile.
+// Uses a tap-on-sensei trigger (not the selection toolbar) because on web the
+// browser's own menu overrides Flutter's toolbar. This works everywhere: select
+// or copy any text, then tap the sensei.
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'explain_sheet.dart';
+import 'sensei_avatar.dart';
 
-/// Root navigator key (kept for callers that already reference it).
+/// Root navigator key (kept for callers that reference it).
 final GlobalKey<NavigatorState> appNavigatorKey = GlobalKey<NavigatorState>();
 
 class SelectionExplain extends StatefulWidget {
@@ -22,66 +24,66 @@ class SelectionExplain extends StatefulWidget {
 class _SelectionExplainState extends State<SelectionExplain> {
   String _selected = '';
 
-  void _open() {
-    final t = _selected.trim();
-    if (t.isNotEmpty) showExplainSheet(context, t);
+  Future<void> _askSensei() async {
+    var t = _selected.trim();
+    if (t.isEmpty) {
+      final clip = await Clipboard.getData(Clipboard.kTextPlain);
+      t = clip?.text?.trim() ?? '';
+    }
+    if (!mounted) return;
+    if (t.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('আগে একটা শব্দ বা বাক্য select বা copy করো — তারপর সেনসেই বুঝিয়ে দেবে।'),
+        duration: Duration(seconds: 3),
+      ));
+      return;
+    }
+    if (t.length > 400) t = t.substring(0, 400);
+    showExplainSheet(context, t);
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       SelectionArea(
-        onSelectionChanged: (c) {
-          final t = c?.plainText ?? '';
-          if (t != _selected) setState(() => _selected = t);
-        },
-        // Keep a toolbar 'ব্যাখ্যা' too where it works (mobile long-press).
-        contextMenuBuilder: (ctx, state) => AdaptiveTextSelectionToolbar.buttonItems(
-          anchors: state.contextMenuAnchors,
-          buttonItems: [
-            ...state.contextMenuButtonItems,
-            if (_selected.trim().isNotEmpty)
-              ContextMenuButtonItem(
-                  label: 'ব্যাখ্যা',
-                  onPressed: () { state.hideToolbar(); _open(); }),
-          ],
-        ),
+        onSelectionChanged: (c) => _selected = c?.plainText ?? '',
         child: widget.child,
       ),
-      // Floating explain button — appears while text is selected.
-      if (_selected.trim().isNotEmpty)
-        Positioned(
-          left: 16, right: 16, bottom: 20,
-          child: Center(
-            child: Material(
-              color: const Color(0xFF4D7DF7),
-              borderRadius: BorderRadius.circular(999),
-              elevation: 6,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(999),
-                onTap: _open,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 11),
-                  child: Row(mainAxisSize: MainAxisSize.min, children: [
-                    const Icon(Icons.auto_awesome, size: 18, color: Color(0xFF111111)),
-                    const SizedBox(width: 8),
-                    Flexible(
-                      child: Text(
-                        _selected.trim().length > 18
-                            ? '「${_selected.trim().substring(0, 18)}…」 ব্যাখ্যা'
-                            : '「${_selected.trim()}」 ব্যাখ্যা করো',
-                        maxLines: 1, overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                            color: Color(0xFF111111),
-                            fontWeight: FontWeight.w800, fontSize: 13),
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-        ),
+      // Persistent sensei button — tap to explain selected/copied text.
+      Positioned(
+        right: 16, bottom: 20,
+        child: _SenseiFab(onTap: _askSensei),
+      ),
     ]);
+  }
+}
+
+class _SenseiFab extends StatelessWidget {
+  const _SenseiFab({required this.onTap});
+  final VoidCallback onTap;
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: const Color(0xFF4D7DF7),
+      shape: const StadiumBorder(),
+      elevation: 6,
+      child: InkWell(
+        customBorder: const StadiumBorder(),
+        onTap: onTap,
+        child: const Padding(
+          padding: EdgeInsets.fromLTRB(8, 6, 14, 6),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            SizedBox(
+                width: 30, height: 36,
+                child: SenseiAvatar(size: 30, accent: Color(0xFFEFE94B))),
+            SizedBox(width: 6),
+            Text('সেনসেই ব্যাখ্যা',
+                style: TextStyle(
+                    color: Color(0xFF111111),
+                    fontWeight: FontWeight.w800, fontSize: 12.5)),
+          ]),
+        ),
+      ),
+    );
   }
 }

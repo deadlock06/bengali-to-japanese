@@ -5,7 +5,7 @@
 
 ## Environment (verified this session)
 - **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
-- `flutter analyze` → **No issues found** (first real pass ever). `flutter test` → **50 pass / 1 fail** (journey smoke test, see Known Issues).
+- `flutter analyze` → **No issues found** (first real pass ever). `flutter test` → **50 pass / 0 fail** (all green).
 - Node 20 present; all engine proofs green (validator, batch 11/11, curriculum 14/14, agents 17/17, fsrs, lesson_flow, migrations, pitch).
 - **Web build works** (`flutter build web`), served at `localhost:5601` via `tools/web_server.mjs` — the real app runs in-browser for demoing.
 - **Android SDK NOT installed** (needs sudo) → no on-device APK build here yet. iOS not targeted. fvm not set up.

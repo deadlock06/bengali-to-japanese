@@ -2,7 +2,7 @@
 <!-- READ WHEN: deciding what to build next. Keep statuses updated here — this file is the single source of truth for progress. DEPENDS: 00. ~1.6K tokens -->
 
 ## STATUS LEGEND: ☐ todo · ◐ in-progress · ☑ done · ⊘ blocked
-## ▶ CURRENT POINTER: **2026-07-14 — Flutter 3.44.5 installed; `flutter analyze` CLEAN, `flutter test` 50/51; web build runs at localhost:5601. This session: AI Classroom now teaches KANA in-classroom (sensei recognition) + Phase-1 Intro + Phase-5 SRS-close; l10n DISABLED (empty ARBs, see CODEBASE_MAP Known Issues); content-factory has NO AI (deterministic only). UNCOMMITTED. Full built-vs-not inventory → CODEBASE_MAP.md (refreshed 07-14). Top gaps: audio 0%, offline+online AI 0%, journey-map Learn tab, backend, content packs. Next: commit → audio / journey-map / online-AI-routing.**
+## ▶ CURRENT POINTER: **2026-07-14 — analyze CLEAN, tests 50/50 GREEN, web build runs. Added: AI Classroom teaches kana in-format + Phase-1 Intro/Phase-5 SRS-close + **bundled offline Japanese audio (edge-tts, 192 clips, 🔊 in classroom)**. l10n disabled (empty ARBs). All COMMITTED, tree clean; push needs your GitHub login. Next: online AI (needs key) / Smart Banglish content / A2.M mock / Production+Context phases. See CODEBASE_MAP.md.**
 
 ## Phase FIX — reconciliation fixes (from 2026-07-09 audit)
 - ☐ FIX-A (LOW) Keep streak as neutral history only when porting premium UI (D-001). Prototype-only today.

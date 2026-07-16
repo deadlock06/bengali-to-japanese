@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_responses",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_greetings"
+ ],
+ "can_do": {
+  "en": "React naturally in conversation",
+  "bn": "কথায় স্বাভাবিক সাড়া দেওয়া",
+  "ja": "会話のあいづち"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter reactions set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_greetings"
+ ],
+ "items": [
+  {
+   "id": "rs_01",
+   "jp": "そうですね",
+   "kana": "そうですね",
+   "romaji": "sou desu ne",
+   "meaning": {
+    "en": "That's right / hmm",
+    "bn": "তাই তো / হুম",
+    "ja": "そうですね"
+   },
+   "note": {
+    "en": "The lubricant of JP chat",
+    "bn": "জাপানি কথার তেল — শুনছি বোঝাতে মাথা নেড়ে বলো।",
+    "ja": "あいづち"
+   },
+   "srs_words": [
+    "そうですね"
+   ]
+  },
+  {
+   "id": "rs_02",
+   "jp": "そうですか",
+   "kana": "そうですか",
+   "romaji": "sou desu ka",
+   "meaning": {
+    "en": "Is that so?",
+    "bn": "তাই নাকি?",
+    "ja": "そうですか"
+   },
+   "note": {
+    "en": "Tone changes meaning",
+    "bn": "নতুন কিছু শুনলে — সুর নামালে 'ও আচ্ছা', তুললে অবাক।",
+    "ja": "あいづち"
+   },
+   "srs_words": [
+    "そうですか"
+   ]
+  },
+  {
+   "id": "rs_03",
+   "jp": "ほんとうですか",
+   "kana": "ほんとうですか",
+   "romaji": "hontou desu ka",
+   "meaning": {
+    "en": "Really?",
+    "bn": "সত্যি?",
+    "ja": "本当ですか"
+   },
+   "note": {
+    "en": "Friendly surprise",
+    "bn": "অবাক হওয়ার বন্ধুসুলভ রূপ — へえ！-ও চলে।",
+    "ja": "驚き"
+   },
+   "srs_words": [
+    "ほんとうですか"
+   ]
+  },
+  {
+   "id": "rs_04",
+   "jp": "すごいですね",
+   "kana": "すごいですね",
+   "romaji": "sugoi desu ne",
+   "meaning": {
+    "en": "That's amazing!",
+    "bn": "দারুণ তো!",
+    "ja": "すごいですね"
+   },
+   "note": {
+    "en": "Universal praise",
+    "bn": "প্রশংসার সর্বজনীন শব্দ — মন খুলে ব্যবহার করো।",
+    "ja": "ほめる"
+   },
+   "srs_words": [
+    "すごいですね"
+   ]
+  },
+  {
+   "id": "rs_05",
+   "jp": "ざんねんです",
+   "kana": "ざんねんです",
+   "romaji": "zannen desu",
+   "meaning": {
+    "en": "That's a shame",
+    "bn": "আফসোস / দুঃখজনক",
+    "ja": "残念です"
+   },
+   "note": {
+    "en": "Sympathy word",
+    "bn": "খারাপ খবরে সহমর্মিতা — ঠিক ওজনের শব্দ।",
+    "ja": "残念"
+   },
+   "srs_words": [
+    "ざんねんです"
+   ]
+  },
+  {
+   "id": "rs_06",
+   "jp": "たのしみです",
+   "kana": "たのしみです",
+   "romaji": "tanoshimi desu",
+   "meaning": {
+    "en": "Looking forward to it",
+    "bn": "অপেক্ষায় আছি",
+    "ja": "楽しみです"
+   },
+   "note": {
+    "en": "Reply to invitations",
+    "bn": "দাওয়াত পেলে এটা বলো — সবাই খুশি হবে।",
+    "ja": "期待"
+   },
+   "srs_words": [
+    "たのしみです"
+   ]
+  },
+  {
+   "id": "rs_07",
+   "jp": "なるほど",
+   "kana": "なるほど",
+   "romaji": "naruhodo",
+   "meaning": {
+    "en": "I see",
+    "bn": "আচ্ছা, বুঝলাম",
+    "ja": "なるほど"
+   },
+   "note": {
+    "en": "Shows you're learning",
+    "bn": "ব্যাখ্যা বুঝলে — শেখার মনোভাব দেখায়।",
+    "ja": "納得"
+   },
+   "srs_words": [
+    "なるほど"
+   ]
+  },
+  {
+   "id": "rs_08",
+   "jp": "がんばってください",
+   "kana": "がんばってください",
+   "romaji": "ganbatte kudasai",
+   "meaning": {
+    "en": "Good luck / keep it up",
+    "bn": "আপনি চেষ্টা চালিয়ে যান",
+    "ja": "頑張ってください"
+   },
+   "note": {
+    "en": "Cheering OTHERS on",
+    "bn": "অন্যকে উৎসাহ — নিজের বেলায় がんばります।",
+    "ja": "応援"
+   },
+   "srs_words": [
+    "がんばってください"
+   ]
+  }
+ ]
+}

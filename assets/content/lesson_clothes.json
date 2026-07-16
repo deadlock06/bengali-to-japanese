@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_clothes",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_shopping"
+ ],
+ "can_do": {
+  "en": "Name clothes when shopping",
+  "bn": "পোশাকের নাম বলা",
+  "ja": "服のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter clothes set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_shopping"
+ ],
+ "items": [
+  {
+   "id": "cl2_01",
+   "jp": "ふく",
+   "kana": "ふく",
+   "romaji": "fuku",
+   "meaning": {
+    "en": "Clothes",
+    "bn": "জামাকাপড়",
+    "ja": "服"
+   },
+   "note": {
+    "en": "Clothes",
+    "bn": "ふくをかいます — জামা কিনি। UNIQLO তোমার বন্ধু।",
+    "ja": "服"
+   },
+   "srs_words": [
+    "ふく"
+   ]
+  },
+  {
+   "id": "cl2_02",
+   "jp": "くつ",
+   "kana": "くつ",
+   "romaji": "kutsu",
+   "meaning": {
+    "en": "Shoes",
+    "bn": "জুতা",
+    "ja": "靴"
+   },
+   "note": {
+    "en": "Take them off indoors!",
+    "bn": "জাপানে ঘরে ঢুকলেই くつ খোলা — নিয়ম #১!",
+    "ja": "靴"
+   },
+   "srs_words": [
+    "くつ"
+   ]
+  },
+  {
+   "id": "cl2_03",
+   "jp": "シャツ",
+   "kana": "シャツ",
+   "romaji": "shatsu",
+   "meaning": {
+    "en": "Shirt",
+    "bn": "শার্ট",
+    "ja": "シャツ"
+   },
+   "note": {
+    "en": "T-shirt = T-shatsu",
+    "bn": "কাতাকানা — Tシャツ মানে টি-শার্ট।",
+    "ja": "シャツ"
+   },
+   "srs_words": [
+    "シャツ"
+   ]
+  },
+  {
+   "id": "cl2_04",
+   "jp": "ズボン",
+   "kana": "ズボン",
+   "romaji": "zubon",
+   "meaning": {
+    "en": "Trousers",
+    "bn": "প্যান্ট",
+    "ja": "ズボン"
+   },
+   "note": {
+    "en": "Work trousers",
+    "bn": "কাজের প্যান্ট = さぎょうズボン।",
+    "ja": "ズボン"
+   },
+   "srs_words": [
+    "ズボン"
+   ]
+  },
+  {
+   "id": "cl2_05",
+   "jp": "ぼうし",
+   "kana": "ぼうし",
+   "romaji": "boushi",
+   "meaning": {
+    "en": "Hat / cap",
+    "bn": "টুপি",
+    "ja": "帽子"
+   },
+   "note": {
+    "en": "Sun protection",
+    "bn": "রোদের কাজে ぼうし আর হেলমেট — দুটোই বাঁচায়।",
+    "ja": "帽子"
+   },
+   "srs_words": [
+    "ぼうし"
+   ]
+  },
+  {
+   "id": "cl2_06",
+   "jp": "かばん",
+   "kana": "かばん",
+   "romaji": "kaban",
+   "meaning": {
+    "en": "Bag",
+    "bn": "ব্যাগ",
+    "ja": "かばん"
+   },
+   "note": {
+    "en": "Same as Bengali!",
+    "bn": "বাংলার সাথে মিল! জাপানিতেও কাবান।",
+    "ja": "かばん"
+   },
+   "srs_words": [
+    "かばん"
+   ]
+  },
+  {
+   "id": "cl2_07",
+   "jp": "めがね",
+   "kana": "めがね",
+   "romaji": "megane",
+   "meaning": {
+    "en": "Glasses",
+    "bn": "চশমা",
+    "ja": "眼鏡"
+   },
+   "note": {
+    "en": "Wearing glasses",
+    "bn": "めがねをかけます — চশমা পরি।",
+    "ja": "眼鏡"
+   },
+   "srs_words": [
+    "めがね"
+   ]
+  },
+  {
+   "id": "cl2_08",
+   "jp": "くつした",
+   "kana": "くつした",
+   "romaji": "kutsushita",
+   "meaning": {
+    "en": "Socks",
+    "bn": "মোজা",
+    "ja": "靴下"
+   },
+   "note": {
+    "en": "Shoe + under = socks",
+    "bn": "くつ+した (জুতার নিচে) — যুক্তির শব্দ!",
+    "ja": "靴下"
+   },
+   "srs_words": [
+    "くつした"
+   ]
+  }
+ ]
+}

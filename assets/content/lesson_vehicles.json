@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_vehicles",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_transport"
+ ],
+ "can_do": {
+  "en": "Name the vehicles you ride",
+  "bn": "যানবাহনের নাম",
+  "ja": "乗り物"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori transport set 2 (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_transport"
+ ],
+ "items": [
+  {
+   "id": "vh_01",
+   "jp": "でんしゃ",
+   "kana": "でんしゃ",
+   "romaji": "densha",
+   "meaning": {
+    "en": "Train",
+    "bn": "ট্রেন",
+    "ja": "電車"
+   },
+   "note": {
+    "en": "ALWAYS on time",
+    "bn": "জাপান-জীবনের মেরুদণ্ড — সময়ে চলে, সময়ে ধরো!",
+    "ja": "電車"
+   },
+   "srs_words": [
+    "でんしゃ"
+   ]
+  },
+  {
+   "id": "vh_02",
+   "jp": "えき",
+   "kana": "えき",
+   "romaji": "eki",
+   "meaning": {
+    "en": "Station",
+    "bn": "স্টেশন",
+    "ja": "駅"
+   },
+   "note": {
+    "en": "All roads lead here",
+    "bn": "えきはどこですか-র えき — সব পথ এখানে মেশে।",
+    "ja": "駅"
+   },
+   "srs_words": [
+    "えき"
+   ]
+  },
+  {
+   "id": "vh_03",
+   "jp": "きっぷ",
+   "kana": "きっぷ",
+   "romaji": "kippu",
+   "meaning": {
+    "en": "Ticket",
+    "bn": "টিকিট",
+    "ja": "切符"
+   },
+   "note": {
+    "en": "IC cards replaced most",
+    "bn": "এখন বেশিরভাগ IC কার্ড (Suica/PASMO) — তবু শব্দটা লাগবে।",
+    "ja": "切符"
+   },
+   "srs_words": [
+    "きっぷ"
+   ]
+  },
+  {
+   "id": "vh_04",
+   "jp": "ちかてつ",
+   "kana": "ちかてつ",
+   "romaji": "chikatetsu",
+   "meaning": {
+    "en": "Subway",
+    "bn": "পাতাল রেল",
+    "ja": "地下鉄"
+   },
+   "note": {
+    "en": "Underground iron road",
+    "bn": "ちか(নিচ)+てつ(লোহা) — মাটির নিচের লোহার পথ!",
+    "ja": "地下鉄"
+   },
+   "srs_words": [
+    "ちかてつ"
+   ]
+  },
+  {
+   "id": "vh_05",
+   "jp": "しんかんせん",
+   "kana": "しんかんせん",
+   "romaji": "shinkansen",
+   "meaning": {
+    "en": "Bullet train",
+    "bn": "বুলেট ট্রেন",
+    "ja": "新幹線"
+   },
+   "note": {
+    "en": "300 km/h!",
+    "bn": "ঘণ্টায় ৩০০ কিমি — জীবনে একবার হলেও চড়ো!",
+    "ja": "新幹線"
+   },
+   "srs_words": [
+    "しんかんせん"
+   ]
+  },
+  {
+   "id": "vh_06",
+   "jp": "じてんしゃ",
+   "kana": "じてんしゃ",
+   "romaji": "jitensha",
+   "meaning": {
+    "en": "Bicycle",
+    "bn": "সাইকেল",
+    "ja": "自転車"
+   },
+   "note": {
+    "en": "Light at night = law",
+    "bn": "কর্মীদের প্রিয় বাহন — রাতে লাইট জ্বালানো আইন।",
+    "ja": "自転車"
+   },
+   "srs_words": [
+    "じてんしゃ"
+   ]
+  },
+  {
+   "id": "vh_07",
+   "jp": "くるま",
+   "kana": "くるま",
+   "romaji": "kuruma",
+   "meaning": {
+    "en": "Car",
+    "bn": "গাড়ি",
+    "ja": "車"
+   },
+   "note": {
+    "en": "Left side, like home!",
+    "bn": "জাপানে গাড়ি বাঁ দিকে চলে — বাংলাদেশের মতোই!",
+    "ja": "車"
+   },
+   "srs_words": [
+    "くるま"
+   ]
+  },
+  {
+   "id": "vh_08",
+   "jp": "ひこうき",
+   "kana": "ひこうき",
+   "romaji": "hikouki",
+   "meaning": {
+    "en": "Airplane",
+    "bn": "বিমান",
+    "ja": "飛行機"
+   },
+   "note": {
+    "en": "The bird home",
+    "bn": "দেশে ফেরার পাখি — ひこうきのチケット।",
+    "ja": "飛行機"
+   },
+   "srs_words": [
+    "ひこうき"
+   ]
+  }
+ ]
+}

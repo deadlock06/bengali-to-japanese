@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_body",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_clinic"
+ ],
+ "can_do": {
+  "en": "Name body parts at the clinic",
+  "bn": "শরীরের অঙ্গ চেনা (ডাক্তারে)",
+  "ja": "体のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori clinic set 2 (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_clinic"
+ ],
+ "items": [
+  {
+   "id": "bd_01",
+   "jp": "あたま",
+   "kana": "あたま",
+   "romaji": "atama",
+   "meaning": {
+    "en": "Head",
+    "bn": "মাথা",
+    "ja": "頭"
+   },
+   "note": {
+    "en": "From the pain sentence",
+    "bn": "あたまがいたいです-র あたま — এবার একা চেনো।",
+    "ja": "頭"
+   },
+   "srs_words": [
+    "あたま"
+   ]
+  },
+  {
+   "id": "bd_02",
+   "jp": "おなか",
+   "kana": "おなか",
+   "romaji": "onaka",
+   "meaning": {
+    "en": "Stomach",
+    "bn": "পেট",
+    "ja": "お腹"
+   },
+   "note": {
+    "en": "Stomach",
+    "bn": "পেট ব্যথা/খিদে — দুটোরই কেন্দ্র।",
+    "ja": "お腹"
+   },
+   "srs_words": [
+    "おなか"
+   ]
+  },
+  {
+   "id": "bd_03",
+   "jp": "て",
+   "kana": "て",
+   "romaji": "te",
+   "meaning": {
+    "en": "Hand",
+    "bn": "হাত",
+    "ja": "手"
+   },
+   "note": {
+    "en": "Wash your hands",
+    "bn": "てをあらってください — হাত ধোও (কারখানার নিয়ম)।",
+    "ja": "手"
+   },
+   "srs_words": [
+    "て"
+   ]
+  },
+  {
+   "id": "bd_04",
+   "jp": "あし",
+   "kana": "あし",
+   "romaji": "ashi",
+   "meaning": {
+    "en": "Leg / foot",
+    "bn": "পা",
+    "ja": "足"
+   },
+   "note": {
+    "en": "Leg AND foot",
+    "bn": "পা আর পায়ের পাতা — দুটোই あし।",
+    "ja": "足"
+   },
+   "srs_words": [
+    "あし"
+   ]
+  },
+  {
+   "id": "bd_05",
+   "jp": "め",
+   "kana": "め",
+   "romaji": "me",
+   "meaning": {
+    "en": "Eye",
+    "bn": "চোখ",
+    "ja": "目"
+   },
+   "note": {
+    "en": "Eye",
+    "bn": "めがいたいです — চোখে ব্যথা।",
+    "ja": "目"
+   },
+   "srs_words": [
+    "め"
+   ]
+  },
+  {
+   "id": "bd_06",
+   "jp": "みみ",
+   "kana": "みみ",
+   "romaji": "mimi",
+   "meaning": {
+    "en": "Ear",
+    "bn": "কান",
+    "ja": "耳"
+   },
+   "note": {
+    "en": "Two mimi like two ears!",
+    "bn": "みみ — দেখতেও কানের মতো দুটো み!",
+    "ja": "耳"
+   },
+   "srs_words": [
+    "みみ"
+   ]
+  },
+  {
+   "id": "bd_07",
+   "jp": "は",
+   "kana": "は",
+   "romaji": "ha",
+   "meaning": {
+    "en": "Tooth",
+    "bn": "দাঁত",
+    "ja": "歯"
+   },
+   "note": {
+    "en": "Dentist = haisha",
+    "bn": "はがいたい = দাঁত ব্যথা → はいしゃ (দাঁতের ডাক্তার)।",
+    "ja": "歯"
+   },
+   "srs_words": [
+    "は"
+   ]
+  },
+  {
+   "id": "bd_08",
+   "jp": "せなか",
+   "kana": "せなか",
+   "romaji": "senaka",
+   "meaning": {
+    "en": "Back",
+    "bn": "পিঠ",
+    "ja": "背中"
+   },
+   "note": {
+    "en": "Lift with your knees!",
+    "bn": "ভারী তোলার কাজে せなか বাঁচাও — হাঁটু ভাঁজ করো!",
+    "ja": "背中"
+   },
+   "srs_words": [
+    "せなか"
+   ]
+  }
+ ]
+}

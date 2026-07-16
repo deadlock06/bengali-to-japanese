@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_daily_verbs",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_smalltalk"
+ ],
+ "can_do": {
+  "en": "Say your daily actions",
+  "bn": "দৈনন্দিন কাজের ক্রিয়া",
+  "ja": "毎日の動詞"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori verbs set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_smalltalk"
+ ],
+ "items": [
+  {
+   "id": "dv_01",
+   "jp": "おきます",
+   "kana": "おきます",
+   "romaji": "okimasu",
+   "meaning": {
+    "en": "I wake up",
+    "bn": "ঘুম থেকে উঠি",
+    "ja": "起きます"
+   },
+   "note": {
+    "en": "Day starts here",
+    "bn": "ろくじにおきます — ৬টায় উঠি। দিনের শুরুর verb।",
+    "ja": "起きる"
+   },
+   "srs_words": [
+    "おきます"
+   ]
+  },
+  {
+   "id": "dv_02",
+   "jp": "ねます",
+   "kana": "ねます",
+   "romaji": "nemasu",
+   "meaning": {
+    "en": "I sleep",
+    "bn": "ঘুমাই",
+    "ja": "寝ます"
+   },
+   "note": {
+    "en": "Sleep",
+    "bn": "じゅういちじにねます — ১১টায় ঘুমাই।",
+    "ja": "寝る"
+   },
+   "srs_words": [
+    "ねます"
+   ]
+  },
+  {
+   "id": "dv_03",
+   "jp": "いきます",
+   "kana": "いきます",
+   "romaji": "ikimasu",
+   "meaning": {
+    "en": "I go",
+    "bn": "যাই",
+    "ja": "行きます"
+   },
+   "note": {
+    "en": "The workhorse verb",
+    "bn": "しごとにいきます — কাজে যাই। সবচেয়ে খাটা verb।",
+    "ja": "行く"
+   },
+   "srs_words": [
+    "いきます"
+   ]
+  },
+  {
+   "id": "dv_04",
+   "jp": "かえります",
+   "kana": "かえります",
+   "romaji": "kaerimasu",
+   "meaning": {
+    "en": "I return",
+    "bn": "ফিরি",
+    "ja": "帰ります"
+   },
+   "note": {
+    "en": "Then say tadaima",
+    "bn": "うちにかえります — বাসায় ফিরি। ただいま-র আগের ধাপ।",
+    "ja": "帰る"
+   },
+   "srs_words": [
+    "かえります"
+   ]
+  },
+  {
+   "id": "dv_05",
+   "jp": "あるきます",
+   "kana": "あるきます",
+   "romaji": "arukimasu",
+   "meaning": {
+    "en": "I walk",
+    "bn": "হাঁটি",
+    "ja": "歩きます"
+   },
+   "note": {
+    "en": "Walk",
+    "bn": "えきまであるきます — স্টেশন পর্যন্ত হাঁটি।",
+    "ja": "歩く"
+   },
+   "srs_words": [
+    "あるきます"
+   ]
+  },
+  {
+   "id": "dv_06",
+   "jp": "します",
+   "kana": "します",
+   "romaji": "shimasu",
+   "meaning": {
+    "en": "I do",
+    "bn": "করি",
+    "ja": "します"
+   },
+   "note": {
+    "en": "Noun + shimasu = verb!",
+    "bn": "জাদুর verb — べんきょうします, でんわします, সব します!",
+    "ja": "する"
+   },
+   "srs_words": [
+    "します"
+   ]
+  },
+  {
+   "id": "dv_07",
+   "jp": "みます",
+   "kana": "みます",
+   "romaji": "mimasu",
+   "meaning": {
+    "en": "I see / watch",
+    "bn": "দেখি",
+    "ja": "見ます"
+   },
+   "note": {
+    "en": "Watch",
+    "bn": "テレビをみます — টিভি দেখি।",
+    "ja": "見る"
+   },
+   "srs_words": [
+    "みます"
+   ]
+  },
+  {
+   "id": "dv_08",
+   "jp": "ききます",
+   "kana": "ききます",
+   "romaji": "kikimasu",
+   "meaning": {
+    "en": "I listen / ask",
+    "bn": "শুনি / জিজ্ঞেস করি",
+    "ja": "聞きます"
+   },
+   "note": {
+    "en": "Listen AND ask",
+    "bn": "শোনা আর জিজ্ঞেস করা — একই শব্দ! সেনসেইに ききます।",
+    "ja": "聞く"
+   },
+   "srs_words": [
+    "ききます"
+   ]
+  }
+ ]
+}

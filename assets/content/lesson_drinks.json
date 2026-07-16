@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_drinks",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_food"
+ ],
+ "can_do": {
+  "en": "Order drinks and snacks",
+  "bn": "পানীয় ও নাস্তা অর্ডার করা",
+  "ja": "飲み物とおやつ"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter food set 3",
+ "verified": true,
+ "prerequisites": [
+  "lesson_food"
+ ],
+ "items": [
+  {
+   "id": "dr_01",
+   "jp": "コーヒー",
+   "kana": "コーヒー",
+   "romaji": "koohii",
+   "meaning": {
+    "en": "Coffee",
+    "bn": "কফি",
+    "ja": "コーヒー"
+   },
+   "note": {
+    "en": "Long vowels!",
+    "bn": "কাতাকানা — লম্বা ー দুটো খেয়াল করো: koohii।",
+    "ja": "コーヒー"
+   },
+   "srs_words": [
+    "コーヒー"
+   ]
+  },
+  {
+   "id": "dr_02",
+   "jp": "ジュース",
+   "kana": "ジュース",
+   "romaji": "juusu",
+   "meaning": {
+    "en": "Juice",
+    "bn": "জুস",
+    "ja": "ジュース"
+   },
+   "note": {
+    "en": "Any sweet drink",
+    "bn": "জাপানে মিষ্টি পানীয় মানেই প্রায় ジュース।",
+    "ja": "ジュース"
+   },
+   "srs_words": [
+    "ジュース"
+   ]
+  },
+  {
+   "id": "dr_03",
+   "jp": "おかし",
+   "kana": "おかし",
+   "romaji": "okashi",
+   "meaning": {
+    "en": "Sweets / snacks",
+    "bn": "মিষ্টি/নাস্তা",
+    "ja": "お菓子"
+   },
+   "note": {
+    "en": "Accept the snack!",
+    "bn": "সহকর্মী おかし দিলে নাও + ありがとう — বন্ধুত্বের শুরু।",
+    "ja": "お菓子"
+   },
+   "srs_words": [
+    "おかし"
+   ]
+  },
+  {
+   "id": "dr_04",
+   "jp": "ラーメン",
+   "kana": "ラーメン",
+   "romaji": "raamen",
+   "meaning": {
+    "en": "Ramen",
+    "bn": "রামেন",
+    "ja": "ラーメン"
+   },
+   "note": {
+    "en": "Broth is often pork-based",
+    "bn": "সাবধান: ঝোল প্রায়ই শুয়োর-ভিত্তিক — আগে জিজ্ঞেস করো!",
+    "ja": "ラーメン"
+   },
+   "srs_words": [
+    "ラーメン"
+   ]
+  },
+  {
+   "id": "dr_05",
+   "jp": "カレー",
+   "kana": "カレー",
+   "romaji": "karee",
+   "meaning": {
+    "en": "Curry",
+    "bn": "কারি",
+    "ja": "カレー"
+   },
+   "note": {
+    "en": "Sweeter than ours",
+    "bn": "জাপানি কারি = মিষ্টি ভাই — বাংলার ঝালের আশা কোরো না 😄",
+    "ja": "カレー"
+   },
+   "srs_words": [
+    "カレー"
+   ]
+  },
+  {
+   "id": "dr_06",
+   "jp": "おさけはのみません",
+   "kana": "おさけはのみません",
+   "romaji": "osake wa nomimasen",
+   "meaning": {
+    "en": "I don't drink alcohol",
+    "bn": "মদ খাই না",
+    "ja": "お酒は飲みません"
+   },
+   "note": {
+    "en": "Respected refusal",
+    "bn": "পার্টিতে সোজাসাপ্টা বলো — জাপানে এটা সম্মান পায়।",
+    "ja": "飲酒の断り"
+   },
+   "srs_words": [
+    "おさけはのみません"
+   ]
+  },
+  {
+   "id": "dr_07",
+   "jp": "おみず",
+   "kana": "おみず",
+   "romaji": "omizu",
+   "meaning": {
+    "en": "Water (polite)",
+    "bn": "পানি (ভদ্র রূপ)",
+    "ja": "お水"
+   },
+   "note": {
+    "en": "O- softens it",
+    "bn": "দোকানে おみずください — お যোগে নরম শোনায়।",
+    "ja": "お水"
+   },
+   "srs_words": [
+    "おみず"
+   ]
+  },
+  {
+   "id": "dr_08",
+   "jp": "ちゅうもん",
+   "kana": "ちゅうもん",
+   "romaji": "chuumon",
+   "meaning": {
+    "en": "Order",
+    "bn": "অর্ডার",
+    "ja": "注文"
+   },
+   "note": {
+    "en": "Calling for the order",
+    "bn": "ちゅうもん、おねがいします — অর্ডার নিন!",
+    "ja": "注文"
+   },
+   "srs_words": [
+    "ちゅうもん"
+   ]
+  }
+ ]
+}

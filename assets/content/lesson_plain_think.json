@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_plain_think",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Say opinions (〜とおもいます)",
+  "bn": "মতামত বলা (〜とおもいます)",
+  "ja": "〜と思います"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "po_01",
+   "jp": "いいとおもいます",
+   "kana": "いいとおもいます",
+   "romaji": "ii to omoimasu",
+   "meaning": {
+    "en": "I think it's good",
+    "bn": "ভালো মনে হয়",
+    "ja": "いいと思います"
+   },
+   "note": {
+    "en": "THIS is why plain matters",
+    "bn": "とおもいます-র আগে plain form বসে — এজন্যই plain শিখলে!",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "いいとおもいます"
+   ]
+  },
+  {
+   "id": "po_02",
+   "jp": "あしたはあめだとおもいます",
+   "kana": "あしたはあめだとおもいます",
+   "romaji": "ashita wa ame da to omoimasu",
+   "meaning": {
+    "en": "I think it'll rain tomorrow",
+    "bn": "কাল বৃষ্টি হবে মনে হয়",
+    "ja": "明日は雨だと思います"
+   },
+   "note": {
+    "en": "Noun needs da",
+    "bn": "noun+だ+とおもいます — だ ভুলো না।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "あしたはあめだとおもいます"
+   ]
+  },
+  {
+   "id": "po_03",
+   "jp": "むずかしいとおもいます",
+   "kana": "むずかしいとおもいます",
+   "romaji": "muzukashii to omoimasu",
+   "meaning": {
+    "en": "I think it's difficult",
+    "bn": "কঠিন মনে হচ্ছে",
+    "ja": "難しいと思います"
+   },
+   "note": {
+    "en": "Opinion ≠ complaint",
+    "bn": "মত জানানো ≠ অভিযোগ — জাপানে এই রূপেই বলো।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "むずかしいとおもいます"
+   ]
+  },
+  {
+   "id": "po_04",
+   "jp": "だいじょうぶだとおもいます",
+   "kana": "だいじょうぶだとおもいます",
+   "romaji": "daijoubu da to omoimasu",
+   "meaning": {
+    "en": "I think it's fine",
+    "bn": "ঠিক আছে বলে মনে হয়",
+    "ja": "大丈夫だと思います"
+   },
+   "note": {
+    "en": "Confident yet humble",
+    "bn": "আত্মবিশ্বাস+বিনয় একসাথে — report-এর ভাষা।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "だいじょうぶだとおもいます"
+   ]
+  },
+  {
+   "id": "po_05",
+   "jp": "いくとおもいます",
+   "kana": "いくとおもいます",
+   "romaji": "iku to omoimasu",
+   "meaning": {
+    "en": "I think I'll go",
+    "bn": "যাব বলে মনে হচ্ছে",
+    "ja": "行くと思います"
+   },
+   "note": {
+    "en": "Softens your own plans",
+    "bn": "নিজের সম্ভাব্য plan-ও とおもいます-এ নরম হয়।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "いくとおもいます"
+   ]
+  },
+  {
+   "id": "po_06",
+   "jp": "できるとおもいます",
+   "kana": "できるとおもいます",
+   "romaji": "dekiru to omoimasu",
+   "meaning": {
+    "en": "I think I can do it",
+    "bn": "পারব মনে হয়",
+    "ja": "できると思います"
+   },
+   "note": {
+    "en": "The rational ganbarimasu",
+    "bn": "নতুন কাজ পেলে — がんばります-র যুক্তিবাদী ভাই।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "できるとおもいます"
+   ]
+  },
+  {
+   "id": "po_07",
+   "jp": "そうおもいます",
+   "kana": "そうおもいます",
+   "romaji": "sou omoimasu",
+   "meaning": {
+    "en": "I think so too",
+    "bn": "আমারও তাই মনে হয়",
+    "ja": "そう思います"
+   },
+   "note": {
+    "en": "Meeting agreement",
+    "bn": "সম্মতির ভদ্র রূপ — মিটিং-এর শব্দ।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "そうおもいます"
+   ]
+  },
+  {
+   "id": "po_08",
+   "jp": "どうおもいますか",
+   "kana": "どうおもいますか",
+   "romaji": "dou omoimasu ka",
+   "meaning": {
+    "en": "What do you think?",
+    "bn": "আপনার কী মনে হয়?",
+    "ja": "どう思いますか"
+   },
+   "note": {
+    "en": "Asking opinions delights",
+    "bn": "মত চাওয়া — জিজ্ঞেস করলে জাপানিরা খুশি হয়।",
+    "ja": "意見"
+   },
+   "srs_words": [
+    "どうおもいますか"
+   ]
+  }
+ ]
+}

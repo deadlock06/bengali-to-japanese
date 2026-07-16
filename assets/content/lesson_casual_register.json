@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_casual_register",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_casual_talk"
+ ],
+ "can_do": {
+  "en": "Know WHEN casual is OK",
+  "bn": "কোথায় casual চলে, কোথায় নয়",
+  "ja": "使い分け"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_casual_talk"
+ ],
+ "items": [
+  {
+   "id": "cr_01",
+   "jp": "きょうはやすみだ",
+   "kana": "きょうはやすみだ",
+   "romaji": "kyou wa yasumi da",
+   "meaning": {
+    "en": "Today's a day off! (plain)",
+    "bn": "আজ ছুটি! (plain)",
+    "ja": "今日は休みだ"
+   },
+   "note": {
+    "en": "desu → da",
+    "bn": "です→だ — খুশির স্বগতোক্তিতেও plain।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "きょうはやすみだ"
+   ]
+  },
+  {
+   "id": "cr_02",
+   "jp": "それはむりだ",
+   "kana": "それはむりだ",
+   "romaji": "sore wa muri da",
+   "meaning": {
+    "en": "That's impossible (plain)",
+    "bn": "ওটা অসম্ভব (plain)",
+    "ja": "それは無理だ"
+   },
+   "note": {
+    "en": "muri = no way",
+    "bn": "むり = অসম্ভব — বন্ধুতে সোজাসাপ্টা।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "それはむりだ"
+   ]
+  },
+  {
+   "id": "cr_03",
+   "jp": "いいけど",
+   "kana": "いいけど",
+   "romaji": "ii kedo",
+   "meaning": {
+    "en": "Fine, but…",
+    "bn": "আচ্ছা, তবে…",
+    "ja": "いいけど"
+   },
+   "note": {
+    "en": "kedo = but",
+    "bn": "けど = কিন্তু — শর্তসাপেক্ষ হ্যাঁ।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "いいけど"
+   ]
+  },
+  {
+   "id": "cr_04",
+   "jp": "つかれたから、ねる",
+   "kana": "つかれたから、ねる",
+   "romaji": "tsukareta kara, neru",
+   "meaning": {
+    "en": "Tired, so I'll sleep",
+    "bn": "ক্লান্ত, তাই ঘুমাবো",
+    "ja": "疲れたから、寝る"
+   },
+   "note": {
+    "en": "kara = because",
+    "bn": "から = কারণ — plain বাক্য জোড়ার আঠা।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "つかれたから、ねる"
+   ]
+  },
+  {
+   "id": "cr_05",
+   "jp": "そうだね",
+   "kana": "そうだね",
+   "romaji": "sou da ne",
+   "meaning": {
+    "en": "Yeah, right (casual)",
+    "bn": "তাই তো রে",
+    "ja": "そうだね"
+   },
+   "note": {
+    "en": "Casual sou desu ne",
+    "bn": "そうですね-র বন্ধু-রূপ — ね থাকলেই উষ্ণ।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "そうだね"
+   ]
+  },
+  {
+   "id": "cr_06",
+   "jp": "たぶんね",
+   "kana": "たぶんね",
+   "romaji": "tabun ne",
+   "meaning": {
+    "en": "Probably",
+    "bn": "হয়তো রে",
+    "ja": "たぶんね"
+   },
+   "note": {
+    "en": "Light maybe",
+    "bn": "অনিশ্চয়তার হালকা রূপ।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "たぶんね"
+   ]
+  },
+  {
+   "id": "cr_07",
+   "jp": "あとでね",
+   "kana": "あとでね",
+   "romaji": "ato de ne",
+   "meaning": {
+    "en": "Later, yeah?",
+    "bn": "পরে কথা হবে",
+    "ja": "後でね"
+   },
+   "note": {
+    "en": "Chat sign-off",
+    "bn": "chat শেষের সহজ বিদায়।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "あとでね"
+   ]
+  },
+  {
+   "id": "cr_08",
+   "jp": "せんぱいにはていねいご",
+   "kana": "せんぱいにはていねいご",
+   "romaji": "senpai ni wa teineigo",
+   "meaning": {
+    "en": "Polite form with seniors",
+    "bn": "সিনিয়রদের সাথে ভদ্র-রূপ",
+    "ja": "先輩には丁寧語"
+   },
+   "note": {
+    "en": "When in doubt: desu/masu",
+    "bn": "সোনার নিয়ম: বন্ধু=plain, বস/সিনিয়র/গ্রাহক=ですます। ভুল দিকে ভুল করলে ですます-এ ভুল করো।",
+    "ja": "使い分け"
+   },
+   "srs_words": [
+    "せんぱいにはていねいご"
+   ]
+  }
+ ]
+}

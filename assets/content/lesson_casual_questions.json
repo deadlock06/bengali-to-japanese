@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_casual_questions",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Ask casual questions",
+  "bn": "বন্ধু-প্রশ্ন করা",
+  "ja": "タメ口の質問"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "cq_01",
+   "jp": "いく？",
+   "kana": "いく？",
+   "romaji": "iku?",
+   "meaning": {
+    "en": "Going? (casual)",
+    "bn": "যাবি?",
+    "ja": "行く？"
+   },
+   "note": {
+    "en": "Plain + rising tone = Q",
+    "bn": "Plain form + সুর উঁচু = প্রশ্ন — か লাগে না!",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "いく？"
+   ]
+  },
+  {
+   "id": "cq_02",
+   "jp": "たべる？",
+   "kana": "たべる？",
+   "romaji": "taberu?",
+   "meaning": {
+    "en": "Wanna eat?",
+    "bn": "খাবি?",
+    "ja": "食べる？"
+   },
+   "note": {
+    "en": "One word + offered food",
+    "bn": "খাবার এগিয়ে দিয়ে এক শব্দ — বন্ধুত্বের শুরু।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "たべる？"
+   ]
+  },
+  {
+   "id": "cq_03",
+   "jp": "なにしてるの？",
+   "kana": "なにしてるの？",
+   "romaji": "nani shiteru no?",
+   "meaning": {
+    "en": "Whatcha doing?",
+    "bn": "কী করছিস?",
+    "ja": "何してるの？"
+   },
+   "note": {
+    "en": "-teiru → -teru",
+    "bn": "している→してる — casual-এ い প্রায়ই হাওয়া!",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "なにしてるの？"
+   ]
+  },
+  {
+   "id": "cq_04",
+   "jp": "どこいくの？",
+   "kana": "どこいくの？",
+   "romaji": "doko iku no?",
+   "meaning": {
+    "en": "Where you heading?",
+    "bn": "কোথায় যাচ্ছিস?",
+    "ja": "どこ行くの？"
+   },
+   "note": {
+    "en": "no = friendly curiosity",
+    "bn": "の = নরম কৌতূহল — বন্ধু-প্রশ্নের গন্ধ।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "どこいくの？"
+   ]
+  },
+  {
+   "id": "cq_05",
+   "jp": "これなに？",
+   "kana": "これなに？",
+   "romaji": "kore nani?",
+   "meaning": {
+    "en": "What's this?",
+    "bn": "এটা কী?",
+    "ja": "これ何？"
+   },
+   "note": {
+    "en": "Two-word version",
+    "bn": "これはなんですか-র দুই-শব্দ রূপ।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "これなに？"
+   ]
+  },
+  {
+   "id": "cq_06",
+   "jp": "いまいい？",
+   "kana": "いまいい？",
+   "romaji": "ima ii?",
+   "meaning": {
+    "en": "Got a sec?",
+    "bn": "এখন সময় আছে?",
+    "ja": "今いい？"
+   },
+   "note": {
+    "en": "Casual chotto-ii-desu-ka",
+    "bn": "ちょっといいですか-র বন্ধু-রূপ।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "いまいい？"
+   ]
+  },
+  {
+   "id": "cq_07",
+   "jp": "だいじょうぶ？",
+   "kana": "だいじょうぶ？",
+   "romaji": "daijoubu?",
+   "meaning": {
+    "en": "You OK?",
+    "bn": "ঠিক আছিস?",
+    "ja": "大丈夫？"
+   },
+   "note": {
+    "en": "Tone carries the care",
+    "bn": "পড়ে গেলে/মন খারাপে — সুর-ই সহমর্মিতা।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "だいじょうぶ？"
+   ]
+  },
+  {
+   "id": "cq_08",
+   "jp": "どうしたの？",
+   "kana": "どうしたの？",
+   "romaji": "doushita no?",
+   "meaning": {
+    "en": "What happened?",
+    "bn": "কী হয়েছে?",
+    "ja": "どうしたの？"
+   },
+   "note": {
+    "en": "Opens the door",
+    "bn": "কারো মুখ ভার দেখলে — দরজা খোলার প্রশ্ন।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "どうしたの？"
+   ]
+  }
+ ]
+}

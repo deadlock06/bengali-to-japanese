@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_plain_negative",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Say plain negatives (〜ない)",
+  "bn": "Plain না-বাচক (〜ない)",
+  "ja": "ない形"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "pn_01",
+   "jp": "たべない",
+   "kana": "たべない",
+   "romaji": "tabenai",
+   "meaning": {
+    "en": "Don't eat (plain)",
+    "bn": "খাই না / খাব না (plain)",
+    "ja": "食べない"
+   },
+   "note": {
+    "en": "Casual pork-refusal",
+    "bn": "る কেটে ない — ぶたにくはたべない (শুয়োর খাই না, বন্ধু-রূপে)।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "たべない"
+   ]
+  },
+  {
+   "id": "pn_02",
+   "jp": "のまない",
+   "kana": "のまない",
+   "romaji": "nomanai",
+   "meaning": {
+    "en": "Don't drink (plain)",
+    "bn": "পান করি না (plain)",
+    "ja": "飲まない"
+   },
+   "note": {
+    "en": "u→a+nai",
+    "bn": "う→あ+ない: のむ→のまない — おさけはのまない।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "のまない"
+   ]
+  },
+  {
+   "id": "pn_03",
+   "jp": "いかない",
+   "kana": "いかない",
+   "romaji": "ikanai",
+   "meaning": {
+    "en": "Won't go (plain)",
+    "bn": "যাই না / যাব না (plain)",
+    "ja": "行かない"
+   },
+   "note": {
+    "en": "kyou wa ikanai",
+    "bn": "きょうはいかない — আজ যাব না (বন্ধুকে)।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "いかない"
+   ]
+  },
+  {
+   "id": "pn_04",
+   "jp": "みない",
+   "kana": "みない",
+   "romaji": "minai",
+   "meaning": {
+    "en": "Don't watch (plain)",
+    "bn": "দেখি না (plain)",
+    "ja": "見ない"
+   },
+   "note": {
+    "en": "Ru: just swap",
+    "bn": "る-verb: る→ない — এত সহজ।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "みない"
+   ]
+  },
+  {
+   "id": "pn_05",
+   "jp": "しない",
+   "kana": "しない",
+   "romaji": "shinai",
+   "meaning": {
+    "en": "Don't do (plain)",
+    "bn": "করি না (plain)",
+    "ja": "しない"
+   },
+   "note": {
+    "en": "zangyou wa shinai? 😄",
+    "bn": "する→しない — ざんぎょうはしない? 😄",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "しない"
+   ]
+  },
+  {
+   "id": "pn_06",
+   "jp": "こない",
+   "kana": "こない",
+   "romaji": "konai",
+   "meaning": {
+    "en": "Won't come (plain)",
+    "bn": "আসে না (plain)",
+    "ja": "来ない"
+   },
+   "note": {
+    "en": "kuru→KOnai",
+    "bn": "くる→こない — উচ্চারণ বদলায়, সাবধান।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "こない"
+   ]
+  },
+  {
+   "id": "pn_07",
+   "jp": "わからない",
+   "kana": "わからない",
+   "romaji": "wakaranai",
+   "meaning": {
+    "en": "Don't understand (plain)",
+    "bn": "বুঝি না (plain)",
+    "ja": "分からない"
+   },
+   "note": {
+    "en": "Casual wakarimasen",
+    "bn": "わかりません-র বন্ধু-রূপ — সবচেয়ে বেশি লাগবে!",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "わからない"
+   ]
+  },
+  {
+   "id": "pn_08",
+   "jp": "じかんがない",
+   "kana": "じかんがない",
+   "romaji": "jikan ga nai",
+   "meaning": {
+    "en": "No time (plain)",
+    "bn": "সময় নেই (plain)",
+    "ja": "時間がない"
+   },
+   "note": {
+    "en": "aru's negative IS nai",
+    "bn": "ある-র নেতি ない নিজেই — じかんがありません-র ছোট ভাই।",
+    "ja": "ない形"
+   },
+   "srs_words": [
+    "じかんがない"
+   ]
+  }
+ ]
+}

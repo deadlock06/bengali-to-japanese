@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_casual_talk",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Chat casually with friends",
+  "bn": "বন্ধুর সাথে আটপৌরে কথা",
+  "ja": "タメ口の basics"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "ca_01",
+   "jp": "ありがとう",
+   "kana": "ありがとう",
+   "romaji": "arigatou",
+   "meaning": {
+    "en": "Thanks (casual)",
+    "bn": "ধন্যবাদ (বন্ধুতে)",
+    "ja": "ありがとう"
+   },
+   "note": {
+    "en": "Full form for bosses",
+    "bn": "ございます ছাড়া = বন্ধু-রূপ — বসকে পুরোটা বলো।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "ありがとう"
+   ]
+  },
+  {
+   "id": "ca_02",
+   "jp": "ごめん",
+   "kana": "ごめん",
+   "romaji": "gomen",
+   "meaning": {
+    "en": "Sorry (casual)",
+    "bn": "দুঃখিত (বন্ধুতে)",
+    "ja": "ごめん"
+   },
+   "note": {
+    "en": "Serious? Back to sumimasen",
+    "bn": "ごめんなさい-র ছোট — গুরুতর হলে すみません-এ ফেরো।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "ごめん"
+   ]
+  },
+  {
+   "id": "ca_03",
+   "jp": "うん",
+   "kana": "うん",
+   "romaji": "un",
+   "meaning": {
+    "en": "Yeah",
+    "bn": "হুঁ (হ্যাঁ, casual)",
+    "ja": "うん"
+   },
+   "note": {
+    "en": "Casual hai",
+    "bn": "はい-র বন্ধু-রূপ — মাথা নাড়ার শব্দ।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "うん"
+   ]
+  },
+  {
+   "id": "ca_04",
+   "jp": "ううん",
+   "kana": "ううん",
+   "romaji": "uun",
+   "meaning": {
+    "en": "Nah",
+    "bn": "উঁহু (না, casual)",
+    "ja": "ううん"
+   },
+   "note": {
+    "en": "Casual iie — tone matters",
+    "bn": "いいえ-র বন্ধু-রূপ — সুর নামে-ওঠে, শুনে শেখো।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "ううん"
+   ]
+  },
+  {
+   "id": "ca_05",
+   "jp": "いいね",
+   "kana": "いいね",
+   "romaji": "ii ne",
+   "meaning": {
+    "en": "Nice! / Like!",
+    "bn": "দারুণ! / লাইক!",
+    "ja": "いいね"
+   },
+   "note": {
+    "en": "THE social-media like",
+    "bn": "সম্মতি+প্রশংসা — social media-র সেই いいね-ই!",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "いいね"
+   ]
+  },
+  {
+   "id": "ca_06",
+   "jp": "ほんと",
+   "kana": "ほんと",
+   "romaji": "honto",
+   "meaning": {
+    "en": "Really?! (casual)",
+    "bn": "সত্যি?! (casual)",
+    "ja": "ほんと"
+   },
+   "note": {
+    "en": "Short hontou",
+    "bn": "ほんとうですか-র ছোট — ほんと?! বলে চোখ বড় করো।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "ほんと"
+   ]
+  },
+  {
+   "id": "ca_07",
+   "jp": "またね",
+   "kana": "またね",
+   "romaji": "mata ne",
+   "meaning": {
+    "en": "See ya",
+    "bn": "আবার দেখা হবে (casual)",
+    "ja": "またね"
+   },
+   "note": {
+    "en": "Or jaa ne",
+    "bn": "さようなら-র বন্ধু-রূপ — じゃあね-ও সমান চলে।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "またね"
+   ]
+  },
+  {
+   "id": "ca_08",
+   "jp": "おつかれ",
+   "kana": "おつかれ",
+   "romaji": "otsukare",
+   "meaning": {
+    "en": "Good work (casual)",
+    "bn": "কাজ শেষ! (বন্ধুতে)",
+    "ja": "お疲れ"
+   },
+   "note": {
+    "en": "Dorm version",
+    "bn": "おつかれさまです-র ডর্ম-রূপ — সহকর্মী বন্ধুদের সাথে।",
+    "ja": "タメ口"
+   },
+   "srs_words": [
+    "おつかれ"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_plain_present",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Use dictionary (plain) forms",
+  "bn": "Plain form চেনা (অভিধান-রূপ)",
+  "ja": "辞書形"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "pp_01",
+   "jp": "たべる",
+   "kana": "たべる",
+   "romaji": "taberu",
+   "meaning": {
+    "en": "To eat (plain)",
+    "bn": "খাওয়া (plain)",
+    "ja": "食べる"
+   },
+   "note": {
+    "en": "The dictionary form",
+    "bn": "たべます-র আসল রূপ — অভিধানে এটাই থাকে, বন্ধুতে এটাই চলে।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "たべる"
+   ]
+  },
+  {
+   "id": "pp_02",
+   "jp": "のむ",
+   "kana": "のむ",
+   "romaji": "nomu",
+   "meaning": {
+    "en": "To drink (plain)",
+    "bn": "পান করা (plain)",
+    "ja": "飲む"
+   },
+   "note": {
+    "en": "masu-stem → u-sound",
+    "bn": "のみます→のむ — ます-এর আগের রূপে う-ধ্বনি ফেরে।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "のむ"
+   ]
+  },
+  {
+   "id": "pp_03",
+   "jp": "いく",
+   "kana": "いく",
+   "romaji": "iku",
+   "meaning": {
+    "en": "To go (plain)",
+    "bn": "যাওয়া (plain)",
+    "ja": "行く"
+   },
+   "note": {
+    "en": "Casual: ashita iku?",
+    "bn": "いきます→いく — বন্ধুকে: あした いく? (কাল যাবি?)",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "いく"
+   ]
+  },
+  {
+   "id": "pp_04",
+   "jp": "みる",
+   "kana": "みる",
+   "romaji": "miru",
+   "meaning": {
+    "en": "To see (plain)",
+    "bn": "দেখা (plain)",
+    "ja": "見る"
+   },
+   "note": {
+    "en": "Ru-verbs stay simple",
+    "bn": "みます→みる — る-verb রা এমনই সরল।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "みる"
+   ]
+  },
+  {
+   "id": "pp_05",
+   "jp": "する",
+   "kana": "する",
+   "romaji": "suru",
+   "meaning": {
+    "en": "To do (plain)",
+    "bn": "করা (plain)",
+    "ja": "する"
+   },
+   "note": {
+    "en": "Irregular — memorize",
+    "bn": "します→する — অনিয়মিত, মুখস্থই পথ।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "する"
+   ]
+  },
+  {
+   "id": "pp_06",
+   "jp": "くる",
+   "kana": "くる",
+   "romaji": "kuru",
+   "meaning": {
+    "en": "To come (plain)",
+    "bn": "আসা (plain)",
+    "ja": "来る"
+   },
+   "note": {
+    "en": "The other irregular",
+    "bn": "きます→くる — আরেক অনিয়মিত জুটি।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "くる"
+   ]
+  },
+  {
+   "id": "pp_07",
+   "jp": "ある",
+   "kana": "ある",
+   "romaji": "aru",
+   "meaning": {
+    "en": "To exist (things)",
+    "bn": "আছে (জিনিস, plain)",
+    "ja": "ある"
+   },
+   "note": {
+    "en": "jikan ga aru?",
+    "bn": "あります→ある — じかんがある? (সময় আছে?)",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "ある"
+   ]
+  },
+  {
+   "id": "pp_08",
+   "jp": "いる",
+   "kana": "いる",
+   "romaji": "iru",
+   "meaning": {
+    "en": "To exist (people)",
+    "bn": "আছে (মানুষ/প্রাণী, plain)",
+    "ja": "いる"
+   },
+   "note": {
+    "en": "iru people, aru things",
+    "bn": "います→いる — মানুষ-প্রাণীতে いる, জিনিসে ある।",
+    "ja": "辞書形"
+   },
+   "srs_words": [
+    "いる"
+   ]
+  }
+ ]
+}

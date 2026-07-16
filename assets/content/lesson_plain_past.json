@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_plain_past",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Say plain past (〜た)",
+  "bn": "Plain অতীত (〜た)",
+  "ja": "た形"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "pt_01",
+   "jp": "たべた",
+   "kana": "たべた",
+   "romaji": "tabeta",
+   "meaning": {
+    "en": "Ate (plain)",
+    "bn": "খেয়েছি (plain)",
+    "ja": "食べた"
+   },
+   "note": {
+    "en": "Know te? Ta is free!",
+    "bn": "て-form জানো? た-form ফ্রি! て→た, で→だ।",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "たべた"
+   ]
+  },
+  {
+   "id": "pt_02",
+   "jp": "のんだ",
+   "kana": "のんだ",
+   "romaji": "nonda",
+   "meaning": {
+    "en": "Drank (plain)",
+    "bn": "পান করেছি (plain)",
+    "ja": "飲んだ"
+   },
+   "note": {
+    "en": "nde→nda",
+    "bn": "のんで→のんだ — নিয়মটা এক।",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "のんだ"
+   ]
+  },
+  {
+   "id": "pt_03",
+   "jp": "いった",
+   "kana": "いった",
+   "romaji": "itta",
+   "meaning": {
+    "en": "Went (plain)",
+    "bn": "গিয়েছিলাম (plain)",
+    "ja": "行った"
+   },
+   "note": {
+    "en": "Story-telling form",
+    "bn": "きのう えきに いった — বন্ধু-গল্পের রূপ।",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "いった"
+   ]
+  },
+  {
+   "id": "pt_04",
+   "jp": "みた",
+   "kana": "みた",
+   "romaji": "mita",
+   "meaning": {
+    "en": "Saw (plain)",
+    "bn": "দেখেছি (plain)",
+    "ja": "見た"
+   },
+   "note": {
+    "en": "ano eiga mita?",
+    "bn": "あのえいが みた? — ওই সিনেমা দেখেছিস?",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "みた"
+   ]
+  },
+  {
+   "id": "pt_05",
+   "jp": "した",
+   "kana": "した",
+   "romaji": "shita",
+   "meaning": {
+    "en": "Did (plain)",
+    "bn": "করেছি (plain)",
+    "ja": "した"
+   },
+   "note": {
+    "en": "Homework check 😄",
+    "bn": "しゅくだい した? — জাপানি মায়েদের প্রিয় প্রশ্ন 😄",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "した"
+   ]
+  },
+  {
+   "id": "pt_06",
+   "jp": "きた",
+   "kana": "きた",
+   "romaji": "kita",
+   "meaning": {
+    "en": "Came (plain)",
+    "bn": "এসেছি (plain)",
+    "ja": "来た"
+   },
+   "note": {
+    "en": "densha ga kita!",
+    "bn": "でんしゃが きた! — ট্রেন এসে গেছে!",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "きた"
+   ]
+  },
+  {
+   "id": "pt_07",
+   "jp": "わかった",
+   "kana": "わかった",
+   "romaji": "wakatta",
+   "meaning": {
+    "en": "Got it (plain)",
+    "bn": "বুঝেছি (plain)",
+    "ja": "分かった"
+   },
+   "note": {
+    "en": "Casual OK; boss gets -mashita",
+    "bn": "বন্ধুর 'ওকে!' — বসকে কিন্তু わかりました।",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "わかった"
+   ]
+  },
+  {
+   "id": "pt_08",
+   "jp": "たのしかった",
+   "kana": "たのしかった",
+   "romaji": "tanoshikatta",
+   "meaning": {
+    "en": "It was fun (plain)",
+    "bn": "মজা হয়েছিল (plain)",
+    "ja": "楽しかった"
+   },
+   "note": {
+    "en": "i→katta",
+    "bn": "い-adjective-র অতীত: い→かった — きょうは たのしかった!",
+    "ja": "た形"
+   },
+   "srs_words": [
+    "たのしかった"
+   ]
+  }
+ ]
+}

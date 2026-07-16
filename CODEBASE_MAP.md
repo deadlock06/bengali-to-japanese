@@ -62,10 +62,11 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - Mistake-pattern remediation (500+ target) — schema only.
 - **Native-speaker review** of content — pending (human-gated).
 
-### Classroom loop (09 5-phase — 3 of 5 done)
-- **Phase 3 Production** (say-it / finger-write inside the lesson) — not built.
+### Classroom loop (09 5-phase — 4 of 5 for kana, 3 of 5 for vocab)
+- ✅ **Phase 3 Production for KANA** — after a correct recognition the learner WRITES the character in-lesson (`writingPhase` + `KanaTracePad`: trace pad w/ stroke-order ▶, height-capped, offline). Skip still works (D-001). Proven by test/kana_writing_phase_test.dart.
+- ❌ Phase 3 for VOCAB (say-it speaking drill) — not built.
 - **Phase 4 Context** (word-block sentence building) — not built.
-- (Intro + Recognition + SRS-close done this session.)
+- (Intro + Recognition + SRS-close done earlier.)
 
 ### The Learn experience (owner's own #1 — DESIGN_BRIEF)
 - **Goal-select onboarding** (SSW / JLPT / daily life) — not built.

@@ -36,6 +36,7 @@ import '../data/lesson_batch.dart';
 import 'book_reader_screen.dart';
 import 'book_screen_v4.dart';
 import 'curriculum_screen_v4.dart';
+import 'kana_trace_pad.dart';
 import 'writing_screen.dart';
 
 /// Adaptive mood of the classroom. One accent dominates per state.
@@ -82,6 +83,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   // Phase 1 of the 09 micro-loop: the sensei PRESENTS the item before asking
   // (teach → then recognition). false = intro card showing; true = MC showing.
   bool introSeen = false;
+  // Phase 3 of the 09 micro-loop, for kana items: after a correct recognition
+  // the learner WRITES the character before moving on (writing practice is part
+  // of the lesson path). D-001: বাদ (skip) works here too — a step, not a lock.
+  bool writingPhase = false;
   int _audioPlayedFor = -1; // auto-play each item's audio once when presented
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
@@ -222,7 +227,6 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     ref.read(agentBusProvider.notifier).recordAnswer(
         correct: correct, patternKey: q.itemId, hesitationMs: _takeHesitation());
     if (correct) {
-      final last = idx >= qs.length - 1;
       setState(() {
         picked = i;
         mood = LessonMood.flow;
@@ -234,15 +238,16 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           streak += 1;
           correctCount += 1;
           mood = streak >= 3 ? LessonMood.boredom : LessonMood.flow;
-          if (last) {
-            done = true;
-            _saveCompletion();
-          } else {
-            idx += 1;
-            _nextQuestion();
-          }
           picked = -1;
           hintOpen = false;
+          if (_canWrite) {
+            // Phase 3 (Production, 09 micro-loop): every writable kana is
+            // WRITTEN as part of the lesson flow — চেনা → লেখা → পরে next.
+            // D-001 holds: the বাদ (skip) pill still moves past it freely.
+            writingPhase = true;
+          } else {
+            _advance();
+          }
         });
       });
     } else {
@@ -253,10 +258,26 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     }
   }
 
+  /// Move to the next item (or finish). Callers hold setState.
+  void _advance() {
+    writingPhase = false;
+    if (idx >= qs.length - 1) {
+      done = true;
+      _saveCompletion();
+    } else {
+      idx += 1;
+      _nextQuestion();
+    }
+  }
+
+  /// Phase 3 done — the learner traced the kana and moves on.
+  void _finishWriting() => setState(_advance);
+
   void skip() { // always available — D-001
     ref.read(agentBusProvider.notifier).recordSkip();
     setState(() {
       skipsUsed += 1;
+      writingPhase = false;
       idx = (idx + 1).clamp(0, qs.length - 1);
       picked = -1; hintOpen = false; mood = LessonMood.neutral;
       teacherNote = null;
@@ -343,8 +364,14 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               _progressBar(progress),
               const SizedBox(height: 16),
               // Phase 1 Intro (present) → Phase 2 Recognition (ask).
-              introSeen ? _questionCard() : _introCard(),
-              if (introSeen && hintOpen) ...[const SizedBox(height: 10), _hintCard()],
+              // Phase 1 Intro → Phase 2 Recognition → Phase 3 Writing (kana).
+              !introSeen
+                  ? _introCard()
+                  : writingPhase
+                      ? _writeCard()
+                      : _questionCard(),
+              if (introSeen && !writingPhase && hintOpen) ...[
+                const SizedBox(height: 10), _hintCard()],
               const Spacer(),
               _teacherRow(),
               const SizedBox(height: 12),
@@ -472,6 +499,35 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         ]),
       );
 
+  // Phase 3 — Writing (kana): recognized it? now WRITE it, right here in the
+  // lesson. ▶ shows the stroke order, the learner traces, then continues.
+  Widget _writeCard() => Container(
+        padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
+        decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: BhasagoTheme.outline)),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Text('এবার লেখো ✍️', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+          const SizedBox(height: 2),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 34, fontWeight: FontWeight.w900)),
+            const SizedBox(width: 10),
+            Text('= ${q.options[q.answerIndex]}',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w800, color: m.color)),
+          ]),
+          const SizedBox(height: 8),
+          KanaTracePad(char: q.jp, katakana: _isKataItem),
+          const SizedBox(height: 10),
+          FilledButton(
+            onPressed: _finishWriting,
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(44), backgroundColor: m.color,
+              foregroundColor: const Color(0xFF111111), shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontWeight: FontWeight.w800)),
+            child: const Text('লেখা হয়েছে →'),
+          ),
+        ]),
+      );
+
   Widget _hintCard() => Container(
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
         decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(16),
@@ -574,6 +630,7 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               onPressed: () => setState(() {
                 idx = 0; streak = 0; wrongs = 0; picked = -1; correctCount = 0;
                 hintsUsed = 0; skipsUsed = 0; hintOpen = false; done = false;
+                writingPhase = false;
                 completionSaved = true; // free practice — count the lesson once
                 mood = LessonMood.neutral; teacherNote = null;
                 _nextQuestion();

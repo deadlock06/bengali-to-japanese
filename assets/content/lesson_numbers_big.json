@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_numbers_big",
+ "pack_id": "basics",
+ "depends_on": [
+  "lesson_numbers"
+ ],
+ "can_do": {
+  "en": "Say big numbers and prices",
+  "bn": "বড় সংখ্যা ও দাম বলা",
+  "ja": "大きい数と値段を言う"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L2 numbers set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_numbers"
+ ],
+ "items": [
+  {
+   "id": "nb_01",
+   "jp": "きゅう",
+   "kana": "きゅう",
+   "romaji": "kyuu",
+   "meaning": {
+    "en": "Nine",
+    "bn": "নয়",
+    "ja": ""
+   },
+   "note": {
+    "en": "Nine",
+    "bn": "৯ — く-ও আছে, তবে きゅう বেশি চলে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "きゅう"
+   ]
+  },
+  {
+   "id": "nb_02",
+   "jp": "じゅう",
+   "kana": "じゅう",
+   "romaji": "juu",
+   "meaning": {
+    "en": "Ten",
+    "bn": "দশ",
+    "ja": ""
+   },
+   "note": {
+    "en": "Ten; 11+ compose from it",
+    "bn": "১০ — এর পরে সব compositional: じゅういち=১১।",
+    "ja": ""
+   },
+   "srs_words": [
+    "じゅう"
+   ]
+  },
+  {
+   "id": "nb_03",
+   "jp": "ひゃく",
+   "kana": "ひゃく",
+   "romaji": "hyaku",
+   "meaning": {
+    "en": "Hundred",
+    "bn": "একশো",
+    "ja": ""
+   },
+   "note": {
+    "en": "Hundred; sound changes at 300/600/800",
+    "bn": "১০০ — দামে সবচেয়ে বেশি শুনবে (さんびゃく=৩০০)।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ひゃく"
+   ]
+  },
+  {
+   "id": "nb_04",
+   "jp": "せん",
+   "kana": "せん",
+   "romaji": "sen",
+   "meaning": {
+    "en": "Thousand",
+    "bn": "এক হাজার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Thousand",
+    "bn": "১০০০ — せんえん = ১০০০ ইয়েন।",
+    "ja": ""
+   },
+   "srs_words": [
+    "せん"
+   ]
+  },
+  {
+   "id": "nb_05",
+   "jp": "いちまん",
+   "kana": "いちまん",
+   "romaji": "ichiman",
+   "meaning": {
+    "en": "Ten thousand",
+    "bn": "দশ হাজার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Japan counts by 10,000s (man unit)",
+    "bn": "জাপানে হাজারের পরে まん unit — ১০,০০০ = いちまん।",
+    "ja": ""
+   },
+   "srs_words": [
+    "いちまん"
+   ]
+  },
+  {
+   "id": "nb_06",
+   "jp": "えん",
+   "kana": "えん",
+   "romaji": "en",
+   "meaning": {
+    "en": "Yen",
+    "bn": "ইয়েন (টাকা)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Japanese currency",
+    "bn": "জাপানের মুদ্রা — দামের শেষে থাকে: ごひゃくえん।",
+    "ja": ""
+   },
+   "srs_words": [
+    "えん"
+   ]
+  },
+  {
+   "id": "nb_07",
+   "jp": "ゼロ",
+   "kana": "ゼロ",
+   "romaji": "zero",
+   "meaning": {
+    "en": "Zero",
+    "bn": "শূন্য",
+    "ja": ""
+   },
+   "note": {
+    "en": "Zero (also rei)",
+    "bn": "০ — ফোন নম্বরে れい-ও বলা হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ゼロ"
+   ]
+  },
+  {
+   "id": "nb_08",
+   "jp": "でんわばんごう",
+   "kana": "でんわばんごう",
+   "romaji": "denwa bangou",
+   "meaning": {
+    "en": "Phone number",
+    "bn": "ফোন নম্বর",
+    "ja": ""
+   },
+   "note": {
+    "en": "Asked on forms and at stores",
+    "bn": "ফর্ম আর দোকানের membership-এ জিজ্ঞেস করে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "でんわばんごう"
+   ]
+  }
+ ]
+}

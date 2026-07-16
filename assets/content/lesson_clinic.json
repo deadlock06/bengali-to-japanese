@@ -1,62 +1,176 @@
 {
-  "type": "lesson",
-  "id": "lesson_clinic",
-  "pack_id": "daily",
-  "depends_on": [
-    "basics"
-  ],
-  "can_do": {
-    "en": "Describe symptoms at a clinic",
-    "bn": "ক্লিনিকে লক্ষণ বর্ণনা",
-    "ja": "クリニックで症状を伝える"
+ "type": "lesson",
+ "id": "lesson_clinic",
+ "pack_id": "daily",
+ "depends_on": [
+  "basics"
+ ],
+ "can_do": {
+  "en": "Describe symptoms at a clinic",
+  "bn": "ক্লিনিকে লক্ষণ বর্ণনা",
+  "ja": "クリニックで症状を伝える"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L5",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "cl_01",
+   "jp": "あたまがいたいです",
+   "kana": "あたまがいたいです",
+   "romaji": "atama ga itai desu",
+   "meaning": {
+    "en": "I have a headache",
+    "bn": "আমার মাথা ব্যথা",
+    "ja": "頭が痛いです"
+   },
+   "note": {
+    "en": "Point to head while saying",
+    "bn": "মাথায় হাত দিয়ে বলো",
+    "ja": "頭を指しながら言う"
+   },
+   "srs_words": [
+    "あたま",
+    "が",
+    "いたい",
+    "です"
+   ]
   },
-  "jlpt_or_jft": "JFT-Basic A2",
-  "source": "Irodori Starter L5",
-  "verified": true,
-  "prerequisites": [],
-  "items": [
-    {
-      "id": "cl_01",
-      "jp": "あたまがいたいです",
-      "kana": "あたまがいたいです",
-      "romaji": "atama ga itai desu",
-      "meaning": {
-        "en": "I have a headache",
-        "bn": "আমার মাথা ব্যথা",
-        "ja": "頭が痛いです"
-      },
-      "note": {
-        "en": "Point to head while saying",
-        "bn": "মাথায় হাত দিয়ে বলো",
-        "ja": "頭を指しながら言う"
-      },
-      "srs_words": [
-        "あたま",
-        "が",
-        "いたい",
-        "です"
-      ]
-    },
-    {
-      "id": "cl_02",
-      "jp": "ねつがあります",
-      "kana": "ねつがあります",
-      "romaji": "netsu ga arimasu",
-      "meaning": {
-        "en": "I have a fever",
-        "bn": "আমার জ্বর আছে",
-        "ja": "熱があります"
-      },
-      "note": {
-        "en": "Critical phrase for clinic visits",
-        "bn": "ক্লিনিকে যাওয়ার জন্য গুরুত্বপূর্ণ",
-        "ja": "受診時に必須のフレーズ"
-      },
-      "srs_words": [
-        "ねつ",
-        "が",
-        "あります"
-      ]
-    }
-  ]
+  {
+   "id": "cl_02",
+   "jp": "ねつがあります",
+   "kana": "ねつがあります",
+   "romaji": "netsu ga arimasu",
+   "meaning": {
+    "en": "I have a fever",
+    "bn": "আমার জ্বর আছে",
+    "ja": "熱があります"
+   },
+   "note": {
+    "en": "Critical phrase for clinic visits",
+    "bn": "ক্লিনিকে যাওয়ার জন্য গুরুত্বপূর্ণ",
+    "ja": "受診時に必須のフレーズ"
+   },
+   "srs_words": [
+    "ねつ",
+    "が",
+    "あります"
+   ]
+  },
+  {
+   "id": "cl_03",
+   "jp": "くすりをください",
+   "kana": "くすりをください",
+   "romaji": "kusuri o kudasai",
+   "meaning": {
+    "en": "Medicine, please",
+    "bn": "ওষুধ দিন",
+    "ja": ""
+   },
+   "note": {
+    "en": "At the pharmacy",
+    "bn": "ফার্মেসি = やっきょく; সর্দির ওষুধ চাইলে かぜぐすり।",
+    "ja": ""
+   },
+   "srs_words": [
+    "くすりをください"
+   ]
+  },
+  {
+   "id": "cl_04",
+   "jp": "かぜをひきました",
+   "kana": "かぜをひきました",
+   "romaji": "kaze o hikimashita",
+   "meaning": {
+    "en": "I caught a cold",
+    "bn": "সর্দি লেগেছে",
+    "ja": ""
+   },
+   "note": {
+    "en": "Reporting a cold",
+    "bn": "ডাক্তার/সুপারভাইজারকে অসুস্থতা জানানোর প্রথম লাইন।",
+    "ja": ""
+   },
+   "srs_words": [
+    "かぜをひきました"
+   ]
+  },
+  {
+   "id": "cl_05",
+   "jp": "アレルギーがあります",
+   "kana": "アレルギーがあります",
+   "romaji": "arerugii ga arimasu",
+   "meaning": {
+    "en": "I have an allergy",
+    "bn": "আমার অ্যালার্জি আছে",
+    "ja": ""
+   },
+   "note": {
+    "en": "Critical before food/medicine",
+    "bn": "খাবার/ওষুধের আগে জানানো জরুরি — কী-তে সেটাও বলো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "アレルギーがあります"
+   ]
+  },
+  {
+   "id": "cl_06",
+   "jp": "ここがいたいです",
+   "kana": "ここがいたいです",
+   "romaji": "koko ga itai desu",
+   "meaning": {
+    "en": "It hurts here",
+    "bn": "এখানে ব্যথা",
+    "ja": ""
+   },
+   "note": {
+    "en": "Point and say",
+    "bn": "আঙুল দিয়ে দেখিয়ে বলো — ডাক্তার বুঝে যাবে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ここがいたいです"
+   ]
+  },
+  {
+   "id": "cl_07",
+   "jp": "めまいがします",
+   "kana": "めまいがします",
+   "romaji": "memai ga shimasu",
+   "meaning": {
+    "en": "I feel dizzy",
+    "bn": "মাথা ঘুরছে",
+    "ja": ""
+   },
+   "note": {
+    "en": "Heat-stroke warning sign",
+    "bn": "গরমে কাজে এটা হলে সাথে সাথে বলো — হিটস্ট্রোকের লক্ষণ।",
+    "ja": ""
+   },
+   "srs_words": [
+    "めまいがします"
+   ]
+  },
+  {
+   "id": "cl_08",
+   "jp": "だいじょうぶです",
+   "kana": "だいじょうぶです",
+   "romaji": "daijoubu desu",
+   "meaning": {
+    "en": "I am fine",
+    "bn": "আমি ঠিক আছি",
+    "ja": ""
+   },
+   "note": {
+    "en": "Also means 'no thanks'",
+    "bn": "সাবধান: 'না লাগবে' অর্থেও ব্যবহার হয় (দোকানে ব্যাগ চাইলে)।",
+    "ja": ""
+   },
+   "srs_words": [
+    "だいじょうぶです"
+   ]
+  }
+ ]
 }

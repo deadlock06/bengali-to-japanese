@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_food",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_restaurant"
+ ],
+ "can_do": {
+  "en": "Name everyday foods",
+  "bn": "প্রতিদিনের খাবারের নাম বলা",
+  "ja": "毎日の食べ物を言う"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter food set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_restaurant"
+ ],
+ "items": [
+  {
+   "id": "fd_01",
+   "jp": "ごはん",
+   "kana": "ごはん",
+   "romaji": "gohan",
+   "meaning": {
+    "en": "Rice / meal",
+    "bn": "ভাত / খাবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Rice, also 'meal'",
+    "bn": "ভাত-ও, আবার 'খাবার'-ও — あさごはん মানে নাস্তা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ごはん"
+   ]
+  },
+  {
+   "id": "fd_02",
+   "jp": "みず",
+   "kana": "みず",
+   "romaji": "mizu",
+   "meaning": {
+    "en": "Water",
+    "bn": "পানি",
+    "ja": ""
+   },
+   "note": {
+    "en": "The most basic word",
+    "bn": "দোকানে お水ください বলা যায়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "みず"
+   ]
+  },
+  {
+   "id": "fd_03",
+   "jp": "おちゃ",
+   "kana": "おちゃ",
+   "romaji": "ocha",
+   "meaning": {
+    "en": "Tea",
+    "bn": "চা",
+    "ja": ""
+   },
+   "note": {
+    "en": "Green tea, offered at breaks",
+    "bn": "কাজের বিরতিতে おちゃ অফার করা ভদ্রতা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おちゃ"
+   ]
+  },
+  {
+   "id": "fd_04",
+   "jp": "にく",
+   "kana": "にく",
+   "romaji": "niku",
+   "meaning": {
+    "en": "Meat",
+    "bn": "মাংস",
+    "ja": ""
+   },
+   "note": {
+    "en": "Learn the pork/chicken/beef compounds",
+    "bn": "ぶたにく=শুয়োর, とりにく=মুরগি, ぎゅうにく=গরু — চিনে রাখো!",
+    "ja": ""
+   },
+   "srs_words": [
+    "にく"
+   ]
+  },
+  {
+   "id": "fd_05",
+   "jp": "さかな",
+   "kana": "さかな",
+   "romaji": "sakana",
+   "meaning": {
+    "en": "Fish",
+    "bn": "মাছ",
+    "ja": ""
+   },
+   "note": {
+    "en": "Japan's staple protein",
+    "bn": "জাপানের প্রধান প্রোটিন — বাঙালির চেনা স্বাদ!",
+    "ja": ""
+   },
+   "srs_words": [
+    "さかな"
+   ]
+  },
+  {
+   "id": "fd_06",
+   "jp": "やさい",
+   "kana": "やさい",
+   "romaji": "yasai",
+   "meaning": {
+    "en": "Vegetables",
+    "bn": "শাকসবজি",
+    "ja": ""
+   },
+   "note": {
+    "en": "Vegetables",
+    "bn": "スーパー-তে যাচাই করে কিনতে লাগবে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "やさい"
+   ]
+  },
+  {
+   "id": "fd_07",
+   "jp": "たまご",
+   "kana": "たまご",
+   "romaji": "tamago",
+   "meaning": {
+    "en": "Egg",
+    "bn": "ডিম",
+    "ja": ""
+   },
+   "note": {
+    "en": "Egg",
+    "bn": "সস্তা প্রোটিন — たまごサンド জনপ্রিয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "たまご"
+   ]
+  },
+  {
+   "id": "fd_08",
+   "jp": "くだもの",
+   "kana": "くだもの",
+   "romaji": "kudamono",
+   "meaning": {
+    "en": "Fruit",
+    "bn": "ফল",
+    "ja": ""
+   },
+   "note": {
+    "en": "Fruit (often expensive)",
+    "bn": "জাপানে ফল দামি — উপহার হিসেবেও দেওয়া হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "くだもの"
+   ]
+  }
+ ]
+}

@@ -1,40 +1,173 @@
 {
-  "type": "lesson",
-  "id": "lesson_workplace",
-  "pack_id": "work",
-  "depends_on": [
-    "daily"
-  ],
-  "can_do": {
-    "en": "Ask for help at work",
-    "bn": "কাজে সাহায্য চাওয়া",
-    "ja": "職場で助けを求める"
+ "type": "lesson",
+ "id": "lesson_workplace",
+ "pack_id": "work",
+ "depends_on": [
+  "daily"
+ ],
+ "can_do": {
+  "en": "Ask for help at work",
+  "bn": "কাজে সাহায্য চাওয়া",
+  "ja": "職場で助けを求める"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L7",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "wp_01",
+   "jp": "すみません、たすけてください",
+   "kana": "すみません、たすけてください",
+   "romaji": "sumimasen, tasukete kudasai",
+   "meaning": {
+    "en": "Excuse me, please help me",
+    "bn": "মাফ করবেন, আমাকে সাহায্য করুন",
+    "ja": "すみません、助けてください"
+   },
+   "note": {
+    "en": "Emergency phrase for workplace",
+    "bn": "কাজের জায়গায় জরুরি বাক্য",
+    "ja": "職場での緊急フレーズ"
+   },
+   "srs_words": [
+    "すみません",
+    "たすけて",
+    "ください"
+   ]
   },
-  "jlpt_or_jft": "JFT-Basic A2",
-  "source": "Irodori Starter L7",
-  "verified": true,
-  "prerequisites": [],
-  "items": [
-    {
-      "id": "wp_01",
-      "jp": "すみません、たすけてください",
-      "kana": "すみません、たすけてください",
-      "romaji": "sumimasen, tasukete kudasai",
-      "meaning": {
-        "en": "Excuse me, please help me",
-        "bn": "মাফ করবেন, আমাকে সাহায্য করুন",
-        "ja": "すみません、助けてください"
-      },
-      "note": {
-        "en": "Emergency phrase for workplace",
-        "bn": "কাজের জায়গায় জরুরি বাক্য",
-        "ja": "職場での緊急フレーズ"
-      },
-      "srs_words": [
-        "すみません",
-        "たすけて",
-        "ください"
-      ]
-    }
-  ]
+  {
+   "id": "wp_02",
+   "jp": "やすみをください",
+   "kana": "やすみをください",
+   "romaji": "yasumi o kudasai",
+   "meaning": {
+    "en": "I'd like a day off",
+    "bn": "ছুটি চাই",
+    "ja": ""
+   },
+   "note": {
+    "en": "Ask in advance, never no-show",
+    "bn": "আগে থেকে বলা = ভদ্রতা; হুট করে অনুপস্থিত হওয়া বড় সমস্যা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "やすみをください"
+   ]
+  },
+  {
+   "id": "wp_03",
+   "jp": "おくれます",
+   "kana": "おくれます",
+   "romaji": "okuremasu",
+   "meaning": {
+    "en": "I will be late",
+    "bn": "দেরি হবে",
+    "ja": ""
+   },
+   "note": {
+    "en": "ALWAYS report lateness by phone",
+    "bn": "দেরি হলেই ফোনে জানাও — 報連相 জাপানি কাজের মূল নিয়ম।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おくれます"
+   ]
+  },
+  {
+   "id": "wp_04",
+   "jp": "きゅうけいです",
+   "kana": "きゅうけいです",
+   "romaji": "kyuukei desu",
+   "meaning": {
+    "en": "Break time",
+    "bn": "বিরতি (ব্রেক টাইম)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Break; return on time",
+    "bn": "きゅうけい মানে ব্রেক — সময় মেনে ফিরে এসো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "きゅうけいです"
+   ]
+  },
+  {
+   "id": "wp_05",
+   "jp": "おさきにしつれいします",
+   "kana": "おさきにしつれいします",
+   "romaji": "osaki ni shitsurei shimasu",
+   "meaning": {
+    "en": "Excuse me for leaving first",
+    "bn": "আগে যাচ্ছি, মাফ করবেন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Said when leaving before others",
+    "bn": "কাজ শেষে আগে বের হলে এটা বলে যেতে হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おさきにしつれいします"
+   ]
+  },
+  {
+   "id": "wp_06",
+   "jp": "しごとがおわりました",
+   "kana": "しごとがおわりました",
+   "romaji": "shigoto ga owarimashita",
+   "meaning": {
+    "en": "The work is finished",
+    "bn": "কাজ শেষ হয়েছে",
+    "ja": ""
+   },
+   "note": {
+    "en": "Report task completion",
+    "bn": "শেষ করে report করা — supervisor খুশি হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "しごとがおわりました"
+   ]
+  },
+  {
+   "id": "wp_07",
+   "jp": "トイレにいってもいいですか",
+   "kana": "トイレにいってもいいですか",
+   "romaji": "toire ni itte mo ii desu ka",
+   "meaning": {
+    "en": "May I go to the toilet?",
+    "bn": "টয়লেটে যেতে পারি?",
+    "ja": ""
+   },
+   "note": {
+    "en": "Ask permission on line work",
+    "bn": "লাইনের কাজে অনুমতি নেওয়াই নিয়ম।",
+    "ja": ""
+   },
+   "srs_words": [
+    "トイレにいってもいいですか"
+   ]
+  },
+  {
+   "id": "wp_08",
+   "jp": "いってきます",
+   "kana": "いってきます",
+   "romaji": "ittekimasu",
+   "meaning": {
+    "en": "I'm off (and will return)",
+    "bn": "যাচ্ছি, ফিরব (বেরোনোর সম্ভাষণ)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Said when leaving home",
+    "bn": "বাসা/ডর্ম থেকে বেরোনোর সময় বলে — ফিরে ただいま।",
+    "ja": ""
+   },
+   "srs_words": [
+    "いってきます"
+   ]
+  }
+ ]
 }

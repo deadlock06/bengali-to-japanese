@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_week",
+ "pack_id": "basics",
+ "depends_on": [
+  "lesson_time"
+ ],
+ "can_do": {
+  "en": "Say the days of the week",
+  "bn": "সপ্তাহের বার বলা",
+  "ja": "曜日を言う"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L3 days set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_time"
+ ],
+ "items": [
+  {
+   "id": "wk_01",
+   "jp": "げつようび",
+   "kana": "げつようび",
+   "romaji": "getsuyoubi",
+   "meaning": {
+    "en": "Monday",
+    "bn": "সোমবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Monday (moon day)",
+    "bn": "月=চাঁদ — সপ্তাহ শুরুর দিন।",
+    "ja": ""
+   },
+   "srs_words": [
+    "げつようび"
+   ]
+  },
+  {
+   "id": "wk_02",
+   "jp": "かようび",
+   "kana": "かようび",
+   "romaji": "kayoubi",
+   "meaning": {
+    "en": "Tuesday",
+    "bn": "মঙ্গলবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Tuesday (fire day)",
+    "bn": "火=আগুন।",
+    "ja": ""
+   },
+   "srs_words": [
+    "かようび"
+   ]
+  },
+  {
+   "id": "wk_03",
+   "jp": "すいようび",
+   "kana": "すいようび",
+   "romaji": "suiyoubi",
+   "meaning": {
+    "en": "Wednesday",
+    "bn": "বুধবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Wednesday (water day)",
+    "bn": "水=পানি।",
+    "ja": ""
+   },
+   "srs_words": [
+    "すいようび"
+   ]
+  },
+  {
+   "id": "wk_04",
+   "jp": "もくようび",
+   "kana": "もくようび",
+   "romaji": "mokuyoubi",
+   "meaning": {
+    "en": "Thursday",
+    "bn": "বৃহস্পতিবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Thursday (wood day)",
+    "bn": "木=গাছ।",
+    "ja": ""
+   },
+   "srs_words": [
+    "もくようび"
+   ]
+  },
+  {
+   "id": "wk_05",
+   "jp": "きんようび",
+   "kana": "きんようび",
+   "romaji": "kinyoubi",
+   "meaning": {
+    "en": "Friday",
+    "bn": "শুক্রবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Friday (gold day)",
+    "bn": "金=সোনা — বেতনের দিনও প্রায়ই!",
+    "ja": ""
+   },
+   "srs_words": [
+    "きんようび"
+   ]
+  },
+  {
+   "id": "wk_06",
+   "jp": "どようび",
+   "kana": "どようび",
+   "romaji": "doyoubi",
+   "meaning": {
+    "en": "Saturday",
+    "bn": "শনিবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Saturday (earth day)",
+    "bn": "土=মাটি।",
+    "ja": ""
+   },
+   "srs_words": [
+    "どようび"
+   ]
+  },
+  {
+   "id": "wk_07",
+   "jp": "にちようび",
+   "kana": "にちようび",
+   "romaji": "nichiyoubi",
+   "meaning": {
+    "en": "Sunday",
+    "bn": "রবিবার",
+    "ja": ""
+   },
+   "note": {
+    "en": "Sunday (sun day)",
+    "bn": "日=সূর্য — বেশিরভাগের ছুটির দিন।",
+    "ja": ""
+   },
+   "srs_words": [
+    "にちようび"
+   ]
+  },
+  {
+   "id": "wk_08",
+   "jp": "しゅうまつ",
+   "kana": "しゅうまつ",
+   "romaji": "shuumatsu",
+   "meaning": {
+    "en": "Weekend",
+    "bn": "সপ্তাহান্ত",
+    "ja": ""
+   },
+   "note": {
+    "en": "Weekend",
+    "bn": "শনি-রবি একসাথে — plan-এর কথায় লাগে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "しゅうまつ"
+   ]
+  }
+ ]
+}

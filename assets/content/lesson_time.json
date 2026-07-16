@@ -1,40 +1,173 @@
 {
-  "type": "lesson",
-  "id": "lesson_time",
-  "pack_id": "daily",
-  "depends_on": [
-    "basics"
-  ],
-  "can_do": {
-    "en": "Tell and ask about time",
-    "bn": "সময় বলা ও জিজ্ঞাসা করা",
-    "ja": "時間を伝える・尋ねる"
+ "type": "lesson",
+ "id": "lesson_time",
+ "pack_id": "daily",
+ "depends_on": [
+  "basics"
+ ],
+ "can_do": {
+  "en": "Tell and ask about time",
+  "bn": "সময় বলা ও জিজ্ঞাসা করা",
+  "ja": "時間を伝える・尋ねる"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L4",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "ti_01",
+   "jp": "いまなんじですか",
+   "kana": "いまなんじですか",
+   "romaji": "ima nanji desu ka",
+   "meaning": {
+    "en": "What time is it now?",
+    "bn": "এখন কটা বাজে?",
+    "ja": "今何時ですか"
+   },
+   "note": {
+    "en": "Essential daily phrase",
+    "bn": "দৈনন্দিন জরুরি বাক্য",
+    "ja": "日常で必須のフレーズ"
+   },
+   "srs_words": [
+    "いま",
+    "なんじ",
+    "ですか"
+   ]
   },
-  "jlpt_or_jft": "JFT-Basic A2",
-  "source": "Irodori Starter L4",
-  "verified": true,
-  "prerequisites": [],
-  "items": [
-    {
-      "id": "ti_01",
-      "jp": "いまなんじですか",
-      "kana": "いまなんじですか",
-      "romaji": "ima nanji desu ka",
-      "meaning": {
-        "en": "What time is it now?",
-        "bn": "এখন কটা বাজে?",
-        "ja": "今何時ですか"
-      },
-      "note": {
-        "en": "Essential daily phrase",
-        "bn": "দৈনন্দিন জরুরি বাক্য",
-        "ja": "日常で必須のフレーズ"
-      },
-      "srs_words": [
-        "いま",
-        "なんじ",
-        "ですか"
-      ]
-    }
-  ]
+  {
+   "id": "ti_02",
+   "jp": "いま",
+   "kana": "いま",
+   "romaji": "ima",
+   "meaning": {
+    "en": "Now",
+    "bn": "এখন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Now",
+    "bn": "いまなんじ？ — এখন কটা বাজে?",
+    "ja": ""
+   },
+   "srs_words": [
+    "いま"
+   ]
+  },
+  {
+   "id": "ti_03",
+   "jp": "ごぜん",
+   "kana": "ごぜん",
+   "romaji": "gozen",
+   "meaning": {
+    "en": "A.M.",
+    "bn": "সকাল (AM)",
+    "ja": ""
+   },
+   "note": {
+    "en": "AM; used for shift times",
+    "bn": "ごぜんくじ = সকাল ৯টা — শিফট বলায় লাগে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ごぜん"
+   ]
+  },
+  {
+   "id": "ti_04",
+   "jp": "ごご",
+   "kana": "ごご",
+   "romaji": "gogo",
+   "meaning": {
+    "en": "P.M.",
+    "bn": "বিকাল (PM)",
+    "ja": ""
+   },
+   "note": {
+    "en": "PM",
+    "bn": "ごごさんじ = বিকাল ৩টা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ごご"
+   ]
+  },
+  {
+   "id": "ti_05",
+   "jp": "はん",
+   "kana": "はん",
+   "romaji": "han",
+   "meaning": {
+    "en": "Half past",
+    "bn": "সাড়ে (আধা ঘণ্টা)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Half past the hour",
+    "bn": "くじはん = সাড়ে ৯টা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "はん"
+   ]
+  },
+  {
+   "id": "ti_06",
+   "jp": "きょう",
+   "kana": "きょう",
+   "romaji": "kyou",
+   "meaning": {
+    "en": "Today",
+    "bn": "আজ",
+    "ja": ""
+   },
+   "note": {
+    "en": "Today",
+    "bn": "きょうは〜 দিয়ে দিনের কথা শুরু হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "きょう"
+   ]
+  },
+  {
+   "id": "ti_07",
+   "jp": "あした",
+   "kana": "あした",
+   "romaji": "ashita",
+   "meaning": {
+    "en": "Tomorrow",
+    "bn": "আগামীকাল",
+    "ja": ""
+   },
+   "note": {
+    "en": "Tomorrow",
+    "bn": "শিফট/ছুটির কথায় প্রতিদিন লাগবে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "あした"
+   ]
+  },
+  {
+   "id": "ti_08",
+   "jp": "きのう",
+   "kana": "きのう",
+   "romaji": "kinou",
+   "meaning": {
+    "en": "Yesterday",
+    "bn": "গতকাল",
+    "ja": ""
+   },
+   "note": {
+    "en": "Yesterday",
+    "bn": "অতীতের কথা বলায় প্রথম শব্দ।",
+    "ja": ""
+   },
+   "srs_words": [
+    "きのう"
+   ]
+  }
+ ]
 }

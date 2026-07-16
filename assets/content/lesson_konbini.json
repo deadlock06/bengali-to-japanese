@@ -1,62 +1,176 @@
 {
-  "type": "lesson",
-  "id": "lesson_konbini",
-  "pack_id": "daily",
-  "depends_on": [
-    "basics"
-  ],
-  "can_do": {
-    "en": "Buy things at a convenience store",
-    "bn": "কনবিনিতে জিনিস কেনা",
-    "ja": "コンビニで買い物をする"
+ "type": "lesson",
+ "id": "lesson_konbini",
+ "pack_id": "daily",
+ "depends_on": [
+  "basics"
+ ],
+ "can_do": {
+  "en": "Buy things at a convenience store",
+  "bn": "কনবিনিতে জিনিস কেনা",
+  "ja": "コンビニで買い物をする"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L3",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "ko_01",
+   "jp": "これはいくらですか",
+   "kana": "これはいくらですか",
+   "romaji": "kore wa ikura desu ka",
+   "meaning": {
+    "en": "How much is this?",
+    "bn": "এটার দাম কত?",
+    "ja": "これはいくらですか"
+   },
+   "note": {
+    "en": "Point at item while asking",
+    "bn": "জিনিসটা দেখিয়ে জিজ্ঞাসা করো",
+    "ja": "商品を指しながら尋ねる"
+   },
+   "srs_words": [
+    "これ",
+    "は",
+    "いくら",
+    "ですか"
+   ]
   },
-  "jlpt_or_jft": "JFT-Basic A2",
-  "source": "Irodori Starter L3",
-  "verified": true,
-  "prerequisites": [],
-  "items": [
-    {
-      "id": "ko_01",
-      "jp": "これはいくらですか",
-      "kana": "これはいくらですか",
-      "romaji": "kore wa ikura desu ka",
-      "meaning": {
-        "en": "How much is this?",
-        "bn": "এটার দাম কত?",
-        "ja": "これはいくらですか"
-      },
-      "note": {
-        "en": "Point at item while asking",
-        "bn": "জিনিসটা দেখিয়ে জিজ্ঞাসা করো",
-        "ja": "商品を指しながら尋ねる"
-      },
-      "srs_words": [
-        "これ",
-        "は",
-        "いくら",
-        "ですか"
-      ]
-    },
-    {
-      "id": "ko_02",
-      "jp": "ふくろはいりますか",
-      "kana": "ふくろはいりますか",
-      "romaji": "fukuro wa irimasu ka",
-      "meaning": {
-        "en": "Do you need a bag?",
-        "bn": "ব্যাগ লাগবে?",
-        "ja": "袋はいりますか"
-      },
-      "note": {
-        "en": "Cashier asks this; reply 'irimasen' if you have your own",
-        "bn": "ক্যাশিয়ার জিজ্ঞাসা করে; নিজের থাকলে 'irimasen' বলো",
-        "ja": "レジで聞かれる。マイバッグなら「いりません」"
-      },
-      "srs_words": [
-        "ふくろ",
-        "は",
-        "いりますか"
-      ]
-    }
-  ]
+  {
+   "id": "ko_02",
+   "jp": "ふくろはいりますか",
+   "kana": "ふくろはいりますか",
+   "romaji": "fukuro wa irimasu ka",
+   "meaning": {
+    "en": "Do you need a bag?",
+    "bn": "ব্যাগ লাগবে?",
+    "ja": "袋はいりますか"
+   },
+   "note": {
+    "en": "Cashier asks this; reply 'irimasen' if you have your own",
+    "bn": "ক্যাশিয়ার জিজ্ঞাসা করে; নিজের থাকলে 'irimasen' বলো",
+    "ja": "レジで聞かれる。マイバッグなら「いりません」"
+   },
+   "srs_words": [
+    "ふくろ",
+    "は",
+    "いりますか"
+   ]
+  },
+  {
+   "id": "ko_03",
+   "jp": "あたためてください",
+   "kana": "あたためてください",
+   "romaji": "atatamete kudasai",
+   "meaning": {
+    "en": "Please heat it up",
+    "bn": "গরম করে দিন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Ask to microwave your bento",
+    "bn": "おべんとう কিনলে ক্যাশিয়ার জিজ্ঞেস করবে — নিজে চাইতেও পারো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "あたためてください"
+   ]
+  },
+  {
+   "id": "ko_04",
+   "jp": "おにぎり",
+   "kana": "おにぎり",
+   "romaji": "onigiri",
+   "meaning": {
+    "en": "Rice ball",
+    "bn": "ভাতের বল (অনিগিরি)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Cheap staple; check fillings",
+    "bn": "সস্তা, halal option চেনা যায় — টুনা/লবণ flavour safe।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おにぎり"
+   ]
+  },
+  {
+   "id": "ko_05",
+   "jp": "おべんとう",
+   "kana": "おべんとう",
+   "romaji": "obentou",
+   "meaning": {
+    "en": "Boxed lunch",
+    "bn": "খাবারের বাক্স (বেন্টো)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Common lunch; check ingredients",
+    "bn": "দুপুরের সবচেয়ে common খাবার — উপকরণ দেখে নিও।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おべんとう"
+   ]
+  },
+  {
+   "id": "ko_06",
+   "jp": "ぎゅうにゅう",
+   "kana": "ぎゅうにゅう",
+   "romaji": "gyuunyuu",
+   "meaning": {
+    "en": "Milk",
+    "bn": "দুধ",
+    "ja": ""
+   },
+   "note": {
+    "en": "Look for 牛乳 on the carton",
+    "bn": "牛乳 লেখা থাকে — সাদা প্যাকেট সবসময় দুধ না!",
+    "ja": ""
+   },
+   "srs_words": [
+    "ぎゅうにゅう"
+   ]
+  },
+  {
+   "id": "ko_07",
+   "jp": "おつり",
+   "kana": "おつり",
+   "romaji": "otsuri",
+   "meaning": {
+    "en": "Change",
+    "bn": "ভাংতি (ফেরত টাকা)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Your change; use the money tray",
+    "bn": "ক্যাশে দিলে おつり ফেরত পাবে — trays-এ লেনদেন হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おつり"
+   ]
+  },
+  {
+   "id": "ko_08",
+   "jp": "パン",
+   "kana": "パン",
+   "romaji": "pan",
+   "meaning": {
+    "en": "Bread",
+    "bn": "রুটি/পাউরুটি",
+    "ja": ""
+   },
+   "note": {
+    "en": "Katakana loanword",
+    "bn": "কাতাকানা শব্দ — সকালের সস্তা নাস্তা।",
+    "ja": ""
+   },
+   "srs_words": [
+    "パン"
+   ]
+  }
+ ]
 }

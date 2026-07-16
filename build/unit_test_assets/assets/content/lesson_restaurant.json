@@ -1,41 +1,174 @@
 {
-  "type": "lesson",
-  "id": "lesson_restaurant",
-  "pack_id": "work",
-  "depends_on": [
-    "daily"
-  ],
-  "can_do": {
-    "en": "Order food at a restaurant",
-    "bn": "রেস্তোরাঁয় খাবার অর্ডার",
-    "ja": "レストランで食事を注文する"
+ "type": "lesson",
+ "id": "lesson_restaurant",
+ "pack_id": "work",
+ "depends_on": [
+  "daily"
+ ],
+ "can_do": {
+  "en": "Order food at a restaurant",
+  "bn": "রেস্তোরাঁয় খাবার অর্ডার",
+  "ja": "レストランで食事を注文する"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter L6",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "re_01",
+   "jp": "おすすめはなんですか",
+   "kana": "おすすめはなんですか",
+   "romaji": "osusume wa nan desu ka",
+   "meaning": {
+    "en": "What do you recommend?",
+    "bn": "আপনার সুপারিশ কী?",
+    "ja": "おすすめは何ですか"
+   },
+   "note": {
+    "en": "Polite way to ask for recommendations",
+    "bn": "সুপারিশ জানার ভদ্র উপায়",
+    "ja": "おすすめを尋ねる丁寧な言い方"
+   },
+   "srs_words": [
+    "おすすめ",
+    "は",
+    "なん",
+    "ですか"
+   ]
   },
-  "jlpt_or_jft": "JFT-Basic A2",
-  "source": "Irodori Starter L6",
-  "verified": true,
-  "prerequisites": [],
-  "items": [
-    {
-      "id": "re_01",
-      "jp": "おすすめはなんですか",
-      "kana": "おすすめはなんですか",
-      "romaji": "osusume wa nan desu ka",
-      "meaning": {
-        "en": "What do you recommend?",
-        "bn": "আপনার সুপারিশ কী?",
-        "ja": "おすすめは何ですか"
-      },
-      "note": {
-        "en": "Polite way to ask for recommendations",
-        "bn": "সুপারিশ জানার ভদ্র উপায়",
-        "ja": "おすすめを尋ねる丁寧な言い方"
-      },
-      "srs_words": [
-        "おすすめ",
-        "は",
-        "なん",
-        "ですか"
-      ]
-    }
-  ]
+  {
+   "id": "re_02",
+   "jp": "メニューをください",
+   "kana": "メニューをください",
+   "romaji": "menyuu o kudasai",
+   "meaning": {
+    "en": "The menu, please",
+    "bn": "মেনুটা দিন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Ask right after sitting down",
+    "bn": "বসেই এটা বলো — ছবিওয়ালা মেনু চাইলে しゃしん বলো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "メニューをください"
+   ]
+  },
+  {
+   "id": "re_03",
+   "jp": "みずをください",
+   "kana": "みずをください",
+   "romaji": "mizu o kudasai",
+   "meaning": {
+    "en": "Water, please",
+    "bn": "পানি দিন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Water is free in Japan",
+    "bn": "জাপানে পানি ফ্রি — নির্ভয়ে চাও।",
+    "ja": ""
+   },
+   "srs_words": [
+    "みずをください"
+   ]
+  },
+  {
+   "id": "re_04",
+   "jp": "ぶたにくははいっていますか",
+   "kana": "ぶたにくははいっていますか",
+   "romaji": "butaniku wa haitte imasu ka",
+   "meaning": {
+    "en": "Does this contain pork?",
+    "bn": "এতে কি শুয়োরের মাংস আছে?",
+    "ja": ""
+   },
+   "note": {
+    "en": "THE halal-check question",
+    "bn": "halal check-এর সবচেয়ে জরুরি বাক্য — order করার আগে জিজ্ঞেস করো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ぶたにくははいっていますか"
+   ]
+  },
+  {
+   "id": "re_05",
+   "jp": "おかいけいおねがいします",
+   "kana": "おかいけいおねがいします",
+   "romaji": "okaikei onegaishimasu",
+   "meaning": {
+    "en": "The bill, please",
+    "bn": "বিলটা দিন",
+    "ja": ""
+   },
+   "note": {
+    "en": "Often paid at the counter",
+    "bn": "টেবিলে না, প্রায়ই কাউন্টারে গিয়ে বিল দিতে হয়।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おかいけいおねがいします"
+   ]
+  },
+  {
+   "id": "re_06",
+   "jp": "いただきます",
+   "kana": "いただきます",
+   "romaji": "itadakimasu",
+   "meaning": {
+    "en": "Expression before eating",
+    "bn": "খাওয়া শুরুর প্রার্থণা (খাচ্ছি!)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Said before every meal",
+    "bn": "খাওয়ার আগে বললে ভদ্রতা — সবাই বলে।",
+    "ja": ""
+   },
+   "srs_words": [
+    "いただきます"
+   ]
+  },
+  {
+   "id": "re_07",
+   "jp": "ごちそうさまでした",
+   "kana": "ごちそうさまでした",
+   "romaji": "gochisousama deshita",
+   "meaning": {
+    "en": "Thanks for the meal",
+    "bn": "খাওয়া শেষের ধন্যবাদ",
+    "ja": ""
+   },
+   "note": {
+    "en": "Said after the meal",
+    "bn": "খাওয়া শেষে + দোকান থেকে বের হওয়ার সময় বলো।",
+    "ja": ""
+   },
+   "srs_words": [
+    "ごちそうさまでした"
+   ]
+  },
+  {
+   "id": "re_08",
+   "jp": "おいしいです",
+   "kana": "おいしいです",
+   "romaji": "oishii desu",
+   "meaning": {
+    "en": "It's delicious",
+    "bn": "খুব মজা (সুস্বাদু)",
+    "ja": ""
+   },
+   "note": {
+    "en": "Compliment the food",
+    "bn": "প্রশংসা করলে পরিবেশ ভালো হয় — おいしかった (অতীত)।",
+    "ja": ""
+   },
+   "srs_words": [
+    "おいしいです"
+   ]
+  }
+ ]
 }

@@ -98,7 +98,7 @@
         "L0.1"
       ],
       "exam_tag": "foundation",
-      "lesson_id": "lesson_numbers,lesson_time",
+      "lesson_id": "lesson_numbers,lesson_numbers_big,lesson_time,lesson_week",
       "target_word_count": 40
     },
     {
@@ -178,7 +178,7 @@
         "A1.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_restaurant",
+      "lesson_id": "lesson_restaurant,lesson_food",
       "target_word_count": 40
     },
     {

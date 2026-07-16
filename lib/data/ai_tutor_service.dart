@@ -39,14 +39,32 @@ class AiTutorService {
 4. কোনো চাপ/লজ্জা/guilt নয়। শিক্ষার্থীকে উৎসাহ দাও।
 5. জাপানি লিখলে সাথে romaji + বাংলা উচ্চারণ দাও।''';
 
+  /// Dynamic BN↔JP language balance (13_MASTER_VISION): the sensei's mix of
+  /// Bengali and Japanese follows the learner's curriculum level — beginner
+  /// mostly Bengali, advanced mostly Japanese. D-017 mapping:
+  /// L0/A1 → beginner · A2 → intermediate · N4 → advanced.
+  static String _balanceLine(String level) => switch (level) {
+        'N4' =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী ADVANCED (N4) স্তরে। উত্তরের ৮০-৯০% জাপানিতে দাও '
+              '(স্বাভাবিক বাক্যে, kana/kanji সহ) — বাংলা শুধু কঠিন জায়গার ছোট ব্যাখ্যায়।',
+        'A2' =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী INTERMEDIATE (A2) স্তরে। বাংলা ও জাপানি প্রায় ৫০/৫০ '
+              'মেশাও — জাপানি বাক্য আগে, তারপর বাংলা ব্যাখ্যা।',
+        _ =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী BEGINNER (L0/A1) স্তরে। ৮০-৯০% বাংলায় বলো; জাপানি '
+              'অল্প-অল্প করে, আর জাপানি লিখলেই সাথে romaji + বাংলা উচ্চারণ দেবে।',
+      };
+
   /// Returns the sensei's reply, or null on no-proxy/offline/error (→ caller
   /// uses its canned fallback). [contextJp] is the item under discussion.
+  /// [level] = curriculum level (L0/A1/A2/N4) for the BN↔JP balance.
   Future<String?> reply(String userText,
-      {String contextJp = '', String curriculumHint = ''}) {
+      {String contextJp = '', String curriculumHint = '', String level = ''}) {
     final ctx = StringBuffer();
     if (curriculumHint.isNotEmpty) ctx.write('$curriculumHint ');
     if (contextJp.isNotEmpty) ctx.write('শিক্ষার্থী এখন 「$contextJp」 নিয়ে কথা বলছে। ');
-    return _complete(_system, '$ctx$userText', maxTokens: 300);
+    final system = level.isEmpty ? _system : '$_system${_balanceLine(level)}';
+    return _complete(system, '$ctx$userText', maxTokens: 300);
   }
 
   static const _dictSystem = '''
@@ -74,11 +92,15 @@ class AiTutorService {
 
   /// AI dictionary — explains arbitrary (usually Japanese) text. null on
   /// offline / no-key / error (caller shows a gentle offline message).
-  /// [curriculumHint] lets the sensei tie the answer to the learner's unit.
-  Future<String?> explain(String text, {String curriculumHint = ''}) {
+  /// [curriculumHint] ties the answer to the learner's unit; [level] drives
+  /// the BN↔JP balance (13_MASTER_VISION).
+  Future<String?> explain(String text,
+      {String curriculumHint = '', String level = ''}) {
     final t = text.trim();
     final user = curriculumHint.isEmpty ? t : '$curriculumHint\n\nটেক্সট: $t';
-    return _complete(_dictSystem, user, maxTokens: 400);
+    final system =
+        level.isEmpty ? _dictSystem : '$_dictSystem${_balanceLine(level)}';
+    return _complete(system, user, maxTokens: 400);
   }
 
   Future<String?> _complete(String system, String user, {int maxTokens = 300}) async {

@@ -62,6 +62,22 @@ final curriculumProvider = FutureProvider<List<CurriculumUnit>>((ref) async {
   return CurriculumService.load(completed);
 });
 
+/// The learner's current curriculum level (L0/A1/A2/N4) — drives the sensei's
+/// dynamic BN↔JP language balance (13_MASTER_VISION: beginner 80–90% Bengali →
+/// advanced 80–90% Japanese). Derived from the current unit; L0 when unknown.
+final learnerLevelProvider = FutureProvider<String>((ref) async {
+  try {
+    final units = await ref.watch(curriculumProvider.future);
+    for (final u in units) {
+      if (u.state == UnitProgress.current) return u.level;
+    }
+    // Everything done → the learner works at the top authored level.
+    return units.isEmpty ? 'L0' : units.last.level;
+  } catch (_) {
+    return 'L0';
+  }
+});
+
 /// T-112 — the AI Classroom's next lesson as answer-key MC questions, selected
 /// from the current curriculum unit (rev-3 rule). Deterministic; proof in
 /// tools/batch_reference.mjs. null = every wired lesson completed. Off-device

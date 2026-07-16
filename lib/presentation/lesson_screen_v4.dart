@@ -32,6 +32,7 @@ import '../data/audio_service.dart';
 import 'selection_explain.dart';
 import 'sensei_chat_sheet.dart';
 import '../data/book_repository.dart';
+import '../data/curriculum_service.dart';
 import '../data/lesson_batch.dart';
 import 'book_reader_screen.dart';
 import 'book_screen_v4.dart';
@@ -567,15 +568,51 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           decoration: BoxDecoration(color: BhasagoTheme.card,
               borderRadius: const BorderRadius.only(topLeft: Radius.circular(14), topRight: Radius.circular(14), bottomRight: Radius.circular(14), bottomLeft: Radius.circular(3)),
               border: Border.all(color: BhasagoTheme.outline)),
-          // After a correct answer the sensei explains WHY/WHEN the phrase is
-          // used (note.bn from the verified JSON) — never a generated rule.
-          // Sensei teaches first (introBn), then explains after a correct answer
-          // (note.bn) — always the verified line, never generated.
-          child: Text(
-              teacherNote ?? (q.introBn.isNotEmpty ? q.introBn : m.teacherMsg),
-              style: const TextStyle(fontSize: 12)),
+          // 13_MASTER_VISION: the sensei NARRATES the lesson — he announces
+          // each stage conversationally (teach → test → write → why), so the
+          // learner always knows where they are and what's next. Item facts
+          // stay verified (introBn/noteBn from JSON) — never generated.
+          child: Text(_senseiNarration(), style: const TextStyle(fontSize: 12)),
         )),
       ]);
+
+  /// Stage 13 — next-lesson recommendation from the live curriculum ladder:
+  /// the CURRENT unit after this completion refreshed the providers. null
+  /// while the ontology loads (overlay simply omits the line).
+  String? _nextRecommendation() {
+    final units = ref.watch(curriculumProvider).valueOrNull;
+    if (units == null) return null;
+    for (final u in units) {
+      if (u.state == UnitProgress.current) {
+        final what = u.canDoBn.isNotEmpty ? ' — ${u.canDoBn}' : '';
+        return 'পরের গন্তব্য: "${u.titleBn}" (${u.level})$what। প্রস্তুত হলে চলো!';
+      }
+    }
+    return 'পুরো কারিকুলাম শেষ — এবার review আর অনুশীলনে ধার বাড়াও। অভিনন্দন! 🎉';
+  }
+
+  /// The sensei's conversational line for the CURRENT stage (13_MASTER_VISION:
+  /// proactive teacher — always announces the next educational step).
+  String _senseiNarration() {
+    if (!introSeen) {
+      // Phase 1 — lesson-open greeting on the very first item, then teach.
+      final opening =
+          idx == 0 && correctCount == 0 && wrongs == 0 && skipsUsed == 0
+              ? 'আজকের পাঠ — "$lessonTitle"। শুরু করি!\n'
+              : '';
+      return '$opening${q.introBn.isNotEmpty ? q.introBn : m.teacherMsg}';
+    }
+    if (writingPhase) {
+      // Phase 3 — writing, announced like a teacher would.
+      return 'দারুণ, চিনেছ! এবার হাতে লেখো ✍️ — আগে ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর গাইড ধরে নিজে।';
+    }
+    // Phase 2 — recognition: after a correct answer the WHY/WHEN (verified
+    // note.bn); otherwise a stage announcement or the mood line.
+    return teacherNote ??
+        (mood == LessonMood.neutral
+            ? 'এবার ছোট্ট পরীক্ষা — ঠিকটা বেছে নাও। দরকারে ইঙ্গিত আছে, কোনো চাপ নেই।'
+            : m.teacherMsg);
+  }
 
   Widget _toolbar(BuildContext context) => Row(children: [
         Expanded(child: _pill(icon: Icons.lightbulb_outline, iconColor: m.color, label: 'ইঙ্গিত',
@@ -625,6 +662,16 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             const Text('আজকের শব্দগুলো review deck-এ ঢুকলো — কালকে আবার দেখা হবে।',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 11.5, height: 1.5, color: Color(0xFF35E065))),
+            // Stage 13 (13_MASTER_VISION): the sensei RECOMMENDS what's next —
+            // the learner always knows where the path leads. Recommendation
+            // only, never a lock (D-001).
+            if (_nextRecommendation() != null) ...[
+              const SizedBox(height: 8),
+              Text(_nextRecommendation()!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 11.5, height: 1.5, color: BhasagoTheme.muted)),
+            ],
             const SizedBox(height: 16),
             FilledButton(
               onPressed: () => setState(() {

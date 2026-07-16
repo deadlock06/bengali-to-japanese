@@ -64,6 +64,10 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   // classroom item.
   String get _ctx => widget.seedText.isNotEmpty ? widget.seedText : widget.contextJp;
 
+  /// Curriculum level (L0/A1/A2/N4) → the sensei's BN↔JP language balance
+  /// (13_MASTER_VISION). Empty while the ladder is still loading.
+  String get _level => ref.read(learnerLevelProvider).valueOrNull ?? '';
+
   static const _canned = [
     '「水 · みず」মানে পানি। মনে রাখো: み(mi) দিয়ে শুরু — যেটা তুমি পান করো। উদাহরণ: 水をください — একটু পানি দিন।',
     'ভালো প্রশ্ন! উচ্চারণটা ভেঙে বলি: go-HAN — দ্বিতীয় অংশে একটু জোর। আস্তে আস্তে ৩ বার বলো।',
@@ -129,8 +133,8 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   // Copy-anywhere open: the sensei presents & explains the selected text first.
   Future<void> _bootstrapExplain() async {
     setState(() => _typing = true);
-    final ai = await AiTutorService.instance
-        .explain(widget.seedText, curriculumHint: widget.curriculumHint);
+    final ai = await AiTutorService.instance.explain(widget.seedText,
+        curriculumHint: widget.curriculumHint, level: _level);
     if (!mounted) return;
     
     final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText);
@@ -165,8 +169,8 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
       _typing = true;
     });
     // Online AI (Smart Banglish) if a key is configured; else canned/offline.
-    final ai = await AiTutorService.instance
-        .reply(t, contextJp: _ctx, curriculumHint: widget.curriculumHint);
+    final ai = await AiTutorService.instance.reply(t,
+        contextJp: _ctx, curriculumHint: widget.curriculumHint, level: _level);
     if (!mounted) return;
     if (ai != null) {
       setState(() {

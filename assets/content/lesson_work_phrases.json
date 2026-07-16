@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_work_phrases",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_workplace"
+ ],
+ "can_do": {
+  "en": "Handle the work floor in Japanese",
+  "bn": "কাজের মেঝেতে কথা চালানো",
+  "ja": "現場のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic floor phrases",
+ "verified": true,
+ "prerequisites": [
+  "lesson_workplace"
+ ],
+ "items": [
+  {
+   "id": "wf_01",
+   "jp": "なにをしましょうか",
+   "kana": "なにをしましょうか",
+   "romaji": "nani o shimashou ka",
+   "meaning": {
+    "en": "What should I do?",
+    "bn": "কী করব? (কাজ চেয়ে নেওয়া)",
+    "ja": "何をしましょうか"
+   },
+   "note": {
+    "en": "THE golden worker line",
+    "bn": "কাজ শেষে বসে না থেকে এটা বলো — সোনার লাইন, সবাই ভালোবাসে।",
+    "ja": "仕事を求める"
+   },
+   "srs_words": [
+    "なにをしましょうか"
+   ]
+  },
+  {
+   "id": "wf_02",
+   "jp": "つぎはなんですか",
+   "kana": "つぎはなんですか",
+   "romaji": "tsugi wa nan desu ka",
+   "meaning": {
+    "en": "What's next?",
+    "bn": "এরপর কী?",
+    "ja": "次は何ですか"
+   },
+   "note": {
+    "en": "Step-by-step asking",
+    "bn": "ধাপে ধাপে কাজ বুঝে নেওয়ার প্রশ্ন।",
+    "ja": "次の指示"
+   },
+   "srs_words": [
+    "つぎはなんですか"
+   ]
+  },
+  {
+   "id": "wf_03",
+   "jp": "できました",
+   "kana": "できました",
+   "romaji": "dekimashita",
+   "meaning": {
+    "en": "Done!",
+    "bn": "হয়ে গেছে!",
+    "ja": "できました"
+   },
+   "note": {
+    "en": "Report, don't just move on",
+    "bn": "কাজ শেষ = report — চুপচাপ পরেরটায় যেও না।",
+    "ja": "完了報告"
+   },
+   "srs_words": [
+    "できました"
+   ]
+  },
+  {
+   "id": "wf_04",
+   "jp": "あとすこしです",
+   "kana": "あとすこしです",
+   "romaji": "ato sukoshi desu",
+   "meaning": {
+    "en": "Almost done",
+    "bn": "আর একটু বাকি",
+    "ja": "あと少しです"
+   },
+   "note": {
+    "en": "Progress updates calm bosses",
+    "bn": "অগ্রগতি জানানো — supervisor-এর দুশ্চিন্তা কমায়।",
+    "ja": "進捗"
+   },
+   "srs_words": [
+    "あとすこしです"
+   ]
+  },
+  {
+   "id": "wf_05",
+   "jp": "もうすぐおわります",
+   "kana": "もうすぐおわります",
+   "romaji": "mousugu owarimasu",
+   "meaning": {
+    "en": "Finishing very soon",
+    "bn": "এক্ষুনি শেষ হবে",
+    "ja": "もうすぐ終わります"
+   },
+   "note": {
+    "en": "When asked how long",
+    "bn": "সময় জিজ্ঞেস করলে এই জবাব।",
+    "ja": "進捗"
+   },
+   "srs_words": [
+    "もうすぐおわります"
+   ]
+  },
+  {
+   "id": "wf_06",
+   "jp": "ちょっといいですか",
+   "kana": "ちょっといいですか",
+   "romaji": "chotto ii desu ka",
+   "meaning": {
+    "en": "Got a second?",
+    "bn": "একটু সময় হবে?",
+    "ja": "ちょっといいですか"
+   },
+   "note": {
+    "en": "Soft interruption",
+    "bn": "কাউকে ডাকার নরম উপায় — হুট করে প্রশ্ন নয়।",
+    "ja": "声かけ"
+   },
+   "srs_words": [
+    "ちょっといいですか"
+   ]
+  },
+  {
+   "id": "wf_07",
+   "jp": "いまいきます",
+   "kana": "いまいきます",
+   "romaji": "ima ikimasu",
+   "meaning": {
+    "en": "Coming right now!",
+    "bn": "এক্ষুনি আসছি!",
+    "ja": "今行きます"
+   },
+   "note": {
+    "en": "Answer calls loudly",
+    "bn": "ডাক পড়লে জোরে এটা বলো — সাড়া দেওয়াটাই সংস্কৃতি।",
+    "ja": "返事"
+   },
+   "srs_words": [
+    "いまいきます"
+   ]
+  },
+  {
+   "id": "wf_08",
+   "jp": "てつだいましょうか",
+   "kana": "てつだいましょうか",
+   "romaji": "tetsudaimashou ka",
+   "meaning": {
+    "en": "Shall I help?",
+    "bn": "সাহায্য করব?",
+    "ja": "手伝いましょうか"
+   },
+   "note": {
+    "en": "Team-heart winner",
+    "bn": "কারো কষ্ট দেখলে — দলের মন জেতার লাইন।",
+    "ja": "申し出"
+   },
+   "srs_words": [
+    "てつだいましょうか"
+   ]
+  }
+ ]
+}

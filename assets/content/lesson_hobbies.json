@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_hobbies",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_intro_qa"
+ ],
+ "can_do": {
+  "en": "Talk about hobbies",
+  "bn": "শখের কথা বলা",
+  "ja": "趣味のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter hobbies (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_intro_qa"
+ ],
+ "items": [
+  {
+   "id": "hb_01",
+   "jp": "しゅみ",
+   "kana": "しゅみ",
+   "romaji": "shumi",
+   "meaning": {
+    "en": "Hobby",
+    "bn": "শখ",
+    "ja": "趣味"
+   },
+   "note": {
+    "en": "Answering the hobby question",
+    "bn": "しゅみはなんですか-র জবাব দিতে এই set।",
+    "ja": "趣味"
+   },
+   "srs_words": [
+    "しゅみ"
+   ]
+  },
+  {
+   "id": "hb_02",
+   "jp": "クリケット",
+   "kana": "クリケット",
+   "romaji": "kuriketto",
+   "meaning": {
+    "en": "Cricket",
+    "bn": "ক্রিকেট",
+    "ja": "クリケット"
+   },
+   "note": {
+    "en": "They don't know it — teach them!",
+    "bn": "জাপানিরা চেনে না — বোঝাতে গিয়ে বন্ধুত্ব হবে! 🏏",
+    "ja": "クリケット"
+   },
+   "srs_words": [
+    "クリケット"
+   ]
+  },
+  {
+   "id": "hb_03",
+   "jp": "サッカー",
+   "kana": "サッカー",
+   "romaji": "sakkaa",
+   "meaning": {
+    "en": "Soccer/football",
+    "bn": "ফুটবল",
+    "ja": "サッカー"
+   },
+   "note": {
+    "en": "Easy icebreaker",
+    "bn": "জাপানে খুব জনপ্রিয় — কথা শুরুর সহজ পথ।",
+    "ja": "サッカー"
+   },
+   "srs_words": [
+    "サッカー"
+   ]
+  },
+  {
+   "id": "hb_04",
+   "jp": "えいが",
+   "kana": "えいが",
+   "romaji": "eiga",
+   "meaning": {
+    "en": "Movie",
+    "bn": "সিনেমা",
+    "ja": "映画"
+   },
+   "note": {
+    "en": "I like watching movies",
+    "bn": "えいがをみるのがすきです — সিনেমা দেখতে ভালোবাসি।",
+    "ja": "映画"
+   },
+   "srs_words": [
+    "えいが"
+   ]
+  },
+  {
+   "id": "hb_05",
+   "jp": "おんがく",
+   "kana": "おんがく",
+   "romaji": "ongaku",
+   "meaning": {
+    "en": "Music",
+    "bn": "গান / সংগীত",
+    "ja": "音楽"
+   },
+   "note": {
+    "en": "Listening to music",
+    "bn": "おんがくをききます — গান শুনি।",
+    "ja": "音楽"
+   },
+   "srs_words": [
+    "おんがく"
+   ]
+  },
+  {
+   "id": "hb_06",
+   "jp": "りょこう",
+   "kana": "りょこう",
+   "romaji": "ryokou",
+   "meaning": {
+    "en": "Travel",
+    "bn": "ভ্রমণ",
+    "ja": "旅行"
+   },
+   "note": {
+    "en": "Explore Japan on holidays",
+    "bn": "ছুটিতে りょこう — জাপান দেখার সুযোগ নিও।",
+    "ja": "旅行"
+   },
+   "srs_words": [
+    "りょこう"
+   ]
+  },
+  {
+   "id": "hb_07",
+   "jp": "りょうり",
+   "kana": "りょうり",
+   "romaji": "ryouri",
+   "meaning": {
+    "en": "Cooking",
+    "bn": "রান্না",
+    "ja": "料理"
+   },
+   "note": {
+    "en": "Deshi food wins hearts",
+    "bn": "দেশি রান্না খাওয়ালে সহকর্মীরা ভক্ত হয়ে যাবে!",
+    "ja": "料理"
+   },
+   "srs_words": [
+    "りょうり"
+   ]
+  },
+  {
+   "id": "hb_08",
+   "jp": "ゲーム",
+   "kana": "ゲーム",
+   "romaji": "geemu",
+   "meaning": {
+    "en": "Games",
+    "bn": "গেম",
+    "ja": "ゲーム"
+   },
+   "note": {
+    "en": "Bridge to young coworkers",
+    "bn": "কাতাকানা — তরুণ সহকর্মীদের সাথে মেলার সেতু।",
+    "ja": "ゲーム"
+   },
+   "srs_words": [
+    "ゲーム"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_permissions",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_work_requests"
+ ],
+ "can_do": {
+  "en": "Ask permission for daily things",
+  "bn": "দৈনন্দিন অনুমতি চাওয়া",
+  "ja": "毎日の許可"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic permissions set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_work_requests"
+ ],
+ "items": [
+  {
+   "id": "pm_01",
+   "jp": "かえってもいいですか",
+   "kana": "かえってもいいですか",
+   "romaji": "kaette mo ii desu ka",
+   "meaning": {
+    "en": "May I go home?",
+    "bn": "বাড়ি যেতে পারি?",
+    "ja": "帰ってもいいですか"
+   },
+   "note": {
+    "en": "Before osaki-ni",
+    "bn": "কাজ শেষ + おさきにしつれいします-র আগে জিজ্ঞেস।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "かえってもいいですか"
+   ]
+  },
+  {
+   "id": "pm_02",
+   "jp": "きゅうけいしてもいいですか",
+   "kana": "きゅうけいしてもいいですか",
+   "romaji": "kyuukei shite mo ii desu ka",
+   "meaning": {
+    "en": "May I take a break?",
+    "bn": "বিরতি নিতে পারি?",
+    "ja": "休憩してもいいですか"
+   },
+   "note": {
+    "en": "Safety, not shyness",
+    "bn": "গরমে/অসুস্থ লাগলে — লজ্জা নয়, নিরাপত্তা।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "きゅうけいしてもいいですか"
+   ]
+  },
+  {
+   "id": "pm_03",
+   "jp": "でんわしてもいいですか",
+   "kana": "でんわしてもいいですか",
+   "romaji": "denwa shite mo ii desu ka",
+   "meaning": {
+    "en": "May I make a call?",
+    "bn": "ফোন করতে পারি?",
+    "ja": "電話してもいいですか"
+   },
+   "note": {
+    "en": "Calls need permission",
+    "bn": "কাজের সময় ফোন = অনুমতি নিয়ে।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "でんわしてもいいですか"
+   ]
+  },
+  {
+   "id": "pm_04",
+   "jp": "ここにおいてもいいですか",
+   "kana": "ここにおいてもいいですか",
+   "romaji": "koko ni oite mo ii desu ka",
+   "meaning": {
+    "en": "May I put it here?",
+    "bn": "এখানে রাখতে পারি?",
+    "ja": "ここに置いてもいいですか"
+   },
+   "note": {
+    "en": "Everything has its place",
+    "bn": "জায়গামতো রাখা জাপানি কারখানার ধর্ম — আগে জিজ্ঞেস।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "ここにおいてもいいですか"
+   ]
+  },
+  {
+   "id": "pm_05",
+   "jp": "まどをあけてもいいですか",
+   "kana": "まどをあけてもいいですか",
+   "romaji": "mado o akete mo ii desu ka",
+   "meaning": {
+    "en": "May I open the window?",
+    "bn": "জানালা খুলতে পারি?",
+    "ja": "窓を開けてもいいですか"
+   },
+   "note": {
+    "en": "Roommate politeness",
+    "bn": "ডর্মের রুমমেট-জীবনের ভদ্রতা।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "まどをあけてもいいですか"
+   ]
+  },
+  {
+   "id": "pm_06",
+   "jp": "エアコンをつけてもいいですか",
+   "kana": "エアコンをつけてもいいですか",
+   "romaji": "eakon o tsukete mo ii desu ka",
+   "meaning": {
+    "en": "May I turn on the AC?",
+    "bn": "এসি চালাতে পারি?",
+    "ja": "エアコンをつけてもいいですか"
+   },
+   "note": {
+    "en": "Tsukemasu/keshimasu pair",
+    "bn": "つけます=চালু, けします=বন্ধ — জোড়া মনে রাখো।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "エアコンをつけてもいいですか"
+   ]
+  },
+  {
+   "id": "pm_07",
+   "jp": "これをもらってもいいですか",
+   "kana": "これをもらってもいいですか",
+   "romaji": "kore o moratte mo ii desu ka",
+   "meaning": {
+    "en": "May I have this?",
+    "bn": "এটা নিতে পারি?",
+    "ja": "これをもらってもいいですか"
+   },
+   "note": {
+    "en": "Never take without asking",
+    "bn": "কেউ জিনিস ছাড়লে — না জিজ্ঞেস করে নিও না।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "これをもらってもいいですか"
+   ]
+  },
+  {
+   "id": "pm_08",
+   "jp": "あとでやってもいいですか",
+   "kana": "あとでやってもいいですか",
+   "romaji": "atode yatte mo ii desu ka",
+   "meaning": {
+    "en": "May I do it later?",
+    "bn": "পরে করলে হবে?",
+    "ja": "後でやってもいいですか"
+   },
+   "note": {
+    "en": "Negotiating > silence",
+    "bn": "চাপ বেশি হলে ভদ্র negotiate — জাপানে চলে, চুপ থাকা চলে না।",
+    "ja": "相談"
+   },
+   "srs_words": [
+    "あとでやってもいいですか"
+   ]
+  }
+ ]
+}

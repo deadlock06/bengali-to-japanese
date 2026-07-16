@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_trouble_talk",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_apology"
+ ],
+ "can_do": {
+  "en": "Navigate when things go wrong",
+  "bn": "গোলমালে পথ বের করা",
+  "ja": "トラブル時のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic trouble set 2",
+ "verified": true,
+ "prerequisites": [
+  "lesson_apology"
+ ],
+ "items": [
+  {
+   "id": "tt_01",
+   "jp": "おそくなりました",
+   "kana": "おそくなりました",
+   "romaji": "osoku narimashita",
+   "meaning": {
+    "en": "Sorry for the delay",
+    "bn": "দেরি হয়ে গেল (দুঃখিত)",
+    "ja": "遅くなりました"
+   },
+   "note": {
+    "en": "Say it first, reason after",
+    "bn": "পৌঁছে প্রথম কথা — তারপর কারণ।",
+    "ja": "謝罪"
+   },
+   "srs_words": [
+    "おそくなりました"
+   ]
+  },
+  {
+   "id": "tt_02",
+   "jp": "しりませんでした",
+   "kana": "しりませんでした",
+   "romaji": "shirimasen deshita",
+   "meaning": {
+    "en": "I didn't know",
+    "bn": "জানতাম না",
+    "ja": "知りませんでした"
+   },
+   "note": {
+    "en": "Honest + will-be-careful",
+    "bn": "সৎ স্বীকারোক্তি — সাথে つぎからきをつけます।",
+    "ja": "弁明"
+   },
+   "srs_words": [
+    "しりませんでした"
+   ]
+  },
+  {
+   "id": "tt_03",
+   "jp": "きがつきませんでした",
+   "kana": "きがつきませんでした",
+   "romaji": "ki ga tsukimasen deshita",
+   "meaning": {
+    "en": "I didn't notice",
+    "bn": "খেয়াল করিনি",
+    "ja": "気がつきませんでした"
+   },
+   "note": {
+    "en": "Admission, not excuse",
+    "bn": "ভুল ধরিয়ে দিলে এই স্বীকারোক্তি — অজুহাত নয়।",
+    "ja": "弁明"
+   },
+   "srs_words": [
+    "きがつきませんでした"
+   ]
+  },
+  {
+   "id": "tt_04",
+   "jp": "もんだいがあります",
+   "kana": "もんだいがあります",
+   "romaji": "mondai ga arimasu",
+   "meaning": {
+    "en": "There is a problem",
+    "bn": "একটা সমস্যা আছে",
+    "ja": "問題があります"
+   },
+   "note": {
+    "en": "Hiding problems = worst sin",
+    "bn": "報連相-এর 相 — সমস্যা লুকানো জাপানে সবচেয়ে বড় ভুল।",
+    "ja": "報告"
+   },
+   "srs_words": [
+    "もんだいがあります"
+   ]
+  },
+  {
+   "id": "tt_05",
+   "jp": "だれにいえばいいですか",
+   "kana": "だれにいえばいいですか",
+   "romaji": "dare ni ieba ii desu ka",
+   "meaning": {
+    "en": "Who should I tell?",
+    "bn": "কাকে বলব?",
+    "ja": "誰に言えばいいですか"
+   },
+   "note": {
+    "en": "Finds the right person",
+    "bn": "সঠিক মানুষ খোঁজার প্রশ্ন — chain of command শেখায়।",
+    "ja": "相談"
+   },
+   "srs_words": [
+    "だれにいえばいいですか"
+   ]
+  },
+  {
+   "id": "tt_06",
+   "jp": "どうすればいいですか",
+   "kana": "どうすればいいですか",
+   "romaji": "dou sureba ii desu ka",
+   "meaning": {
+    "en": "What should I do?",
+    "bn": "কী করলে ভালো হয়?",
+    "ja": "どうすればいいですか"
+   },
+   "note": {
+    "en": "Never guess — ask this",
+    "bn": "আটকে গেলে সোনার প্রশ্ন — অনুমানে কাজ কোরো না।",
+    "ja": "相談"
+   },
+   "srs_words": [
+    "どうすればいいですか"
+   ]
+  },
+  {
+   "id": "tt_07",
+   "jp": "じかんがありません",
+   "kana": "じかんがありません",
+   "romaji": "jikan ga arimasen",
+   "meaning": {
+    "en": "There's no time",
+    "bn": "সময় নেই",
+    "ja": "時間がありません"
+   },
+   "note": {
+    "en": "Flag deadline pressure",
+    "bn": "deadline চাপে জানাও — চুপচাপ ডুবো না।",
+    "ja": "報告"
+   },
+   "srs_words": [
+    "じかんがありません"
+   ]
+  },
+  {
+   "id": "tt_08",
+   "jp": "まにあいません",
+   "kana": "まにあいません",
+   "romaji": "maniaimasen",
+   "meaning": {
+    "en": "I won't make it in time",
+    "bn": "সময়মতো হবে না",
+    "ja": "間に合いません"
+   },
+   "note": {
+    "en": "Early warning saves you",
+    "bn": "ট্রেন/ডেডলাইন — আগে জানালে সমাধান হয়, পরে জানালে সমস্যা।",
+    "ja": "報告"
+   },
+   "srs_words": [
+    "まにあいません"
+   ]
+  }
+ ]
+}

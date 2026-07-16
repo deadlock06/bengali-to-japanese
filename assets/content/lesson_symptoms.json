@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_symptoms",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_clinic"
+ ],
+ "can_do": {
+  "en": "Describe symptoms",
+  "bn": "উপসর্গ বোঝানো",
+  "ja": "症状のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic clinic set 3",
+ "verified": true,
+ "prerequisites": [
+  "lesson_clinic"
+ ],
+ "items": [
+  {
+   "id": "sy_01",
+   "jp": "つかれました",
+   "kana": "つかれました",
+   "romaji": "tsukaremashita",
+   "meaning": {
+    "en": "I'm tired",
+    "bn": "ক্লান্ত হয়ে গেছি",
+    "ja": "疲れました"
+   },
+   "note": {
+    "en": "The tsukare in otsukaresama",
+    "bn": "おつかれさま-র সেই つかれ — এবার নিজের বেলায়।",
+    "ja": "疲労"
+   },
+   "srs_words": [
+    "つかれました"
+   ]
+  },
+  {
+   "id": "sy_02",
+   "jp": "ねむいです",
+   "kana": "ねむいです",
+   "romaji": "nemui desu",
+   "meaning": {
+    "en": "I'm sleepy",
+    "bn": "ঘুম পাচ্ছে",
+    "ja": "眠いです"
+   },
+   "note": {
+    "en": "Night-shift word",
+    "bn": "রাত-শিফটের সঙ্গী — মেশিনে কাজে বললে সিরিয়াসলি নেবে।",
+    "ja": "眠気"
+   },
+   "srs_words": [
+    "ねむいです"
+   ]
+  },
+  {
+   "id": "sy_03",
+   "jp": "きぶんがわるいです",
+   "kana": "きぶんがわるいです",
+   "romaji": "kibun ga warui desu",
+   "meaning": {
+    "en": "I feel unwell",
+    "bn": "শরীর ভালো লাগছে না",
+    "ja": "気分が悪いです"
+   },
+   "note": {
+    "en": "The vague-but-real one",
+    "bn": "নির্দিষ্ট ব্যথা নেই কিন্তু খারাপ লাগছে — এটাই বলো।",
+    "ja": "体調不良"
+   },
+   "srs_words": [
+    "きぶんがわるいです"
+   ]
+  },
+  {
+   "id": "sy_04",
+   "jp": "はきけがします",
+   "kana": "はきけがします",
+   "romaji": "hakike ga shimasu",
+   "meaning": {
+    "en": "I feel nauseous",
+    "bn": "বমি বমি লাগছে",
+    "ja": "吐き気がします"
+   },
+   "note": {
+    "en": "Report immediately",
+    "bn": "গরম/গন্ধের কাজে হয় — সাথে সাথে বলো।",
+    "ja": "吐き気"
+   },
+   "srs_words": [
+    "はきけがします"
+   ]
+  },
+  {
+   "id": "sy_05",
+   "jp": "せきがでます",
+   "kana": "せきがでます",
+   "romaji": "seki ga demasu",
+   "meaning": {
+    "en": "I have a cough",
+    "bn": "কাশি হচ্ছে",
+    "ja": "咳が出ます"
+   },
+   "note": {
+    "en": "Cough = wear a mask",
+    "bn": "জাপানে কাশি হলে মাস্ক পরাটা ভদ্রতা।",
+    "ja": "咳"
+   },
+   "srs_words": [
+    "せきがでます"
+   ]
+  },
+  {
+   "id": "sy_06",
+   "jp": "はなみずがでます",
+   "kana": "はなみずがでます",
+   "romaji": "hanamizu ga demasu",
+   "meaning": {
+    "en": "I have a runny nose",
+    "bn": "নাক দিয়ে পানি পড়ছে",
+    "ja": "鼻水が出ます"
+   },
+   "note": {
+    "en": "Nose-water — logical!",
+    "bn": "はな(নাক)+みず(পানি) — শব্দটাই ছবি!",
+    "ja": "鼻水"
+   },
+   "srs_words": [
+    "はなみずがでます"
+   ]
+  },
+  {
+   "id": "sy_07",
+   "jp": "ちがでています",
+   "kana": "ちがでています",
+   "romaji": "chi ga dete imasu",
+   "meaning": {
+    "en": "It's bleeding",
+    "bn": "রক্ত পড়ছে",
+    "ja": "血が出ています"
+   },
+   "note": {
+    "en": "Show + say + first-aid kit",
+    "bn": "কেটে গেলে — দেখাও + এই লাইন। প্রাথমিক চিকিৎসা বাক্সে যাও।",
+    "ja": "出血"
+   },
+   "srs_words": [
+    "ちがでています"
+   ]
+  },
+  {
+   "id": "sy_08",
+   "jp": "やけどをしました",
+   "kana": "やけどをしました",
+   "romaji": "yakedo o shimashita",
+   "meaning": {
+    "en": "I got burned",
+    "bn": "পুড়ে গেছি",
+    "ja": "やけどをしました"
+   },
+   "note": {
+    "en": "Cool water 10min, then report",
+    "bn": "রান্নাঘর/ওয়েল্ডিং-এর বিপদ — ঠান্ডা পানি ১০ মিনিট, তারপর রিপোর্ট।",
+    "ja": "火傷"
+   },
+   "srs_words": [
+    "やけどをしました"
+   ]
+  }
+ ]
+}

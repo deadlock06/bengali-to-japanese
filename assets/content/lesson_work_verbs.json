@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_work_verbs",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_workplace"
+ ],
+ "can_do": {
+  "en": "Say what you do at work",
+  "bn": "কাজের ক্রিয়া বলা",
+  "ja": "仕事の動詞"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic work verbs (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_workplace"
+ ],
+ "items": [
+  {
+   "id": "wv_01",
+   "jp": "つくります",
+   "kana": "つくります",
+   "romaji": "tsukurimasu",
+   "meaning": {
+    "en": "I make",
+    "bn": "বানাই",
+    "ja": "作ります"
+   },
+   "note": {
+    "en": "THE factory verb",
+    "bn": "কারখানার মূল verb — なにをつくりますか?",
+    "ja": "作る"
+   },
+   "srs_words": [
+    "つくります"
+   ]
+  },
+  {
+   "id": "wv_02",
+   "jp": "はこびます",
+   "kana": "はこびます",
+   "romaji": "hakobimasu",
+   "meaning": {
+    "en": "I carry",
+    "bn": "বহন করি",
+    "ja": "運びます"
+   },
+   "note": {
+    "en": "Carry loads safely",
+    "bn": "にもつをはこびます — মাল বহন। পিঠ সোজা রেখো!",
+    "ja": "運ぶ"
+   },
+   "srs_words": [
+    "はこびます"
+   ]
+  },
+  {
+   "id": "wv_03",
+   "jp": "あらいます",
+   "kana": "あらいます",
+   "romaji": "araimasu",
+   "meaning": {
+    "en": "I wash",
+    "bn": "ধুই",
+    "ja": "洗います"
+   },
+   "note": {
+    "en": "Food-factory rule #1",
+    "bn": "てをあらいます — খাদ্য-কারখানার নিয়ম #১।",
+    "ja": "洗う"
+   },
+   "srs_words": [
+    "あらいます"
+   ]
+  },
+  {
+   "id": "wv_04",
+   "jp": "きります",
+   "kana": "きります",
+   "romaji": "kirimasu",
+   "meaning": {
+    "en": "I cut",
+    "bn": "কাটি",
+    "ja": "切ります"
+   },
+   "note": {
+    "en": "Watch your fingers",
+    "bn": "やさいをきります — সাবধানে, আঙুল বাঁচিয়ে!",
+    "ja": "切る"
+   },
+   "srs_words": [
+    "きります"
+   ]
+  },
+  {
+   "id": "wv_05",
+   "jp": "いれます",
+   "kana": "いれます",
+   "romaji": "iremasu",
+   "meaning": {
+    "en": "I put in",
+    "bn": "ভেতরে রাখি",
+    "ja": "入れます"
+   },
+   "note": {
+    "en": "The packing verb",
+    "bn": "はこにいれます — বাক্সে ভরা (packing-এর verb)।",
+    "ja": "入れる"
+   },
+   "srs_words": [
+    "いれます"
+   ]
+  },
+  {
+   "id": "wv_06",
+   "jp": "だします",
+   "kana": "だします",
+   "romaji": "dashimasu",
+   "meaning": {
+    "en": "I take out / submit",
+    "bn": "বের করি / জমা দিই",
+    "ja": "出します"
+   },
+   "note": {
+    "en": "Trash AND reports",
+    "bn": "ごみをだします আর レポートをだします — দুটোই!",
+    "ja": "出す"
+   },
+   "srs_words": [
+    "だします"
+   ]
+  },
+  {
+   "id": "wv_07",
+   "jp": "おきます、ものを",
+   "kana": "おきます、ものを",
+   "romaji": "mono o okimasu",
+   "meaning": {
+    "en": "I place things",
+    "bn": "জিনিস রাখি",
+    "ja": "物を置きます"
+   },
+   "note": {
+    "en": "Different from wake-up okimasu!",
+    "bn": "ここにおきます — এখানে রাখি। (ঘুম-থেকে-ওঠা おきます-র সাথে গুলিয়ো না!)",
+    "ja": "置く"
+   },
+   "srs_words": [
+    "おきます、ものを"
+   ]
+  },
+  {
+   "id": "wv_08",
+   "jp": "かたづけます",
+   "kana": "かたづけます",
+   "romaji": "katazukemasu",
+   "meaning": {
+    "en": "I tidy up",
+    "bn": "গুছাই",
+    "ja": "片付けます"
+   },
+   "note": {
+    "en": "Tidying = competence here",
+    "bn": "কাজ শেষের রীতি — জাপানে গোছানো = দক্ষতা।",
+    "ja": "片付ける"
+   },
+   "srs_words": [
+    "かたづけます"
+   ]
+  }
+ ]
+}

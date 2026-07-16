@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_family",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_intro_qa"
+ ],
+ "can_do": {
+  "en": "Talk about your family",
+  "bn": "পরিবারের কথা বলা",
+  "ja": "家族について話す"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter family set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_intro_qa"
+ ],
+ "items": [
+  {
+   "id": "fa_01",
+   "jp": "かぞく",
+   "kana": "かぞく",
+   "romaji": "kazoku",
+   "meaning": {
+    "en": "Family",
+    "bn": "পরিবার",
+    "ja": "家族"
+   },
+   "note": {
+    "en": "Family",
+    "bn": "পরিচয়ের পরেই সবাই জিজ্ঞেস করে — ছবি দেখিয়ে বলো!",
+    "ja": "家族"
+   },
+   "srs_words": [
+    "かぞく"
+   ]
+  },
+  {
+   "id": "fa_02",
+   "jp": "ちち",
+   "kana": "ちち",
+   "romaji": "chichi",
+   "meaning": {
+    "en": "My father",
+    "bn": "বাবা (নিজের)",
+    "ja": "父"
+   },
+   "note": {
+    "en": "Own father chichi; others' otousan",
+    "bn": "নিজের বাবাকে ちち, অন্যের বাবাকে おとうさん — সম্মানের নিয়ম।",
+    "ja": "自分の父"
+   },
+   "srs_words": [
+    "ちち"
+   ]
+  },
+  {
+   "id": "fa_03",
+   "jp": "はは",
+   "kana": "はは",
+   "romaji": "haha",
+   "meaning": {
+    "en": "My mother",
+    "bn": "মা (নিজের)",
+    "ja": "母"
+   },
+   "note": {
+    "en": "Own mother haha",
+    "bn": "নিজের মাকে はは, অন্যের মাকে おかあさん।",
+    "ja": "自分の母"
+   },
+   "srs_words": [
+    "はは"
+   ]
+  },
+  {
+   "id": "fa_04",
+   "jp": "あに",
+   "kana": "あに",
+   "romaji": "ani",
+   "meaning": {
+    "en": "My older brother",
+    "bn": "বড় ভাই (নিজের)",
+    "ja": "兄"
+   },
+   "note": {
+    "en": "Older brother",
+    "bn": "জাপানিতে বড়/ছোট ভাইবোন আলাদা শব্দ — বাংলার মতোই!",
+    "ja": "自分の兄"
+   },
+   "srs_words": [
+    "あに"
+   ]
+  },
+  {
+   "id": "fa_05",
+   "jp": "あね",
+   "kana": "あね",
+   "romaji": "ane",
+   "meaning": {
+    "en": "My older sister",
+    "bn": "বড় বোন (নিজের)",
+    "ja": "姉"
+   },
+   "note": {
+    "en": "Older sister",
+    "bn": "অন্যের বড় বোন = おねえさん।",
+    "ja": "自分の姉"
+   },
+   "srs_words": [
+    "あね"
+   ]
+  },
+  {
+   "id": "fa_06",
+   "jp": "おとうと",
+   "kana": "おとうと",
+   "romaji": "otouto",
+   "meaning": {
+    "en": "Younger brother",
+    "bn": "ছোট ভাই",
+    "ja": "弟"
+   },
+   "note": {
+    "en": "Younger brother",
+    "bn": "নিজের-অন্যের একই শব্দ, শুধু さん যোগ হয়।",
+    "ja": "弟"
+   },
+   "srs_words": [
+    "おとうと"
+   ]
+  },
+  {
+   "id": "fa_07",
+   "jp": "いもうと",
+   "kana": "いもうと",
+   "romaji": "imouto",
+   "meaning": {
+    "en": "Younger sister",
+    "bn": "ছোট বোন",
+    "ja": "妹"
+   },
+   "note": {
+    "en": "Younger sister",
+    "bn": "দেশের পরিবারের গল্পে রোজ লাগবে।",
+    "ja": "妹"
+   },
+   "srs_words": [
+    "いもうと"
+   ]
+  },
+  {
+   "id": "fa_08",
+   "jp": "こども",
+   "kana": "こども",
+   "romaji": "kodomo",
+   "meaning": {
+    "en": "Child(ren)",
+    "bn": "সন্তান / বাচ্চা",
+    "ja": "子供"
+   },
+   "note": {
+    "en": "Child / children",
+    "bn": "こどもがふたりいます — আমার দুই সন্তান।",
+    "ja": "子供"
+   },
+   "srs_words": [
+    "こども"
+   ]
+  }
+ ]
+}

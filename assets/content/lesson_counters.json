@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_counters",
+ "pack_id": "basics",
+ "depends_on": [
+  "lesson_numbers"
+ ],
+ "can_do": {
+  "en": "Count things with the generic counter",
+  "bn": "জিনিস গোনা (ひとつ, ふたつ…)",
+  "ja": "ものを数える"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter counters (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_numbers"
+ ],
+ "items": [
+  {
+   "id": "ct_01",
+   "jp": "ひとつ",
+   "kana": "ひとつ",
+   "romaji": "hitotsu",
+   "meaning": {
+    "en": "One (thing)",
+    "bn": "একটা",
+    "ja": "一つ"
+   },
+   "note": {
+    "en": "Generic counter for 1",
+    "bn": "জিনিস গোনার universal রূপ — これをひとつください।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "ひとつ"
+   ]
+  },
+  {
+   "id": "ct_02",
+   "jp": "ふたつ",
+   "kana": "ふたつ",
+   "romaji": "futatsu",
+   "meaning": {
+    "en": "Two (things)",
+    "bn": "দুইটা",
+    "ja": "二つ"
+   },
+   "note": {
+    "en": "Generic counter for 2",
+    "bn": "দোকান-রেস্টুরেন্টে অর্ডারে সবচেয়ে বেশি লাগে।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "ふたつ"
+   ]
+  },
+  {
+   "id": "ct_03",
+   "jp": "みっつ",
+   "kana": "みっつ",
+   "romaji": "mittsu",
+   "meaning": {
+    "en": "Three (things)",
+    "bn": "তিনটা",
+    "ja": "三つ"
+   },
+   "note": {
+    "en": "Note the small tsu",
+    "bn": "っ (ছোট tsu) খেয়াল করো — mit-tsu।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "みっつ"
+   ]
+  },
+  {
+   "id": "ct_04",
+   "jp": "よっつ",
+   "kana": "よっつ",
+   "romaji": "yottsu",
+   "meaning": {
+    "en": "Four (things)",
+    "bn": "চারটা",
+    "ja": "四つ"
+   },
+   "note": {
+    "en": "From yon",
+    "bn": "よん থেকে এসেছে — যন্ত্রণাহীন ৪।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "よっつ"
+   ]
+  },
+  {
+   "id": "ct_05",
+   "jp": "いつつ",
+   "kana": "いつつ",
+   "romaji": "itsutsu",
+   "meaning": {
+    "en": "Five (things)",
+    "bn": "পাঁচটা",
+    "ja": "五つ"
+   },
+   "note": {
+    "en": "Not go — itsutsu",
+    "bn": "ご নয় — গোনায় いつつ।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "いつつ"
+   ]
+  },
+  {
+   "id": "ct_06",
+   "jp": "むっつ",
+   "kana": "むっつ",
+   "romaji": "muttsu",
+   "meaning": {
+    "en": "Six (things)",
+    "bn": "ছয়টা",
+    "ja": "六つ"
+   },
+   "note": {
+    "en": "Sounds different from roku",
+    "bn": "ろく → むっつ — আলাদা শোনায়, অভ্যাস করো।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "むっつ"
+   ]
+  },
+  {
+   "id": "ct_07",
+   "jp": "ななつ",
+   "kana": "ななつ",
+   "romaji": "nanatsu",
+   "meaning": {
+    "en": "Seven (things)",
+    "bn": "সাতটা",
+    "ja": "七つ"
+   },
+   "note": {
+    "en": "Matches nana",
+    "bn": "なな-র সাথে মিল — সহজ!",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "ななつ"
+   ]
+  },
+  {
+   "id": "ct_08",
+   "jp": "やっつ",
+   "kana": "やっつ",
+   "romaji": "yattsu",
+   "meaning": {
+    "en": "Eight (things)",
+    "bn": "আটটা",
+    "ja": "八つ"
+   },
+   "note": {
+    "en": "9=kokonotsu, 10=too",
+    "bn": "১০ পর্যন্ত এই系: ここのつ(৯) とお(১০)।",
+    "ja": "ものの数え方"
+   },
+   "srs_words": [
+    "やっつ"
+   ]
+  }
+ ]
+}

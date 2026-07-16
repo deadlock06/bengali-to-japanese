@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_places",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_directions"
+ ],
+ "can_do": {
+  "en": "Name the places in town",
+  "bn": "শহরের জায়গা চেনা",
+  "ja": "町の場所"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter places set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_directions"
+ ],
+ "items": [
+  {
+   "id": "pl_01",
+   "jp": "ぎんこう",
+   "kana": "ぎんこう",
+   "romaji": "ginkou",
+   "meaning": {
+    "en": "Bank",
+    "bn": "ব্যাংক",
+    "ja": "銀行"
+   },
+   "note": {
+    "en": "You'll open an account here",
+    "bn": "বেতনের account খুলতে প্রথম মাসেই যেতে হবে।",
+    "ja": "銀行"
+   },
+   "srs_words": [
+    "ぎんこう"
+   ]
+  },
+  {
+   "id": "pl_02",
+   "jp": "ゆうびんきょく",
+   "kana": "ゆうびんきょく",
+   "romaji": "yuubinkyoku",
+   "meaning": {
+    "en": "Post office",
+    "bn": "পোস্ট অফিস",
+    "ja": "郵便局"
+   },
+   "note": {
+    "en": "Sending things home",
+    "bn": "দেশে টাকা/জিনিস পাঠানো, ঠিকানা বদল — সব এখানে।",
+    "ja": "郵便局"
+   },
+   "srs_words": [
+    "ゆうびんきょく"
+   ]
+  },
+  {
+   "id": "pl_03",
+   "jp": "スーパー",
+   "kana": "スーパー",
+   "romaji": "suupaa",
+   "meaning": {
+    "en": "Supermarket",
+    "bn": "সুপারমার্কেট",
+    "ja": "スーパー"
+   },
+   "note": {
+    "en": "Evening discounts!",
+    "bn": "কাতাকানা — রাত ৮টার পরে খাবারে discount sticker!",
+    "ja": "スーパー"
+   },
+   "srs_words": [
+    "スーパー"
+   ]
+  },
+  {
+   "id": "pl_04",
+   "jp": "やっきょく",
+   "kana": "やっきょく",
+   "romaji": "yakkyoku",
+   "meaning": {
+    "en": "Pharmacy",
+    "bn": "ফার্মেসি",
+    "ja": "薬局"
+   },
+   "note": {
+    "en": "Take your prescription here",
+    "bn": "ডাক্তারের কাগজ নিয়ে এখানে ওষুধ নেবে।",
+    "ja": "薬局"
+   },
+   "srs_words": [
+    "やっきょく"
+   ]
+  },
+  {
+   "id": "pl_05",
+   "jp": "こうばん",
+   "kana": "こうばん",
+   "romaji": "kouban",
+   "meaning": {
+    "en": "Police box",
+    "bn": "পুলিশ বক্স",
+    "ja": "交番"
+   },
+   "note": {
+    "en": "Lost? Go here",
+    "bn": "হারিয়ে গেলে/কিছু হারালে — জাপানের রাস্তার বন্ধু।",
+    "ja": "交番"
+   },
+   "srs_words": [
+    "こうばん"
+   ]
+  },
+  {
+   "id": "pl_06",
+   "jp": "くうこう",
+   "kana": "くうこう",
+   "romaji": "kuukou",
+   "meaning": {
+    "en": "Airport",
+    "bn": "বিমানবন্দর",
+    "ja": "空港"
+   },
+   "note": {
+    "en": "Your first day starts here",
+    "bn": "প্রথম দিন এখান থেকেই শুরু — নারিতা/হানেদা।",
+    "ja": "空港"
+   },
+   "srs_words": [
+    "くうこう"
+   ]
+  },
+  {
+   "id": "pl_07",
+   "jp": "ホテル",
+   "kana": "ホテル",
+   "romaji": "hoteru",
+   "meaning": {
+    "en": "Hotel",
+    "bn": "হোটেল",
+    "ja": "ホテル"
+   },
+   "note": {
+    "en": "Katakana loanword",
+    "bn": "কাতাকানা loanword — উচ্চারণ ho-te-ru।",
+    "ja": "ホテル"
+   },
+   "srs_words": [
+    "ホテル"
+   ]
+  },
+  {
+   "id": "pl_08",
+   "jp": "びょういん",
+   "kana": "びょういん",
+   "romaji": "byouin",
+   "meaning": {
+    "en": "Hospital",
+    "bn": "হাসপাতাল",
+    "ja": "病院"
+   },
+   "note": {
+    "en": "Don't confuse with biyouin!",
+    "bn": "びよういん (beauty salon) নয়! লম্বা よう খেয়াল করো।",
+    "ja": "病院"
+   },
+   "srs_words": [
+    "びょういん"
+   ]
+  }
+ ]
+}

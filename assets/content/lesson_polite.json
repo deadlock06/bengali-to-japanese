@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_polite",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_greetings"
+ ],
+ "can_do": {
+  "en": "Use everyday polite expressions",
+  "bn": "প্রতিদিনের ভদ্রতা-বাক্য বলা",
+  "ja": "毎日のあいさつ"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter greetings set 2",
+ "verified": true,
+ "prerequisites": [
+  "lesson_greetings"
+ ],
+ "items": [
+  {
+   "id": "po_01",
+   "jp": "さようなら",
+   "kana": "さようなら",
+   "romaji": "sayounara",
+   "meaning": {
+    "en": "Goodbye",
+    "bn": "বিদায়",
+    "ja": "さようなら"
+   },
+   "note": {
+    "en": "Formal goodbye",
+    "bn": "লম্বা বিদায়ে — রোজকার কাজ শেষে じゃ、また-ও চলে।",
+    "ja": "別れのあいさつ"
+   },
+   "srs_words": [
+    "さようなら"
+   ]
+  },
+  {
+   "id": "po_02",
+   "jp": "おやすみなさい",
+   "kana": "おやすみなさい",
+   "romaji": "oyasuminasai",
+   "meaning": {
+    "en": "Good night",
+    "bn": "শুভরাত্রি",
+    "ja": "おやすみなさい"
+   },
+   "note": {
+    "en": "Before sleeping",
+    "bn": "ঘুমের আগে — dorm-এ রোজ বলবে।",
+    "ja": "寝る前のあいさつ"
+   },
+   "srs_words": [
+    "おやすみなさい"
+   ]
+  },
+  {
+   "id": "po_03",
+   "jp": "どうぞ",
+   "kana": "どうぞ",
+   "romaji": "douzo",
+   "meaning": {
+    "en": "Here you go / please go ahead",
+    "bn": "এই নিন / আগে যান",
+    "ja": "どうぞ"
+   },
+   "note": {
+    "en": "Offering something / yielding",
+    "bn": "কিছু এগিয়ে দিলে বা রাস্তা ছেড়ে দিলে — জাদুর শব্দ।",
+    "ja": "何かを渡すとき"
+   },
+   "srs_words": [
+    "どうぞ"
+   ]
+  },
+  {
+   "id": "po_04",
+   "jp": "どうも",
+   "kana": "どうも",
+   "romaji": "doumo",
+   "meaning": {
+    "en": "Thanks (casual)",
+    "bn": "ধন্যবাদ (হালকা)",
+    "ja": "どうも"
+   },
+   "note": {
+    "en": "Light thanks",
+    "bn": "ছোট্ট কৃতজ্ঞতা — দরজা ধরে রাখলে যেমন।",
+    "ja": "軽いお礼"
+   },
+   "srs_words": [
+    "どうも"
+   ]
+  },
+  {
+   "id": "po_05",
+   "jp": "またあした",
+   "kana": "またあした",
+   "romaji": "mata ashita",
+   "meaning": {
+    "en": "See you tomorrow",
+    "bn": "কাল দেখা হবে",
+    "ja": "また明日"
+   },
+   "note": {
+    "en": "Daily goodbye to coworkers",
+    "bn": "সহকর্মীদের রোজকার বিদায় — উষ্ণ ও সহজ।",
+    "ja": "別れのあいさつ"
+   },
+   "srs_words": [
+    "またあした"
+   ]
+  },
+  {
+   "id": "po_06",
+   "jp": "いってらっしゃい",
+   "kana": "いってらっしゃい",
+   "romaji": "itterasshai",
+   "meaning": {
+    "en": "Take care (reply to leaving)",
+    "bn": "সাবধানে যেও (বিদায় জবাব)",
+    "ja": "いってらっしゃい"
+   },
+   "note": {
+    "en": "Reply to ittekimasu",
+    "bn": "কেউ いってきます বললে এটাই জবাব।",
+    "ja": "見送りのことば"
+   },
+   "srs_words": [
+    "いってらっしゃい"
+   ]
+  },
+  {
+   "id": "po_07",
+   "jp": "ただいま",
+   "kana": "ただいま",
+   "romaji": "tadaima",
+   "meaning": {
+    "en": "I'm home",
+    "bn": "ফিরে এলাম",
+    "ja": "ただいま"
+   },
+   "note": {
+    "en": "Said returning home",
+    "bn": "বাসা/ডর্মে ফিরে বলো — ঘরোয়া উষ্ণতা।",
+    "ja": "帰宅のあいさつ"
+   },
+   "srs_words": [
+    "ただいま"
+   ]
+  },
+  {
+   "id": "po_08",
+   "jp": "おかえりなさい",
+   "kana": "おかえりなさい",
+   "romaji": "okaerinasai",
+   "meaning": {
+    "en": "Welcome back",
+    "bn": "স্বাগত (ফেরার জবাব)",
+    "ja": "おかえりなさい"
+   },
+   "note": {
+    "en": "Reply to tadaima",
+    "bn": "কেউ ただいま বললে এটাই জবাব।",
+    "ja": "帰宅を迎えることば"
+   },
+   "srs_words": [
+    "おかえりなさい"
+   ]
+  }
+ ]
+}

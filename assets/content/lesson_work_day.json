@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_work_day",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_workplace"
+ ],
+ "can_do": {
+  "en": "Name everyday work things",
+  "bn": "কাজের জিনিস ও কথা চেনা",
+  "ja": "仕事のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic workplace set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_workplace"
+ ],
+ "items": [
+  {
+   "id": "wd_01",
+   "jp": "しごと",
+   "kana": "しごと",
+   "romaji": "shigoto",
+   "meaning": {
+    "en": "Work / job",
+    "bn": "কাজ / চাকরি",
+    "ja": "仕事"
+   },
+   "note": {
+    "en": "THE small-talk question",
+    "bn": "おしごとは？ — আপনার কাজ কী? সবচেয়ে common প্রশ্ন।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "しごと"
+   ]
+  },
+  {
+   "id": "wd_02",
+   "jp": "こうじょう",
+   "kana": "こうじょう",
+   "romaji": "koujou",
+   "meaning": {
+    "en": "Factory",
+    "bn": "কারখানা",
+    "ja": "工場"
+   },
+   "note": {
+    "en": "Biggest SSW workplace",
+    "bn": "SSW/TITP-দের সবচেয়ে বড় কর্মস্থল।",
+    "ja": "工場"
+   },
+   "srs_words": [
+    "こうじょう"
+   ]
+  },
+  {
+   "id": "wd_03",
+   "jp": "げんば",
+   "kana": "げんば",
+   "romaji": "genba",
+   "meaning": {
+    "en": "Work site",
+    "bn": "কাজের সাইট",
+    "ja": "現場"
+   },
+   "note": {
+    "en": "The actual site",
+    "bn": "construction/factory floor — げんばに いきます।",
+    "ja": "現場"
+   },
+   "srs_words": [
+    "げんば"
+   ]
+  },
+  {
+   "id": "wd_04",
+   "jp": "どうぐ",
+   "kana": "どうぐ",
+   "romaji": "dougu",
+   "meaning": {
+    "en": "Tools",
+    "bn": "যন্ত্রপাতি",
+    "ja": "道具"
+   },
+   "note": {
+    "en": "Put tools back!",
+    "bn": "কাজ শেষে どうぐ গুছিয়ে রাখা = ভালো কর্মীর লক্ষণ।",
+    "ja": "道具"
+   },
+   "srs_words": [
+    "どうぐ"
+   ]
+  },
+  {
+   "id": "wd_05",
+   "jp": "きゅうりょう",
+   "kana": "きゅうりょう",
+   "romaji": "kyuuryou",
+   "meaning": {
+    "en": "Salary",
+    "bn": "বেতন",
+    "ja": "給料"
+   },
+   "note": {
+    "en": "Payday = kyuuryoubi",
+    "bn": "মাসের সবচেয়ে প্রিয় শব্দ 😄 — きゅうりょうび = বেতনের দিন।",
+    "ja": "給料"
+   },
+   "srs_words": [
+    "きゅうりょう"
+   ]
+  },
+  {
+   "id": "wd_06",
+   "jp": "ざんぎょう",
+   "kana": "ざんぎょう",
+   "romaji": "zangyou",
+   "meaning": {
+    "en": "Overtime",
+    "bn": "ওভারটাইম",
+    "ja": "残業"
+   },
+   "note": {
+    "en": "Overtime pay is your right",
+    "bn": "ওভারটাইমের আলাদা টাকা আছে — অধিকার, জেনে রাখো।",
+    "ja": "残業"
+   },
+   "srs_words": [
+    "ざんぎょう"
+   ]
+  },
+  {
+   "id": "wd_07",
+   "jp": "シフト",
+   "kana": "シフト",
+   "romaji": "shifuto",
+   "meaning": {
+    "en": "Shift",
+    "bn": "শিফট",
+    "ja": "シフト"
+   },
+   "note": {
+    "en": "Shift schedule = shift-hyou",
+    "bn": "কাতাকানা — シフトひょう মানে শিফটের তালিকা।",
+    "ja": "シフト"
+   },
+   "srs_words": [
+    "シフト"
+   ]
+  },
+  {
+   "id": "wd_08",
+   "jp": "あんぜん",
+   "kana": "あんぜん",
+   "romaji": "anzen",
+   "meaning": {
+    "en": "Safety",
+    "bn": "নিরাপত্তা",
+    "ja": "安全"
+   },
+   "note": {
+    "en": "Anzen daiichi = safety first",
+    "bn": "あんぜんだいいち — Safety First! সব কারখানার দেয়ালে লেখা।",
+    "ja": "安全"
+   },
+   "srs_words": [
+    "あんぜん"
+   ]
+  }
+ ]
+}

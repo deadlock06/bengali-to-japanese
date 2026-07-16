@@ -62,7 +62,14 @@ class AiTutorService {
       {String contextJp = '', String curriculumHint = '', String level = ''}) {
     final ctx = StringBuffer();
     if (curriculumHint.isNotEmpty) ctx.write('$curriculumHint ');
-    if (contextJp.isNotEmpty) ctx.write('শিক্ষার্থী এখন 「$contextJp」 নিয়ে কথা বলছে। ');
+    // Context is BACKGROUND only — the learner's actual question wins. (Bug:
+    // "hiragana ki?" got answered about the current item あ instead.)
+    if (contextJp.isNotEmpty) {
+      ctx.write('[প্রসঙ্গ, শুধু দরকার হলে: ক্লাসরুমে এখন 「$contextJp」 চলছে। '
+          'শিক্ষার্থীর প্রশ্ন অন্য/বড় বিষয়ে হলে প্রশ্নটারই উত্তর দাও — '
+          'জোর করে 「$contextJp」-তে টেনো না।] ');
+    }
+    ctx.write('শিক্ষার্থীর প্রশ্ন: ');
     final system = level.isEmpty ? _system : '$_system${_balanceLine(level)}';
     return _complete(system, '$ctx$userText', maxTokens: 300);
   }

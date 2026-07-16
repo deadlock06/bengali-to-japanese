@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_sequence",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Chain actions in order (〜て、〜てから)",
+  "bn": "কাজের ধারা বলা (〜て、〜てから)",
+  "ja": "動作の順番"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "tq_01",
+   "jp": "あさおきて、シャワーをあびます",
+   "kana": "あさおきて、シャワーをあびます",
+   "romaji": "asa okite, shawaa o abimasu",
+   "meaning": {
+    "en": "I wake up and shower",
+    "bn": "সকালে উঠে শাওয়ার নিই",
+    "ja": "朝起きて、シャワーを浴びます"
+   },
+   "note": {
+    "en": "te chains like Bengali '-e'",
+    "bn": "て-form = 'করে' — বাংলার মতোই বাক্য জোড়ে!",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "あさおきて、シャワーをあびます"
+   ]
+  },
+  {
+   "id": "tq_02",
+   "jp": "てをあらってから、たべます",
+   "kana": "てをあらってから、たべます",
+   "romaji": "te o aratte kara, tabemasu",
+   "meaning": {
+    "en": "I wash hands, then eat",
+    "bn": "হাত ধুয়ে তারপর খাই",
+    "ja": "手を洗ってから、食べます"
+   },
+   "note": {
+    "en": "-te kara = after doing",
+    "bn": "てから = 'করার পরে' — ধারা আরও স্পষ্ট।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "てをあらってから、たべます"
+   ]
+  },
+  {
+   "id": "tq_03",
+   "jp": "しごとがおわってから、かいものにいきます",
+   "kana": "しごとがおわってから、かいものにいきます",
+   "romaji": "shigoto ga owatte kara, kaimono ni ikimasu",
+   "meaning": {
+    "en": "After work I go shopping",
+    "bn": "কাজ শেষ করে কেনাকাটায় যাই",
+    "ja": "仕事が終わってから、買い物に行きます"
+   },
+   "note": {
+    "en": "Daily-routine frame",
+    "bn": "দিনের রুটিন বলার কাঠামো।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "しごとがおわってから、かいものにいきます"
+   ]
+  },
+  {
+   "id": "tq_04",
+   "jp": "うちにかえって、ばんごはんをつくります",
+   "kana": "うちにかえって、ばんごはんをつくります",
+   "romaji": "uchi ni kaette, bangohan o tsukurimasu",
+   "meaning": {
+    "en": "I go home and cook dinner",
+    "bn": "বাসায় ফিরে রাতের খাবার বানাই",
+    "ja": "うちに帰って、晩ご飯を作ります"
+   },
+   "note": {
+    "en": "ri→tte again",
+    "bn": "かえります→かえって — り→って আবার।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "うちにかえって、ばんごはんをつくります"
+   ]
+  },
+  {
+   "id": "tq_05",
+   "jp": "でんきをけして、ねます",
+   "kana": "でんきをけして、ねます",
+   "romaji": "denki o keshite, nemasu",
+   "meaning": {
+    "en": "I turn off the light and sleep",
+    "bn": "লাইট নিভিয়ে ঘুমাই",
+    "ja": "電気を消して、寝ます"
+   },
+   "note": {
+    "en": "Day's last chain",
+    "bn": "けします→けして — রাতের শেষ দুই কাজ এক বাক্যে।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "でんきをけして、ねます"
+   ]
+  },
+  {
+   "id": "tq_06",
+   "jp": "きがえてから、げんばにいきます",
+   "kana": "きがえてから、げんばにいきます",
+   "romaji": "kigaete kara, genba ni ikimasu",
+   "meaning": {
+    "en": "I change clothes, then go to the site",
+    "bn": "পোশাক বদলে সাইটে যাই",
+    "ja": "着替えてから、現場に行きます"
+   },
+   "note": {
+    "en": "kigaeru = change clothes",
+    "bn": "きがえる = পোশাক বদলানো — কর্মীর সকাল।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "きがえてから、げんばにいきます"
+   ]
+  },
+  {
+   "id": "tq_07",
+   "jp": "メールをみてから、へんじをします",
+   "kana": "メールをみてから、へんじをします",
+   "romaji": "meeru o mite kara, henji o shimasu",
+   "meaning": {
+    "en": "I read the mail, then reply",
+    "bn": "মেইল দেখে তারপর জবাব দিই",
+    "ja": "メールを見てから、返事をします"
+   },
+   "note": {
+    "en": "henji = reply",
+    "bn": "へんじ = জবাব — অফিস-জীবনের ধারা।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "メールをみてから、へんじをします"
+   ]
+  },
+  {
+   "id": "tq_08",
+   "jp": "よくきいてから、こたえてください",
+   "kana": "よくきいてから、こたえてください",
+   "romaji": "yoku kiite kara, kotaete kudasai",
+   "meaning": {
+    "en": "Listen well, then answer",
+    "bn": "ভালো করে শুনে তারপর উত্তর দাও",
+    "ja": "よく聞いてから、答えてください"
+   },
+   "note": {
+    "en": "Sensei's own rule 😄",
+    "bn": "সেনসেইয়ের নিজের নিয়ম 😄 — পরীক্ষাতেও এটাই।",
+    "ja": "順序"
+   },
+   "srs_words": [
+    "よくきいてから、こたえてください"
+   ]
+  }
+ ]
+}

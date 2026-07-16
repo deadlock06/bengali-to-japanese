@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_now",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_daily_verbs"
+ ],
+ "can_do": {
+  "en": "Say what is happening right now (〜ています)",
+  "bn": "এখন যা চলছে তা বলা (〜ています)",
+  "ja": "今していること"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_daily_verbs"
+ ],
+ "items": [
+  {
+   "id": "tn_01",
+   "jp": "いまなにをしていますか",
+   "kana": "いまなにをしていますか",
+   "romaji": "ima nani o shite imasu ka",
+   "meaning": {
+    "en": "What are you doing now?",
+    "bn": "এখন কী করছ?",
+    "ja": "今何をしていますか"
+   },
+   "note": {
+    "en": "-te imasu = present continuous",
+    "bn": "〜ています = এখন চলছে — বাংলার 'করছি'-র হুবহু জাপানি রূপ।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "いまなにをしていますか"
+   ]
+  },
+  {
+   "id": "tn_02",
+   "jp": "ごはんをたべています",
+   "kana": "ごはんをたべています",
+   "romaji": "gohan o tabete imasu",
+   "meaning": {
+    "en": "I am eating",
+    "bn": "ভাত খাচ্ছি",
+    "ja": "ご飯を食べています"
+   },
+   "note": {
+    "en": "Ru-verb te: drop masu, add te",
+    "bn": "たべます→たべて+います — る-verb এর て খুব সহজ: ます কেটে て।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "ごはんをたべています"
+   ]
+  },
+  {
+   "id": "tn_03",
+   "jp": "ともだちとはなしています",
+   "kana": "ともだちとはなしています",
+   "romaji": "tomodachi to hanashite imasu",
+   "meaning": {
+    "en": "I'm talking with a friend",
+    "bn": "বন্ধুর সাথে কথা বলছি",
+    "ja": "友達と話しています"
+   },
+   "note": {
+    "en": "shi → shite",
+    "bn": "はなします→はなして — し-ending র て রূপ して।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "ともだちとはなしています"
+   ]
+  },
+  {
+   "id": "tn_04",
+   "jp": "あめがふっています",
+   "kana": "あめがふっています",
+   "romaji": "ame ga futte imasu",
+   "meaning": {
+    "en": "It is raining",
+    "bn": "বৃষ্টি পড়ছে",
+    "ja": "雨が降っています"
+   },
+   "note": {
+    "en": "ri → tte",
+    "bn": "ふります→ふって — り→って (ছোট্ট っ আসে)।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "あめがふっています"
+   ]
+  },
+  {
+   "id": "tn_05",
+   "jp": "しごとをしています",
+   "kana": "しごとをしています",
+   "romaji": "shigoto o shite imasu",
+   "meaning": {
+    "en": "I am working",
+    "bn": "কাজ করছি",
+    "ja": "仕事をしています"
+   },
+   "note": {
+    "en": "suru → shite",
+    "bn": "します→して — জাদুর verb-এর て রূপ।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "しごとをしています"
+   ]
+  },
+  {
+   "id": "tn_06",
+   "jp": "テレビをみています",
+   "kana": "テレビをみています",
+   "romaji": "terebi o mite imasu",
+   "meaning": {
+    "en": "I'm watching TV",
+    "bn": "টিভি দেখছি",
+    "ja": "テレビを見ています"
+   },
+   "note": {
+    "en": "miru → mite",
+    "bn": "みます→みて — এক অক্ষরের সহজ পরিবর্তন।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "テレビをみています"
+   ]
+  },
+  {
+   "id": "tn_07",
+   "jp": "おんがくをきいています",
+   "kana": "おんがくをきいています",
+   "romaji": "ongaku o kiite imasu",
+   "meaning": {
+    "en": "I'm listening to music",
+    "bn": "গান শুনছি",
+    "ja": "音楽を聞いています"
+   },
+   "note": {
+    "en": "ku → ite",
+    "bn": "ききます→きいて — き→いて (く-ending নিয়ম)।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "おんがくをきいています"
+   ]
+  },
+  {
+   "id": "tn_08",
+   "jp": "にほんごをならっています",
+   "kana": "にほんごをならっています",
+   "romaji": "nihongo o naratte imasu",
+   "meaning": {
+    "en": "I'm learning Japanese",
+    "bn": "জাপানি শিখছি",
+    "ja": "日本語を習っています"
+   },
+   "note": {
+    "en": "Great self-intro line",
+    "bn": "ならいます→ならって — い→って। এই এক বাক্যেই self-intro উজ্জ্বল।",
+    "ja": "進行形"
+   },
+   "srs_words": [
+    "にほんごをならっています"
+   ]
+  }
+ ]
+}

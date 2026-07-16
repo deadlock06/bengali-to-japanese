@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_state",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Describe ongoing states (〜ています)",
+  "bn": "চলমান অবস্থা বোঝানো (〜ています)",
+  "ja": "状態の〜ています"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "ts_01",
+   "jp": "とうきょうにすんでいます",
+   "kana": "とうきょうにすんでいます",
+   "romaji": "toukyou ni sunde imasu",
+   "meaning": {
+    "en": "I live in Tokyo",
+    "bn": "টোকিওতে থাকি",
+    "ja": "東京に住んでいます"
+   },
+   "note": {
+    "en": "State, not action",
+    "bn": "'এখন করছি' না — 'অবস্থায় আছি'। すんでいます = বাস করি (সবসময়)।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "とうきょうにすんでいます"
+   ]
+  },
+  {
+   "id": "ts_02",
+   "jp": "けっこんしています",
+   "kana": "けっこんしています",
+   "romaji": "kekkon shite imasu",
+   "meaning": {
+    "en": "I am married",
+    "bn": "আমি বিবাহিত",
+    "ja": "結婚しています"
+   },
+   "note": {
+    "en": "One-time event, lasting state",
+    "bn": "একবার ঘটে টিকে থাকা অবস্থা — জাপানিতে ています।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "けっこんしています"
+   ]
+  },
+  {
+   "id": "ts_03",
+   "jp": "かいしゃではたらいています",
+   "kana": "かいしゃではたらいています",
+   "romaji": "kaisha de hataraite imasu",
+   "meaning": {
+    "en": "I work at a company",
+    "bn": "কোম্পানিতে কাজ করি",
+    "ja": "会社で働いています"
+   },
+   "note": {
+    "en": "The job-description form",
+    "bn": "পেশা বলার standard রূপ — ではたらいています।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "かいしゃではたらいています"
+   ]
+  },
+  {
+   "id": "ts_04",
+   "jp": "でんわばんごうをしっています",
+   "kana": "でんわばんごうをしっています",
+   "romaji": "denwa bangou o shitte imasu",
+   "meaning": {
+    "en": "I know the number",
+    "bn": "নম্বরটা জানি",
+    "ja": "電話番号を知っています"
+   },
+   "note": {
+    "en": "Negative is shirimasen!",
+    "bn": "জানি = しっています; জানি না = しりません (しっていません নয়!)।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "でんわばんごうをしっています"
+   ]
+  },
+  {
+   "id": "ts_05",
+   "jp": "かさをもっています",
+   "kana": "かさをもっています",
+   "romaji": "kasa o motte imasu",
+   "meaning": {
+    "en": "I have an umbrella",
+    "bn": "ছাতা আছে (সাথে)",
+    "ja": "傘を持っています"
+   },
+   "note": {
+    "en": "Having on you",
+    "bn": "সাথে-থাকা বোঝায় もっています — বর্ষার প্রশ্নোত্তরে রোজ।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "かさをもっています"
+   ]
+  },
+  {
+   "id": "ts_06",
+   "jp": "めがねをかけています",
+   "kana": "めがねをかけています",
+   "romaji": "megane o kakete imasu",
+   "meaning": {
+    "en": "I'm wearing glasses",
+    "bn": "চশমা পরে আছি",
+    "ja": "眼鏡をかけています"
+   },
+   "note": {
+    "en": "Describing people",
+    "bn": "পরে-থাকা অবস্থা — মানুষ চেনাতে দারুণ কাজে দেয়।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "めがねをかけています"
+   ]
+  },
+  {
+   "id": "ts_07",
+   "jp": "ユニフォームをきています",
+   "kana": "ユニフォームをきています",
+   "romaji": "yunifoomu o kite imasu",
+   "meaning": {
+    "en": "I'm wearing the uniform",
+    "bn": "ইউনিফর্ম পরা আছি",
+    "ja": "ユニフォームを着ています"
+   },
+   "note": {
+    "en": "kiru top-half, haku bottom",
+    "bn": "きます(পরা)→きて — উপরের পোশাকে きる, নিচে はく।",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "ユニフォームをきています"
+   ]
+  },
+  {
+   "id": "ts_08",
+   "jp": "まだおきています",
+   "kana": "まだおきています",
+   "romaji": "mada okite imasu",
+   "meaning": {
+    "en": "I'm still awake",
+    "bn": "এখনো জেগে আছি",
+    "ja": "まだ起きています"
+   },
+   "note": {
+    "en": "mada = still",
+    "bn": "まだ+ています = এখনো চলছে — রাতের ফোনালাপের লাইন 😄",
+    "ja": "状態"
+   },
+   "srs_words": [
+    "まだおきています"
+   ]
+  }
+ ]
+}

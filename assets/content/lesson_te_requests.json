@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_requests",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Make extra-polite requests (〜ていただけませんか)",
+  "bn": "অতি-ভদ্র অনুরোধ (〜ていただけませんか)",
+  "ja": "丁寧な依頼"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "tp_01",
+   "jp": "もういちどせつめいしていただけませんか",
+   "kana": "もういちどせつめいしていただけませんか",
+   "romaji": "mou ichido setsumei shite itadakemasen ka",
+   "meaning": {
+    "en": "Could you explain once more?",
+    "bn": "আরেকবার বুঝিয়ে বলবেন কি?",
+    "ja": "もう一度説明していただけませんか"
+   },
+   "note": {
+    "en": "One notch above kudasai",
+    "bn": "ください-র চেয়ে এক ধাপ উপরে — বসদের সাথে এই রূপ।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "もういちどせつめいしていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_02",
+   "jp": "ゆっくりはなしていただけませんか",
+   "kana": "ゆっくりはなしていただけませんか",
+   "romaji": "yukkuri hanashite itadakemasen ka",
+   "meaning": {
+    "en": "Could you speak slowly?",
+    "bn": "একটু ধীরে বলবেন কি?",
+    "ja": "ゆっくり話していただけませんか"
+   },
+   "note": {
+    "en": "The politest shield",
+    "bn": "শেখার ঢালের ভদ্রতম রূপ।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "ゆっくりはなしていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_03",
+   "jp": "みちをおしえていただけませんか",
+   "kana": "みちをおしえていただけませんか",
+   "romaji": "michi o oshiete itadakemasen ka",
+   "meaning": {
+    "en": "Could you tell me the way?",
+    "bn": "পথটা বলে দেবেন কি?",
+    "ja": "道を教えていただけませんか"
+   },
+   "note": {
+    "en": "Start with sumimasen",
+    "bn": "অচেনা মানুষকে — すみません দিয়ে শুরু করো।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "みちをおしえていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_04",
+   "jp": "ちょっとてつだっていただけませんか",
+   "kana": "ちょっとてつだっていただけませんか",
+   "romaji": "chotto tetsudatte itadakemasen ka",
+   "meaning": {
+    "en": "Could you help me a bit?",
+    "bn": "একটু সাহায্য করবেন কি?",
+    "ja": "ちょっと手伝っていただけませんか"
+   },
+   "note": {
+    "en": "chotto softens",
+    "bn": "ちょっと নরম করে — অনুরোধের শিল্প।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "ちょっとてつだっていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_05",
+   "jp": "あしたやすみをいただけませんか",
+   "kana": "あしたやすみをいただけませんか",
+   "romaji": "ashita yasumi o itadakemasen ka",
+   "meaning": {
+    "en": "May I have tomorrow off?",
+    "bn": "কাল ছুটি পেতে পারি কি?",
+    "ja": "明日休みをいただけませんか"
+   },
+   "note": {
+    "en": "The politest leave-ask",
+    "bn": "ছুটি চাওয়ার সবচেয়ে ভদ্র রূপ — はんちょう গলে যাবে।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "あしたやすみをいただけませんか"
+   ]
+  },
+  {
+   "id": "tp_06",
+   "jp": "まどをしめていただけませんか",
+   "kana": "まどをしめていただけませんか",
+   "romaji": "mado o shimete itadakemasen ka",
+   "meaning": {
+    "en": "Could you close the window?",
+    "bn": "জানালাটা বন্ধ করবেন কি?",
+    "ja": "窓を閉めていただけませんか"
+   },
+   "note": {
+    "en": "When troubling others",
+    "bn": "অন্যকে কষ্ট দেওয়া অনুরোধে এই স্তর।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "まどをしめていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_07",
+   "jp": "かくにんしていただけませんか",
+   "kana": "かくにんしていただけませんか",
+   "romaji": "kakunin shite itadakemasen ka",
+   "meaning": {
+    "en": "Could you check this?",
+    "bn": "একটু দেখে দেবেন কি?",
+    "ja": "確認していただけませんか"
+   },
+   "note": {
+    "en": "Submitting work politely",
+    "bn": "কাজ জমা দেওয়ার ভদ্র চাবি।",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "かくにんしていただけませんか"
+   ]
+  },
+  {
+   "id": "tp_08",
+   "jp": "しゃしんをとっていただけませんか",
+   "kana": "しゃしんをとっていただけませんか",
+   "romaji": "shashin o totte itadakemasen ka",
+   "meaning": {
+    "en": "Could you take a photo (for us)?",
+    "bn": "একটা ছবি তুলে দেবেন কি?",
+    "ja": "写真を撮っていただけませんか"
+   },
+   "note": {
+    "en": "Hanami essential 📸",
+    "bn": "はなみ-তে কাজে লাগবে — বদলে তুমিও তুলে দিও!",
+    "ja": "丁寧依頼"
+   },
+   "srs_words": [
+    "しゃしんをとっていただけませんか"
+   ]
+  }
+ ]
+}

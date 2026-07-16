@@ -48,7 +48,11 @@ const realIds = new Set(fs.readdirSync('assets/content')
   .filter(Boolean));
 realIds.add('kana_hiragana'); realIds.add('kana_katakana'); // kana screens' ids
 const withLessons = root.units.filter(u => u.lesson_id);
-t('13 units have lesson_id (mocks+N4 pending)', withLessons.length === 13);
+// Intent (not a hardcoded count — content grows): every NON-MOCK unit is either
+// wired to lessons or is a known not-yet-authored N4 unit.
+t('every non-mock unit wired or pending-N4',
+  root.units.every(u => u.lesson_id || u.id.endsWith('.M') || u.level === 'N4'));
+t('all wired L0/A1/A2 units present (>=13)', withLessons.length >= 13);
 t('all lesson_ids resolve to real lesson JSON ids (or kana ids)',
   withLessons.every(u => u.lesson_id.split(',').every(l => realIds.has(l.trim()))));
 

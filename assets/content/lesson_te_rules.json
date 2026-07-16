@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_rules",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Understand prohibitions (〜てはいけません)",
+  "bn": "নিষেধ বোঝা (〜てはいけません)",
+  "ja": "禁止の言い方"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "tr_01",
+   "jp": "ここでたばこをすってはいけません",
+   "kana": "ここでたばこをすってはいけません",
+   "romaji": "koko de tabako o sutte wa ikemasen",
+   "meaning": {
+    "en": "No smoking here",
+    "bn": "এখানে ধূমপান নিষেধ",
+    "ja": "ここでタバコを吸ってはいけません"
+   },
+   "note": {
+    "en": "The signboard grammar",
+    "bn": "てはいけません = কঠোর নিষেধ — সাইনবোর্ডের ভাষা।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "ここでたばこをすってはいけません"
+   ]
+  },
+  {
+   "id": "tr_02",
+   "jp": "ろうかではしってはいけません",
+   "kana": "ろうかではしってはいけません",
+   "romaji": "rouka de hashitte wa ikemasen",
+   "meaning": {
+    "en": "No running in the corridor",
+    "bn": "করিডোরে দৌড়ানো নিষেধ",
+    "ja": "廊下で走ってはいけません"
+   },
+   "note": {
+    "en": "Factory floors too",
+    "bn": "はしります→はしって — কারখানার মেঝেতেও একই নিয়ম।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "ろうかではしってはいけません"
+   ]
+  },
+  {
+   "id": "tr_03",
+   "jp": "きかいにさわってはいけません",
+   "kana": "きかいにさわってはいけません",
+   "romaji": "kikai ni sawatte wa ikemasen",
+   "meaning": {
+    "en": "Don't touch the machine",
+    "bn": "মেশিনে হাত দেওয়া নিষেধ",
+    "ja": "機械に触ってはいけません"
+   },
+   "note": {
+    "en": "This line saves lives",
+    "bn": "প্রশিক্ষণ ছাড়া মেশিন = বিপদ — এই লাইন জীবন বাঁচায়।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "きかいにさわってはいけません"
+   ]
+  },
+  {
+   "id": "tr_04",
+   "jp": "ごみをここにすててはいけません",
+   "kana": "ごみをここにすててはいけません",
+   "romaji": "gomi o koko ni sutete wa ikemasen",
+   "meaning": {
+    "en": "Don't throw trash here",
+    "bn": "এখানে ময়লা ফেলা নিষেধ",
+    "ja": "ゴミをここに捨ててはいけません"
+   },
+   "note": {
+    "en": "Remember gomi sorting!",
+    "bn": "すてます→すてて — ময়লার নিয়ম মনে আছে তো?",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "ごみをここにすててはいけません"
+   ]
+  },
+  {
+   "id": "tr_05",
+   "jp": "しごとちゅうにけいたいをつかってはいけません",
+   "kana": "しごとちゅうにけいたいをつかってはいけません",
+   "romaji": "shigotochuu ni keitai o tsukatte wa ikemasen",
+   "meaning": {
+    "en": "No phones during work",
+    "bn": "কাজের সময় ফোন নিষেধ",
+    "ja": "仕事中に携帯を使ってはいけません"
+   },
+   "note": {
+    "en": "-chuu = during",
+    "bn": "〜ちゅう = চলাকালীন; けいたい = মোবাইল।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "しごとちゅうにけいたいをつかってはいけません"
+   ]
+  },
+  {
+   "id": "tr_06",
+   "jp": "ヘルメットをわすれてはいけません",
+   "kana": "ヘルメットをわすれてはいけません",
+   "romaji": "herumetto o wasurete wa ikemasen",
+   "meaning": {
+    "en": "Don't forget your helmet",
+    "bn": "হেলমেট ভুললে চলবে না",
+    "ja": "ヘルメットを忘れてはいけません"
+   },
+   "note": {
+    "en": "Safety non-negotiables",
+    "bn": "নিরাপত্তার জিনিসে いけません — অভ্যাস বানাও।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "ヘルメットをわすれてはいけません"
+   ]
+  },
+  {
+   "id": "tr_07",
+   "jp": "おくれてはいけません",
+   "kana": "おくれてはいけません",
+   "romaji": "okurete wa ikemasen",
+   "meaning": {
+    "en": "You must not be late",
+    "bn": "দেরি করা চলবে না",
+    "ja": "遅れてはいけません"
+   },
+   "note": {
+    "en": "Punctuality, grammared",
+    "bn": "জাপানি সময়ানুবর্তিতার ব্যাকরণ-রূপ।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "おくれてはいけません"
+   ]
+  },
+  {
+   "id": "tr_08",
+   "jp": "うそをついてはいけません",
+   "kana": "うそをついてはいけません",
+   "romaji": "uso o tsuite wa ikemasen",
+   "meaning": {
+    "en": "You must not lie",
+    "bn": "মিথ্যা বলা চলবে না",
+    "ja": "嘘をついてはいけません"
+   },
+   "note": {
+    "en": "Admitting > lying, always",
+    "bn": "うそをつく = মিথ্যা বলা — ভুল স্বীকার > মিথ্যা, সবসময়।",
+    "ja": "禁止"
+   },
+   "srs_words": [
+    "うそをついてはいけません"
+   ]
+  }
+ ]
+}

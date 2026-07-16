@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_giving",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Say who did favors for whom (〜てくれます・〜てあげます・〜てもらいます)",
+  "bn": "কে কার জন্য করল তা বলা",
+  "ja": "〜てくれる・あげる・もらう"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "tg_01",
+   "jp": "せんぱいがおしえてくれました",
+   "kana": "せんぱいがおしえてくれました",
+   "romaji": "senpai ga oshiete kuremashita",
+   "meaning": {
+    "en": "My senpai taught me (kindly)",
+    "bn": "সিনিয়র শিখিয়ে দিলেন",
+    "ja": "先輩が教えてくれました"
+   },
+   "note": {
+    "en": "Gratitude, grammared",
+    "bn": "てくれます = কেউ আমার জন্য করল — কৃতজ্ঞতা ব্যাকরণে!",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "せんぱいがおしえてくれました"
+   ]
+  },
+  {
+   "id": "tg_02",
+   "jp": "ともだちがてつだってくれました",
+   "kana": "ともだちがてつだってくれました",
+   "romaji": "tomodachi ga tetsudatte kuremashita",
+   "meaning": {
+    "en": "A friend helped me out",
+    "bn": "বন্ধু সাহায্য করে দিল",
+    "ja": "友達が手伝ってくれました"
+   },
+   "note": {
+    "en": "Warms up stories",
+    "bn": "গল্প বলায় এই রূপ সম্পর্ক উষ্ণ দেখায়।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "ともだちがてつだってくれました"
+   ]
+  },
+  {
+   "id": "tg_03",
+   "jp": "はんちょうがせつめいしてくれました",
+   "kana": "はんちょうがせつめいしてくれました",
+   "romaji": "hanchou ga setsumei shite kuremashita",
+   "meaning": {
+    "en": "The leader explained it to me",
+    "bn": "দলনেতা বুঝিয়ে দিলেন",
+    "ja": "班長が説明してくれました"
+   },
+   "note": {
+    "en": "Credit your helpers",
+    "bn": "報告-এও ব্যবহার করো — কে সাহায্য করল বলা ভদ্রতা।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "はんちょうがせつめいしてくれました"
+   ]
+  },
+  {
+   "id": "tg_04",
+   "jp": "わたしがあんないしてあげます",
+   "kana": "わたしがあんないしてあげます",
+   "romaji": "watashi ga annai shite agemasu",
+   "meaning": {
+    "en": "I'll show you around",
+    "bn": "আমি ঘুরিয়ে দেখাব",
+    "ja": "私が案内してあげます"
+   },
+   "note": {
+    "en": "Pay it forward",
+    "bn": "てあげます = আমি অন্যের জন্য — নতুন しんじん এলে তুমিই বলো!",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "わたしがあんないしてあげます"
+   ]
+  },
+  {
+   "id": "tg_05",
+   "jp": "にもつをもってあげます",
+   "kana": "にもつをもってあげます",
+   "romaji": "nimotsu o motte agemasu",
+   "meaning": {
+    "en": "I'll carry that for you",
+    "bn": "ব্যাগটা ধরে দিচ্ছি",
+    "ja": "荷物を持ってあげます"
+   },
+   "note": {
+    "en": "Ask first, then help",
+    "bn": "বয়স্কদের সাহায্যে — জিজ্ঞেস করে তারপর।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "にもつをもってあげます"
+   ]
+  },
+  {
+   "id": "tg_06",
+   "jp": "やりかたをおしえてもらいました",
+   "kana": "やりかたをおしえてもらいました",
+   "romaji": "yarikata o oshiete moraimashita",
+   "meaning": {
+    "en": "I got taught the method",
+    "bn": "পদ্ধতিটা শিখে নিয়েছি (কারো কাছে)",
+    "ja": "やり方を教えてもらいました"
+   },
+   "note": {
+    "en": "Received a favor",
+    "bn": "てもらいます = আমি কারো থেকে পেলাম — চাওয়া+পাওয়া।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "やりかたをおしえてもらいました"
+   ]
+  },
+  {
+   "id": "tg_07",
+   "jp": "しゃしんをみせてもらいました",
+   "kana": "しゃしんをみせてもらいました",
+   "romaji": "shashin o misete moraimashita",
+   "meaning": {
+    "en": "They showed me the photos",
+    "bn": "ছবিগুলো দেখে নিলাম (দেখালেন)",
+    "ja": "写真を見せてもらいました"
+   },
+   "note": {
+    "en": "Family-photo bonding",
+    "bn": "দেশের ছবির গল্প — সম্পর্ক গড়ার মুহূর্ত।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "しゃしんをみせてもらいました"
+   ]
+  },
+  {
+   "id": "tg_08",
+   "jp": "びょういんにつれていってもらいました",
+   "kana": "びょういんにつれていってもらいました",
+   "romaji": "byouin ni tsurete itte moraimashita",
+   "meaning": {
+    "en": "They took me to the hospital",
+    "bn": "হাসপাতালে নিয়ে গেলেন",
+    "ja": "病院に連れて行ってもらいました"
+   },
+   "note": {
+    "en": "Crisis-day gratitude",
+    "bn": "つれていく = সাথে নিয়ে যাওয়া — বিপদের দিনের কৃতজ্ঞতা।",
+    "ja": "恩恵"
+   },
+   "srs_words": [
+    "びょういんにつれていってもらいました"
+   ]
+  }
+ ]
+}

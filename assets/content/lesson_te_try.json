@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_te_try",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_now"
+ ],
+ "can_do": {
+  "en": "Try things & confess mishaps (〜てみます・〜てしまいました)",
+  "bn": "চেষ্টা ও অঘটন বলা (〜てみます・〜てしまいました)",
+  "ja": "〜てみる・〜てしまう"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_now"
+ ],
+ "items": [
+  {
+   "id": "tt2_01",
+   "jp": "たべてみます",
+   "kana": "たべてみます",
+   "romaji": "tabete mimasu",
+   "meaning": {
+    "en": "I'll try eating it",
+    "bn": "খেয়ে দেখব",
+    "ja": "食べてみます"
+   },
+   "note": {
+    "en": "Culinary courage grammar",
+    "bn": "てみます = করে দেখা — নতুন খাবারে সাহসের ব্যাকরণ!",
+    "ja": "試み"
+   },
+   "srs_words": [
+    "たべてみます"
+   ]
+  },
+  {
+   "id": "tt2_02",
+   "jp": "やってみます",
+   "kana": "やってみます",
+   "romaji": "yatte mimasu",
+   "meaning": {
+    "en": "I'll give it a try",
+    "bn": "করে দেখব",
+    "ja": "やってみます"
+   },
+   "note": {
+    "en": "The can-do reply",
+    "bn": "নতুন কাজ পেলে এই জবাব — がんばります-র ভাই।",
+    "ja": "試み"
+   },
+   "srs_words": [
+    "やってみます"
+   ]
+  },
+  {
+   "id": "tt2_03",
+   "jp": "きいてみます",
+   "kana": "きいてみます",
+   "romaji": "kiite mimasu",
+   "meaning": {
+    "en": "I'll ask and see",
+    "bn": "জিজ্ঞেস করে দেখব",
+    "ja": "聞いてみます"
+   },
+   "note": {
+    "en": "I'll go ask",
+    "bn": "নিজে না জানলে — はんちょうにきいてみます।",
+    "ja": "試み"
+   },
+   "srs_words": [
+    "きいてみます"
+   ]
+  },
+  {
+   "id": "tt2_04",
+   "jp": "さいふをわすれてしまいました",
+   "kana": "さいふをわすれてしまいました",
+   "romaji": "saifu o wasurete shimaimashita",
+   "meaning": {
+    "en": "I('ve) forgotten my wallet!",
+    "bn": "মানিব্যাগ ফেলে এসেছি!",
+    "ja": "財布を忘れてしまいました"
+   },
+   "note": {
+    "en": "Done + regret",
+    "bn": "てしまいました = হয়ে গেছে + আফসোস — স্বীকারোক্তির ব্যাকরণ।",
+    "ja": "後悔"
+   },
+   "srs_words": [
+    "さいふをわすれてしまいました"
+   ]
+  },
+  {
+   "id": "tt2_05",
+   "jp": "ねぼうしてしまいました",
+   "kana": "ねぼうしてしまいました",
+   "romaji": "nebou shite shimaimashita",
+   "meaning": {
+    "en": "I overslept",
+    "bn": "ঘুম থেকে উঠতে দেরি হয়ে গেছে",
+    "ja": "寝坊してしまいました"
+   },
+   "note": {
+    "en": "Call in, don't hide",
+    "bn": "ねぼう = বেশি ঘুম — ফোন করে এটা বলো, লুকিয়ো না!",
+    "ja": "後悔"
+   },
+   "srs_words": [
+    "ねぼうしてしまいました"
+   ]
+  },
+  {
+   "id": "tt2_06",
+   "jp": "こわしてしまいました",
+   "kana": "こわしてしまいました",
+   "romaji": "kowashite shimaimashita",
+   "meaning": {
+    "en": "I broke it",
+    "bn": "ভেঙে ফেলেছি",
+    "ja": "壊してしまいました"
+   },
+   "note": {
+    "en": "Accident confession",
+    "bn": "দুর্ঘটনা স্বীকারের রূপ — সাথে もうしわけありません।",
+    "ja": "後悔"
+   },
+   "srs_words": [
+    "こわしてしまいました"
+   ]
+  },
+  {
+   "id": "tt2_07",
+   "jp": "ぜんぶたべてしまいました",
+   "kana": "ぜんぶたべてしまいました",
+   "romaji": "zenbu tabete shimaimashita",
+   "meaning": {
+    "en": "I ate it all 😅",
+    "bn": "সব খেয়ে ফেলেছি 😅",
+    "ja": "全部食べてしまいました"
+   },
+   "note": {
+    "en": "The tasty regret",
+    "bn": "মজার আফসোস — おいしかったから!",
+    "ja": "後悔"
+   },
+   "srs_words": [
+    "ぜんぶたべてしまいました"
+   ]
+  },
+  {
+   "id": "tt2_08",
+   "jp": "みちをまちがえてしまいました",
+   "kana": "みちをまちがえてしまいました",
+   "romaji": "michi o machigaete shimaimashita",
+   "meaning": {
+    "en": "I took the wrong way",
+    "bn": "রাস্তা ভুল করে ফেলেছি",
+    "ja": "道を間違えてしまいました"
+   },
+   "note": {
+    "en": "Then find a kouban",
+    "bn": "দেরির কারণ ব্যাখ্যায় — তারপর こうばん!",
+    "ja": "後悔"
+   },
+   "srs_words": [
+    "みちをまちがえてしまいました"
+   ]
+  }
+ ]
+}

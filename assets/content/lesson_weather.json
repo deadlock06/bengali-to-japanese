@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_weather",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_smalltalk"
+ ],
+ "can_do": {
+  "en": "Talk about weather and seasons",
+  "bn": "আবহাওয়া ও ঋতুর কথা",
+  "ja": "天気と季節"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori weather set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_smalltalk"
+ ],
+ "items": [
+  {
+   "id": "we_01",
+   "jp": "はる",
+   "kana": "はる",
+   "romaji": "haru",
+   "meaning": {
+    "en": "Spring",
+    "bn": "বসন্ত",
+    "ja": "春"
+   },
+   "note": {
+    "en": "Cherry blossom season",
+    "bn": "さくらার ঋতু — মার্চ-এপ্রিলে জাপান গোলাপি!",
+    "ja": "春"
+   },
+   "srs_words": [
+    "はる"
+   ]
+  },
+  {
+   "id": "we_02",
+   "jp": "なつ",
+   "kana": "なつ",
+   "romaji": "natsu",
+   "meaning": {
+    "en": "Summer",
+    "bn": "গ্রীষ্ম",
+    "ja": "夏"
+   },
+   "note": {
+    "en": "Humid heat — hydrate!",
+    "bn": "জাপানের なつ ভেজা-গরম — পানি খাও, নুন খাও।",
+    "ja": "夏"
+   },
+   "srs_words": [
+    "なつ"
+   ]
+  },
+  {
+   "id": "we_03",
+   "jp": "あき",
+   "kana": "あき",
+   "romaji": "aki",
+   "meaning": {
+    "en": "Autumn",
+    "bn": "শরৎ",
+    "ja": "秋"
+   },
+   "note": {
+    "en": "Red maple season",
+    "bn": "লাল-হলুদ পাতার ঋতু — かえで দেখতে যেও।",
+    "ja": "秋"
+   },
+   "srs_words": [
+    "あき"
+   ]
+  },
+  {
+   "id": "we_04",
+   "jp": "ふゆ",
+   "kana": "ふゆ",
+   "romaji": "fuyu",
+   "meaning": {
+    "en": "Winter",
+    "bn": "শীত",
+    "ja": "冬"
+   },
+   "note": {
+    "en": "Buy Heattech. Seriously.",
+    "bn": "বাংলাদেশের শীত ≠ জাপানের শীত — হিটটেক কেনো!",
+    "ja": "冬"
+   },
+   "srs_words": [
+    "ふゆ"
+   ]
+  },
+  {
+   "id": "we_05",
+   "jp": "あめ",
+   "kana": "あめ",
+   "romaji": "ame",
+   "meaning": {
+    "en": "Rain",
+    "bn": "বৃষ্টি",
+    "ja": "雨"
+   },
+   "note": {
+    "en": "June = rainy season",
+    "bn": "জুনে つゆ (বর্ষা) — ছাতা সবসময় ব্যাগে।",
+    "ja": "雨"
+   },
+   "srs_words": [
+    "あめ"
+   ]
+  },
+  {
+   "id": "we_06",
+   "jp": "ゆき",
+   "kana": "ゆき",
+   "romaji": "yuki",
+   "meaning": {
+    "en": "Snow",
+    "bn": "তুষার",
+    "ja": "雪"
+   },
+   "note": {
+    "en": "First snow: photo, then careful!",
+    "bn": "জীবনের প্রথম ゆき — ছবি তুলো, তারপর সাবধানে হাঁটো!",
+    "ja": "雪"
+   },
+   "srs_words": [
+    "ゆき"
+   ]
+  },
+  {
+   "id": "we_07",
+   "jp": "はれ",
+   "kana": "はれ",
+   "romaji": "hare",
+   "meaning": {
+    "en": "Sunny / clear",
+    "bn": "রোদেলা দিন",
+    "ja": "晴れ"
+   },
+   "note": {
+    "en": "Safe small-talk opener",
+    "bn": "きょうははれですね — smalltalk-এর নিরাপদ শুরু।",
+    "ja": "晴れ"
+   },
+   "srs_words": [
+    "はれ"
+   ]
+  },
+  {
+   "id": "we_08",
+   "jp": "くもり",
+   "kana": "くもり",
+   "romaji": "kumori",
+   "meaning": {
+    "en": "Cloudy",
+    "bn": "মেঘলা",
+    "ja": "曇り"
+   },
+   "note": {
+    "en": "Check tenki like locals",
+    "bn": "কাজের আগে てんき দেখা জাপানি অভ্যাস — তুমিও করো।",
+    "ja": "曇り"
+   },
+   "srs_words": [
+    "くもり"
+   ]
+  }
+ ]
+}

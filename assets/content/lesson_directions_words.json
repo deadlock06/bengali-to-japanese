@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_directions_words",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_directions"
+ ],
+ "can_do": {
+  "en": "Use direction words",
+  "bn": "দিক-নির্দেশের শব্দ",
+  "ja": "方向のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori directions set 2 (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_directions"
+ ],
+ "items": [
+  {
+   "id": "dw_01",
+   "jp": "みぎ",
+   "kana": "みぎ",
+   "romaji": "migi",
+   "meaning": {
+    "en": "Right",
+    "bn": "ডান",
+    "ja": "右"
+   },
+   "note": {
+    "en": "From the turn sentence",
+    "bn": "みぎにまがって-র みぎ — এবার একা।",
+    "ja": "右"
+   },
+   "srs_words": [
+    "みぎ"
+   ]
+  },
+  {
+   "id": "dw_02",
+   "jp": "ひだり",
+   "kana": "ひだり",
+   "romaji": "hidari",
+   "meaning": {
+    "en": "Left",
+    "bn": "বাম",
+    "ja": "左"
+   },
+   "note": {
+    "en": "Stand left on escalators (Tokyo)",
+    "bn": "জাপানে হাঁটাও বাঁ দিকে — এস্কেলেটরে বাঁয়ে দাঁড়াও (টোকিও)।",
+    "ja": "左"
+   },
+   "srs_words": [
+    "ひだり"
+   ]
+  },
+  {
+   "id": "dw_03",
+   "jp": "まえ",
+   "kana": "まえ",
+   "romaji": "mae",
+   "meaning": {
+    "en": "Front / before",
+    "bn": "সামনে",
+    "ja": "前"
+   },
+   "note": {
+    "en": "Station-front addresses",
+    "bn": "えきのまえ = স্টেশনের সামনে — ঠিকানা বলার শব্দ।",
+    "ja": "前"
+   },
+   "srs_words": [
+    "まえ"
+   ]
+  },
+  {
+   "id": "dw_04",
+   "jp": "うしろ",
+   "kana": "うしろ",
+   "romaji": "ushiro",
+   "meaning": {
+    "en": "Behind",
+    "bn": "পেছনে",
+    "ja": "後ろ"
+   },
+   "note": {
+    "en": "Behind",
+    "bn": "うしろにあります — পেছনে আছে।",
+    "ja": "後ろ"
+   },
+   "srs_words": [
+    "うしろ"
+   ]
+  },
+  {
+   "id": "dw_05",
+   "jp": "となり",
+   "kana": "となり",
+   "romaji": "tonari",
+   "meaning": {
+    "en": "Next to",
+    "bn": "পাশে",
+    "ja": "隣"
+   },
+   "note": {
+    "en": "Best friend of addresses",
+    "bn": "コンビニのとなり — কনবিনির পাশে। ঠিকানার সেরা বন্ধু।",
+    "ja": "隣"
+   },
+   "srs_words": [
+    "となり"
+   ]
+  },
+  {
+   "id": "dw_06",
+   "jp": "ちかく",
+   "kana": "ちかく",
+   "romaji": "chikaku",
+   "meaning": {
+    "en": "Nearby",
+    "bn": "কাছে",
+    "ja": "近く"
+   },
+   "note": {
+    "en": "Nearby",
+    "bn": "ちかくにあります — কাছেই আছে।",
+    "ja": "近く"
+   },
+   "srs_words": [
+    "ちかく"
+   ]
+  },
+  {
+   "id": "dw_07",
+   "jp": "とおい",
+   "kana": "とおい",
+   "romaji": "tooi",
+   "meaning": {
+    "en": "Far",
+    "bn": "দূরে",
+    "ja": "遠い"
+   },
+   "note": {
+    "en": "Walk or train? Ask this",
+    "bn": "とおいですか? — হাঁটব নাকি ট্রেন, সিদ্ধান্তের প্রশ্ন।",
+    "ja": "遠い"
+   },
+   "srs_words": [
+    "とおい"
+   ]
+  },
+  {
+   "id": "dw_08",
+   "jp": "ちず",
+   "kana": "ちず",
+   "romaji": "chizu",
+   "meaning": {
+    "en": "Map",
+    "bn": "মানচিত্র",
+    "ja": "地図"
+   },
+   "note": {
+    "en": "Ask them to DRAW it",
+    "bn": "ちずをかいてください — এঁকে দিন! হারালে জাদুর লাইন।",
+    "ja": "地図"
+   },
+   "srs_words": [
+    "ちず"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_learning_questions",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_work_requests"
+ ],
+ "can_do": {
+  "en": "Ask questions that make you learn fast",
+  "bn": "দ্রুত শেখার প্রশ্নগুলো",
+  "ja": "学ぶための質問"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic learner questions",
+ "verified": true,
+ "prerequisites": [
+  "lesson_work_requests"
+ ],
+ "items": [
+  {
+   "id": "lq_01",
+   "jp": "これはどうやってつかいますか",
+   "kana": "これはどうやってつかいますか",
+   "romaji": "kore wa douyatte tsukaimasu ka",
+   "meaning": {
+    "en": "How do I use this?",
+    "bn": "এটা কীভাবে ব্যবহার করে?",
+    "ja": "これはどうやって使いますか"
+   },
+   "note": {
+    "en": "Ask BEFORE touching",
+    "bn": "নতুন যন্ত্র = আগে এই প্রশ্ন, তারপর হাত।",
+    "ja": "使い方"
+   },
+   "srs_words": [
+    "これはどうやってつかいますか"
+   ]
+  },
+  {
+   "id": "lq_02",
+   "jp": "やりかたをおしえてください",
+   "kana": "やりかたをおしえてください",
+   "romaji": "yarikata o oshiete kudasai",
+   "meaning": {
+    "en": "Please teach me how",
+    "bn": "পদ্ধতিটা শিখিয়ে দিন",
+    "ja": "やり方を教えてください"
+   },
+   "note": {
+    "en": "Yarikata = the how",
+    "bn": "やりかた = করার নিয়ম — শেখার সোনার চাবি।",
+    "ja": "教わる"
+   },
+   "srs_words": [
+    "やりかたをおしえてください"
+   ]
+  },
+  {
+   "id": "lq_03",
+   "jp": "みほんをみせてください",
+   "kana": "みほんをみせてください",
+   "romaji": "mihon o misete kudasai",
+   "meaning": {
+    "en": "Please show me a sample",
+    "bn": "একটা নমুনা দেখান",
+    "ja": "見本を見せてください"
+   },
+   "note": {
+    "en": "One demo > 1000 words",
+    "bn": "একবার দেখলে হাজার কথার কাজ হয়।",
+    "ja": "見本"
+   },
+   "srs_words": [
+    "みほんをみせてください"
+   ]
+  },
+  {
+   "id": "lq_04",
+   "jp": "いっしょにやってもいいですか",
+   "kana": "いっしょにやってもいいですか",
+   "romaji": "issho ni yatte mo ii desu ka",
+   "meaning": {
+    "en": "May I do it with you?",
+    "bn": "আপনার সাথে করতে পারি?",
+    "ja": "一緒にやってもいいですか"
+   },
+   "note": {
+    "en": "Learning alongside",
+    "bn": "পাশে থেকে শেখা — জাপানি শেখানোর প্রিয় ধরন।",
+    "ja": "一緒に"
+   },
+   "srs_words": [
+    "いっしょにやってもいいですか"
+   ]
+  },
+  {
+   "id": "lq_05",
+   "jp": "メモをとってもいいですか",
+   "kana": "メモをとってもいいですか",
+   "romaji": "memo o totte mo ii desu ka",
+   "meaning": {
+    "en": "May I take notes?",
+    "bn": "নোট নিতে পারি?",
+    "ja": "メモを取ってもいいですか"
+   },
+   "note": {
+    "en": "Note-takers impress",
+    "bn": "নোট নেওয়া কর্মী = সিরিয়াস কর্মী — impression জেতে।",
+    "ja": "メモ"
+   },
+   "srs_words": [
+    "メモをとってもいいですか"
+   ]
+  },
+  {
+   "id": "lq_06",
+   "jp": "しつもんしてもいいですか",
+   "kana": "しつもんしてもいいですか",
+   "romaji": "shitsumon shite mo ii desu ka",
+   "meaning": {
+    "en": "May I ask a question?",
+    "bn": "প্রশ্ন করতে পারি?",
+    "ja": "質問してもいいですか"
+   },
+   "note": {
+    "en": "Opens the door politely",
+    "bn": "ব্যস্ত সময়ে দরজা খোলার লাইন।",
+    "ja": "質問"
+   },
+   "srs_words": [
+    "しつもんしてもいいですか"
+   ]
+  },
+  {
+   "id": "lq_07",
+   "jp": "かくにんしてください",
+   "kana": "かくにんしてください",
+   "romaji": "kakunin shite kudasai",
+   "meaning": {
+    "en": "Please check my work",
+    "bn": "একটু দেখে দিন (চেক করুন)",
+    "ja": "確認してください"
+   },
+   "note": {
+    "en": "Self-requested checks build trust",
+    "bn": "কাজ শেষে নিজে থেকে চেক চাওয়া = বিশ্বাস তৈরি।",
+    "ja": "確認"
+   },
+   "srs_words": [
+    "かくにんしてください"
+   ]
+  },
+  {
+   "id": "lq_08",
+   "jp": "これであっていますか",
+   "kana": "これであっていますか",
+   "romaji": "kore de atte imasu ka",
+   "meaning": {
+    "en": "Is this correct?",
+    "bn": "এটা ঠিক আছে তো?",
+    "ja": "これで合っていますか"
+   },
+   "note": {
+    "en": "Verify mid-way",
+    "bn": "মাঝপথে যাচাই — শেষে ভুল ধরার চেয়ে ভালো।",
+    "ja": "確認"
+   },
+   "srs_words": [
+    "これであっていますか"
+   ]
+  }
+ ]
+}

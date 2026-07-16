@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_shop_talk",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_shopping"
+ ],
+ "can_do": {
+  "en": "Handle the full shop conversation",
+  "bn": "দোকানের পুরো কথোপকথন সামলানো",
+  "ja": "店での会話"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori shop dialogue set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_shopping"
+ ],
+ "items": [
+  {
+   "id": "st_01",
+   "jp": "いらっしゃいませ",
+   "kana": "いらっしゃいませ",
+   "romaji": "irasshaimase",
+   "meaning": {
+    "en": "Welcome! (shop greeting)",
+    "bn": "আসুন! (দোকানির ডাক)",
+    "ja": "いらっしゃいませ"
+   },
+   "note": {
+    "en": "No reply needed — just know it",
+    "bn": "তোমাকে বলা — জবাব লাগে না, শুধু চেনো। সব দোকানে শুনবে।",
+    "ja": "店のあいさつ"
+   },
+   "srs_words": [
+    "いらっしゃいませ"
+   ]
+  },
+  {
+   "id": "st_02",
+   "jp": "ポイントカードはありますか",
+   "kana": "ポイントカードはありますか",
+   "romaji": "pointo kaado wa arimasu ka",
+   "meaning": {
+    "en": "Do you have a point card?",
+    "bn": "পয়েন্ট কার্ড আছে?",
+    "ja": "ポイントカードはありますか"
+   },
+   "note": {
+    "en": "They ask EVERY time",
+    "bn": "ক্যাশে রোজ জিজ্ঞেস করবে — না থাকলে ないです বলো।",
+    "ja": "レジの質問"
+   },
+   "srs_words": [
+    "ポイントカードはありますか"
+   ]
+  },
+  {
+   "id": "st_03",
+   "jp": "いりません",
+   "kana": "いりません",
+   "romaji": "irimasen",
+   "meaning": {
+    "en": "I don't need it",
+    "bn": "লাগবে না",
+    "ja": "いりません"
+   },
+   "note": {
+    "en": "Polite refusal",
+    "bn": "ব্যাগ/কার্ড/রসিদ — ভদ্রভাবে না বলার শব্দ।",
+    "ja": "断り"
+   },
+   "srs_words": [
+    "いりません"
+   ]
+  },
+  {
+   "id": "st_04",
+   "jp": "しちゃくしてもいいですか",
+   "kana": "しちゃくしてもいいですか",
+   "romaji": "shichaku shite mo ii desu ka",
+   "meaning": {
+    "en": "May I try it on?",
+    "bn": "পরে দেখতে পারি?",
+    "ja": "試着してもいいですか"
+   },
+   "note": {
+    "en": "Fitting room = shichaku-shitsu",
+    "bn": "জামা কেনার আগে — しちゃくしつ = ট্রায়াল রুম।",
+    "ja": "試着"
+   },
+   "srs_words": [
+    "しちゃくしてもいいですか"
+   ]
+  },
+  {
+   "id": "st_05",
+   "jp": "これとこれをください",
+   "kana": "これとこれをください",
+   "romaji": "kore to kore o kudasai",
+   "meaning": {
+    "en": "This one and this one, please",
+    "bn": "এটা আর এটা দিন",
+    "ja": "これとこれをください"
+   },
+   "note": {
+    "en": "Point and connect with to",
+    "bn": "と দিয়ে জোড়া — আঙুলে দেখিয়ে বলো।",
+    "ja": "注文"
+   },
+   "srs_words": [
+    "これとこれをください"
+   ]
+  },
+  {
+   "id": "st_06",
+   "jp": "ぜんぶでいくらですか",
+   "kana": "ぜんぶでいくらですか",
+   "romaji": "zenbu de ikura desu ka",
+   "meaning": {
+    "en": "How much in total?",
+    "bn": "সব মিলিয়ে কত?",
+    "ja": "全部でいくらですか"
+   },
+   "note": {
+    "en": "Zenbu de = in total",
+    "bn": "ぜんぶで = মোটে — বাজেট মেলানোর প্রশ্ন।",
+    "ja": "値段"
+   },
+   "srs_words": [
+    "ぜんぶでいくらですか"
+   ]
+  },
+  {
+   "id": "st_07",
+   "jp": "またきます",
+   "kana": "またきます",
+   "romaji": "mata kimasu",
+   "meaning": {
+    "en": "I'll come again",
+    "bn": "আবার আসব",
+    "ja": "また来ます"
+   },
+   "note": {
+    "en": "The polite no-buy exit",
+    "bn": "না কিনে বেরোনোর ভদ্র exit line।",
+    "ja": "退店"
+   },
+   "srs_words": [
+    "またきます"
+   ]
+  },
+  {
+   "id": "st_08",
+   "jp": "おつりをください",
+   "kana": "おつりをください",
+   "romaji": "otsuri o kudasai",
+   "meaning": {
+    "en": "My change, please",
+    "bn": "ভাংতিটা দিন",
+    "ja": "お釣りをください"
+   },
+   "note": {
+    "en": "Rarely needed in Japan!",
+    "bn": "おつり ভুলে গেলে — যদিও জাপানে প্রায় হয় না!",
+    "ja": "レジ"
+   },
+   "srs_words": [
+    "おつりをください"
+   ]
+  }
+ ]
+}

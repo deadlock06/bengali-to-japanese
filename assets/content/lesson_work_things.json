@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_work_things",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_workplace"
+ ],
+ "can_do": {
+  "en": "Name workplace objects",
+  "bn": "কর্মস্থলের জিনিস চেনা",
+  "ja": "職場の物"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic workplace objects",
+ "verified": true,
+ "prerequisites": [
+  "lesson_workplace"
+ ],
+ "items": [
+  {
+   "id": "wt_01",
+   "jp": "きかい",
+   "kana": "きかい",
+   "romaji": "kikai",
+   "meaning": {
+    "en": "Machine",
+    "bn": "মেশিন",
+    "ja": "機械"
+   },
+   "note": {
+    "en": "The heart of the factory",
+    "bn": "きかいをとめてください-র きかい — কারখানার হৃদয়।",
+    "ja": "機械"
+   },
+   "srs_words": [
+    "きかい"
+   ]
+  },
+  {
+   "id": "wt_02",
+   "jp": "スイッチ",
+   "kana": "スイッチ",
+   "romaji": "suicchi",
+   "meaning": {
+    "en": "Switch",
+    "bn": "সুইচ",
+    "ja": "スイッチ"
+   },
+   "note": {
+    "en": "On/off is katakana too",
+    "bn": "オン/オフ — অন-অফও কাতাকানা!",
+    "ja": "スイッチ"
+   },
+   "srs_words": [
+    "スイッチ"
+   ]
+  },
+  {
+   "id": "wt_03",
+   "jp": "ボタン",
+   "kana": "ボタン",
+   "romaji": "botan",
+   "meaning": {
+    "en": "Button",
+    "bn": "বোতাম",
+    "ja": "ボタン"
+   },
+   "note": {
+    "en": "Know the red button!",
+    "bn": "あかいボタン = লাল বোতাম — জরুরি থামানোর বোতাম চিনে রাখো!",
+    "ja": "ボタン"
+   },
+   "srs_words": [
+    "ボタン"
+   ]
+  },
+  {
+   "id": "wt_04",
+   "jp": "でんげん",
+   "kana": "でんげん",
+   "romaji": "dengen",
+   "meaning": {
+    "en": "Power (source)",
+    "bn": "পাওয়ার (বিদ্যুৎ উৎস)",
+    "ja": "電源"
+   },
+   "note": {
+    "en": "Cut the power — safety line",
+    "bn": "でんげんをきってください — পাওয়ার বন্ধ করো (নিরাপত্তার লাইন)।",
+    "ja": "電源"
+   },
+   "srs_words": [
+    "でんげん"
+   ]
+  },
+  {
+   "id": "wt_05",
+   "jp": "そうこ",
+   "kana": "そうこ",
+   "romaji": "souko",
+   "meaning": {
+    "en": "Warehouse",
+    "bn": "গুদাম",
+    "ja": "倉庫"
+   },
+   "note": {
+    "en": "Fetch-from-warehouse",
+    "bn": "そうこからもってきてください — গুদাম থেকে আনো।",
+    "ja": "倉庫"
+   },
+   "srs_words": [
+    "そうこ"
+   ]
+  },
+  {
+   "id": "wt_06",
+   "jp": "ラベル",
+   "kana": "ラベル",
+   "romaji": "raberu",
+   "meaning": {
+    "en": "Label",
+    "bn": "লেবেল",
+    "ja": "ラベル"
+   },
+   "note": {
+    "en": "Daily packing task",
+    "bn": "ラベルをはります — লেবেল লাগাই। packing-এর রোজের কাজ।",
+    "ja": "ラベル"
+   },
+   "srs_words": [
+    "ラベル"
+   ]
+  },
+  {
+   "id": "wt_07",
+   "jp": "はこ",
+   "kana": "はこ",
+   "romaji": "hako",
+   "meaning": {
+    "en": "Box",
+    "bn": "বাক্স",
+    "ja": "箱"
+   },
+   "note": {
+    "en": "From the packing verb",
+    "bn": "はこにいれます-র はこ — এবার একা চেনো।",
+    "ja": "箱"
+   },
+   "srs_words": [
+    "はこ"
+   ]
+  },
+  {
+   "id": "wt_08",
+   "jp": "ごみ",
+   "kana": "ごみ",
+   "romaji": "gomi",
+   "meaning": {
+    "en": "Trash",
+    "bn": "ময়লা",
+    "ja": "ゴミ"
+   },
+   "note": {
+    "en": "Burnable vs non-burnable!",
+    "bn": "জাপানের ময়লা-ভাগ কিংবদন্তি — もえるゴミ/もえないゴミ শিখতেই হবে।",
+    "ja": "ゴミ"
+   },
+   "srs_words": [
+    "ごみ"
+   ]
+  }
+ ]
+}

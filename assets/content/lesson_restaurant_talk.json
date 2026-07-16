@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_restaurant_talk",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_restaurant"
+ ],
+ "can_do": {
+  "en": "Handle the full restaurant visit",
+  "bn": "রেস্টুরেন্টের পুরো কথোপকথন",
+  "ja": "レストランの会話"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori restaurant dialogue set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_restaurant"
+ ],
+ "items": [
+  {
+   "id": "rt_01",
+   "jp": "なんめいさまですか",
+   "kana": "なんめいさまですか",
+   "romaji": "nanmei-sama desu ka",
+   "meaning": {
+    "en": "How many people?",
+    "bn": "কয়জন? (দোকানির প্রশ্ন)",
+    "ja": "何名様ですか"
+   },
+   "note": {
+    "en": "First question at the door",
+    "bn": "ঢুকলেই এই প্রশ্ন — আঙুলেও দেখাতে পারো।",
+    "ja": "入店"
+   },
+   "srs_words": [
+    "なんめいさまですか"
+   ]
+  },
+  {
+   "id": "rt_02",
+   "jp": "ひとりです",
+   "kana": "ひとりです",
+   "romaji": "hitori desu",
+   "meaning": {
+    "en": "Just one",
+    "bn": "একজন",
+    "ja": "一人です"
+   },
+   "note": {
+    "en": "Solo dining is normal here",
+    "bn": "একা খেতে যাওয়া জাপানে সম্পূর্ণ স্বাভাবিক।",
+    "ja": "人数"
+   },
+   "srs_words": [
+    "ひとりです"
+   ]
+  },
+  {
+   "id": "rt_03",
+   "jp": "ふたりです",
+   "kana": "ふたりです",
+   "romaji": "futari desu",
+   "meaning": {
+    "en": "Two people",
+    "bn": "দুইজন",
+    "ja": "二人です"
+   },
+   "note": {
+    "en": "Hitori, futari, then -nin",
+    "bn": "ひとり→ふたり→さんにん — মানুষ গোনার ধারা।",
+    "ja": "人数"
+   },
+   "srs_words": [
+    "ふたりです"
+   ]
+  },
+  {
+   "id": "rt_04",
+   "jp": "のみものはなにがありますか",
+   "kana": "のみものはなにがありますか",
+   "romaji": "nomimono wa nani ga arimasu ka",
+   "meaning": {
+    "en": "What drinks do you have?",
+    "bn": "পানীয় কী কী আছে?",
+    "ja": "飲み物は何がありますか"
+   },
+   "note": {
+    "en": "When the menu defeats you",
+    "bn": "মেনু না বুঝলে সরাসরি জিজ্ঞেস — কাজ হয়।",
+    "ja": "注文"
+   },
+   "srs_words": [
+    "のみものはなにがありますか"
+   ]
+  },
+  {
+   "id": "rt_05",
+   "jp": "おてあらいはどこですか",
+   "kana": "おてあらいはどこですか",
+   "romaji": "otearai wa doko desu ka",
+   "meaning": {
+    "en": "Where is the restroom?",
+    "bn": "ওয়াশরুম কোথায়?",
+    "ja": "お手洗いはどこですか"
+   },
+   "note": {
+    "en": "Politer than toire",
+    "bn": "トイレ-র ভদ্র রূপ — রেস্টুরেন্টে এটাই বলো।",
+    "ja": "トイレ"
+   },
+   "srs_words": [
+    "おてあらいはどこですか"
+   ]
+  },
+  {
+   "id": "rt_06",
+   "jp": "テイクアウトできますか",
+   "kana": "テイクアウトできますか",
+   "romaji": "teikuauto dekimasu ka",
+   "meaning": {
+    "en": "Can I take it out?",
+    "bn": "পার্সেল করা যাবে?",
+    "ja": "テイクアウトできますか"
+   },
+   "note": {
+    "en": "Also mochikaeri",
+    "bn": "もちかえり-ও বলে — দুটোই চেনো।",
+    "ja": "持ち帰り"
+   },
+   "srs_words": [
+    "テイクアウトできますか"
+   ]
+  },
+  {
+   "id": "rt_07",
+   "jp": "おかわりください",
+   "kana": "おかわりください",
+   "romaji": "okawari kudasai",
+   "meaning": {
+    "en": "Refill, please",
+    "bn": "আরেকবার দিন (রিফিল)",
+    "ja": "おかわりください"
+   },
+   "note": {
+    "en": "Rice refills often free!",
+    "bn": "ভাত/চা おかわり প্রায়ই ফ্রি — জিজ্ঞেস করে নাও!",
+    "ja": "おかわり"
+   },
+   "srs_words": [
+    "おかわりください"
+   ]
+  },
+  {
+   "id": "rt_08",
+   "jp": "からくしてください",
+   "kana": "からくしてください",
+   "romaji": "karaku shite kudasai",
+   "meaning": {
+    "en": "Make it spicy, please",
+    "bn": "ঝাল করে দিন",
+    "ja": "辛くしてください"
+   },
+   "note": {
+    "en": "The Bengali secret weapon",
+    "bn": "বাঙালির গোপন অস্ত্র — জাপানি ঝালে মন ভরবে না 😄",
+    "ja": "味の注文"
+   },
+   "srs_words": [
+    "からくしてください"
+   ]
+  }
+ ]
+}

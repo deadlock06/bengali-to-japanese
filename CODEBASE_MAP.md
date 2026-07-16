@@ -58,7 +58,8 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 
 ### Content gaps
 - **Smart Banglish** corporate code-switching content — not built (schema + lessons TODO).
-- Lessons: L0/A1/A2 all wired (18 content lessons, no orphans left — greetings/shopping/emergency wired into A1.1/A1.3/A2.2 this session); **N4.1–N4.5 + both mocks still not authored** (need N4 whitelist + verified grammar; do NOT auto-generate — D-001 correctness).
+- Lessons: **NO STUBS LEFT (2026-07-16)** — all 21 wired lessons have 8 items (vocab 100→168; ladder 24%→33%). 3 NEW lessons authored (numbers_big / week / food) + 7 expanded (numbers, time, work_intro, konbini, restaurant, workplace, clinic) — standard Irodori/JFT survival set, SSW-focused notes (halal-check, 報連相, heat-stroke). Every item: Intro+why → Recognition → SRS + bundled audio (306 clips). Design rule: **≤8 items per lesson file** (= one classroom session; the batch builder caps at 8 and would silently drop extras) — grow units by adding lesson FILES to the unit's comma list, never by making a lesson bigger.
+- Still ❌ content: A1/A2 to full targets (~need +250 items via new lesson files) · **N4.1–N4.5 + both mocks not authored** (need N4 whitelist + verified grammar; do NOT auto-generate — D-001 correctness) · **native-speaker review pending on ALL content before publish**.
 - **Mock exams** A2.M / N4.M — not built (AiCheck is demo).
 - **Scenario mode** (NPC roleplay, 200+ target) — not built.
 - Mistake-pattern remediation (500+ target) — schema only.

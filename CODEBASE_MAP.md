@@ -79,7 +79,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - Speak / Review / Settings / Kana screens still v0.1 styling.
 
 ### Backend / sync / data
-- **Backend not chosen or built** (Firebase vs Supabase, D-010) — app is offline-only · cloud sync / accounts / social — 0% · PDF export missing (ZIP works) · opt-in analytics (HMAC) — 0%.
+- **Backend = SUPABASE (D-018, 2026-07-16)** — live Postgres 17 (Tokyo), `supabase/schema.sql` v1 applied: profiles/srs_cards/lesson_completions/daily_stats/deletion_requests, **RLS own-rows-only on every table** (verified). Creds OUTSIDE repo (`../.claude/sensei_db.env`). Still ❌: client wiring (supabase_flutter + auth + SyncService — needs the project's ANON KEY, not the DB password), offline_queue drain, /ai/explain smart-router as Edge Function, PDF export, opt-in analytics.
 
 ### Distribution — ~0%
 - Content **bundled monolithically**; tiered download / content-pack system (03 / D-008) — not built · P2P import + update system — stubs only.

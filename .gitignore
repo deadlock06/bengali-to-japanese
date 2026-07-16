@@ -49,3 +49,7 @@ app.*.map.json
 llm_export/
 /Load existing design/
 /SENSEI_Codebase_Export/
+
+# secrets (backend creds live in ../.claude/sensei_db.env)
+.env
+.env.*

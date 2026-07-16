@@ -25,12 +25,12 @@
    "meaning": {
     "en": "Nine",
     "bn": "নয়",
-    "ja": ""
+    "ja": "九"
    },
    "note": {
     "en": "Nine",
     "bn": "৯ — く-ও আছে, তবে きゅう বেশি চলে।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "きゅう"
@@ -44,12 +44,12 @@
    "meaning": {
     "en": "Ten",
     "bn": "দশ",
-    "ja": ""
+    "ja": "十"
    },
    "note": {
     "en": "Ten; 11+ compose from it",
     "bn": "১০ — এর পরে সব compositional: じゅういち=১১।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "じゅう"
@@ -63,12 +63,12 @@
    "meaning": {
     "en": "Hundred",
     "bn": "একশো",
-    "ja": ""
+    "ja": "百"
    },
    "note": {
     "en": "Hundred; sound changes at 300/600/800",
     "bn": "১০০ — দামে সবচেয়ে বেশি শুনবে (さんびゃく=৩০০)।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "ひゃく"
@@ -82,12 +82,12 @@
    "meaning": {
     "en": "Thousand",
     "bn": "এক হাজার",
-    "ja": ""
+    "ja": "千"
    },
    "note": {
     "en": "Thousand",
     "bn": "১০০০ — せんえん = ১০০০ ইয়েন।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "せん"
@@ -101,12 +101,12 @@
    "meaning": {
     "en": "Ten thousand",
     "bn": "দশ হাজার",
-    "ja": ""
+    "ja": "一万"
    },
    "note": {
     "en": "Japan counts by 10,000s (man unit)",
     "bn": "জাপানে হাজারের পরে まん unit — ১০,০০০ = いちまん।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "いちまん"
@@ -120,12 +120,12 @@
    "meaning": {
     "en": "Yen",
     "bn": "ইয়েন (টাকা)",
-    "ja": ""
+    "ja": "円"
    },
    "note": {
     "en": "Japanese currency",
     "bn": "জাপানের মুদ্রা — দামের শেষে থাকে: ごひゃくえん।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "えん"
@@ -139,12 +139,12 @@
    "meaning": {
     "en": "Zero",
     "bn": "শূন্য",
-    "ja": ""
+    "ja": "ゼロ"
    },
    "note": {
     "en": "Zero (also rei)",
     "bn": "০ — ফোন নম্বরে れい-ও বলা হয়।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "ゼロ"
@@ -158,12 +158,12 @@
    "meaning": {
     "en": "Phone number",
     "bn": "ফোন নম্বর",
-    "ja": ""
+    "ja": "電話番号"
    },
    "note": {
     "en": "Asked on forms and at stores",
     "bn": "ফর্ম আর দোকানের membership-এ জিজ্ঞেস করে।",
-    "ja": ""
+    "ja": "数と値段"
    },
    "srs_words": [
     "でんわばんごう"

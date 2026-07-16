@@ -25,12 +25,12 @@
    "meaning": {
     "en": "Monday",
     "bn": "সোমবার",
-    "ja": ""
+    "ja": "月曜日"
    },
    "note": {
     "en": "Monday (moon day)",
     "bn": "月=চাঁদ — সপ্তাহ শুরুর দিন।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "げつようび"
@@ -44,12 +44,12 @@
    "meaning": {
     "en": "Tuesday",
     "bn": "মঙ্গলবার",
-    "ja": ""
+    "ja": "火曜日"
    },
    "note": {
     "en": "Tuesday (fire day)",
     "bn": "火=আগুন।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "かようび"
@@ -63,12 +63,12 @@
    "meaning": {
     "en": "Wednesday",
     "bn": "বুধবার",
-    "ja": ""
+    "ja": "水曜日"
    },
    "note": {
     "en": "Wednesday (water day)",
     "bn": "水=পানি।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "すいようび"
@@ -82,12 +82,12 @@
    "meaning": {
     "en": "Thursday",
     "bn": "বৃহস্পতিবার",
-    "ja": ""
+    "ja": "木曜日"
    },
    "note": {
     "en": "Thursday (wood day)",
     "bn": "木=গাছ।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "もくようび"
@@ -101,12 +101,12 @@
    "meaning": {
     "en": "Friday",
     "bn": "শুক্রবার",
-    "ja": ""
+    "ja": "金曜日"
    },
    "note": {
     "en": "Friday (gold day)",
     "bn": "金=সোনা — বেতনের দিনও প্রায়ই!",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "きんようび"
@@ -120,12 +120,12 @@
    "meaning": {
     "en": "Saturday",
     "bn": "শনিবার",
-    "ja": ""
+    "ja": "土曜日"
    },
    "note": {
     "en": "Saturday (earth day)",
     "bn": "土=মাটি।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "どようび"
@@ -139,12 +139,12 @@
    "meaning": {
     "en": "Sunday",
     "bn": "রবিবার",
-    "ja": ""
+    "ja": "日曜日"
    },
    "note": {
     "en": "Sunday (sun day)",
     "bn": "日=সূর্য — বেশিরভাগের ছুটির দিন।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "にちようび"
@@ -158,12 +158,12 @@
    "meaning": {
     "en": "Weekend",
     "bn": "সপ্তাহান্ত",
-    "ja": ""
+    "ja": "週末"
    },
    "note": {
     "en": "Weekend",
     "bn": "শনি-রবি একসাথে — plan-এর কথায় লাগে।",
-    "ja": ""
+    "ja": "曜日"
    },
    "srs_words": [
     "しゅうまつ"

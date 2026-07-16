@@ -1,15 +1,15 @@
 # CODEBASE MAP — full state of the SENSEI/Bhasago build
-`refreshed 2026-07-14 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
+`refreshed 2026-07-16 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
 
 **One-line status:** strong scaffolding (design system, deterministic agents, FSRS, curriculum graph, kana-in-classroom teaching) is real and **`flutter analyze` = clean**; but the pieces that make it a finished *AI* app — real audio, a real LLM tutor (offline or online), the journey-map Learn UX, backend/sync, content packs — are **largely unbuilt**. Overall ≈ **60%** toward a usable JFT-A2 beta.
 
 ## Environment (verified this session)
 - **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
-- `flutter analyze` → **No issues found** (first real pass ever). `flutter test` → **50 pass / 0 fail** (all green).
+- `flutter analyze` → **No issues found**. `flutter test` → **52 pass / 0 fail**. Content validator → **PASS (cleared to ship)**. Node proofs all green (batch 11/11 · curriculum 14/14 · agents 17/17 · fsrs · lesson_flow 19/19 · migrations · pitch).
 - Node 20 present; all engine proofs green (validator, batch 11/11, curriculum 14/14, agents 17/17, fsrs, lesson_flow, migrations, pitch).
 - **Web build works** (`flutter build web`), served at `localhost:5601` via `tools/web_server.mjs` — the real app runs in-browser for demoing.
 - **Android SDK NOT installed** (needs sudo) → no on-device APK build here yet. iOS not targeted. fvm not set up.
-- **All work COMMITTED, tree clean** (through 2026-07-14). Push to GitHub needs your login (`git push origin main`).
+- **All work COMMITTED, tree clean** (through 2026-07-16). Push to GitHub needs your login (`git push origin main`).
 
 ## Stack
 Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore via flutter_secure_storage) · numbered migrations m001–m002 · gen-l10n **disabled** (see Known Issues) · backend: **none** (D-010 open).
@@ -22,7 +22,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - **v4 "Bold Ink" design system** — theme.dart tokens, 4 brand fonts bundled + wired.
 - **Home v4** to full fidelity — top row (lang pill + avatar), greeting, red AI-Classroom card (spinning star, live current-unit subtitle, #111/white/red progress pill), pink review card (live due count), blue AI-check, green retention sparkline (live series), book mini-card, week topics, AI-sensei typed-greeting pill, `_DepthField` backdrop (red sun + seigaiha + floating kana), 4-tab shell.
 - **Onboarding** (language select, first-run gate, persisted).
-- **Offline Japanese audio** — 192 bundled clips (edge-tts), 🔊 button + auto-play in the classroom.
+- **Offline Japanese audio** — 306 bundled clips (edge-tts: 71×2 kana + every lesson item), 🔊 + auto-play in the classroom.
 - **AI Classroom (lesson_screen_v4)** — the sensei classroom: mood ring (psych states), sensei sprite + speech bubble, MC recognition, Hint/Skip/Quit invariant, sensei chat sheet (canned), completion overlay. **NEW this session:** teaches **kana recognition in-classroom** (এটি কোন ধ্বনি? あ→আ) when the current unit is kana, then flows to vocab; **Phase-1 Intro** (sensei presents item before asking) + **Phase-5 SRS-close** line.
 - **Curriculum screen** (red timeline, live from ontology), **Book reader** (T-121, renders book.json chapters, mark-read persists), **Progress v4** (retention chart — শোনা/বলা % still demo), **Review** (v0.1), **Speak** (shadowing + pitch entry, v0.1), **Kana grid + Writing/tracing** (offline stroke animation, sound context, first-open intro), **Settings** (locale, tutor-persona picker, **data autonomy: ZIP export + delete-with-7-day-grace**, KanjiVG attribution).
 
@@ -31,7 +31,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - **Kana-first sequencing** — numbers requires hiragana (ontology); the classroom teaches kana first.
 
 ### Content / data
-- 19 verified lesson JSONs + kana×2 + pitch · **Bhasha Go book** 20 chapters (book.json, 876 blocks) · curriculum.json ontology (20 units) · KanjiVG stroke data (offline) · content validator (in CI).
+- 21 verified lesson JSONs (168 items, ALL ≤8-item lessons, validator-clean incl. trilingual + whitelist 1430) + kana×2 + pitch · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
 
 ### Platform
 - SQLCipher DB + migrations · one-tap ZIP export + 7-day-grace deletion + boot purge check · persona persistence · device build **verified once** on TECNO (07-10).

@@ -66,12 +66,12 @@
    "meaning": {
     "en": "Please heat it up",
     "bn": "গরম করে দিন",
-    "ja": ""
+    "ja": "あたためてください"
    },
    "note": {
     "en": "Ask to microwave your bento",
     "bn": "おべんとう কিনলে ক্যাশিয়ার জিজ্ঞেস করবে — নিজে চাইতেও পারো।",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "あたためてください"
@@ -85,12 +85,12 @@
    "meaning": {
     "en": "Rice ball",
     "bn": "ভাতের বল (অনিগিরি)",
-    "ja": ""
+    "ja": "おにぎり"
    },
    "note": {
     "en": "Cheap staple; check fillings",
     "bn": "সস্তা, halal option চেনা যায় — টুনা/লবণ flavour safe।",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "おにぎり"
@@ -104,12 +104,12 @@
    "meaning": {
     "en": "Boxed lunch",
     "bn": "খাবারের বাক্স (বেন্টো)",
-    "ja": ""
+    "ja": "お弁当"
    },
    "note": {
     "en": "Common lunch; check ingredients",
     "bn": "দুপুরের সবচেয়ে common খাবার — উপকরণ দেখে নিও।",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "おべんとう"
@@ -123,12 +123,12 @@
    "meaning": {
     "en": "Milk",
     "bn": "দুধ",
-    "ja": ""
+    "ja": "牛乳"
    },
    "note": {
     "en": "Look for 牛乳 on the carton",
     "bn": "牛乳 লেখা থাকে — সাদা প্যাকেট সবসময় দুধ না!",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "ぎゅうにゅう"
@@ -142,12 +142,12 @@
    "meaning": {
     "en": "Change",
     "bn": "ভাংতি (ফেরত টাকা)",
-    "ja": ""
+    "ja": "お釣り"
    },
    "note": {
     "en": "Your change; use the money tray",
     "bn": "ক্যাশে দিলে おつり ফেরত পাবে — trays-এ লেনদেন হয়।",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "おつり"
@@ -161,12 +161,12 @@
    "meaning": {
     "en": "Bread",
     "bn": "রুটি/পাউরুটি",
-    "ja": ""
+    "ja": "パン"
    },
    "note": {
     "en": "Katakana loanword",
     "bn": "কাতাকানা শব্দ — সকালের সস্তা নাস্তা।",
-    "ja": ""
+    "ja": "コンビニで使う"
    },
    "srs_words": [
     "パン"

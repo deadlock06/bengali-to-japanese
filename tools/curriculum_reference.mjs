@@ -72,7 +72,9 @@ t('authored-all: exactly one current', d2.filter(u => u.state === 'current').len
 t('authored-all: >=13 done', d2.filter(u => u.state === 'done').length >= 13);
 
 // 6. partial unit pct: only lesson_smalltalk of A2.5 done
-let d3 = derive(root, new Set(['kana_hiragana','kana_katakana','lesson_numbers','lesson_time','work_intro_01','lesson_intro_qa','lesson_greetings','lesson_konbini','lesson_restaurant','lesson_workplace','lesson_clinic','lesson_directions','lesson_transport','lesson_work_requests','lesson_smalltalk']));
+// (fixture tracks the wired lesson lists — updated 2026-07-16 for the new
+// numbers_big/week/food + orphan wirings shopping/greetings/emergency)
+let d3 = derive(root, new Set(['kana_hiragana','kana_katakana','lesson_numbers','lesson_numbers_big','lesson_time','lesson_week','work_intro_01','lesson_intro_qa','lesson_greetings','lesson_konbini','lesson_shopping','lesson_restaurant','lesson_food','lesson_workplace','lesson_clinic','lesson_emergency','lesson_directions','lesson_transport','lesson_work_requests','lesson_smalltalk']));
 const a25 = d3.find(u => u.id === 'A2.5');
 t('A2.5 current w/ pct 0.5', a25.state === 'current' && Math.abs(a25.pct - 0.5) < 1e-9);
 

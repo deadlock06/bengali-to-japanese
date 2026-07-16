@@ -44,12 +44,12 @@
    "meaning": {
     "en": "I'd like a day off",
     "bn": "ছুটি চাই",
-    "ja": ""
+    "ja": "やすみをください"
    },
    "note": {
     "en": "Ask in advance, never no-show",
     "bn": "আগে থেকে বলা = ভদ্রতা; হুট করে অনুপস্থিত হওয়া বড় সমস্যা।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "やすみをください"
@@ -63,12 +63,12 @@
    "meaning": {
     "en": "I will be late",
     "bn": "দেরি হবে",
-    "ja": ""
+    "ja": "おくれます"
    },
    "note": {
     "en": "ALWAYS report lateness by phone",
     "bn": "দেরি হলেই ফোনে জানাও — 報連相 জাপানি কাজের মূল নিয়ম।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "おくれます"
@@ -82,12 +82,12 @@
    "meaning": {
     "en": "Break time",
     "bn": "বিরতি (ব্রেক টাইম)",
-    "ja": ""
+    "ja": "きゅうけいです"
    },
    "note": {
     "en": "Break; return on time",
     "bn": "きゅうけい মানে ব্রেক — সময় মেনে ফিরে এসো।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "きゅうけいです"
@@ -101,12 +101,12 @@
    "meaning": {
     "en": "Excuse me for leaving first",
     "bn": "আগে যাচ্ছি, মাফ করবেন",
-    "ja": ""
+    "ja": "おさきにしつれいします"
    },
    "note": {
     "en": "Said when leaving before others",
     "bn": "কাজ শেষে আগে বের হলে এটা বলে যেতে হয়।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "おさきにしつれいします"
@@ -120,12 +120,12 @@
    "meaning": {
     "en": "The work is finished",
     "bn": "কাজ শেষ হয়েছে",
-    "ja": ""
+    "ja": "しごとがおわりました"
    },
    "note": {
     "en": "Report task completion",
     "bn": "শেষ করে report করা — supervisor খুশি হয়।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "しごとがおわりました"
@@ -139,12 +139,12 @@
    "meaning": {
     "en": "May I go to the toilet?",
     "bn": "টয়লেটে যেতে পারি?",
-    "ja": ""
+    "ja": "トイレにいってもいいですか"
    },
    "note": {
     "en": "Ask permission on line work",
     "bn": "লাইনের কাজে অনুমতি নেওয়াই নিয়ম।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "トイレにいってもいいですか"
@@ -158,12 +158,12 @@
    "meaning": {
     "en": "I'm off (and will return)",
     "bn": "যাচ্ছি, ফিরব (বেরোনোর সম্ভাষণ)",
-    "ja": ""
+    "ja": "いってきます"
    },
    "note": {
     "en": "Said when leaving home",
     "bn": "বাসা/ডর্ম থেকে বেরোনোর সময় বলে — ফিরে ただいま।",
-    "ja": ""
+    "ja": "職場で使う"
    },
    "srs_words": [
     "いってきます"

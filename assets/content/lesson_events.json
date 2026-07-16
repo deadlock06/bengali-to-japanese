@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_events",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_smalltalk"
+ ],
+ "can_do": {
+  "en": "Know Japan's seasons & events",
+  "bn": "জাপানের উৎসব-অনুষ্ঠান চেনা",
+  "ja": "季節の行事"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori events set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_smalltalk"
+ ],
+ "items": [
+  {
+   "id": "ev_01",
+   "jp": "はなみ",
+   "kana": "はなみ",
+   "romaji": "hanami",
+   "meaning": {
+    "en": "Blossom viewing",
+    "bn": "চেরি ফুল দেখা",
+    "ja": "花見"
+   },
+   "note": {
+    "en": "Go with coworkers",
+    "bn": "এপ্রিলে সহকর্মীদের সাথে はなみ — যেও, দারুণ স্মৃতি হবে।",
+    "ja": "花見"
+   },
+   "srs_words": [
+    "はなみ"
+   ]
+  },
+  {
+   "id": "ev_02",
+   "jp": "まつり",
+   "kana": "まつり",
+   "romaji": "matsuri",
+   "meaning": {
+    "en": "Festival",
+    "bn": "উৎসব / মেলা",
+    "ja": "祭り"
+   },
+   "note": {
+    "en": "Summer street festivals",
+    "bn": "গ্রীষ্মের なつまつり — খাবার-স্টল আর ঢোল!",
+    "ja": "祭り"
+   },
+   "srs_words": [
+    "まつり"
+   ]
+  },
+  {
+   "id": "ev_03",
+   "jp": "はなび",
+   "kana": "はなび",
+   "romaji": "hanabi",
+   "meaning": {
+    "en": "Fireworks",
+    "bn": "আতশবাজি",
+    "ja": "花火"
+   },
+   "note": {
+    "en": "Riverside firework nights",
+    "bn": "জুলাই-আগস্টে はなびたいかい — নদীর ধারে হাজারো মানুষ।",
+    "ja": "花火"
+   },
+   "srs_words": [
+    "はなび"
+   ]
+  },
+  {
+   "id": "ev_04",
+   "jp": "おしょうがつ",
+   "kana": "おしょうがつ",
+   "romaji": "oshougatsu",
+   "meaning": {
+    "en": "New Year",
+    "bn": "নববর্ষ",
+    "ja": "お正月"
+   },
+   "note": {
+    "en": "Everything closes Jan 1-3",
+    "bn": "জাপানের সবচেয়ে বড় ছুটি — জানুয়ারি ১-৩ প্রায় সব বন্ধ।",
+    "ja": "お正月"
+   },
+   "srs_words": [
+    "おしょうがつ"
+   ]
+  },
+  {
+   "id": "ev_05",
+   "jp": "ゴールデンウィーク",
+   "kana": "ゴールデンウィーク",
+   "romaji": "gooruden wiiku",
+   "meaning": {
+    "en": "Golden Week",
+    "bn": "গোল্ডেন উইক",
+    "ja": "ゴールデンウィーク"
+   },
+   "note": {
+    "en": "YOUR travel window",
+    "bn": "এপ্রিল-মে-র টানা ছুটি — SSW-দের ভ্রমণের সুযোগ!",
+    "ja": "ゴールデンウィーク"
+   },
+   "srs_words": [
+    "ゴールデンウィーク"
+   ]
+  },
+  {
+   "id": "ev_06",
+   "jp": "おぼん",
+   "kana": "おぼん",
+   "romaji": "obon",
+   "meaning": {
+    "en": "Obon (ancestor festival)",
+    "bn": "ওবন (পূর্বপুরুষ স্মরণ)",
+    "ja": "お盆"
+   },
+   "note": {
+    "en": "Factories close too",
+    "bn": "আগস্টের ছুটি — কারখানাও প্রায়ই বন্ধ থাকে।",
+    "ja": "お盆"
+   },
+   "srs_words": [
+    "おぼん"
+   ]
+  },
+  {
+   "id": "ev_07",
+   "jp": "ぼうねんかい",
+   "kana": "ぼうねんかい",
+   "romaji": "bounenkai",
+   "meaning": {
+    "en": "Year-end party",
+    "bn": "বছর-শেষের পার্টি",
+    "ja": "忘年会"
+   },
+   "note": {
+    "en": "Deploy your alcohol-refusal line",
+    "bn": "ডিসেম্বরে কোম্পানির দাওয়াত — おさけはのみません আগেই বলে রাখো।",
+    "ja": "忘年会"
+   },
+   "srs_words": [
+    "ぼうねんかい"
+   ]
+  },
+  {
+   "id": "ev_08",
+   "jp": "きゅうじつ",
+   "kana": "きゅうじつ",
+   "romaji": "kyuujitsu",
+   "meaning": {
+    "en": "Day off / holiday",
+    "bn": "ছুটির দিন",
+    "ja": "休日"
+   },
+   "note": {
+    "en": "Favorite small-talk Q",
+    "bn": "きゅうじつはなにをしますか? — smalltalk-এর প্রিয় প্রশ্ন।",
+    "ja": "休日"
+   },
+   "srs_words": [
+    "きゅうじつ"
+   ]
+  }
+ ]
+}

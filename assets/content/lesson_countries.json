@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_countries",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_intro_qa"
+ ],
+ "can_do": {
+  "en": "Name countries",
+  "bn": "দেশের নাম বলা",
+  "ja": "国の名前"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori countries set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_intro_qa"
+ ],
+ "items": [
+  {
+   "id": "cn_01",
+   "jp": "バングラデシュ",
+   "kana": "バングラデシュ",
+   "romaji": "banguradeshu",
+   "meaning": {
+    "en": "Bangladesh",
+    "bn": "বাংলাদেশ",
+    "ja": "バングラデシュ"
+   },
+   "note": {
+    "en": "Write it in katakana",
+    "bn": "নিজের দেশ কাতাকানায় লিখতে-বলতে শেখো — フォーম-এ লাগবেই।",
+    "ja": "バングラデシュ"
+   },
+   "srs_words": [
+    "バングラデシュ"
+   ]
+  },
+  {
+   "id": "cn_02",
+   "jp": "にほん",
+   "kana": "にほん",
+   "romaji": "nihon",
+   "meaning": {
+    "en": "Japan",
+    "bn": "জাপান",
+    "ja": "日本"
+   },
+   "note": {
+    "en": "Nihon or Nippon",
+    "bn": "にっぽん-ও শুনবে — দুটোই ঠিক।",
+    "ja": "日本"
+   },
+   "srs_words": [
+    "にほん"
+   ]
+  },
+  {
+   "id": "cn_03",
+   "jp": "インド",
+   "kana": "インド",
+   "romaji": "indo",
+   "meaning": {
+    "en": "India",
+    "bn": "ভারত",
+    "ja": "インド"
+   },
+   "note": {
+    "en": "Neighbor",
+    "bn": "প্রতিবেশী — কাতাকানা সহজ।",
+    "ja": "インド"
+   },
+   "srs_words": [
+    "インド"
+   ]
+  },
+  {
+   "id": "cn_04",
+   "jp": "ネパール",
+   "kana": "ネパール",
+   "romaji": "nepaaru",
+   "meaning": {
+    "en": "Nepal",
+    "bn": "নেপাল",
+    "ja": "ネパール"
+   },
+   "note": {
+    "en": "Common dorm-mates",
+    "bn": "ডর্মে প্রায়ই নেপালি সহকর্মী পাবে।",
+    "ja": "ネパール"
+   },
+   "srs_words": [
+    "ネパール"
+   ]
+  },
+  {
+   "id": "cn_05",
+   "jp": "ベトナム",
+   "kana": "ベトナム",
+   "romaji": "betonamu",
+   "meaning": {
+    "en": "Vietnam",
+    "bn": "ভিয়েতনাম",
+    "ja": "ベトナム"
+   },
+   "note": {
+    "en": "Largest worker group",
+    "bn": "জাপানের সবচেয়ে বড় বিদেশি-কর্মী দল।",
+    "ja": "ベトナム"
+   },
+   "srs_words": [
+    "ベトナム"
+   ]
+  },
+  {
+   "id": "cn_06",
+   "jp": "インドネシア",
+   "kana": "インドネシア",
+   "romaji": "indoneshia",
+   "meaning": {
+    "en": "Indonesia",
+    "bn": "ইন্দোনেশিয়া",
+    "ja": "インドネシア"
+   },
+   "note": {
+    "en": "Halal-hunt allies!",
+    "bn": "মুসলিম সহকর্মী — halal খোঁজার সঙ্গী!",
+    "ja": "インドネシア"
+   },
+   "srs_words": [
+    "インドネシア"
+   ]
+  },
+  {
+   "id": "cn_07",
+   "jp": "ちゅうごく",
+   "kana": "ちゅうごく",
+   "romaji": "chuugoku",
+   "meaning": {
+    "en": "China",
+    "bn": "চীন",
+    "ja": "中国"
+   },
+   "note": {
+    "en": "The middle country",
+    "bn": "なか-র 中 — 'মাঝের দেশ'।",
+    "ja": "中国"
+   },
+   "srs_words": [
+    "ちゅうごく"
+   ]
+  },
+  {
+   "id": "cn_08",
+   "jp": "アメリカ",
+   "kana": "アメリカ",
+   "romaji": "amerika",
+   "meaning": {
+    "en": "America",
+    "bn": "আমেরিকা",
+    "ja": "アメリカ"
+   },
+   "note": {
+    "en": "Katakana classic",
+    "bn": "কাতাকানা প্র্যাকটিসের ক্লাসিক।",
+    "ja": "アメリカ"
+   },
+   "srs_words": [
+    "アメリカ"
+   ]
+  }
+ ]
+}

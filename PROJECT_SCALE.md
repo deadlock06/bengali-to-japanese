@@ -24,10 +24,9 @@ script — checkboxes below are for the steps the machine can't measure.
 ---
 
 ## PHASE A — CONTENT to beta target (biggest lever)
-- [ ] **A1 · A1/A2 vocab to ladder targets (772)** — author new ≤8-item lesson FILES
-      (never grow a file past 8), wire into unit comma-lists, `generate_audio.py`,
-      `sync_book_vocab.py`, validator PASS. ~250 items ≈ 6–8 sessions of authoring.
-      _needs: —_ · size L
+- [x] **A1 · A1/A2 vocab to ladder targets (772)** — DONE 2026-07-16: every L0/A1/A2
+      unit ≥ target (466 items, 55 lessons, 596 audio clips, book synced). Remaining
+      772-gap is entirely N4 (steps A2/A3). _needs: —_ · size L
 - [ ] **A2 · N4 whitelist** — author `content_factory/n4_whitelist.txt` (JLPT N4 superset,
       verified source). _needs: —_ · size M
 - [ ] **A3 · N4.1–N4.5 content** — te-form/plain/potential/give-receive/keigo lessons

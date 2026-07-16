@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_work_team",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_workplace"
+ ],
+ "can_do": {
+  "en": "Know your workplace people & things",
+  "bn": "কর্মস্থলের মানুষ ও নিয়ম চেনা",
+  "ja": "職場の人と物"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic workplace set 3",
+ "verified": true,
+ "prerequisites": [
+  "lesson_workplace"
+ ],
+ "items": [
+  {
+   "id": "wm_01",
+   "jp": "タイムカード",
+   "kana": "タイムカード",
+   "romaji": "taimu kaado",
+   "meaning": {
+    "en": "Time card",
+    "bn": "টাইম কার্ড",
+    "ja": "タイムカード"
+   },
+   "note": {
+    "en": "Punch in or payroll pain",
+    "bn": "ঢুকেই punch — ভুলে গেলে বেতনের ঝামেলা!",
+    "ja": "タイムカード"
+   },
+   "srs_words": [
+    "タイムカード"
+   ]
+  },
+  {
+   "id": "wm_02",
+   "jp": "せいふく",
+   "kana": "せいふく",
+   "romaji": "seifuku",
+   "meaning": {
+    "en": "Uniform",
+    "bn": "ইউনিফর্ম",
+    "ja": "制服"
+   },
+   "note": {
+    "en": "Clean uniform matters",
+    "bn": "পরিষ্কার せいふく = পেশাদার ছাপ।",
+    "ja": "制服"
+   },
+   "srs_words": [
+    "せいふく"
+   ]
+  },
+  {
+   "id": "wm_03",
+   "jp": "ロッカー",
+   "kana": "ロッカー",
+   "romaji": "rokkaa",
+   "meaning": {
+    "en": "Locker",
+    "bn": "লকার",
+    "ja": "ロッカー"
+   },
+   "note": {
+    "en": "Valuables go here",
+    "bn": "মূল্যবান জিনিস ロッカー-তে — কারখানার মেঝেতে নয়।",
+    "ja": "ロッカー"
+   },
+   "srs_words": [
+    "ロッカー"
+   ]
+  },
+  {
+   "id": "wm_04",
+   "jp": "こうじょうちょう",
+   "kana": "こうじょうちょう",
+   "romaji": "koujouchou",
+   "meaning": {
+    "en": "Factory manager",
+    "bn": "কারখানা প্রধান",
+    "ja": "工場長"
+   },
+   "note": {
+    "en": "-chou = chief",
+    "bn": "こうじょう+ちょう(প্রধান) — ちょう মানেই বস-শব্দ।",
+    "ja": "工場長"
+   },
+   "srs_words": [
+    "こうじょうちょう"
+   ]
+  },
+  {
+   "id": "wm_05",
+   "jp": "はんちょう",
+   "kana": "はんちょう",
+   "romaji": "hanchou",
+   "meaning": {
+    "en": "Team leader",
+    "bn": "দলনেতা",
+    "ja": "班長"
+   },
+   "note": {
+    "en": "Your first escalation point",
+    "bn": "তোমার সরাসরি বস — সমস্যা আগে ওঁকেই বলো।",
+    "ja": "班長"
+   },
+   "srs_words": [
+    "はんちょう"
+   ]
+  },
+  {
+   "id": "wm_06",
+   "jp": "みんな",
+   "kana": "みんな",
+   "romaji": "minna",
+   "meaning": {
+    "en": "Everyone",
+    "bn": "সবাই",
+    "ja": "みんな"
+   },
+   "note": {
+    "en": "Minna de = all together",
+    "bn": "みんなでがんばりましょう — চলুন সবাই মিলে!",
+    "ja": "みんな"
+   },
+   "srs_words": [
+    "みんな"
+   ]
+  },
+  {
+   "id": "wm_07",
+   "jp": "しんじん",
+   "kana": "しんじん",
+   "romaji": "shinjin",
+   "meaning": {
+    "en": "Newcomer",
+    "bn": "নতুন কর্মী",
+    "ja": "新人"
+   },
+   "note": {
+    "en": "Newbie privileges: use them",
+    "bn": "প্রথম বছর তুমি しんじん — ভুল মাফ, প্রশ্ন ফ্রি!",
+    "ja": "新人"
+   },
+   "srs_words": [
+    "しんじん"
+   ]
+  },
+  {
+   "id": "wm_08",
+   "jp": "けんしゅう",
+   "kana": "けんしゅう",
+   "romaji": "kenshuu",
+   "meaning": {
+    "en": "Training",
+    "bn": "প্রশিক্ষণ",
+    "ja": "研修"
+   },
+   "note": {
+    "en": "Kenshuu-chuu badge",
+    "bn": "けんしゅうちゅう = প্রশিক্ষণে আছি — ব্যাজেও লেখা থাকে।",
+    "ja": "研修"
+   },
+   "srs_words": [
+    "けんしゅう"
+   ]
+  }
+ ]
+}

@@ -138,7 +138,7 @@
         "A1.1"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_intro_qa,lesson_family,lesson_about_me,lesson_hobbies",
+      "lesson_id": "lesson_intro_qa,lesson_family,lesson_about_me,lesson_hobbies,lesson_countries",
       "target_word_count": 35
     },
     {
@@ -198,7 +198,7 @@
         "A1.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_workplace,lesson_work_day,lesson_work_verbs,lesson_work_phrases,lesson_work_things",
+      "lesson_id": "lesson_workplace,lesson_work_day,lesson_work_verbs,lesson_work_phrases,lesson_work_things,lesson_work_team",
       "target_word_count": 45
     },
     {
@@ -218,7 +218,7 @@
         "A1.2"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_clinic,lesson_emergency,lesson_body,lesson_symptoms",
+      "lesson_id": "lesson_clinic,lesson_emergency,lesson_body,lesson_symptoms,lesson_medicine,lesson_hygiene",
       "target_word_count": 45
     },
     {
@@ -238,7 +238,7 @@
         "L0.3"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_directions,lesson_transport,lesson_places,lesson_vehicles,lesson_directions_words",
+      "lesson_id": "lesson_directions,lesson_transport,lesson_places,lesson_vehicles,lesson_directions_words,lesson_stations,lesson_travel_manners",
       "target_word_count": 50
     },
     {
@@ -258,7 +258,7 @@
         "A2.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_requests,lesson_requests_2,lesson_permissions,lesson_learning_questions",
+      "lesson_id": "lesson_work_requests,lesson_requests_2,lesson_permissions,lesson_learning_questions,lesson_asking_actions",
       "target_word_count": 40
     },
     {
@@ -278,7 +278,7 @@
         "A2.4"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_smalltalk,lesson_past_plans,lesson_frequency,lesson_daily_verbs,lesson_weather",
+      "lesson_id": "lesson_smalltalk,lesson_past_plans,lesson_frequency,lesson_daily_verbs,lesson_weather,lesson_events",
       "target_word_count": 45
     },
     {
@@ -298,7 +298,7 @@
         "A2.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_safety,lesson_apology,lesson_problems,lesson_trouble_talk",
+      "lesson_id": "lesson_work_safety,lesson_apology,lesson_problems,lesson_trouble_talk,lesson_feelings",
       "target_word_count": 40
     },
     {

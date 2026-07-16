@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_asking_actions",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_work_requests"
+ ],
+ "can_do": {
+  "en": "Ask for everyday actions",
+  "bn": "দৈনন্দিন কাজ করে দিতে বলা",
+  "ja": "日常の依頼"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic requests set 3",
+ "verified": true,
+ "prerequisites": [
+  "lesson_work_requests"
+ ],
+ "items": [
+  {
+   "id": "aa_01",
+   "jp": "とってください",
+   "kana": "とってください",
+   "romaji": "totte kudasai",
+   "meaning": {
+    "en": "Please pass/get it",
+    "bn": "ওটা এগিয়ে দিন",
+    "ja": "取ってください"
+   },
+   "note": {
+    "en": "Pass the salt etc.",
+    "bn": "টেবিল-জীবনের রোজের অনুরোধ — しお、とってください।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "とってください"
+   ]
+  },
+  {
+   "id": "aa_02",
+   "jp": "あけてください",
+   "kana": "あけてください",
+   "romaji": "akete kudasai",
+   "meaning": {
+    "en": "Please open it",
+    "bn": "খুলে দিন",
+    "ja": "開けてください"
+   },
+   "note": {
+    "en": "Doors, windows, bottles",
+    "bn": "দরজা/জানালা/বোতল — সবকিছুতে চলে।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "あけてください"
+   ]
+  },
+  {
+   "id": "aa_03",
+   "jp": "しめてください",
+   "kana": "しめてください",
+   "romaji": "shimete kudasai",
+   "meaning": {
+    "en": "Please close it",
+    "bn": "বন্ধ করে দিন",
+    "ja": "閉めてください"
+   },
+   "note": {
+    "en": "Pair with akete",
+    "bn": "あけて-র উল্টো — জোড়ায় মনে রাখো।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "しめてください"
+   ]
+  },
+  {
+   "id": "aa_04",
+   "jp": "つけてください",
+   "kana": "つけてください",
+   "romaji": "tsukete kudasai",
+   "meaning": {
+    "en": "Please turn it on",
+    "bn": "চালু করুন",
+    "ja": "つけてください"
+   },
+   "note": {
+    "en": "Universal on-switch",
+    "bn": "লাইট/এসি/মেশিন — on করার সর্বজনীন অনুরোধ।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "つけてください"
+   ]
+  },
+  {
+   "id": "aa_05",
+   "jp": "けしてください",
+   "kana": "けしてください",
+   "romaji": "keshite kudasai",
+   "meaning": {
+    "en": "Please turn it off",
+    "bn": "বন্ধ করুন (নিভান)",
+    "ja": "消してください"
+   },
+   "note": {
+    "en": "Lights-off line",
+    "bn": "でんきをけしてください — বেরোনোর সময়ের লাইন।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "けしてください"
+   ]
+  },
+  {
+   "id": "aa_06",
+   "jp": "もってきてください",
+   "kana": "もってきてください",
+   "romaji": "motte kite kudasai",
+   "meaning": {
+    "en": "Please bring it",
+    "bn": "নিয়ে আসুন",
+    "ja": "持ってきてください"
+   },
+   "note": {
+    "en": "Hold-and-come",
+    "bn": "もって(ধরে)+きて(এসে) — জিনিস আনানোর অনুরোধ।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "もってきてください"
+   ]
+  },
+  {
+   "id": "aa_07",
+   "jp": "いそいでください",
+   "kana": "いそいでください",
+   "romaji": "isoide kudasai",
+   "meaning": {
+    "en": "Please hurry",
+    "bn": "তাড়াতাড়ি করুন",
+    "ja": "急いでください"
+   },
+   "note": {
+    "en": "Soften with sumimasen",
+    "bn": "জরুরি অবস্থায় — সাথে すみません নরম করে।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "いそいでください"
+   ]
+  },
+  {
+   "id": "aa_08",
+   "jp": "ゆっくりおねがいします",
+   "kana": "ゆっくりおねがいします",
+   "romaji": "yukkuri onegaishimasu",
+   "meaning": {
+    "en": "Slowly, please",
+    "bn": "আস্তে, প্লিজ",
+    "ja": "ゆっくりお願いします"
+   },
+   "note": {
+    "en": "The learner's shield",
+    "bn": "কথা/কাজ দুটোতেই — শেখার সময়ের রক্ষাকবচ।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "ゆっくりおねがいします"
+   ]
+  }
+ ]
+}

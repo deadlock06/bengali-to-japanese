@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_feelings",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_smalltalk"
+ ],
+ "can_do": {
+  "en": "Say how you feel",
+  "bn": "মনের অবস্থা বলা",
+  "ja": "気持ちのことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori feelings set (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_smalltalk"
+ ],
+ "items": [
+  {
+   "id": "fe_01",
+   "jp": "うれしい",
+   "kana": "うれしい",
+   "romaji": "ureshii",
+   "meaning": {
+    "en": "Happy/glad",
+    "bn": "খুশি",
+    "ja": "嬉しい"
+   },
+   "note": {
+    "en": "Genuine joy reply",
+    "bn": "প্রশংসা পেলে: うれしいです! — আন্তরিক শোনায়।",
+    "ja": "嬉しい"
+   },
+   "srs_words": [
+    "うれしい"
+   ]
+  },
+  {
+   "id": "fe_02",
+   "jp": "かなしい",
+   "kana": "かなしい",
+   "romaji": "kanashii",
+   "meaning": {
+    "en": "Sad",
+    "bn": "দুঃখিত (মন খারাপ)",
+    "ja": "悲しい"
+   },
+   "note": {
+    "en": "OK to share",
+    "bn": "মন খারাপ লুকোতে হয় না — বন্ধুকে বলো।",
+    "ja": "悲しい"
+   },
+   "srs_words": [
+    "かなしい"
+   ]
+  },
+  {
+   "id": "fe_03",
+   "jp": "さびしい",
+   "kana": "さびしい",
+   "romaji": "sabishii",
+   "meaning": {
+    "en": "Lonely",
+    "bn": "একা লাগছে",
+    "ja": "寂しい"
+   },
+   "note": {
+    "en": "The expat truth",
+    "bn": "প্রবাস-জীবনের সত্যি — বললে হালকা হয়, দেশে ফোনও দাও।",
+    "ja": "寂しい"
+   },
+   "srs_words": [
+    "さびしい"
+   ]
+  },
+  {
+   "id": "fe_04",
+   "jp": "こわい",
+   "kana": "こわい",
+   "romaji": "kowai",
+   "meaning": {
+    "en": "Scared",
+    "bn": "ভয় লাগছে",
+    "ja": "怖い"
+   },
+   "note": {
+    "en": "kowai ≠ kawaii!",
+    "bn": "かわいい(কিউট)-র সাথে গুলিয়ো না — উচ্চারণ সাবধান!",
+    "ja": "怖い"
+   },
+   "srs_words": [
+    "こわい"
+   ]
+  },
+  {
+   "id": "fe_05",
+   "jp": "びっくりしました",
+   "kana": "びっくりしました",
+   "romaji": "bikkuri shimashita",
+   "meaning": {
+    "en": "I was surprised!",
+    "bn": "চমকে গেছি!",
+    "ja": "びっくりしました"
+   },
+   "note": {
+    "en": "Fun to say",
+    "bn": "জাপানের প্রিয় exclamation — শব্দটাই মজার।",
+    "ja": "驚き"
+   },
+   "srs_words": [
+    "びっくりしました"
+   ]
+  },
+  {
+   "id": "fe_06",
+   "jp": "しんぱいです",
+   "kana": "しんぱいです",
+   "romaji": "shinpai desu",
+   "meaning": {
+    "en": "I'm worried",
+    "bn": "চিন্তা হচ্ছে",
+    "ja": "心配です"
+   },
+   "note": {
+    "en": "Shinpai shinaide = don't worry",
+    "bn": "しんぱいしないで — চিন্তা কোরো না (উল্টোটাও শেখা হলো)।",
+    "ja": "心配"
+   },
+   "srs_words": [
+    "しんぱいです"
+   ]
+  },
+  {
+   "id": "fe_07",
+   "jp": "あんしんしました",
+   "kana": "あんしんしました",
+   "romaji": "anshin shimashita",
+   "meaning": {
+    "en": "I'm relieved",
+    "bn": "নিশ্চিন্ত হলাম",
+    "ja": "安心しました"
+   },
+   "note": {
+    "en": "Opposite of shinpai",
+    "bn": "ভালো খবর পেলে — しんぱい-র উল্টো।",
+    "ja": "安心"
+   },
+   "srs_words": [
+    "あんしんしました"
+   ]
+  },
+  {
+   "id": "fe_08",
+   "jp": "たいへんです",
+   "kana": "たいへんです",
+   "romaji": "taihen desu",
+   "meaning": {
+    "en": "It's tough / serious",
+    "bn": "খুব কঠিন / সাংঘাতিক",
+    "ja": "大変です"
+   },
+   "note": {
+    "en": "Taihen desu ne = empathy",
+    "bn": "কষ্টের স্বীকৃতি — たいへんですね বললে সহমর্মিতা।",
+    "ja": "大変"
+   },
+   "srs_words": [
+    "たいへんです"
+   ]
+  }
+ ]
+}

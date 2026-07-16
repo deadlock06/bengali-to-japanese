@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_stations",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_transport"
+ ],
+ "can_do": {
+  "en": "Navigate the station",
+  "bn": "স্টেশন চেনা",
+  "ja": "駅の中"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic station set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_transport"
+ ],
+ "items": [
+  {
+   "id": "sn_01",
+   "jp": "かいさつ",
+   "kana": "かいさつ",
+   "romaji": "kaisatsu",
+   "meaning": {
+    "en": "Ticket gate",
+    "bn": "টিকিট গেট",
+    "ja": "改札"
+   },
+   "note": {
+    "en": "Tap here; meet here",
+    "bn": "IC কার্ড ছোঁয়াও — かいさつ-তে দেখা করার ওয়াদাও হয়।",
+    "ja": "改札"
+   },
+   "srs_words": [
+    "かいさつ"
+   ]
+  },
+  {
+   "id": "sn_02",
+   "jp": "ホーム",
+   "kana": "ホーム",
+   "romaji": "hoomu",
+   "meaning": {
+    "en": "Platform",
+    "bn": "প্ল্যাটফর্ম",
+    "ja": "ホーム"
+   },
+   "note": {
+    "en": "Behind the yellow line",
+    "bn": "１ばんホーム = প্ল্যাটফর্ম ১ — হলুদ দাগের পেছনে দাঁড়াও।",
+    "ja": "ホーム"
+   },
+   "srs_words": [
+    "ホーム"
+   ]
+  },
+  {
+   "id": "sn_03",
+   "jp": "いりぐち",
+   "kana": "いりぐち",
+   "romaji": "iriguchi",
+   "meaning": {
+    "en": "Entrance",
+    "bn": "প্রবেশপথ",
+    "ja": "入口"
+   },
+   "note": {
+    "en": "Enter-mouth",
+    "bn": "いり(ঢোকা)+ぐち(মুখ) — লেখা চিনে রাখো।",
+    "ja": "入口"
+   },
+   "srs_words": [
+    "いりぐち"
+   ]
+  },
+  {
+   "id": "sn_04",
+   "jp": "でぐち",
+   "kana": "でぐち",
+   "romaji": "deguchi",
+   "meaning": {
+    "en": "Exit",
+    "bn": "বাহির পথ",
+    "ja": "出口"
+   },
+   "note": {
+    "en": "Exit numbers save you",
+    "bn": "স্টেশনে হারালে でぐち-র নম্বর দেখো — ひがしぐち=পূর্ব গেট।",
+    "ja": "出口"
+   },
+   "srs_words": [
+    "でぐち"
+   ]
+  },
+  {
+   "id": "sn_05",
+   "jp": "のりば",
+   "kana": "のりば",
+   "romaji": "noriba",
+   "meaning": {
+    "en": "Boarding point",
+    "bn": "ওঠার জায়গা",
+    "ja": "乗り場"
+   },
+   "note": {
+    "en": "Where you board",
+    "bn": "バスのりば、タクシーのりば — যেখান থেকে ওঠে।",
+    "ja": "乗り場"
+   },
+   "srs_words": [
+    "のりば"
+   ]
+  },
+  {
+   "id": "sn_06",
+   "jp": "じこくひょう",
+   "kana": "じこくひょう",
+   "romaji": "jikokuhyou",
+   "meaning": {
+    "en": "Timetable",
+    "bn": "সময়সূচি",
+    "ja": "時刻表"
+   },
+   "note": {
+    "en": "Trust it to the minute",
+    "bn": "জাপানের ট্রেন মিনিটে মেলে — じこくひょう বিশ্বাস করো।",
+    "ja": "時刻表"
+   },
+   "srs_words": [
+    "じこくひょう"
+   ]
+  },
+  {
+   "id": "sn_07",
+   "jp": "バスてい",
+   "kana": "バスてい",
+   "romaji": "basutei",
+   "meaning": {
+    "en": "Bus stop",
+    "bn": "বাস স্টপ",
+    "ja": "バス停"
+   },
+   "note": {
+    "en": "Rural lifeline",
+    "bn": "গ্রামের দিকে বাসই ভরসা — バスてい চিনে রাখো।",
+    "ja": "バス停"
+   },
+   "srs_words": [
+    "バスてい"
+   ]
+  },
+  {
+   "id": "sn_08",
+   "jp": "しゅうでん",
+   "kana": "しゅうでん",
+   "romaji": "shuuden",
+   "meaning": {
+    "en": "Last train",
+    "bn": "শেষ ট্রেন",
+    "ja": "終電"
+   },
+   "note": {
+    "en": "Miss it = taxi = broke",
+    "bn": "মিস করলে ট্যাক্সি = অর্ধেক বেতন! しゅうでん-এর সময় মুখস্থ রাখো।",
+    "ja": "終電"
+   },
+   "srs_words": [
+    "しゅうでん"
+   ]
+  }
+ ]
+}

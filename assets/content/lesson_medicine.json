@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_medicine",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_clinic"
+ ],
+ "can_do": {
+  "en": "Handle pharmacy & hospital things",
+  "bn": "ওষুধ-হাসপাতালের জিনিস",
+  "ja": "薬と病院の物"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic clinic set 4",
+ "verified": true,
+ "prerequisites": [
+  "lesson_clinic"
+ ],
+ "items": [
+  {
+   "id": "md_01",
+   "jp": "ほけんしょう",
+   "kana": "ほけんしょう",
+   "romaji": "hokenshou",
+   "meaning": {
+    "en": "Health insurance card",
+    "bn": "স্বাস্থ্যবিমা কার্ড",
+    "ja": "保険証"
+   },
+   "note": {
+    "en": "ALWAYS in your wallet",
+    "bn": "ডাক্তারে গেলে প্রথমেই চাইবে — সবসময় মানিব্যাগে রাখো!",
+    "ja": "保険証"
+   },
+   "srs_words": [
+    "ほけんしょう"
+   ]
+  },
+  {
+   "id": "md_02",
+   "jp": "よやく",
+   "kana": "よやく",
+   "romaji": "yoyaku",
+   "meaning": {
+    "en": "Appointment/reservation",
+    "bn": "অ্যাপয়েন্টমেন্ট",
+    "ja": "予約"
+   },
+   "note": {
+    "en": "Doctor AND restaurants",
+    "bn": "よやくがありますか? — ডাক্তার/রেস্টুরেন্ট দুটোতেই।",
+    "ja": "予約"
+   },
+   "srs_words": [
+    "よやく"
+   ]
+  },
+  {
+   "id": "md_03",
+   "jp": "ばんそうこう",
+   "kana": "ばんそうこう",
+   "romaji": "bansoukou",
+   "meaning": {
+    "en": "Adhesive bandage",
+    "bn": "ব্যান্ডেজ (ব্যান্ড-এইড)",
+    "ja": "絆創膏"
+   },
+   "note": {
+    "en": "Konbini stocks them",
+    "bn": "ছোট কাটায় — কনবিনিতেও পাওয়া যায়।",
+    "ja": "絆創膏"
+   },
+   "srs_words": [
+    "ばんそうこう"
+   ]
+  },
+  {
+   "id": "md_04",
+   "jp": "マスク",
+   "kana": "マスク",
+   "romaji": "masuku",
+   "meaning": {
+    "en": "Mask",
+    "bn": "মাস্ক",
+    "ja": "マスク"
+   },
+   "note": {
+    "en": "Courtesy + food-factory rule",
+    "bn": "অসুস্থ হলে মাস্ক পরা এখানে ভদ্রতা — খাদ্য-কারখানায় নিয়ম।",
+    "ja": "マスク"
+   },
+   "srs_words": [
+    "マスク"
+   ]
+  },
+  {
+   "id": "md_05",
+   "jp": "たいおんけい",
+   "kana": "たいおんけい",
+   "romaji": "taionkei",
+   "meaning": {
+    "en": "Thermometer",
+    "bn": "থার্মোমিটার",
+    "ja": "体温計"
+   },
+   "note": {
+    "en": "Measuring fever",
+    "bn": "ねつをはかります — জ্বর মাপি।",
+    "ja": "体温計"
+   },
+   "srs_words": [
+    "たいおんけい"
+   ]
+  },
+  {
+   "id": "md_06",
+   "jp": "ちゅうしゃ",
+   "kana": "ちゅうしゃ",
+   "romaji": "chuusha",
+   "meaning": {
+    "en": "Injection",
+    "bn": "ইনজেকশন",
+    "ja": "注射"
+   },
+   "note": {
+    "en": "Say kowai if scared 😄",
+    "bn": "টিকা/চিকিৎসা — ভয় পেলে こわいです বলেই ফেলো 😄",
+    "ja": "注射"
+   },
+   "srs_words": [
+    "ちゅうしゃ"
+   ]
+  },
+  {
+   "id": "md_07",
+   "jp": "くすりや",
+   "kana": "くすりや",
+   "romaji": "kusuriya",
+   "meaning": {
+    "en": "Drugstore",
+    "bn": "ওষুধের দোকান",
+    "ja": "薬屋"
+   },
+   "note": {
+    "en": "Also drugstore",
+    "bn": "やっきょく-র সহজ ভাই — ドラッグストア-ও বলে।",
+    "ja": "薬屋"
+   },
+   "srs_words": [
+    "くすりや"
+   ]
+  },
+  {
+   "id": "md_08",
+   "jp": "おだいじに",
+   "kana": "おだいじに",
+   "romaji": "odaijini",
+   "meaning": {
+    "en": "Get well soon",
+    "bn": "সেরে উঠুন (বিদায়)",
+    "ja": "お大事に"
+   },
+   "note": {
+    "en": "They say it to YOU",
+    "bn": "ডাক্তার/ফার্মেসি থেকে বেরোনোর সময় তোমাকে বলবে — জবাব লাগে না।",
+    "ja": "お大事に"
+   },
+   "srs_words": [
+    "おだいじに"
+   ]
+  }
+ ]
+}

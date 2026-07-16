@@ -1,0 +1,135 @@
+{
+ "type": "lesson",
+ "id": "lesson_hygiene",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_clinic"
+ ],
+ "can_do": {
+  "en": "Name daily hygiene items",
+  "bn": "পরিচ্ছন্নতার জিনিস চেনা",
+  "ja": "衛生用品"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic hygiene set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_clinic"
+ ],
+ "items": [
+  {
+   "id": "hy_01",
+   "jp": "せっけん",
+   "kana": "せっけん",
+   "romaji": "sekken",
+   "meaning": {
+    "en": "Soap",
+    "bn": "সাবান",
+    "ja": "石鹸"
+   },
+   "note": {
+    "en": "Handwashing partner",
+    "bn": "てをあらいます-র সঙ্গী — খাদ্য-কারখানার নিত্যকর্ম।",
+    "ja": "石鹸"
+   },
+   "srs_words": [
+    "せっけん"
+   ]
+  },
+  {
+   "id": "hy_02",
+   "jp": "シャンプー",
+   "kana": "シャンプー",
+   "romaji": "shanpuu",
+   "meaning": {
+    "en": "Shampoo",
+    "bn": "শ্যাম্পু",
+    "ja": "シャンプー"
+   },
+   "note": {
+    "en": "Rinse = conditioner",
+    "bn": "リンス = কন্ডিশনার — বোতল গুলিয়ো না!",
+    "ja": "シャンプー"
+   },
+   "srs_words": [
+    "シャンプー"
+   ]
+  },
+  {
+   "id": "hy_03",
+   "jp": "タオル",
+   "kana": "タオル",
+   "romaji": "taoru",
+   "meaning": {
+    "en": "Towel",
+    "bn": "তোয়ালে",
+    "ja": "タオル"
+   },
+   "note": {
+    "en": "Carry a hand towel",
+    "bn": "জাপানে নিজের হাত-তোয়ালে বয়ে বেড়ানো স্বাভাবিক।",
+    "ja": "タオル"
+   },
+   "srs_words": [
+    "タオル"
+   ]
+  },
+  {
+   "id": "hy_04",
+   "jp": "はぶらし",
+   "kana": "はぶらし",
+   "romaji": "haburashi",
+   "meaning": {
+    "en": "Toothbrush",
+    "bn": "টুথব্রাশ",
+    "ja": "歯ブラシ"
+   },
+   "note": {
+    "en": "Tooth + brush",
+    "bn": "は(দাঁত)+ぶらし(ব্রাশ) — যুক্তির শব্দ।",
+    "ja": "歯ブラシ"
+   },
+   "srs_words": [
+    "はぶらし"
+   ]
+  },
+  {
+   "id": "hy_05",
+   "jp": "ティッシュ",
+   "kana": "ティッシュ",
+   "romaji": "tisshu",
+   "meaning": {
+    "en": "Tissue",
+    "bn": "টিস্যু",
+    "ja": "ティッシュ"
+   },
+   "note": {
+    "en": "Free at stations!",
+    "bn": "স্টেশনের সামনে ফ্রি ティッシュ বিলি হয় — নিয়ে নিও!",
+    "ja": "ティッシュ"
+   },
+   "srs_words": [
+    "ティッシュ"
+   ]
+  },
+  {
+   "id": "hy_06",
+   "jp": "トイレットペーパー",
+   "kana": "トイレットペーパー",
+   "romaji": "toiretto peepaa",
+   "meaning": {
+    "en": "Toilet paper",
+    "bn": "টয়লেট পেপার",
+    "ja": "トイレットペーパー"
+   },
+   "note": {
+    "en": "Long katakana practice",
+    "bn": "লম্বা কাতাকানা পড়ার প্র্যাকটিস — রোজের কেনাকাটা।",
+    "ja": "トイレットペーパー"
+   },
+   "srs_words": [
+    "トイレットペーパー"
+   ]
+  }
+ ]
+}

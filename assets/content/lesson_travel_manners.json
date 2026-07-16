@@ -1,0 +1,97 @@
+{
+ "type": "lesson",
+ "id": "lesson_travel_manners",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_transport"
+ ],
+ "can_do": {
+  "en": "Ride with Japanese manners",
+  "bn": "জাপানি কায়দায় যাতায়াত",
+  "ja": "乗り物のマナー"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic transit manners",
+ "verified": true,
+ "prerequisites": [
+  "lesson_transport"
+ ],
+ "items": [
+  {
+   "id": "tm_01",
+   "jp": "ゆうせんせき",
+   "kana": "ゆうせんせき",
+   "romaji": "yuusenseki",
+   "meaning": {
+    "en": "Priority seat",
+    "bn": "সংরক্ষিত আসন",
+    "ja": "優先席"
+   },
+   "note": {
+    "en": "Leave it empty",
+    "bn": "বয়স্ক/গর্ভবতী/অসুস্থদের — খালি থাকলেও না বসাই ভদ্রতা।",
+    "ja": "優先席"
+   },
+   "srs_words": [
+    "ゆうせんせき"
+   ]
+  },
+  {
+   "id": "tm_02",
+   "jp": "マナーモード",
+   "kana": "マナーモード",
+   "romaji": "manaa moodo",
+   "meaning": {
+    "en": "Silent mode",
+    "bn": "সাইলেন্ট মোড",
+    "ja": "マナーモード"
+   },
+   "note": {
+    "en": "Iron rule on trains",
+    "bn": "ট্রেনে ফোন সাইলেন্ট + কথা না বলা — লোহার নিয়ম।",
+    "ja": "マナーモード"
+   },
+   "srs_words": [
+    "マナーモード"
+   ]
+  },
+  {
+   "id": "tm_03",
+   "jp": "ならびます",
+   "kana": "ならびます",
+   "romaji": "narabimasu",
+   "meaning": {
+    "en": "I line up",
+    "bn": "লাইনে দাঁড়াই",
+    "ja": "並びます"
+   },
+   "note": {
+    "en": "Land of queues",
+    "bn": "জাপান = লাইনের দেশ — দাগ দেখে দাঁড়াও।",
+    "ja": "並ぶ"
+   },
+   "srs_words": [
+    "ならびます"
+   ]
+  },
+  {
+   "id": "tm_04",
+   "jp": "ICカード",
+   "kana": "ICカード",
+   "romaji": "ai shii kaado",
+   "meaning": {
+    "en": "IC card",
+    "bn": "আইসি কার্ড",
+    "ja": "ICカード"
+   },
+   "note": {
+    "en": "Works at konbini too",
+    "bn": "Suica/PASMO — কনবিনিতেও চলে। প্রথম সপ্তাহেই বানাও।",
+    "ja": "ICカード"
+   },
+   "srs_words": [
+    "ICカード"
+   ]
+  }
+ ]
+}

@@ -128,6 +128,28 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
     });
   }
 
+  /// The device's Bengali TTS voice tag (bn-IN / bn-BD / bn…), or null if the
+  /// platform has no Bengali voice. Bengali script can only be read by a
+  /// Bengali voice, so we can't fall back to another language.
+  Future<String?> _bengaliVoice() async {
+    try {
+      final langs = await _tts.getLanguages;
+      if (langs is! List || langs.isEmpty) return null;
+      final tags = langs.map((e) => e.toString()).toList();
+      for (final want in ['bn-IN', 'bn-BD', 'bn']) {
+        for (final t in tags) {
+          if (t.toLowerCase() == want.toLowerCase()) return t;
+        }
+      }
+      for (final t in tags) {
+        if (t.toLowerCase().startsWith('bn')) return t;
+      }
+      return null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   Future<void> _speak(int msgIdx, String text) async {
     if (_speakingIdx == msgIdx) {
       await _tts.stop();
@@ -135,11 +157,25 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
       return;
     }
     await _tts.stop();
+    final voice = await _bengaliVoice();
+    if (!mounted) return;
+    if (voice == null) {
+      // No Bengali voice on this device (common on desktop/headless browsers) —
+      // tell the learner instead of failing silently.
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+            'এই ডিভাইসে বাংলা voice নেই — মোবাইলে (Android/iOS) পড়ে শোনানো যাবে। '
+            'জাপানি উচ্চারণ 🔊 বাটনে অফলাইনেই শোনা যায়।'),
+        duration: Duration(seconds: 4),
+      ));
+      return;
+    }
     setState(() => _speakingIdx = msgIdx);
     try {
-      await _tts.setLanguage('bn-IN');
+      await _tts.setLanguage(voice);
       await _tts.setSpeechRate(0.45);
-      await _tts.speak(text);
+      final r = await _tts.speak(text);
+      if (r == 0 && mounted) setState(() => _speakingIdx = -1);
     } catch (_) {
       if (mounted) setState(() => _speakingIdx = -1);
     }

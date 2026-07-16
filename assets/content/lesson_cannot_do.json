@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_cannot_do",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_can_do"
+ ],
+ "can_do": {
+  "en": "Say what you CANNOT do (honestly)",
+  "bn": "যা পারি না তা (সৎভাবে) বলা",
+  "ja": "できないこと"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_can_do"
+ ],
+ "items": [
+  {
+   "id": "cn2_01",
+   "jp": "おさけがのめません",
+   "kana": "おさけがのめません",
+   "romaji": "osake ga nomemasen",
+   "meaning": {
+    "en": "I cannot drink alcohol",
+    "bn": "মদ পান করতে পারি না",
+    "ja": "お酒が飲めません"
+   },
+   "note": {
+    "en": "Stronger than nomimasen",
+    "bn": "のみません (করি না) থেকেও জোরালো — পারি-ই-না। ধর্মীয় কারণে এটাই পরিষ্কার।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "おさけがのめません"
+   ]
+  },
+  {
+   "id": "cn2_02",
+   "jp": "まだかんじがよめません",
+   "kana": "まだかんじがよめません",
+   "romaji": "mada kanji ga yomemasen",
+   "meaning": {
+    "en": "I can't read kanji yet",
+    "bn": "কাঞ্জি এখনো পড়তে পারি না",
+    "ja": "まだ漢字が読めません"
+   },
+   "note": {
+    "en": "mada = not YET",
+    "bn": "まだ+ません = এখনো পারি না — শেখার সততা।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "まだかんじがよめません"
+   ]
+  },
+  {
+   "id": "cn2_03",
+   "jp": "にちようびははたらけません",
+   "kana": "にちようびははたらけません",
+   "romaji": "nichiyoubi wa hatarakemasen",
+   "meaning": {
+    "en": "I can't work on Sundays",
+    "bn": "রবিবারে কাজ করতে পারি না",
+    "ja": "日曜日は働けません"
+   },
+   "note": {
+    "en": "State it early, get respect",
+    "bn": "প্রার্থনা/বিশ্রামের দিন আগে থেকেই জানাও — সম্মান পাবে।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "にちようびははたらけません"
+   ]
+  },
+  {
+   "id": "cn2_04",
+   "jp": "きょうはざんぎょうできません",
+   "kana": "きょうはざんぎょうできません",
+   "romaji": "kyou wa zangyou dekimasen",
+   "meaning": {
+    "en": "I can't do overtime today",
+    "bn": "আজ ওভারটাইম পারব না",
+    "ja": "今日は残業できません"
+   },
+   "note": {
+    "en": "You MAY refuse politely",
+    "bn": "না বলার অধিকার আছে — কারণসহ ভদ্রভাবে।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "きょうはざんぎょうできません"
+   ]
+  },
+  {
+   "id": "cn2_05",
+   "jp": "あしたはこられません",
+   "kana": "あしたはこられません",
+   "romaji": "ashita wa koraremasen",
+   "meaning": {
+    "en": "I can't come tomorrow",
+    "bn": "কাল আসতে পারব না",
+    "ja": "明日は来られません"
+   },
+   "note": {
+    "en": "Advance notice = hourensou",
+    "bn": "くる→こられます→こられません — আগে জানানোই 報連相।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "あしたはこられません"
+   ]
+  },
+  {
+   "id": "cn2_06",
+   "jp": "よるはでんわできません",
+   "kana": "よるはでんわできません",
+   "romaji": "yoru wa denwa dekimasen",
+   "meaning": {
+    "en": "I can't take calls at night",
+    "bn": "রাতে ফোন ধরতে পারি না",
+    "ja": "夜は電話できません"
+   },
+   "note": {
+    "en": "Boundaries are fluency too",
+    "bn": "সীমানা বলাও ভাষা-দক্ষতা।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "よるはでんわできません"
+   ]
+  },
+  {
+   "id": "cn2_07",
+   "jp": "それはできません",
+   "kana": "それはできません",
+   "romaji": "sore wa dekimasen",
+   "meaning": {
+    "en": "That I cannot do",
+    "bn": "ওটা আমি পারব না",
+    "ja": "それはできません"
+   },
+   "note": {
+    "en": "Firm refusal — your shield",
+    "bn": "অন্যায়/অনিরাপদ কাজে ভদ্র কিন্তু দৃঢ় না — তোমার রক্ষাকবচ।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "それはできません"
+   ]
+  },
+  {
+   "id": "cn2_08",
+   "jp": "ねつがあるので、いけません",
+   "kana": "ねつがあるので、いけません",
+   "romaji": "netsu ga aru node, ikemasen",
+   "meaning": {
+    "en": "I have a fever, so I can't go",
+    "bn": "জ্বর আছে, তাই যেতে পারছি না",
+    "ja": "熱があるので、行けません"
+   },
+   "note": {
+    "en": "node = soft because",
+    "bn": "ので = কারণ (নরম) — অসুস্থতার ফোনকলের পুরো বাক্য।",
+    "ja": "可能形否定"
+   },
+   "srs_words": [
+    "ねつがあるので、いけません"
+   ]
+  }
+ ]
+}

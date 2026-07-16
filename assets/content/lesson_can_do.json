@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_can_do",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_plain_present"
+ ],
+ "can_do": {
+  "en": "Say what you CAN do",
+  "bn": "যা পারি তা বলা (potential)",
+  "ja": "できること"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_plain_present"
+ ],
+ "items": [
+  {
+   "id": "cd_01",
+   "jp": "にほんごがはなせます",
+   "kana": "にほんごがはなせます",
+   "romaji": "nihongo ga hanasemasu",
+   "meaning": {
+    "en": "I can speak Japanese",
+    "bn": "জাপানি বলতে পারি",
+    "ja": "日本語が話せます"
+   },
+   "note": {
+    "en": "u→e; particle becomes GA",
+    "bn": "う-verb: す→せ+ます = পারা-রূপ। を নয়, が বসে!",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "にほんごがはなせます"
+   ]
+  },
+  {
+   "id": "cd_02",
+   "jp": "ひらがながよめます",
+   "kana": "ひらがながよめます",
+   "romaji": "hiragana ga yomemasu",
+   "meaning": {
+    "en": "I can read hiragana",
+    "bn": "হিরাগানা পড়তে পারি",
+    "ja": "ひらがなが読めます"
+   },
+   "note": {
+    "en": "Your app achievement!",
+    "bn": "よむ→よめます — তোমার এই অ্যাপেরই অর্জন!",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "ひらがながよめます"
+   ]
+  },
+  {
+   "id": "cd_03",
+   "jp": "カタカナがかけます",
+   "kana": "カタカナがかけます",
+   "romaji": "katakana ga kakemasu",
+   "meaning": {
+    "en": "I can write katakana",
+    "bn": "কাতাকানা লিখতে পারি",
+    "ja": "カタカナが書けます"
+   },
+   "note": {
+    "en": "Fruit of the Write screen",
+    "bn": "かく→かけます — ✍️ Write স্ক্রিনের ফসল।",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "カタカナがかけます"
+   ]
+  },
+  {
+   "id": "cd_04",
+   "jp": "はしがつかえます",
+   "kana": "はしがつかえます",
+   "romaji": "hashi ga tsukaemasu",
+   "meaning": {
+    "en": "I can use chopsticks",
+    "bn": "চপস্টিক ব্যবহার করতে পারি",
+    "ja": "箸が使えます"
+   },
+   "note": {
+    "en": "THE question they always ask",
+    "bn": "জাপানিদের প্রিয় প্রশ্নের জবাব — পারলে সবাই মুগ্ধ!",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "はしがつかえます"
+   ]
+  },
+  {
+   "id": "cd_05",
+   "jp": "じてんしゃにのれます",
+   "kana": "じてんしゃにのれます",
+   "romaji": "jitensha ni noremasu",
+   "meaning": {
+    "en": "I can ride a bicycle",
+    "bn": "সাইকেল চালাতে পারি",
+    "ja": "自転車に乗れます"
+   },
+   "note": {
+    "en": "noru keeps ni",
+    "bn": "のる→のれます — のる-এ に থাকে, が নয়।",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "じてんしゃにのれます"
+   ]
+  },
+  {
+   "id": "cd_06",
+   "jp": "およげます",
+   "kana": "およげます",
+   "romaji": "oyogemasu",
+   "meaning": {
+    "en": "I can swim",
+    "bn": "সাঁতার পারি",
+    "ja": "泳げます"
+   },
+   "note": {
+    "en": "gu→ge",
+    "bn": "およぐ→およげます — ぐ→げ।",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "およげます"
+   ]
+  },
+  {
+   "id": "cd_07",
+   "jp": "からいものがたべられます",
+   "kana": "からいものがたべられます",
+   "romaji": "karai mono ga taberaremasu",
+   "meaning": {
+    "en": "I can eat spicy food",
+    "bn": "ঝাল খেতে পারি",
+    "ja": "辛い物が食べられます"
+   },
+   "note": {
+    "en": "The Bengali pride line 🌶️",
+    "bn": "る-verb: られます — বাঙালির গর্বের লাইন! 🌶️",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "からいものがたべられます"
+   ]
+  },
+  {
+   "id": "cd_08",
+   "jp": "あさはやくおきられます",
+   "kana": "あさはやくおきられます",
+   "romaji": "asa hayaku okiraremasu",
+   "meaning": {
+    "en": "I can wake up early",
+    "bn": "ভোরে উঠতে পারি",
+    "ja": "朝早く起きられます"
+   },
+   "note": {
+    "en": "Shift-interview gold",
+    "bn": "おきる→おきられます — শিফটের interview-তে বলো।",
+    "ja": "可能形"
+   },
+   "srs_words": [
+    "あさはやくおきられます"
+   ]
+  }
+ ]
+}

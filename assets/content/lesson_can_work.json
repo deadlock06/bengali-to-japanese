@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_can_work",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_can_do"
+ ],
+ "can_do": {
+  "en": "Discuss what's possible at work",
+  "bn": "কাজে কী সম্ভব তা বলা",
+  "ja": "仕事のできる・できない"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_can_do"
+ ],
+ "items": [
+  {
+   "id": "cw_01",
+   "jp": "いつできますか",
+   "kana": "いつできますか",
+   "romaji": "itsu dekimasu ka",
+   "meaning": {
+    "en": "When can it be done?",
+    "bn": "কবে হবে?",
+    "ja": "いつできますか"
+   },
+   "note": {
+    "en": "Deadline talk opener",
+    "bn": "deadline-আলোচনার শুরু।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "いつできますか"
+   ]
+  },
+  {
+   "id": "cw_02",
+   "jp": "きょうじゅうにできます",
+   "kana": "きょうじゅうにできます",
+   "romaji": "kyoujuu ni dekimasu",
+   "meaning": {
+    "en": "I can finish within today",
+    "bn": "আজকের মধ্যেই পারব",
+    "ja": "今日中にできます"
+   },
+   "note": {
+    "en": "-juu ni = within",
+    "bn": "〜じゅうに = -এর মধ্যে — あしたじゅうに-ও চলে।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "きょうじゅうにできます"
+   ]
+  },
+  {
+   "id": "cw_03",
+   "jp": "すぐにできます",
+   "kana": "すぐにできます",
+   "romaji": "sugu ni dekimasu",
+   "meaning": {
+    "en": "I can do it right away",
+    "bn": "এক্ষুনি পারব",
+    "ja": "すぐにできます"
+   },
+   "note": {
+    "en": "Instant-confidence reply",
+    "bn": "ছোট কাজে আস্থার জবাব।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "すぐにできます"
+   ]
+  },
+  {
+   "id": "cw_04",
+   "jp": "かんたんにできます",
+   "kana": "かんたんにできます",
+   "romaji": "kantan ni dekimasu",
+   "meaning": {
+    "en": "I can do it easily",
+    "bn": "সহজেই পারব",
+    "ja": "簡単にできます"
+   },
+   "note": {
+    "en": "Words are promises here",
+    "bn": "না-বলা ভালো যদি sure না হও — জাপানে কথা=ওয়াদা।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "かんたんにできます"
+   ]
+  },
+  {
+   "id": "cw_05",
+   "jp": "ひとりではできません",
+   "kana": "ひとりではできません",
+   "romaji": "hitori de wa dekimasen",
+   "meaning": {
+    "en": "I can't do it alone",
+    "bn": "একা পারব না",
+    "ja": "一人ではできません"
+   },
+   "note": {
+    "en": "Asking help = safety",
+    "bn": "সাহায্য চাওয়া দুর্বলতা নয় — নিরাপত্তা।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "ひとりではできません"
+   ]
+  },
+  {
+   "id": "cw_06",
+   "jp": "もっとはやくできます",
+   "kana": "もっとはやくできます",
+   "romaji": "motto hayaku dekimasu",
+   "meaning": {
+    "en": "I can do it faster",
+    "bn": "আরও দ্রুত পারব",
+    "ja": "もっと速くできます"
+   },
+   "note": {
+    "en": "Offer improvement humbly",
+    "bn": "উন্নতির প্রস্তাব — たぶん যোগ করলে বিনয়ী।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "もっとはやくできます"
+   ]
+  },
+  {
+   "id": "cw_07",
+   "jp": "このきかいがつかえます",
+   "kana": "このきかいがつかえます",
+   "romaji": "kono kikai ga tsukaemasu",
+   "meaning": {
+    "en": "I can use this machine",
+    "bn": "এই মেশিনটা চালাতে পারি",
+    "ja": "この機械が使えます"
+   },
+   "note": {
+    "en": "Opens new duties",
+    "bn": "প্রশিক্ষণ শেষে ঘোষণা — নতুন দায়িত্বের দরজা।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "このきかいがつかえます"
+   ]
+  },
+  {
+   "id": "cw_08",
+   "jp": "よじまでにできます",
+   "kana": "よじまでにできます",
+   "romaji": "yoji made ni dekimasu",
+   "meaning": {
+    "en": "I can do it by 4",
+    "bn": "৪টার মধ্যে পারব",
+    "ja": "4時までにできます"
+   },
+   "note": {
+    "en": "Promise only what you'll keep",
+    "bn": "までに আবার — সময়-ওয়াদার ছাঁচ, রাখতে পারবে এমনটাই বলো।",
+    "ja": "仕事"
+   },
+   "srs_words": [
+    "よじまでにできます"
+   ]
+  }
+ ]
+}

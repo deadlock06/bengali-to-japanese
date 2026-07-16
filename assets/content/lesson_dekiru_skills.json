@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_dekiru_skills",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_can_do"
+ ],
+ "can_do": {
+  "en": "List your skills (〜ができます)",
+  "bn": "দক্ষতার তালিকা (〜ができます)",
+  "ja": "スキルのできます"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_can_do"
+ ],
+ "items": [
+  {
+   "id": "dk_01",
+   "jp": "りょうりができます",
+   "kana": "りょうりができます",
+   "romaji": "ryouri ga dekimasu",
+   "meaning": {
+    "en": "I can cook",
+    "bn": "রান্না পারি",
+    "ja": "料理ができます"
+   },
+   "note": {
+    "en": "The resume template",
+    "bn": "noun+ができます = দক্ষতা বলার ছাঁচ — CV-র ভাষা।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "りょうりができます"
+   ]
+  },
+  {
+   "id": "dk_02",
+   "jp": "パソコンができます",
+   "kana": "パソコンができます",
+   "romaji": "pasokon ga dekimasu",
+   "meaning": {
+    "en": "I can use computers",
+    "bn": "কম্পিউটার পারি",
+    "ja": "パソコンができます"
+   },
+   "note": {
+    "en": "One-line skill claim",
+    "bn": "口頭 CV — interview-তে এক লাইনে দক্ষতা।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "パソコンができます"
+   ]
+  },
+  {
+   "id": "dk_03",
+   "jp": "フォークリフトができます",
+   "kana": "フォークリフトができます",
+   "romaji": "fookurifuto ga dekimasu",
+   "meaning": {
+    "en": "I can operate a forklift",
+    "bn": "ফর্কলিফট চালাতে পারি",
+    "ja": "フォークリフトができます"
+   },
+   "note": {
+    "en": "License = higher pay",
+    "bn": "লাইসেন্স থাকলে বেতন বাড়ে — めんきょがあります সাথে বলো।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "フォークリフトができます"
+   ]
+  },
+  {
+   "id": "dk_04",
+   "jp": "えいごがすこしできます",
+   "kana": "えいごがすこしできます",
+   "romaji": "eigo ga sukoshi dekimasu",
+   "meaning": {
+    "en": "I can do a little English",
+    "bn": "একটু ইংরেজি পারি",
+    "ja": "英語が少しできます"
+   },
+   "note": {
+    "en": "Never overclaim here",
+    "bn": "すこし যোগ = বিনয় — জাপানে overclaim কোরো না।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "えいごがすこしできます"
+   ]
+  },
+  {
+   "id": "dk_05",
+   "jp": "クリケットができます",
+   "kana": "クリケットができます",
+   "romaji": "kuriketto ga dekimasu",
+   "meaning": {
+    "en": "I can play cricket",
+    "bn": "ক্রিকেট খেলতে পারি",
+    "ja": "クリケットができます"
+   },
+   "note": {
+    "en": "Sports-day surprise 🏏",
+    "bn": "かいしゃの うんどうかい-তে চমক দেখাও! 🏏",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "クリケットができます"
+   ]
+  },
+  {
+   "id": "dk_06",
+   "jp": "すこしできます",
+   "kana": "すこしできます",
+   "romaji": "sukoshi dekimasu",
+   "meaning": {
+    "en": "I can do it a little",
+    "bn": "একটু পারি",
+    "ja": "少しできます"
+   },
+   "note": {
+    "en": "The humble yes",
+    "bn": "THE বিনয়ী জবাব — পুরো পারলেও এটা বলা জাপানি কায়দা।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "すこしできます"
+   ]
+  },
+  {
+   "id": "dk_07",
+   "jp": "まだよくできません",
+   "kana": "まだよくできません",
+   "romaji": "mada yoku dekimasen",
+   "meaning": {
+    "en": "I can't do it well yet",
+    "bn": "এখনো ভালো পারি না",
+    "ja": "まだよくできません"
+   },
+   "note": {
+    "en": "Growth-mindset answer",
+    "bn": "শেখার মনোভাব দেখানো জবাব — সাথে ならっています।",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "まだよくできません"
+   ]
+  },
+  {
+   "id": "dk_08",
+   "jp": "ひとりでできます",
+   "kana": "ひとりでできます",
+   "romaji": "hitori de dekimasu",
+   "meaning": {
+    "en": "I can do it alone",
+    "bn": "একাই পারব",
+    "ja": "一人でできます"
+   },
+   "note": {
+    "en": "The graduation line",
+    "bn": "প্রশিক্ষণ শেষের মাইলফলক ঘোষণা — গর্বের লাইন!",
+    "ja": "スキル"
+   },
+   "srs_words": [
+    "ひとりでできます"
+   ]
+  }
+ ]
+}

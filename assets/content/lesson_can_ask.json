@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_can_ask",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_can_do"
+ ],
+ "can_do": {
+  "en": "Ask what's possible",
+  "bn": "কী সম্ভব জিজ্ঞেস করা",
+  "ja": "できますか"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_can_do"
+ ],
+ "items": [
+  {
+   "id": "ck_01",
+   "jp": "これはたべられますか",
+   "kana": "これはたべられますか",
+   "romaji": "kore wa taberaremasu ka",
+   "meaning": {
+    "en": "Can this be eaten?",
+    "bn": "এটা কি খাওয়া যাবে?",
+    "ja": "これは食べられますか"
+   },
+   "note": {
+    "en": "Universal halal-check",
+    "bn": "halal-চেকের সার্বজনীন রূপ — উপকরণ না চিনলে এটাই।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "これはたべられますか"
+   ]
+  },
+  {
+   "id": "ck_02",
+   "jp": "カードがつかえますか",
+   "kana": "カードがつかえますか",
+   "romaji": "kaado ga tsukaemasu ka",
+   "meaning": {
+    "en": "Can I use a card?",
+    "bn": "কার্ড চলবে কি?",
+    "ja": "カードが使えますか"
+   },
+   "note": {
+    "en": "Small shops are cash-only",
+    "bn": "ছোট দোকানে আগে জিজ্ঞেস — অনেকে cash-only।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "カードがつかえますか"
+   ]
+  },
+  {
+   "id": "ck_03",
+   "jp": "ここでりょうがえできますか",
+   "kana": "ここでりょうがえできますか",
+   "romaji": "koko de ryougae dekimasu ka",
+   "meaning": {
+    "en": "Can I exchange money here?",
+    "bn": "এখানে টাকা ভাঙানো যাবে?",
+    "ja": "ここで両替できますか"
+   },
+   "note": {
+    "en": "ryougae = exchange",
+    "bn": "りょうがえ = মুদ্রা বিনিময় — বিমানবন্দর/ব্যাংকে।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "ここでりょうがえできますか"
+   ]
+  },
+  {
+   "id": "ck_04",
+   "jp": "よやくできますか",
+   "kana": "よやくできますか",
+   "romaji": "yoyaku dekimasu ka",
+   "meaning": {
+    "en": "Can I make a reservation?",
+    "bn": "বুকিং দেওয়া যাবে?",
+    "ja": "予約できますか"
+   },
+   "note": {
+    "en": "One question, everywhere",
+    "bn": "ডাক্তার-রেস্টুরেন্ট-সেলুন — সব এক প্রশ্নে।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "よやくできますか"
+   ]
+  },
+  {
+   "id": "ck_05",
+   "jp": "どこでかえますか",
+   "kana": "どこでかえますか",
+   "romaji": "doko de kaemasu ka",
+   "meaning": {
+    "en": "Where can I buy it?",
+    "bn": "কোথায় কিনতে পাওয়া যায়?",
+    "ja": "どこで買えますか"
+   },
+   "note": {
+    "en": "kau→kaemasu",
+    "bn": "かう→かえます — জিনিস খোঁজার প্রশ্ন।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "どこでかえますか"
+   ]
+  },
+  {
+   "id": "ck_06",
+   "jp": "なんじまでにこられますか",
+   "kana": "なんじまでにこられますか",
+   "romaji": "nanji made ni koraremasu ka",
+   "meaning": {
+    "en": "By when can you come?",
+    "bn": "কটার মধ্যে আসতে পারবেন?",
+    "ja": "何時までに来られますか"
+   },
+   "note": {
+    "en": "made ni = by (deadline)",
+    "bn": "までに = -এর মধ্যে — deadline-এর ভাষা।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "なんじまでにこられますか"
+   ]
+  },
+  {
+   "id": "ck_07",
+   "jp": "もうすこしまってもらえますか",
+   "kana": "もうすこしまってもらえますか",
+   "romaji": "mou sukoshi matte moraemasu ka",
+   "meaning": {
+    "en": "Could you wait a bit more?",
+    "bn": "আরেকটু অপেক্ষা করতে পারবেন?",
+    "ja": "もう少し待ってもらえますか"
+   },
+   "note": {
+    "en": "-te moraemasu ka softness",
+    "bn": "もらう→もらえます — てもらえますか = নরম অনুরোধ-প্রশ্ন।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "もうすこしまってもらえますか"
+   ]
+  },
+  {
+   "id": "ck_08",
+   "jp": "てつだってもらえますか",
+   "kana": "てつだってもらえますか",
+   "romaji": "tetsudatte moraemasu ka",
+   "meaning": {
+    "en": "Could I get some help?",
+    "bn": "একটু সাহায্য পেতে পারি?",
+    "ja": "手伝ってもらえますか"
+   },
+   "note": {
+    "en": "The middle politeness tier",
+    "bn": "ください-র চেয়ে নরম, いただけませんか-র চেয়ে হালকা — মাঝের স্তর।",
+    "ja": "可能質問"
+   },
+   "srs_words": [
+    "てつだってもらえますか"
+   ]
+  }
+ ]
+}

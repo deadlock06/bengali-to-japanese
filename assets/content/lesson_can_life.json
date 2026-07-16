@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_can_life",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_can_do"
+ ],
+ "can_do": {
+  "en": "Celebrate life-skill milestones",
+  "bn": "জীবনের মাইলফলক বলা",
+  "ja": "生活のできた！"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_can_do"
+ ],
+ "items": [
+  {
+   "id": "cf_01",
+   "jp": "ひとりでびょういんにいけます",
+   "kana": "ひとりでびょういんにいけます",
+   "romaji": "hitori de byouin ni ikemasu",
+   "meaning": {
+    "en": "I can go to the hospital alone",
+    "bn": "একাই হাসপাতালে যেতে পারি",
+    "ja": "一人で病院に行けます"
+   },
+   "note": {
+    "en": "Independence milestone #1",
+    "bn": "স্বাধীনতার মাইলফলক #১ — ほけんしょう নিতে ভুলো না।",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "ひとりでびょういんにいけます"
+   ]
+  },
+  {
+   "id": "cf_02",
+   "jp": "でんしゃにひとりでのれます",
+   "kana": "でんしゃにひとりでのれます",
+   "romaji": "densha ni hitori de noremasu",
+   "meaning": {
+    "en": "I can take the train alone",
+    "bn": "একাই ট্রেনে চড়তে পারি",
+    "ja": "電車に一人で乗れます"
+   },
+   "note": {
+    "en": "Transfers = veteran status",
+    "bn": "のりかえ পারলে তুমি আর নতুন নও!",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "でんしゃにひとりでのれます"
+   ]
+  },
+  {
+   "id": "cf_03",
+   "jp": "ぎんこうでこうざがつくれました",
+   "kana": "ぎんこうでこうざがつくれました",
+   "romaji": "ginkou de kouza ga tsukuremashita",
+   "meaning": {
+    "en": "I managed to open a bank account",
+    "bn": "ব্যাংকে অ্যাকাউন্ট খুলতে পেরেছি",
+    "ja": "銀行で口座が作れました"
+   },
+   "note": {
+    "en": "kouza = account",
+    "bn": "つくれました = পেরেছি (অতীত) — অর্জনের ঘোষণা! こうざ=অ্যাকাউন্ট।",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "ぎんこうでこうざがつくれました"
+   ]
+  },
+  {
+   "id": "cf_04",
+   "jp": "にほんのりょうりがつくれます",
+   "kana": "にほんのりょうりがつくれます",
+   "romaji": "nihon no ryouri ga tsukuremasu",
+   "meaning": {
+    "en": "I can cook Japanese food",
+    "bn": "জাপানি রান্না বানাতে পারি",
+    "ja": "日本の料理が作れます"
+   },
+   "note": {
+    "en": "Miso soup impresses",
+    "bn": "みそしる বানাতে পারলে সহকর্মীরা অবাক হবে!",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "にほんのりょうりがつくれます"
+   ]
+  },
+  {
+   "id": "cf_05",
+   "jp": "カタカナがぜんぶよめます",
+   "kana": "カタカナがぜんぶよめます",
+   "romaji": "katakana ga zenbu yomemasu",
+   "meaning": {
+    "en": "I can read ALL katakana",
+    "bn": "সব কাতাকানা পড়তে পারি",
+    "ja": "カタカナが全部読めます"
+   },
+   "note": {
+    "en": "Menus are open books now",
+    "bn": "メニュー আর দোকানের লেবেল এখন খোলা বই!",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "カタカナがぜんぶよめます"
+   ]
+  },
+  {
+   "id": "cf_06",
+   "jp": "ゆっくりならよめます",
+   "kana": "ゆっくりならよめます",
+   "romaji": "yukkuri nara yomemasu",
+   "meaning": {
+    "en": "If it's slow, I can read",
+    "bn": "ধীরে হলে পড়তে পারি",
+    "ja": "ゆっくりなら読めます"
+   },
+   "note": {
+    "en": "nara = if/in-that-case",
+    "bn": "なら = যদি/হলে — শর্তসাপেক্ষ পারা।",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "ゆっくりならよめます"
+   ]
+  },
+  {
+   "id": "cf_07",
+   "jp": "むずかしいかんじはまだかけません",
+   "kana": "むずかしいかんじはまだかけません",
+   "romaji": "muzukashii kanji wa mada kakemasen",
+   "meaning": {
+    "en": "I can't write hard kanji yet",
+    "bn": "কঠিন কাঞ্জি এখনো লিখতে পারি না",
+    "ja": "難しい漢字はまだ書けません"
+   },
+   "note": {
+    "en": "wa marks the contrast",
+    "bn": "সৎ self-assessment — は এখানে contrast দেখায়।",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "むずかしいかんじはまだかけません"
+   ]
+  },
+  {
+   "id": "cf_08",
+   "jp": "まいにちべんきょうがつづけられます",
+   "kana": "まいにちべんきょうがつづけられます",
+   "romaji": "mainichi benkyou ga tsuzukeraremasu",
+   "meaning": {
+    "en": "I can keep studying daily",
+    "bn": "প্রতিদিন পড়া চালিয়ে যেতে পারি",
+    "ja": "毎日勉強が続けられます"
+   },
+   "note": {
+    "en": "Your SRS streak proves it",
+    "bn": "つづける→つづけられます — এই অ্যাপের SRS-ই তোমার প্রমাণ 😄",
+    "ja": "生活"
+   },
+   "srs_words": [
+    "まいにちべんきょうがつづけられます"
+   ]
+  }
+ ]
+}

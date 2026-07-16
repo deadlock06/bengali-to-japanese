@@ -27,8 +27,9 @@ script — checkboxes below are for the steps the machine can't measure.
 - [x] **A1 · A1/A2 vocab to ladder targets (772)** — DONE 2026-07-16: every L0/A1/A2
       unit ≥ target (466 items, 55 lessons, 596 audio clips, book synced). Remaining
       772-gap is entirely N4 (steps A2/A3). _needs: —_ · size L
-- [ ] **A2 · N4 whitelist** — author `content_factory/n4_whitelist.txt` (JLPT N4 superset,
-      verified source). _needs: —_ · size M
+- [x] **A2 · N4 whitelist** — DONE 2026-07-17: `content_factory/n4_whitelist.txt`
+      (1402 words = full JFT-A2 superset + curated standard JLPT-N4 core); validator
+      now level-scoped (N4-tagged lessons check n4, others jft_a2). _needs: —_ · size M
 - [ ] **A3 · N4.1–N4.5 content** — te-form/plain/potential/give-receive/keigo lessons
       (verified grammar ONLY — never generated; D-001). _needs: A2_ · size L
 - [ ] **A4 · Mock-exam engine + A2.M/N4.M** — CBT-format mock (timer, 4 sections,

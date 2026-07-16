@@ -34,6 +34,9 @@ function loadLines(file) {
 const banned = (loadLines(path.join(FACTORY, 'banned_phrases.txt')) || []).map((s) => s.toLowerCase());
 const whitelist = loadLines(path.join(FACTORY, 'jft_a2_whitelist.txt')); // null until authored
 const whitelistSet = whitelist ? new Set(whitelist) : null;
+// N4 superset list (D-011: whitelist per level — jft_a2 at L0–A2, n4 at N4).
+const n4List = loadLines(path.join(FACTORY, 'n4_whitelist.txt'));
+const n4Set = n4List ? new Set(n4List) : null;
 
 const HALFWIDTH_KATAKANA = /[｡-ﾟ]/; // rule 7
 
@@ -100,7 +103,7 @@ function validateLesson(file, data, reg) {
     else if (!nonEmpty(it.meaning.bn)) err(file, `${tag}: JP without BN meaning (05 rule 1)`);
     if (!triOk(it.note)) err(file, `${tag}: note not trilingual`);
     if (!Array.isArray(it.srs_words) || it.srs_words.length === 0) err(file, `${tag}: srs_words missing`);
-    else for (const w of it.srs_words) reg.srsWords.push({ file, tag, word: w });
+    else for (const w of it.srs_words) reg.srsWords.push({ file, tag, word: w, lvl: data.jlpt_or_jft || '' });
     scanHalfwidth(file, tag, [it.jp, it.kana]);
     scanBanned(file, tag, [...triStrings(it.meaning), ...triStrings(it.note)]);
     checkMedia(file, tag, it);
@@ -179,15 +182,21 @@ function checkPackAcyclic(reg) {
 
 function checkWhitelist(reg) {
   if (!whitelistSet) return; // scaffold: no list authored yet
-  for (const { file, tag, word } of reg.srsWords) {
-    if (!whitelistSet.has(word)) err(file, `${tag}: "${word}" outside JFT-A2 whitelist (05 rule 3)`);
+  for (const { file, tag, word, lvl } of reg.srsWords) {
+    // Level-scoped bound (D-011): N4-tagged lessons check the N4 superset;
+    // everything else stays inside JFT-A2.
+    if (/N4/i.test(lvl) && n4Set) {
+      if (!n4Set.has(word)) err(file, `${tag}: "${word}" outside N4 whitelist (05 rule 3)`);
+    } else if (!whitelistSet.has(word)) {
+      err(file, `${tag}: "${word}" outside JFT-A2 whitelist (05 rule 3)`);
+    }
   }
 }
 
 // --- run --------------------------------------------------------------------
 const files = fs.readdirSync(CONTENT).filter((f) => f.endsWith('.json'));
 console.log(`Validating ${files.length} content file(s) in assets/content/`);
-console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'}\n`);
+console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'} · n4: ${n4Set ? n4List.length + ' words' : 'not authored'}\n`);
 
 const reg = { lessonIds: new Set(), packEdges: [], prereqs: [], srsWords: [] };
 

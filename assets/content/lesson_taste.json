@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_taste",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_food"
+ ],
+ "can_do": {
+  "en": "Say tastes and food needs",
+  "bn": "স্বাদ ও খাবারের চাহিদা বলা",
+  "ja": "味と食べ物のこと"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter food set 2",
+ "verified": true,
+ "prerequisites": [
+  "lesson_food"
+ ],
+ "items": [
+  {
+   "id": "ta_01",
+   "jp": "たべます",
+   "kana": "たべます",
+   "romaji": "tabemasu",
+   "meaning": {
+    "en": "I eat",
+    "bn": "খাই",
+    "ja": "食べます"
+   },
+   "note": {
+    "en": "THE food verb",
+    "bn": "সবচেয়ে দরকারি verb — たべません = খাই না।",
+    "ja": "基本動詞"
+   },
+   "srs_words": [
+    "たべます"
+   ]
+  },
+  {
+   "id": "ta_02",
+   "jp": "のみます",
+   "kana": "のみます",
+   "romaji": "nomimasu",
+   "meaning": {
+    "en": "I drink",
+    "bn": "পান করি",
+    "ja": "飲みます"
+   },
+   "note": {
+    "en": "Medicine uses nomimasu too",
+    "bn": "ওষুধ 'খাওয়া'ও のみます — জাপানিতে ওষুধ পান করে!",
+    "ja": "基本動詞"
+   },
+   "srs_words": [
+    "のみます"
+   ]
+  },
+  {
+   "id": "ta_03",
+   "jp": "あまい",
+   "kana": "あまい",
+   "romaji": "amai",
+   "meaning": {
+    "en": "Sweet",
+    "bn": "মিষ্টি",
+    "ja": "甘い"
+   },
+   "note": {
+    "en": "Sweet",
+    "bn": "জাপানি খাবার প্রায়ই একটু あまい লাগবে।",
+    "ja": "味"
+   },
+   "srs_words": [
+    "あまい"
+   ]
+  },
+  {
+   "id": "ta_04",
+   "jp": "からい",
+   "kana": "からい",
+   "romaji": "karai",
+   "meaning": {
+    "en": "Spicy",
+    "bn": "ঝাল",
+    "ja": "辛い"
+   },
+   "note": {
+    "en": "Japanese 'spicy' is mild",
+    "bn": "বাঙালির প্রশ্ন: からいですか? — জাপানি ঝাল = হালকা ঝাল!",
+    "ja": "味"
+   },
+   "srs_words": [
+    "からい"
+   ]
+  },
+  {
+   "id": "ta_05",
+   "jp": "つめたい",
+   "kana": "つめたい",
+   "romaji": "tsumetai",
+   "meaning": {
+    "en": "Cold (to touch)",
+    "bn": "ঠান্ডা (জিনিস)",
+    "ja": "冷たい"
+   },
+   "note": {
+    "en": "Things are tsumetai, weather is samui",
+    "bn": "ঠান্ডা পানীয়/খাবার — আবহাওয়া ঠান্ডা হলে さむい।",
+    "ja": "味・温度"
+   },
+   "srs_words": [
+    "つめたい"
+   ]
+  },
+  {
+   "id": "ta_06",
+   "jp": "ぶたにくがたべられません",
+   "kana": "ぶたにくがたべられません",
+   "romaji": "butaniku ga taberaremasen",
+   "meaning": {
+    "en": "I cannot eat pork",
+    "bn": "শুয়োরের মাংস খেতে পারি না",
+    "ja": "豚肉が食べられません"
+   },
+   "note": {
+    "en": "Say BEFORE the party",
+    "bn": "halal জীবনের ২ নম্বর অস্ত্র — welcome party-তে আগেই বলে দাও।",
+    "ja": "食の制限"
+   },
+   "srs_words": [
+    "ぶたにくがたべられません"
+   ]
+  },
+  {
+   "id": "ta_07",
+   "jp": "おなかがすきました",
+   "kana": "おなかがすきました",
+   "romaji": "onaka ga sukimashita",
+   "meaning": {
+    "en": "I'm hungry",
+    "bn": "খিদে পেয়েছে",
+    "ja": "お腹が空きました"
+   },
+   "note": {
+    "en": "Break-time line",
+    "bn": "বিরতির আগে সহকর্মীদের সাথে হাসাহাসির লাইন।",
+    "ja": "空腹"
+   },
+   "srs_words": [
+    "おなかがすきました"
+   ]
+  },
+  {
+   "id": "ta_08",
+   "jp": "のどがかわきました",
+   "kana": "のどがかわきました",
+   "romaji": "nodo ga kawakimashita",
+   "meaning": {
+    "en": "I'm thirsty",
+    "bn": "পিপাসা পেয়েছে",
+    "ja": "喉が渇きました"
+   },
+   "note": {
+    "en": "Signals a water break",
+    "bn": "গরমের কাজে এটা বলা = পানি বিরতির ইঙ্গিত।",
+    "ja": "喉の渇き"
+   },
+   "srs_words": [
+    "のどがかわきました"
+   ]
+  }
+ ]
+}

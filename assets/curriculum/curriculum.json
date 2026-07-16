@@ -138,7 +138,7 @@
         "A1.1"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_intro_qa,lesson_family",
+      "lesson_id": "lesson_intro_qa,lesson_family,lesson_about_me",
       "target_word_count": 35
     },
     {
@@ -158,7 +158,7 @@
         "L0.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_konbini,lesson_shopping",
+      "lesson_id": "lesson_konbini,lesson_shopping,lesson_shopping_adj",
       "target_word_count": 40
     },
     {
@@ -178,7 +178,7 @@
         "A1.3"
       ],
       "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_restaurant,lesson_food",
+      "lesson_id": "lesson_restaurant,lesson_food,lesson_taste",
       "target_word_count": 40
     },
     {
@@ -258,7 +258,7 @@
         "A2.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_requests",
+      "lesson_id": "lesson_work_requests,lesson_requests_2",
       "target_word_count": 40
     },
     {
@@ -278,7 +278,7 @@
         "A2.4"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_smalltalk,lesson_past_plans",
+      "lesson_id": "lesson_smalltalk,lesson_past_plans,lesson_frequency",
       "target_word_count": 45
     },
     {
@@ -298,7 +298,7 @@
         "A2.1"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_safety,lesson_apology",
+      "lesson_id": "lesson_work_safety,lesson_apology,lesson_problems",
       "target_word_count": 40
     },
     {

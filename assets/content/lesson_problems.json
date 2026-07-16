@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_problems",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_apology"
+ ],
+ "can_do": {
+  "en": "Report everyday problems",
+  "bn": "দৈনন্দিন সমস্যা জানানো",
+  "ja": "トラブルを伝える"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic daily-trouble set",
+ "verified": true,
+ "prerequisites": [
+  "lesson_apology"
+ ],
+ "items": [
+  {
+   "id": "pr_01",
+   "jp": "こまっています",
+   "kana": "こまっています",
+   "romaji": "komatte imasu",
+   "meaning": {
+    "en": "I'm in trouble",
+    "bn": "বিপদে আছি",
+    "ja": "困っています"
+   },
+   "note": {
+    "en": "Opens any help desk",
+    "bn": "সাহায্যের দরজা খোলার লাইন — যেকোনো অফিসে বলো।",
+    "ja": "トラブル"
+   },
+   "srs_words": [
+    "こまっています"
+   ]
+  },
+  {
+   "id": "pr_02",
+   "jp": "なくしました",
+   "kana": "なくしました",
+   "romaji": "nakushimashita",
+   "meaning": {
+    "en": "I lost it",
+    "bn": "হারিয়ে ফেলেছি",
+    "ja": "なくしました"
+   },
+   "note": {
+    "en": "Go to the kouban",
+    "bn": "カードをなくしました — কার্ড হারালে こうばん-এ।",
+    "ja": "紛失"
+   },
+   "srs_words": [
+    "なくしました"
+   ]
+  },
+  {
+   "id": "pr_03",
+   "jp": "かぎをなくしました",
+   "kana": "かぎをなくしました",
+   "romaji": "kagi o nakushimashita",
+   "meaning": {
+    "en": "I lost my key",
+    "bn": "চাবি হারিয়েছি",
+    "ja": "鍵をなくしました"
+   },
+   "note": {
+    "en": "The classic dorm crisis",
+    "bn": "ডর্ম-জীবনের ক্লাসিক বিপদ — ম্যানেজারকে এটাই বলবে।",
+    "ja": "紛失"
+   },
+   "srs_words": [
+    "かぎをなくしました"
+   ]
+  },
+  {
+   "id": "pr_04",
+   "jp": "こわれています",
+   "kana": "こわれています",
+   "romaji": "kowarete imasu",
+   "meaning": {
+    "en": "It's broken",
+    "bn": "ভাঙা / নষ্ট",
+    "ja": "壊れています"
+   },
+   "note": {
+    "en": "Reporting broken things",
+    "bn": "জিনিসটা নষ্ট অবস্থায় আছে — りポート করার রূপ।",
+    "ja": "故障"
+   },
+   "srs_words": [
+    "こわれています"
+   ]
+  },
+  {
+   "id": "pr_05",
+   "jp": "でんきがつきません",
+   "kana": "でんきがつきません",
+   "romaji": "denki ga tsukimasen",
+   "meaning": {
+    "en": "The light won't turn on",
+    "bn": "লাইট জ্বলছে না",
+    "ja": "電気がつきません"
+   },
+   "note": {
+    "en": "The complaint template",
+    "bn": "ডর্মের সমস্যা জানানোর template: [জিনিস]が+negative।",
+    "ja": "故障"
+   },
+   "srs_words": [
+    "でんきがつきません"
+   ]
+  },
+  {
+   "id": "pr_06",
+   "jp": "みずがでません",
+   "kana": "みずがでません",
+   "romaji": "mizu ga demasen",
+   "meaning": {
+    "en": "No water is coming",
+    "bn": "পানি আসছে না",
+    "ja": "水が出ません"
+   },
+   "note": {
+    "en": "Frozen pipes happen",
+    "bn": "শীতে পাইপ জমলে হয় — সাথে সাথে জানাও।",
+    "ja": "故障"
+   },
+   "srs_words": [
+    "みずがでません"
+   ]
+  },
+  {
+   "id": "pr_07",
+   "jp": "エアコンがうごきません",
+   "kana": "エアコンがうごきません",
+   "romaji": "eakon ga ugokimasen",
+   "meaning": {
+    "en": "The AC won't work",
+    "bn": "এসি চলছে না",
+    "ja": "エアコンが動きません"
+   },
+   "note": {
+    "en": "Summer emergency",
+    "bn": "জাপানের গরমে এটা emergency — うごきません=চলে না।",
+    "ja": "故障"
+   },
+   "srs_words": [
+    "エアコンがうごきません"
+   ]
+  },
+  {
+   "id": "pr_08",
+   "jp": "なおしてください",
+   "kana": "なおしてください",
+   "romaji": "naoshite kudasai",
+   "meaning": {
+    "en": "Please fix it",
+    "bn": "ঠিক করে দিন",
+    "ja": "直してください"
+   },
+   "note": {
+    "en": "The follow-up ask",
+    "bn": "সমস্যা বলার পরের লাইন — なおす=ঠিক করা।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "なおしてください"
+   ]
+  }
+ ]
+}

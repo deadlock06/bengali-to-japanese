@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_frequency",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_time"
+ ],
+ "can_do": {
+  "en": "Say how often you do things",
+  "bn": "কত ঘনঘন করি তা বলা",
+  "ja": "頻度のことば"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter adverbs (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_time"
+ ],
+ "items": [
+  {
+   "id": "fq_01",
+   "jp": "まいにち",
+   "kana": "まいにち",
+   "romaji": "mainichi",
+   "meaning": {
+    "en": "Every day",
+    "bn": "প্রতিদিন",
+    "ja": "毎日"
+   },
+   "note": {
+    "en": "Daily habits",
+    "bn": "まいにちべんきょうします — অভ্যাসের কথা।",
+    "ja": "頻度"
+   },
+   "srs_words": [
+    "まいにち"
+   ]
+  },
+  {
+   "id": "fq_02",
+   "jp": "まいあさ",
+   "kana": "まいあさ",
+   "romaji": "maiasa",
+   "meaning": {
+    "en": "Every morning",
+    "bn": "প্রতি সকালে",
+    "ja": "毎朝"
+   },
+   "note": {
+    "en": "Mai + time",
+    "bn": "まい+সময় pattern: まいばん=প্রতি রাতে।",
+    "ja": "頻度"
+   },
+   "srs_words": [
+    "まいあさ"
+   ]
+  },
+  {
+   "id": "fq_03",
+   "jp": "いつも",
+   "kana": "いつも",
+   "romaji": "itsumo",
+   "meaning": {
+    "en": "Always",
+    "bn": "সবসময়",
+    "ja": "いつも"
+   },
+   "note": {
+    "en": "Itsumo arigatou",
+    "bn": "いつもありがとう — 'সবসময়ের জন্য ধন্যবাদ'।",
+    "ja": "頻度"
+   },
+   "srs_words": [
+    "いつも"
+   ]
+  },
+  {
+   "id": "fq_04",
+   "jp": "ときどき",
+   "kana": "ときどき",
+   "romaji": "tokidoki",
+   "meaning": {
+    "en": "Sometimes",
+    "bn": "মাঝে মাঝে",
+    "ja": "時々"
+   },
+   "note": {
+    "en": "Honest answers",
+    "bn": "সত্যি বলার শব্দ — ときどきわすれます 😄",
+    "ja": "頻度"
+   },
+   "srs_words": [
+    "ときどき"
+   ]
+  },
+  {
+   "id": "fq_05",
+   "jp": "あとで",
+   "kana": "あとで",
+   "romaji": "atode",
+   "meaning": {
+    "en": "Later",
+    "bn": "পরে",
+    "ja": "後で"
+   },
+   "note": {
+    "en": "Do it though!",
+    "bn": "あとでやります — পরে করব (করা চাই কিন্তু!)।",
+    "ja": "時間"
+   },
+   "srs_words": [
+    "あとで"
+   ]
+  },
+  {
+   "id": "fq_06",
+   "jp": "まえに",
+   "kana": "まえに",
+   "romaji": "maeni",
+   "meaning": {
+    "en": "Before",
+    "bn": "আগে",
+    "ja": "前に"
+   },
+   "note": {
+    "en": "Before work",
+    "bn": "しごとのまえに — কাজের আগে।",
+    "ja": "時間"
+   },
+   "srs_words": [
+    "まえに"
+   ]
+  },
+  {
+   "id": "fq_07",
+   "jp": "はじめて",
+   "kana": "はじめて",
+   "romaji": "hajimete",
+   "meaning": {
+    "en": "For the first time",
+    "bn": "প্রথমবার",
+    "ja": "初めて"
+   },
+   "note": {
+    "en": "First time in Japan",
+    "bn": "にほんははじめてです — প্রথম জাপান! গল্প শুরুর লাইন।",
+    "ja": "経験"
+   },
+   "srs_words": [
+    "はじめて"
+   ]
+  },
+  {
+   "id": "fq_08",
+   "jp": "もういちど",
+   "kana": "もういちど",
+   "romaji": "mou ichido",
+   "meaning": {
+    "en": "One more time",
+    "bn": "আরেকবার",
+    "ja": "もう一度"
+   },
+   "note": {
+    "en": "Didn't catch it? This.",
+    "bn": "না বুঝলে: もういちど、ゆっくり — আরেকবার, ধীরে।",
+    "ja": "繰り返し"
+   },
+   "srs_words": [
+    "もういちど"
+   ]
+  }
+ ]
+}

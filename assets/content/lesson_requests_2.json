@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_requests_2",
+ "pack_id": "work",
+ "depends_on": [
+  "lesson_work_requests"
+ ],
+ "can_do": {
+  "en": "Make more requests and ask permission",
+  "bn": "আরও অনুরোধ ও অনুমতি চাওয়া",
+  "ja": "依頼と許可 2"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "JFT-Basic requests set 2",
+ "verified": true,
+ "prerequisites": [
+  "lesson_work_requests"
+ ],
+ "items": [
+  {
+   "id": "rq_01",
+   "jp": "かしてください",
+   "kana": "かしてください",
+   "romaji": "kashite kudasai",
+   "meaning": {
+    "en": "Please lend me",
+    "bn": "ধার দিন",
+    "ja": "貸してください"
+   },
+   "note": {
+    "en": "Borrowing tools",
+    "bn": "どうぐをかしてください — যন্ত্র ধার চাওয়া।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "かしてください"
+   ]
+  },
+  {
+   "id": "rq_02",
+   "jp": "みせてください",
+   "kana": "みせてください",
+   "romaji": "misete kudasai",
+   "meaning": {
+    "en": "Please show me",
+    "bn": "দেখান",
+    "ja": "見せてください"
+   },
+   "note": {
+    "en": "In shops",
+    "bn": "দোকানে জিনিস দেখতে চাওয়ার ভদ্র রূপ।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "みせてください"
+   ]
+  },
+  {
+   "id": "rq_03",
+   "jp": "おしえてください",
+   "kana": "おしえてください",
+   "romaji": "oshiete kudasai",
+   "meaning": {
+    "en": "Please teach/tell me",
+    "bn": "শিখিয়ে/বলে দিন",
+    "ja": "教えてください"
+   },
+   "note": {
+    "en": "Asking = good worker",
+    "bn": "না জানলে এটাই বলো — জাপানে প্রশ্ন করা = আগ্রহী কর্মী।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "おしえてください"
+   ]
+  },
+  {
+   "id": "rq_04",
+   "jp": "まってください",
+   "kana": "まってください",
+   "romaji": "matte kudasai",
+   "meaning": {
+    "en": "Please wait",
+    "bn": "একটু দাঁড়ান",
+    "ja": "待ってください"
+   },
+   "note": {
+    "en": "Chotto softens it",
+    "bn": "ちょっとまってください — আরও নরম শোনায়।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "まってください"
+   ]
+  },
+  {
+   "id": "rq_05",
+   "jp": "すわってもいいですか",
+   "kana": "すわってもいいですか",
+   "romaji": "suwatte mo ii desu ka",
+   "meaning": {
+    "en": "May I sit?",
+    "bn": "বসতে পারি?",
+    "ja": "座ってもいいですか"
+   },
+   "note": {
+    "en": "The permission pattern",
+    "bn": "〜てもいいですか pattern-এর সহজতম উদাহরণ।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "すわってもいいですか"
+   ]
+  },
+  {
+   "id": "rq_06",
+   "jp": "しゃしんをとってもいいですか",
+   "kana": "しゃしんをとってもいいですか",
+   "romaji": "shashin o totte mo ii desu ka",
+   "meaning": {
+    "en": "May I take a photo?",
+    "bn": "ছবি তুলতে পারি?",
+    "ja": "写真を撮ってもいいですか"
+   },
+   "note": {
+    "en": "Factories often ban photos",
+    "bn": "কারখানায় প্রায়ই ছবি নিষেধ — আগে জিজ্ঞেস করো!",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "しゃしんをとってもいいですか"
+   ]
+  },
+  {
+   "id": "rq_07",
+   "jp": "はいってもいいですか",
+   "kana": "はいってもいいですか",
+   "romaji": "haitte mo ii desu ka",
+   "meaning": {
+    "en": "May I enter?",
+    "bn": "ঢুকতে পারি?",
+    "ja": "入ってもいいですか"
+   },
+   "note": {
+    "en": "Knock + this line",
+    "bn": "ঘরে/অফিসে ঢোকার আগে — নক + এই লাইন।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "はいってもいいですか"
+   ]
+  },
+  {
+   "id": "rq_08",
+   "jp": "つかってもいいですか",
+   "kana": "つかってもいいですか",
+   "romaji": "tsukatte mo ii desu ka",
+   "meaning": {
+    "en": "May I use this?",
+    "bn": "ব্যবহার করতে পারি?",
+    "ja": "使ってもいいですか"
+   },
+   "note": {
+    "en": "Before touching others' things",
+    "bn": "অন্যের জিনিস ছোঁয়ার আগে সবসময়।",
+    "ja": "許可"
+   },
+   "srs_words": [
+    "つかってもいいですか"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_shopping_adj",
+ "pack_id": "daily_life",
+ "depends_on": [
+  "lesson_shopping"
+ ],
+ "can_do": {
+  "en": "Describe things you buy",
+  "bn": "জিনিসের বর্ণনা (দাম-আকার)",
+  "ja": "買い物の形容詞"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter adjectives (JLPT N5 core)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_shopping"
+ ],
+ "items": [
+  {
+   "id": "sa_01",
+   "jp": "やすい",
+   "kana": "やすい",
+   "romaji": "yasui",
+   "meaning": {
+    "en": "Cheap",
+    "bn": "সস্তা",
+    "ja": "安い"
+   },
+   "note": {
+    "en": "Cheap!",
+    "bn": "やすいですね! — দরদামে হাসিমুখের প্রশংসা।",
+    "ja": "値段"
+   },
+   "srs_words": [
+    "やすい"
+   ]
+  },
+  {
+   "id": "sa_02",
+   "jp": "たかい",
+   "kana": "たかい",
+   "romaji": "takai",
+   "meaning": {
+    "en": "Expensive / tall",
+    "bn": "দামি / উঁচু",
+    "ja": "高い"
+   },
+   "note": {
+    "en": "Expensive AND tall",
+    "bn": "দাম আর উচ্চতা — দুটোই たかい। context বলে দেয়।",
+    "ja": "値段・高さ"
+   },
+   "srs_words": [
+    "たかい"
+   ]
+  },
+  {
+   "id": "sa_03",
+   "jp": "おおきい",
+   "kana": "おおきい",
+   "romaji": "ookii",
+   "meaning": {
+    "en": "Big",
+    "bn": "বড়",
+    "ja": "大きい"
+   },
+   "note": {
+    "en": "Ask for bigger",
+    "bn": "সাইজ চাইতে: もっとおおきいのはありますか?",
+    "ja": "大きさ"
+   },
+   "srs_words": [
+    "おおきい"
+   ]
+  },
+  {
+   "id": "sa_04",
+   "jp": "ちいさい",
+   "kana": "ちいさい",
+   "romaji": "chiisai",
+   "meaning": {
+    "en": "Small",
+    "bn": "ছোট",
+    "ja": "小さい"
+   },
+   "note": {
+    "en": "Opposite of ookii",
+    "bn": "おおきい-র উল্টো — জুতা/জামায় রোজ লাগবে।",
+    "ja": "大きさ"
+   },
+   "srs_words": [
+    "ちいさい"
+   ]
+  },
+  {
+   "id": "sa_05",
+   "jp": "あたらしい",
+   "kana": "あたらしい",
+   "romaji": "atarashii",
+   "meaning": {
+    "en": "New",
+    "bn": "নতুন",
+    "ja": "新しい"
+   },
+   "note": {
+    "en": "New",
+    "bn": "あたらしいスマホ — নতুন ফোন!",
+    "ja": "新旧"
+   },
+   "srs_words": [
+    "あたらしい"
+   ]
+  },
+  {
+   "id": "sa_06",
+   "jp": "ふるい",
+   "kana": "ふるい",
+   "romaji": "furui",
+   "meaning": {
+    "en": "Old (things)",
+    "bn": "পুরনো (জিনিস)",
+    "ja": "古い"
+   },
+   "note": {
+    "en": "Things only, not people",
+    "bn": "জিনিস ふるい, মানুষ নয় (মানুষে অভদ্র!)।",
+    "ja": "新旧"
+   },
+   "srs_words": [
+    "ふるい"
+   ]
+  },
+  {
+   "id": "sa_07",
+   "jp": "いいです",
+   "kana": "いいです",
+   "romaji": "ii desu",
+   "meaning": {
+    "en": "Good / it's fine",
+    "bn": "ভালো / ঠিক আছে",
+    "ja": "いいです"
+   },
+   "note": {
+    "en": "Often means 'no thanks'!",
+    "bn": "সাবধান: দোকানে いいです মানে প্রায়ই 'লাগবে না'!",
+    "ja": "肯定・断り"
+   },
+   "srs_words": [
+    "いいです"
+   ]
+  },
+  {
+   "id": "sa_08",
+   "jp": "サイズ",
+   "kana": "サイズ",
+   "romaji": "saizu",
+   "meaning": {
+    "en": "Size",
+    "bn": "সাইজ",
+    "ja": "サイズ"
+   },
+   "note": {
+    "en": "S/M/L in katakana",
+    "bn": "কাতাকানা — エス/エム/エル (S/M/L) বলা হয়।",
+    "ja": "サイズ"
+   },
+   "srs_words": [
+    "サイズ"
+   ]
+  }
+ ]
+}

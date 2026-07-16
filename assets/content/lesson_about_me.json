@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_about_me",
+ "pack_id": "survival",
+ "depends_on": [
+  "lesson_intro_qa"
+ ],
+ "can_do": {
+  "en": "Answer more questions about yourself",
+  "bn": "নিজের সম্পর্কে আরও প্রশ্নের উত্তর",
+  "ja": "自分のことをもっと話す"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "Irodori Starter self-intro set 2",
+ "verified": true,
+ "prerequisites": [
+  "lesson_intro_qa"
+ ],
+ "items": [
+  {
+   "id": "am_01",
+   "jp": "なんさいですか",
+   "kana": "なんさいですか",
+   "romaji": "nansai desu ka",
+   "meaning": {
+    "en": "How old are you?",
+    "bn": "বয়স কত?",
+    "ja": "何歳ですか"
+   },
+   "note": {
+    "en": "Forms ask this",
+    "bn": "ফর্ম/অফিসে জিজ্ঞেস করবে — おいくつですか আরও ভদ্র রূপ।",
+    "ja": "年齢の質問"
+   },
+   "srs_words": [
+    "なんさいですか"
+   ]
+  },
+  {
+   "id": "am_02",
+   "jp": "にじゅうごさいです",
+   "kana": "にじゅうごさいです",
+   "romaji": "nijuugosai desu",
+   "meaning": {
+    "en": "I am 25",
+    "bn": "আমার ২৫ বছর",
+    "ja": "二十五歳です"
+   },
+   "note": {
+    "en": "Number + sai desu",
+    "bn": "[সংখ্যা]+さいです — নিজের বয়স বসিয়ে বলো।",
+    "ja": "年齢の答え"
+   },
+   "srs_words": [
+    "にじゅうごさいです"
+   ]
+  },
+  {
+   "id": "am_03",
+   "jp": "どこにすんでいますか",
+   "kana": "どこにすんでいますか",
+   "romaji": "doko ni sunde imasu ka",
+   "meaning": {
+    "en": "Where do you live?",
+    "bn": "কোথায় থাকো?",
+    "ja": "どこに住んでいますか"
+   },
+   "note": {
+    "en": "Common follow-up",
+    "bn": "নতুন পরিচয়ের ২ নম্বর প্রশ্ন।",
+    "ja": "住まいの質問"
+   },
+   "srs_words": [
+    "どこにすんでいますか"
+   ]
+  },
+  {
+   "id": "am_04",
+   "jp": "りょうにすんでいます",
+   "kana": "りょうにすんでいます",
+   "romaji": "ryou ni sunde imasu",
+   "meaning": {
+    "en": "I live in the dorm",
+    "bn": "ডরমিটরিতে থাকি",
+    "ja": "寮に住んでいます"
+   },
+   "note": {
+    "en": "Ryou = company dorm",
+    "bn": "りょう = কোম্পানির ডর্ম — SSW জীবনের বাস্তবতা।",
+    "ja": "住まいの答え"
+   },
+   "srs_words": [
+    "りょうにすんでいます"
+   ]
+  },
+  {
+   "id": "am_05",
+   "jp": "しゅっしんはどこですか",
+   "kana": "しゅっしんはどこですか",
+   "romaji": "shusshin wa doko desu ka",
+   "meaning": {
+    "en": "Where are you from originally?",
+    "bn": "জন্মস্থান কোথায়?",
+    "ja": "出身はどこですか"
+   },
+   "note": {
+    "en": "Another 'where from'",
+    "bn": "おくにはどちらですか-র আরেক রূপ — দুটোই শুনবে।",
+    "ja": "出身の質問"
+   },
+   "srs_words": [
+    "しゅっしんはどこですか"
+   ]
+  },
+  {
+   "id": "am_06",
+   "jp": "ダッカしゅっしんです",
+   "kana": "ダッカしゅっしんです",
+   "romaji": "dakka shusshin desu",
+   "meaning": {
+    "en": "I'm from Dhaka",
+    "bn": "আমি ঢাকার",
+    "ja": "ダッカ出身です"
+   },
+   "note": {
+    "en": "Place + shusshin desu",
+    "bn": "[জায়গা]+しゅっしんです — নিজের শহর বসাও।",
+    "ja": "出身の答え"
+   },
+   "srs_words": [
+    "ダッカしゅっしんです"
+   ]
+  },
+  {
+   "id": "am_07",
+   "jp": "にほんごがすこしわかります",
+   "kana": "にほんごがすこしわかります",
+   "romaji": "nihongo ga sukoshi wakarimasu",
+   "meaning": {
+    "en": "I understand a little Japanese",
+    "bn": "একটু জাপানি বুঝি",
+    "ja": "日本語が少し分かります"
+   },
+   "note": {
+    "en": "Says: speak slowly to me",
+    "bn": "বিনয়ী আর সত্য — すこし বললে সবাই ধীরে বলবে।",
+    "ja": "控えめな言い方"
+   },
+   "srs_words": [
+    "にほんごがすこしわかります"
+   ]
+  },
+  {
+   "id": "am_08",
+   "jp": "もっとべんきょうします",
+   "kana": "もっとべんきょうします",
+   "romaji": "motto benkyou shimasu",
+   "meaning": {
+    "en": "I will study more",
+    "bn": "আরও পড়াশোনা করব",
+    "ja": "もっと勉強します"
+   },
+   "note": {
+    "en": "Humble reply to praise",
+    "bn": "প্রশংসা পেলে বিনয়ী জবাব — সাথে がんばります।",
+    "ja": "謙遜の答え"
+   },
+   "srs_words": [
+    "もっとべんきょうします"
+   ]
+  }
+ ]
+}

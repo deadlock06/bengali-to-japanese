@@ -31,7 +31,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 - **Kana-first sequencing** — numbers requires hiragana (ontology); the classroom teaches kana first.
 
 ### Content / data
-- 21 verified lesson JSONs (168 items, ALL ≤8-item lessons, validator-clean incl. trilingual + whitelist 1430) + kana×2 + pitch · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
+- 32 verified lesson JSONs (256 items — live count in `node tools/progress_scale.mjs`; ALL ≤8-item lessons, validator-clean incl. trilingual + whitelist) + kana×2 + pitch · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
 
 ### Platform
 - SQLCipher DB + migrations · one-tap ZIP export + 7-day-grace deletion + boot purge check · persona persistence · device build **verified once** on TECNO (07-10).

@@ -74,9 +74,19 @@ t('authored-all: >=13 done', d2.filter(u => u.state === 'done').length >= 13);
 // 6. partial unit pct: only lesson_smalltalk of A2.5 done
 // (fixture tracks the wired lesson lists — updated 2026-07-16 for the new
 // numbers_big/week/food + orphan wirings shopping/greetings/emergency)
-let d3 = derive(root, new Set(['kana_hiragana','kana_katakana','lesson_numbers','lesson_numbers_big','lesson_counters','lesson_time','lesson_week','work_intro_01','lesson_greetings','lesson_polite','lesson_intro_qa','lesson_family','lesson_konbini','lesson_shopping','lesson_restaurant','lesson_food','lesson_workplace','lesson_work_day','lesson_clinic','lesson_emergency','lesson_directions','lesson_transport','lesson_places','lesson_work_requests','lesson_smalltalk']));
+// Everything before A2.5 done + ONLY smalltalk of A2.5 → A2.5 current at
+// 1/N pct. Derive the set from the live ontology so content growth doesn't
+// break this fixture again (pct asserted against A2.5's live lesson count).
+const upto = new Set();
+for (const u of root.units) {
+  if (u.id === 'A2.5' || u.id.startsWith('N4') || u.id === 'A2.M' || u.id === 'A2.6') continue;
+  for (const id of (u.lesson_id || '').split(',').map(s => s.trim()).filter(Boolean)) upto.add(id);
+}
+upto.add('lesson_smalltalk');
+let d3 = derive(root, upto);
 const a25 = d3.find(u => u.id === 'A2.5');
-t('A2.5 current w/ pct 0.5', a25.state === 'current' && Math.abs(a25.pct - 0.5) < 1e-9);
+const want = 1 / a25.ls.length; // one of A2.5's live lesson list completed
+t(`A2.5 current w/ pct 1/${a25.ls.length}`, a25.state === 'current' && Math.abs(a25.pct - want) < 1e-9);
 
 console.log(`\n${pass}/${pass + fail} passed`);
 process.exit(fail ? 1 : 0);

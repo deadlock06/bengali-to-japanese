@@ -490,7 +490,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         isScrollControlled: true,
         backgroundColor: Colors.transparent,
         builder: (_) => SenseiChatSheet(
-            accent: m.color, moodLabel: m.label, contextJp: q.jp),
+            accent: m.color, moodLabel: m.label, contextJp: q.jp,
+            // Page-specific history: this lesson's chat stays with this lesson.
+            chatKey: 'lesson:${_batch?.lessonId ?? "demo"}'),
       );
 
   Widget _teacherRow() => Row(crossAxisAlignment: CrossAxisAlignment.end, children: [

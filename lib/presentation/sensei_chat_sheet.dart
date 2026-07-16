@@ -10,10 +10,14 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/ai_tutor_service.dart';
+import '../data/chat_history_store.dart';
 
-class SenseiChatSheet extends StatefulWidget {
+class SenseiChatSheet extends ConsumerStatefulWidget {
   const SenseiChatSheet({
     super.key,
     required this.accent,
@@ -21,14 +25,21 @@ class SenseiChatSheet extends StatefulWidget {
     this.contextJp = '',
     this.seedText = '',
     this.curriculumHint = '',
+    this.chatKey,
   });
   final Color accent;
   final String moodLabel;
   final String contextJp; // the classroom item under discussion (AI context)
   final String seedText; // copy-anywhere: text to explain on open
   final String curriculumHint; // "শিক্ষার্থী এখন <unit> শিখছে" — ties to lessons
+
+  /// Stable per-surface key (e.g. 'lesson:<id>', 'kana:か', 'explain:<text>').
+  /// When set, this surface's conversation is saved and restored — a chat done
+  /// on a specific page stays on that page. null = ephemeral (no history).
+  final String? chatKey;
+
   @override
-  State<SenseiChatSheet> createState() => _SenseiChatSheetState();
+  ConsumerState<SenseiChatSheet> createState() => _SenseiChatSheetState();
 }
 
 class _ChatMsg {
@@ -37,7 +48,7 @@ class _ChatMsg {
   final String text;
 }
 
-class _SenseiChatSheetState extends State<SenseiChatSheet>
+class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     with SingleTickerProviderStateMixin {
   final _input = TextEditingController();
   final FlutterTts _tts = FlutterTts();
@@ -65,12 +76,54 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
     _tts.setCompletionHandler(() {
       if (mounted) setState(() => _speakingIdx = -1);
     });
+    if (widget.chatKey != null) {
+      _restoreHistory(); // page-specific: reload this surface's conversation
+    } else {
+      _openingMessage();
+    }
+  }
+
+  /// First-open content when there's no saved history.
+  void _openingMessage() {
     if (widget.seedText.isNotEmpty) {
       _bootstrapExplain(); // open by explaining the selected text
     } else {
-      _msgs.add(const _ChatMsg(false,
-          'কিছু জিজ্ঞেস করতে চাও? আমি আছি — যেকোনো শব্দ বা বাক্য নিয়ে প্রশ্ন করো।'));
+      setState(() => _msgs.add(const _ChatMsg(false,
+          'কিছু জিজ্ঞেস করতে চাও? আমি আছি — যেকোনো শব্দ বা বাক্য নিয়ে প্রশ্ন করো।')));
     }
+  }
+
+  Future<void> _restoreHistory() async {
+    final hist = await ChatHistoryStore.instance.load(widget.chatKey!);
+    if (!mounted) return;
+    if (hist.isNotEmpty) {
+      setState(() {
+        _msgs
+          ..clear()
+          ..addAll(hist.reversed.map((t) => _ChatMsg(t.mine, t.text)));
+      });
+    } else {
+      _openingMessage();
+    }
+  }
+
+  /// Save the conversation for this surface (chronological order).
+  void _persist() {
+    final key = widget.chatKey;
+    if (key == null) return;
+    ChatHistoryStore.instance.save(
+        key, _msgs.reversed.map((m) => ChatTurn(m.mine, m.text)).toList());
+  }
+
+  Future<void> _clearHistory() async {
+    final key = widget.chatKey;
+    setState(() {
+      _msgs.clear();
+      _speakingIdx = -1;
+    });
+    if (key != null) await ChatHistoryStore.instance.clear(key);
+    if (!mounted) return;
+    _openingMessage();
   }
 
   // Copy-anywhere open: the sensei presents & explains the selected text first.
@@ -79,16 +132,20 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
     final ai = await AiTutorService.instance
         .explain(widget.seedText, curriculumHint: widget.curriculumHint);
     if (!mounted) return;
+    
+    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText);
+
     setState(() {
       _msgs.insert(
           0,
           _ChatMsg(
               false,
-              ai ??
+              ai ?? offlineMatch ??
                   'এখন অনলাইন ব্যাখ্যা দিতে পারছি না — ইন্টারনেট বা AI key দরকার। '
                       'তবে জিজ্ঞেস করলে যতটা পারি সাহায্য করব।'));
       _typing = false;
     });
+    _persist();
   }
 
   @override
@@ -116,15 +173,20 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
         _msgs.insert(0, _ChatMsg(false, ai));
         _typing = false;
       });
+      _persist();
       return;
     }
+
+    final offlineResponse = ref.read(contentProvider).valueOrNull?.handleOfflineChat(t, _ctx);
+
     Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
       setState(() {
-        _msgs.insert(0, _ChatMsg(false, _canned[_cannedIdx % _canned.length]));
+        _msgs.insert(0, _ChatMsg(false, offlineResponse ?? _canned[_cannedIdx % _canned.length]));
         _cannedIdx++;
         _typing = false;
       });
+      _persist();
     });
   }
 
@@ -229,20 +291,46 @@ class _SenseiChatSheetState extends State<SenseiChatSheet>
                       fontSize: 16, fontWeight: FontWeight.w900, color: a)),
             ),
             const SizedBox(width: 10),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text('সেনসেই',
-                  style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
-              Row(children: [
-                Container(
-                    width: 6, height: 6,
-                    decoration: BoxDecoration(color: a, shape: BoxShape.circle)),
-                const SizedBox(width: 5),
-                Text(seeded ? 'ব্যাখ্যা' : widget.moodLabel,
-                    style: TextStyle(
-                        color: a, fontSize: 10.5, fontWeight: FontWeight.w700)),
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                const Text('সেনসেই',
+                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 14)),
+                Row(children: [
+                  Container(
+                      width: 6, height: 6,
+                      decoration: BoxDecoration(color: a, shape: BoxShape.circle)),
+                  const SizedBox(width: 5),
+                  Flexible(
+                    child: Text(seeded ? 'ব্যাখ্যা' : widget.moodLabel,
+                        maxLines: 1, overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            color: a, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                  ),
+                  if (widget.chatKey != null)
+                    const Text('  ·  সংরক্ষিত',
+                        maxLines: 1,
+                        style: TextStyle(
+                            color: BhasagoTheme.muted,
+                            fontSize: 10.5, fontWeight: FontWeight.w600)),
+                ]),
               ]),
-            ]),
-            const Spacer(),
+            ),
+            // Page-specific history: clear THIS surface's saved conversation.
+            if (widget.chatKey != null)
+              IconButton(
+                tooltip: 'এই পেজের চ্যাট মুছুন',
+                onPressed: _msgs.isEmpty
+                    ? null
+                    : () {
+                        _clearHistory();
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text('এই পেজের চ্যাট মুছে ফেলা হলো।'),
+                          duration: Duration(seconds: 2),
+                        ));
+                      },
+                icon: const Icon(Icons.delete_outline, size: 19,
+                    color: BhasagoTheme.muted),
+              ),
             IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: const Icon(Icons.close, size: 20, color: BhasagoTheme.muted)),

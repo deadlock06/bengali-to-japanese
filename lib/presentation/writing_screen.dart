@@ -119,8 +119,10 @@ class _WritingScreenState extends State<WritingScreen>
         builder: (_) => SenseiChatSheet(
           accent: const Color(0xFFF06EB7),
           moodLabel: 'লেখা',
-          seedText: '「$_cur」 (${_romaji[_idx]}) — এই ${_kata ? "কাতাকানা" : "হিরাগানা"} '
-              'অক্ষরটা কীভাবে সহজে মনে রাখব, লিখব আর উচ্চারণ করব?',
+          seedText: _cur,
+          // Page-specific history: this character's chat stays with this kana.
+          chatKey: 'kana:$_cur',
+          curriculumHint: 'শিক্ষার্থী এখন 「$_cur」 (${_romaji[_idx]}) ${_kata ? "কাতাকানা" : "হিরাগানা"} অক্ষরটি লিখতে ও আঁকতে শিখছে। এটি কীভাবে সহজে মনে রাখবে (mnemonic), লিখবে (stroke order/tip) এবং উচ্চারণ করবে তা বুঝিয়ে বলো।',
         ),
       );
 
@@ -244,7 +246,7 @@ class _WritingScreenState extends State<WritingScreen>
               width: 46,
               margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
               decoration: BoxDecoration(
-                color: i == _idx ? const Color(0xFFFF2D78) : Colors.white10,
+                color: i == _idx ? const Color(0xFFF06EB7) : Colors.white10,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(child: Text(_chars[i], style: const TextStyle(fontSize: 22))),
@@ -325,29 +327,42 @@ class _WritingScreenState extends State<WritingScreen>
           child: Center(
             child: AspectRatio(
               aspectRatio: 1,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Listener(
-                  onPointerDown: (e) {
-                    if (_animating) return;
-                    setState(() {
-                      _staticStrokes = false; // start drawing over the model
-                      _ink.add([e.localPosition]);
-                    });
-                  },
-                  onPointerMove: (e) {
-                    if (_animating || _ink.isEmpty) return;
-                    setState(() => _ink.last.add(e.localPosition));
-                  },
-                  child: AnimatedBuilder(
-                    animation: _anim,
-                    builder: (_, __) => CustomPaint(
-                      size: Size.infinite,
-                      painter: _WritingPainter(
-                        ink: _ink,
-                        guideChar: _guide && !_animating && !_staticStrokes ? _cur : null,
-                        animStrokes: _animating || _staticStrokes ? strokes : null,
-                        animT: _animating ? _anim.value : 1.0,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: const Color(0xFF2E2E2E), width: 1.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.3),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    )
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(18.5),
+                  child: Listener(
+                    onPointerDown: (e) {
+                      if (_animating) return;
+                      setState(() {
+                        _staticStrokes = false; // start drawing over the model
+                        _ink.add([e.localPosition]);
+                      });
+                    },
+                    onPointerMove: (e) {
+                      if (_animating || _ink.isEmpty) return;
+                      setState(() => _ink.last.add(e.localPosition));
+                    },
+                    child: AnimatedBuilder(
+                      animation: _anim,
+                      builder: (_, __) => CustomPaint(
+                        size: Size.infinite,
+                        painter: _WritingPainter(
+                          ink: _ink,
+                          guideChar: _guide && !_animating && !_staticStrokes ? _cur : null,
+                          animStrokes: _animating || _staticStrokes ? strokes : null,
+                          animT: _animating ? _anim.value : 1.0,
+                        ),
                       ),
                     ),
                   ),
@@ -434,11 +449,11 @@ class _WritingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final w = size.width;
-    canvas.drawRect(Offset.zero & size, Paint()..color = const Color(0xFFFBFBFD));
+    canvas.drawRect(Offset.zero & size, Paint()..color = const Color(0xFF111111));
     // grid
     final pad = w * 0.06;
     final gl = Paint()
-      ..color = const Color(0xFFE6E7EE)
+      ..color = const Color(0xFF222222)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.4;
     canvas.drawRect(Rect.fromLTRB(pad, pad, w - pad, size.height - pad), gl);
@@ -450,7 +465,7 @@ class _WritingPainter extends CustomPainter {
       final tp = TextPainter(
         text: TextSpan(
             text: guideChar,
-            style: TextStyle(fontSize: size.height * 0.7, color: const Color(0xFFE3E4EC))),
+            style: TextStyle(fontSize: size.height * 0.7, color: const Color(0xFF222222))),
         textDirection: TextDirection.ltr,
       )..layout();
       tp.paint(canvas, Offset((w - tp.width) / 2, (size.height - tp.height) / 2));
@@ -458,7 +473,7 @@ class _WritingPainter extends CustomPainter {
 
     // user ink
     final inkPaint = Paint()
-      ..color = const Color(0xFF14141F)
+      ..color = const Color(0xFFFFFFFF)
       ..style = PaintingStyle.stroke
       ..strokeWidth = w * 0.045
       ..strokeCap = StrokeCap.round
@@ -466,7 +481,7 @@ class _WritingPainter extends CustomPainter {
     for (final st in ink) {
       if (st.length < 2) {
         if (st.length == 1) {
-          canvas.drawCircle(st.first, inkPaint.strokeWidth / 2, Paint()..color = const Color(0xFF14141F));
+          canvas.drawCircle(st.first, inkPaint.strokeWidth / 2, Paint()..color = const Color(0xFFFFFFFF));
         }
         continue;
       }
@@ -481,7 +496,7 @@ class _WritingPainter extends CustomPainter {
     if (animStrokes != null) {
       final sc = w / 1000.0;
       final ap = Paint()
-        ..color = const Color(0xFF14141F)
+        ..color = const Color(0xFFF06EB7)
         ..style = PaintingStyle.stroke
         ..strokeWidth = w * 0.06
         ..strokeCap = StrokeCap.round

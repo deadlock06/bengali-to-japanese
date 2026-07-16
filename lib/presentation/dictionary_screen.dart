@@ -4,21 +4,23 @@
 // Explanatory only — no grading (D-001 / 00 §4).
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/ai_tutor_service.dart';
 
-class DictionaryScreen extends StatefulWidget {
+class DictionaryScreen extends ConsumerStatefulWidget {
   const DictionaryScreen({super.key, this.initialText = ''});
 
   /// Pre-fill (e.g. a word tapped elsewhere in the app).
   final String initialText;
 
   @override
-  State<DictionaryScreen> createState() => _DictionaryScreenState();
+  ConsumerState<DictionaryScreen> createState() => _DictionaryScreenState();
 }
 
-class _DictionaryScreenState extends State<DictionaryScreen> {
+class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
   late final TextEditingController _input =
       TextEditingController(text: widget.initialText);
   bool _loading = false;
@@ -58,10 +60,13 @@ class _DictionaryScreenState extends State<DictionaryScreen> {
     });
     final r = await AiTutorService.instance.explain(text);
     if (!mounted) return;
+
+    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(text);
+
     setState(() {
       _loading = false;
-      _result = r;
-      _offline = r == null;
+      _result = r ?? offlineMatch;
+      _offline = r == null && offlineMatch == null;
     });
   }
 

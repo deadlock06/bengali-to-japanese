@@ -18,6 +18,8 @@ Future<void> showExplainSheet(BuildContext context, String text,
       moodLabel: 'ব্যাখ্যা',
       seedText: text,
       curriculumHint: curriculumHint,
+      // Page-specific history: re-selecting the same text reopens its thread.
+      chatKey: 'explain:$text',
     ),
   );
 }

@@ -88,8 +88,9 @@ class BookScreenV4 extends ConsumerWidget {
               end: Alignment.bottomRight,
               colors: [Color(0xFF2E7D5B), Color(0xFF1F5C42)]),
         ),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Container(width: 10, color: const Color(0xFF174632)), // spine
+        child: IntrinsicHeight(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Container(width: 10, color: const Color(0xFF174632)), // spine
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 14),
@@ -151,6 +152,7 @@ class BookScreenV4 extends ConsumerWidget {
             ),
           ),
         ]),
+        ),
       );
 
   Widget _chapterTile(BuildContext context, BookChapter c, int readCh) {

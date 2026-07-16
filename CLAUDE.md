@@ -4,8 +4,9 @@
 
 ## Read order — EVERY session, no exceptions
 1. **`docs/00_START_HERE.md`** — the router + the 7 NON-NEGOTIABLES. It maps your task → the ONE or TWO spec files to load. Do NOT read the whole spec (~25K tokens); load only what the table says.
-2. **`CODEBASE_MAP.md`** (repo root) — what is actually BUILT vs NOT built right now. Read this INSTEAD of re-exploring the repo.
-3. **`NEXT_SESSION.md`** (repo root) — what the last session did and what to do next.
+2. **`PROJECT_SCALE.md`** + run `node tools/progress_scale.mjs` — the master completion tracker: live %, all proofs, and the NEXT step. Work steps in order; run `--gate` before AND after every step; tick the box when green (D-019).
+3. **`CODEBASE_MAP.md`** (repo root) — what is actually BUILT vs NOT built right now. Read this INSTEAD of re-exploring the repo.
+4. **`NEXT_SESSION.md`** (repo root) — what the last session did and what to do next.
 
 Then open ONLY the `docs/NN_*.md` file(s) your task needs (00_START_HERE tells you which).
 

@@ -59,12 +59,12 @@
    "meaning": {
     "en": "Three",
     "bn": "তিন",
-    "ja": ""
+    "ja": "三"
    },
    "note": {
     "en": "Basic number",
     "bn": "৩ — さんじ মানে ৩টা।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "さん"
@@ -78,12 +78,12 @@
    "meaning": {
     "en": "Four",
     "bn": "চার",
-    "ja": ""
+    "ja": "四"
    },
    "note": {
     "en": "Four (yon is safer than shi)",
     "bn": "৪ — し-ও বলা হয়, তবে よん বেশি safe।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "よん"
@@ -97,12 +97,12 @@
    "meaning": {
     "en": "Five",
     "bn": "পাঁচ",
-    "ja": ""
+    "ja": "五"
    },
    "note": {
     "en": "Basic number",
     "bn": "৫ — ごじ মানে ৫টা।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "ご"
@@ -116,12 +116,12 @@
    "meaning": {
     "en": "Six",
     "bn": "ছয়",
-    "ja": ""
+    "ja": "六"
    },
    "note": {
     "en": "Basic number",
     "bn": "৬ — দাম বলায় খুব লাগে।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "ろく"
@@ -135,12 +135,12 @@
    "meaning": {
     "en": "Seven",
     "bn": "সাত",
-    "ja": ""
+    "ja": "七"
    },
    "note": {
     "en": "Seven (nana is clearer than shichi)",
     "bn": "৭ — しち-ও আছে, তবে なな পরিষ্কার শোনায়।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "なな"
@@ -154,12 +154,12 @@
    "meaning": {
     "en": "Eight",
     "bn": "আট",
-    "ja": ""
+    "ja": "八"
    },
    "note": {
     "en": "Basic number",
     "bn": "৮ — はちじ মানে ৮টা।",
-    "ja": ""
+    "ja": "基本の数字"
    },
    "srs_words": [
     "はち"

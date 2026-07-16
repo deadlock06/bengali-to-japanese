@@ -45,12 +45,12 @@
    "meaning": {
     "en": "The menu, please",
     "bn": "মেনুটা দিন",
-    "ja": ""
+    "ja": "メニューをください"
    },
    "note": {
     "en": "Ask right after sitting down",
     "bn": "বসেই এটা বলো — ছবিওয়ালা মেনু চাইলে しゃしん বলো।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "メニューをください"
@@ -64,12 +64,12 @@
    "meaning": {
     "en": "Water, please",
     "bn": "পানি দিন",
-    "ja": ""
+    "ja": "みずをください"
    },
    "note": {
     "en": "Water is free in Japan",
     "bn": "জাপানে পানি ফ্রি — নির্ভয়ে চাও।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "みずをください"
@@ -83,12 +83,12 @@
    "meaning": {
     "en": "Does this contain pork?",
     "bn": "এতে কি শুয়োরের মাংস আছে?",
-    "ja": ""
+    "ja": "ぶたにくははいっていますか"
    },
    "note": {
     "en": "THE halal-check question",
     "bn": "halal check-এর সবচেয়ে জরুরি বাক্য — order করার আগে জিজ্ঞেস করো।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "ぶたにくははいっていますか"
@@ -102,12 +102,12 @@
    "meaning": {
     "en": "The bill, please",
     "bn": "বিলটা দিন",
-    "ja": ""
+    "ja": "おかいけいおねがいします"
    },
    "note": {
     "en": "Often paid at the counter",
     "bn": "টেবিলে না, প্রায়ই কাউন্টারে গিয়ে বিল দিতে হয়।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "おかいけいおねがいします"
@@ -121,12 +121,12 @@
    "meaning": {
     "en": "Expression before eating",
     "bn": "খাওয়া শুরুর প্রার্থণা (খাচ্ছি!)",
-    "ja": ""
+    "ja": "いただきます"
    },
    "note": {
     "en": "Said before every meal",
     "bn": "খাওয়ার আগে বললে ভদ্রতা — সবাই বলে।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "いただきます"
@@ -140,12 +140,12 @@
    "meaning": {
     "en": "Thanks for the meal",
     "bn": "খাওয়া শেষের ধন্যবাদ",
-    "ja": ""
+    "ja": "ごちそうさまでした"
    },
    "note": {
     "en": "Said after the meal",
     "bn": "খাওয়া শেষে + দোকান থেকে বের হওয়ার সময় বলো।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "ごちそうさまでした"
@@ -159,12 +159,12 @@
    "meaning": {
     "en": "It's delicious",
     "bn": "খুব মজা (সুস্বাদু)",
-    "ja": ""
+    "ja": "おいしいです"
    },
    "note": {
     "en": "Compliment the food",
     "bn": "প্রশংসা করলে পরিবেশ ভালো হয় — おいしかった (অতীত)।",
-    "ja": ""
+    "ja": "レストランで使う"
    },
    "srs_words": [
     "おいしいです"

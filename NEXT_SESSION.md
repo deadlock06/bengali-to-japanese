@@ -1,5 +1,12 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
+## ⚡ 2026-07-16 late (Opus 4.8) — PROJECT SCALE + full audit + content/backend (all committed)
+- **📏 PROJECT SCALE is now the law (D-019):** start EVERY session with `node tools/progress_scale.mjs` — it runs 13 proofs, prints the scoreboard, and names the NEXT step. `--gate` adds flutter analyze+test; must be green before AND after each step. Tick boxes in PROJECT_SCALE.md. 👉 current next step: **A1 (A1/A2 vocab toward 772; 260/772=34%)**.
+- **Full audit ran & fixed:** 68 items missing meaning.ja/note.ja (trilingual rule) → filled; 28 standard words appended to jft_a2_whitelist (1430); curriculum_reference fixture updated (14/14). Validator: "PASS cleared to ship". Zero console errors in live walkthrough.
+- **Content session:** stubs eliminated (168 items, 306 audio clips, book synced 11/11 via tools/sync_book_vocab.py). **Backend:** Supabase live (D-018) — schema v1 + RLS verified; creds in ../.claude/sensei_db.env; client wiring blocked on OWNER anon key.
+- **Stale-cache fix:** builds now `--pwa-strategy=none`; web_server sends no-cache + self-destruct SW (user browsers un-stick after one hard refresh).
+- **Chat fix:** learner's question now outranks classroom context ("hiragana ki" bug).
+
 ## ⚡ 2026-07-16 (Opus 4.8) — MASTER VISION adopted + first execution slice (all committed)
 - **`docs/13_MASTER_VISION.md` is now the binding product charter (D-016)** — owner's Master Architect Prompt: AI Classroom IS the product; conversation-first, voice-first, Bengali-first w/ proficiency-based BN↔JP balance; 13-stage flow EXTENDS the 5-phase micro-loop; constitution wins on conflict (streak=history only, mastery recommends never locks, LLM selects/glues never invents). Routed in docs/00.
 - **Vision execution slice 1 (this session):** (a) **sensei narrates every stage** (`_senseiNarration` in lesson_screen_v4: lesson-open greeting → teach → "এবার ছোট্ট পরীক্ষা" → "এবার হাতে লেখো ✍️" → verified WHY note) — conversation-as-spine feel; (b) **dynamic BN↔JP balance** (`learnerLevelProvider`: L0/A1→beginner 80-90% BN · A2→50/50 · N4→80-90% JP, injected into AiTutorService system prompts, D-017); (c) **stage-13 next-lesson recommendation** in the done overlay (from live curriculum ladder, recommend-only).

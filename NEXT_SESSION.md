@@ -1,7 +1,7 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
 ## ⚡ 2026-07-16 late (Opus 4.8) — PROJECT SCALE + full audit + content/backend (all committed)
-- **📏 PROJECT SCALE is now the law (D-019):** start EVERY session with `node tools/progress_scale.mjs` — it runs 13 proofs, prints the scoreboard, and names the NEXT step. `--gate` adds flutter analyze+test; must be green before AND after each step. Tick boxes in PROJECT_SCALE.md. 👉 current next step: **A1 (A1/A2 vocab toward 772; 260/772=34%)**.
+- **📏 PROJECT SCALE is now the law (D-019):** start EVERY session with `node tools/progress_scale.mjs` — it runs 13 proofs, prints the scoreboard, and names the NEXT step. `--gate` adds flutter analyze+test; must be green before AND after each step. Tick boxes in PROJECT_SCALE.md. 👉 current next step: **A1 (A1/A2 vocab toward 772)** — live % from the scale (51% as of the 4th slice; L0 fully ✓, A1.1 ✓).
 - **Full audit ran & fixed:** 68 items missing meaning.ja/note.ja (trilingual rule) → filled; 28 standard words appended to jft_a2_whitelist (1430); curriculum_reference fixture updated (14/14). Validator: "PASS cleared to ship". Zero console errors in live walkthrough.
 - **Content session:** stubs eliminated (168 items, 306 audio clips, book synced 11/11 via tools/sync_book_vocab.py). **Backend:** Supabase live (D-018) — schema v1 + RLS verified; creds in ../.claude/sensei_db.env; client wiring blocked on OWNER anon key.
 - **Stale-cache fix:** builds now `--pwa-strategy=none`; web_server sends no-cache + self-destruct SW (user browsers un-stick after one hard refresh).

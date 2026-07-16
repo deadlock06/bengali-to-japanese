@@ -61,6 +61,13 @@ http.createServer((req, res) => {
   if (req.method === 'POST' && req.url === '/ai/chat') return aiProxy(req, res);
   let f = decodeURIComponent(req.url.split('?')[0]);
   if (f === '/') f = '/index.html';
+  // Browsers that registered the OLD Flutter PWA worker cached the app so hard
+  // that new builds never showed ("changes aren't visible"). Always serve the
+  // self-destruct worker (web/) here: it wipes caches, unregisters, reloads.
+  if (f === '/flutter_service_worker.js') {
+    res.writeHead(200, { 'Content-Type': 'text/javascript', 'Cache-Control': 'no-cache' });
+    return fs.createReadStream(path.join(root, '..', '..', 'web', 'flutter_service_worker.js')).pipe(res);
+  }
   let p = path.join(root, f);
   if (!fs.existsSync(p) || fs.statSync(p).isDirectory()) p = path.join(root, 'index.html');
   const ext = path.extname(p).toLowerCase();
@@ -68,6 +75,9 @@ http.createServer((req, res) => {
     'Content-Type': MIME[ext] || 'application/octet-stream',
     'Cross-Origin-Opener-Policy': 'same-origin',
     'Cross-Origin-Embedder-Policy': 'require-corp',
+    // Always revalidate — stale-build symptoms ("changes aren't visible")
+    // came from the browser caching main.dart.js/assets with no headers.
+    'Cache-Control': 'no-cache',
   });
   fs.createReadStream(p).pipe(res);
 }).listen(5601, () => console.log('flutter web on http://localhost:5601'));

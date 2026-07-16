@@ -40,6 +40,7 @@ Offline-first Japanese tutor for Bengali speakers (Bangladesh/Kolkata) targeting
 | Tests, benchmarks, UAT, ethical review | `10_TESTING_QA.md` | |
 | "What do I build next?" / task board | `11_ROADMAP_TASKS.md` | |
 | Pricing, GTM, metrics, costs | `12_BUSINESS_GTM.md` | |
+| Product direction / "does this feature fit the vision?" | `13_MASTER_VISION.md` (owner's master prompt; constitution wins on conflict) | |
 | Existing repo audit / "what do we already have?" | `90_EXISTING_CODEBASE.md` | |
 | "Why was X decided?" / past mistakes | `99_DECISIONS.md` | |
 

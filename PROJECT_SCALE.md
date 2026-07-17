@@ -49,8 +49,12 @@ script — checkboxes below are for the steps the machine can't measure.
       boundary get a 'বাক্যটা পূরণ করো 🧩' step after Recognition — wrong pick =
       orange nudge + retry (never failure), skip free. 70+ sentences today, grows
       with vocab. Proven by test/gap_fill_test.dart. _needs: —_ · size M
-- [ ] **B2 · Vocab Phase-3: say-it (Tier-0)** — record → replay next to native clip →
-      self-compare (NO scoring without STT; D-002). `record` package. _needs: —_ · size M
+- [x] **B2 · Vocab Phase-3: say-it (Tier-0)** — DONE 2026-07-17: after Recognition,
+      every audio-backed vocab item gets 'এবার মুখে বলো 🎙️' — native 🔊 → record →
+      'আমারটা' replay → self-compare ('তোমার কানই বিচারক, আমি নম্বর দিই না', D-002);
+      no-mic surfaces degrade to say-aloud-3-times; skip free. Vocab loop now
+      Intro→Recognition→SAY→Context→SRS. Proven by test/say_it_phase_test.dart.
+      _needs: —_ · size M
 - [ ] **B3 · Kana completion** — yōon (きゃ…), sokuon っ, long-vowel ー recognition
       (+audio); katakana name-builder drill. _needs: —_ · size M
 

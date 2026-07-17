@@ -24,6 +24,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:record/record.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../agents/agent_state.dart';
 import '../app/providers.dart';
@@ -92,6 +94,13 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   // choosing the blanked KNOWN word. Wrong pick = visual nudge, never failure.
   bool contextPhase = false;
   int gapPicked = -1;
+  // Phase 3 (Production) for vocab: SAY the item — record, then hear yourself
+  // next to the native clip. SELF-compare only, machine never scores (D-002).
+  bool sayPhase = false;
+  bool _recording = false;
+  String _myTakeUrl = '';
+  bool _micUnavailable = false;
+  final AudioRecorder _recorder = AudioRecorder();
   int _audioPlayedFor = -1; // auto-play each item's audio once when presented
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
@@ -250,6 +259,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             // WRITTEN as part of the lesson flow — চেনা → লেখা → পরে next.
             // D-001 holds: the বাদ (skip) pill still moves past it freely.
             writingPhase = true;
+          } else if (q.audioKey.isNotEmpty) {
+            // Phase 3 (Production) for vocab: SAY it before moving on.
+            sayPhase = true;
+            _myTakeUrl = '';
           } else if (q.hasGap) {
             // Phase 4 (Context): recognized the sentence? now COMPLETE it.
             contextPhase = true;
@@ -267,11 +280,25 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     }
   }
 
+  /// Say-it done → Phase 4 (context) if this item has a gap, else next item.
+  void _finishSaying() => setState(() {
+        sayPhase = false;
+        if (q.hasGap) {
+          contextPhase = true;
+          gapPicked = -1;
+        } else {
+          _advance();
+        }
+      });
+
   /// Move to the next item (or finish). Callers hold setState.
   void _advance() {
     writingPhase = false;
     contextPhase = false;
     gapPicked = -1;
+    sayPhase = false;
+    _recording = false;
+    _myTakeUrl = '';
     if (idx >= qs.length - 1) {
       done = true;
       _saveCompletion();
@@ -291,6 +318,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
       writingPhase = false;
       contextPhase = false;
       gapPicked = -1;
+      sayPhase = false;
+      _recording = false;
+      _myTakeUrl = '';
       idx = (idx + 1).clamp(0, qs.length - 1);
       picked = -1; hintOpen = false; mood = LessonMood.neutral;
       teacherNote = null;
@@ -382,10 +412,13 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
                   ? _introCard()
                   : writingPhase
                       ? _writeCard()
-                      : contextPhase
-                          ? _contextCard()
-                          : _questionCard(),
-              if (introSeen && !writingPhase && !contextPhase && hintOpen) ...[
+                      : sayPhase
+                          ? _sayCard()
+                          : contextPhase
+                              ? _contextCard()
+                              : _questionCard(),
+              if (introSeen && !writingPhase && !sayPhase && !contextPhase &&
+                  hintOpen) ...[
                 const SizedBox(height: 10), _hintCard()],
               const Spacer(),
               _teacherRow(),
@@ -543,6 +576,107 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         ]),
       );
 
+  Future<void> _toggleRecord() async {
+    if (_recording) {
+      final path = await _recorder.stop();
+      if (!mounted) return;
+      setState(() {
+        _recording = false;
+        _myTakeUrl = path ?? '';
+      });
+      if (_myTakeUrl.isNotEmpty) AudioService.instance.playUrl(_myTakeUrl);
+      return;
+    }
+    try {
+      if (!await _recorder.hasPermission()) throw Exception('no mic');
+      var path = '';
+      try {
+        final dir = await getTemporaryDirectory();
+        path = '${dir.path}/say_it_take.m4a';
+      } catch (_) {/* web: path ignored */}
+      await _recorder.start(const RecordConfig(), path: path);
+      if (mounted) setState(() => _recording = true);
+    } catch (_) {
+      // No mic (permission denied / unsupported surface): degrade gracefully —
+      // native replay + self-practice aloud still works; NEVER blocks (D-001).
+      if (mounted) setState(() => _micUnavailable = true);
+    }
+  }
+
+  // Phase 3 — Production (say-it, Tier-0): hear the native clip, record your
+  // own take, listen to BOTH and judge with your own ears. The machine never
+  // scores pronunciation without real alignment (D-002).
+  Widget _sayCard() => Container(
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
+        decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: BhasagoTheme.outline)),
+        child: Column(children: [
+          Text('এবার মুখে বলো 🎙️', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+          const SizedBox(height: 8),
+          Text(q.jp,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 30, fontWeight: FontWeight.w900, height: 1.4)),
+          if (q.yomi.isNotEmpty)
+            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+          const SizedBox(height: 14),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            OutlinedButton.icon(
+              onPressed: _playAudio,
+              icon: Icon(Icons.volume_up, size: 18, color: m.color),
+              label: const Text('native'),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 44), foregroundColor: BhasagoTheme.text,
+                  side: BorderSide(color: m.color, width: 1.4), shape: const StadiumBorder(),
+                  textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+            ),
+            const SizedBox(width: 10),
+            if (!_micUnavailable)
+              FilledButton.icon(
+                onPressed: _toggleRecord,
+                icon: Icon(_recording ? Icons.stop : Icons.mic, size: 18),
+                label: Text(_recording ? 'থামাও' : 'রেকর্ড'),
+                style: FilledButton.styleFrom(
+                    minimumSize: const Size(0, 44),
+                    backgroundColor: _recording ? const Color(0xFFF0954B) : m.color,
+                    foregroundColor: const Color(0xFF111111),
+                    shape: const StadiumBorder(),
+                    textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+              ),
+            if (_myTakeUrl.isNotEmpty && !_recording) ...[
+              const SizedBox(width: 10),
+              OutlinedButton.icon(
+                onPressed: () => AudioService.instance.playUrl(_myTakeUrl),
+                icon: const Icon(Icons.replay, size: 17, color: BhasagoTheme.muted),
+                label: const Text('আমারটা'),
+                style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 44), foregroundColor: BhasagoTheme.text,
+                    side: const BorderSide(color: BhasagoTheme.pillOutline, width: 1.4),
+                    shape: const StadiumBorder(),
+                    textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
+              ),
+            ],
+          ]),
+          const SizedBox(height: 8),
+          Text(
+              _micUnavailable
+                  ? 'এই ডিভাইসে মাইক নেই/অনুমতি নেই — জোরে ৩ বার বলো, native-এর সাথে কানে মেলাও।'
+                  : _myTakeUrl.isEmpty
+                      ? 'native শোনো → রেকর্ড চেপে বলো → নিজেরটা শুনে মেলাও। মেশিন নম্বর দেয় না — তোমার কানই বিচারক।'
+                      : 'দুটো পরপর শোনো — সুর আর দৈর্ঘ্য মেলে? না মিললে আবার রেকর্ড করো।',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 11.5, height: 1.5, color: BhasagoTheme.muted)),
+          const SizedBox(height: 14),
+          FilledButton(
+            onPressed: _finishSaying,
+            style: FilledButton.styleFrom(
+              minimumSize: const Size.fromHeight(46), backgroundColor: m.color,
+              foregroundColor: const Color(0xFF111111), shape: const StadiumBorder(),
+              textStyle: const TextStyle(fontWeight: FontWeight.w800)),
+            child: const Text('বলা হয়েছে →'),
+          ),
+        ]),
+      );
+
   // Phase 4 — Context (gap-fill): the learner completes the sentence with the
   // blanked KNOWN word. Wrong pick = orange nudge and try again (never
   // 'failure', D-001); the skip pill moves past freely.
@@ -672,6 +806,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     if (writingPhase) {
       // Phase 3 — writing, announced like a teacher would.
       return 'দারুণ, চিনেছ! এবার হাতে লেখো ✍️ — আগে ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর গাইড ধরে নিজে।';
+    }
+    if (sayPhase) {
+      // Phase 3 — production: say it out loud, compare with your own ears.
+      return 'এবার মুখে বলো 🎙️ — আগে native টা শোনো, তারপর রেকর্ড করে নিজেরটা মিলিয়ে দেখো। তোমার কানই বিচারক, আমি নম্বর দিই না।';
     }
     if (contextPhase) {
       // Phase 4 — context: complete the sentence with the known word.

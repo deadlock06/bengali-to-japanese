@@ -28,6 +28,24 @@ class AudioService {
   /// True if a clip exists for this key (drives whether the 🔊 button shows).
   Future<bool> has(String key) async => (await _load()).containsKey(key);
 
+  /// Play arbitrary audio by URL/path — used for the learner's OWN recording
+  /// in the say-it phase (blob URL on web, file path on device). Same
+  /// fresh-player strategy as [play]; silent no-op on failure.
+  Future<void> playUrl(String url) async {
+    if (url.isEmpty) return;
+    final old = _player;
+    final p = AudioPlayer();
+    _player = p;
+    try {
+      if (old != null) {
+        await old.stop();
+        await old.dispose();
+      }
+      await p.setUrl(url);
+      p.play();
+    } catch (_) {/* unplayable — stay silent */}
+  }
+
   /// Play the clip for [key]. No-op (never throws) if absent or unplayable
   /// (e.g. web without the asset).
   ///

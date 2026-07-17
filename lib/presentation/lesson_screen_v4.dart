@@ -88,6 +88,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   // the learner WRITES the character before moving on (writing practice is part
   // of the lesson path). D-001: বাদ (skip) works here too — a step, not a lock.
   bool writingPhase = false;
+  // Phase 4 (Context) for gap-capable sentence items: rebuild the sentence by
+  // choosing the blanked KNOWN word. Wrong pick = visual nudge, never failure.
+  bool contextPhase = false;
+  int gapPicked = -1;
   int _audioPlayedFor = -1; // auto-play each item's audio once when presented
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
@@ -246,6 +250,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             // WRITTEN as part of the lesson flow — চেনা → লেখা → পরে next.
             // D-001 holds: the বাদ (skip) pill still moves past it freely.
             writingPhase = true;
+          } else if (q.hasGap) {
+            // Phase 4 (Context): recognized the sentence? now COMPLETE it.
+            contextPhase = true;
+            gapPicked = -1;
           } else {
             _advance();
           }
@@ -262,6 +270,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   /// Move to the next item (or finish). Callers hold setState.
   void _advance() {
     writingPhase = false;
+    contextPhase = false;
+    gapPicked = -1;
     if (idx >= qs.length - 1) {
       done = true;
       _saveCompletion();
@@ -279,6 +289,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     setState(() {
       skipsUsed += 1;
       writingPhase = false;
+      contextPhase = false;
+      gapPicked = -1;
       idx = (idx + 1).clamp(0, qs.length - 1);
       picked = -1; hintOpen = false; mood = LessonMood.neutral;
       teacherNote = null;
@@ -370,8 +382,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
                   ? _introCard()
                   : writingPhase
                       ? _writeCard()
-                      : _questionCard(),
-              if (introSeen && !writingPhase && hintOpen) ...[
+                      : contextPhase
+                          ? _contextCard()
+                          : _questionCard(),
+              if (introSeen && !writingPhase && !contextPhase && hintOpen) ...[
                 const SizedBox(height: 10), _hintCard()],
               const Spacer(),
               _teacherRow(),
@@ -529,6 +543,59 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         ]),
       );
 
+  // Phase 4 — Context (gap-fill): the learner completes the sentence with the
+  // blanked KNOWN word. Wrong pick = orange nudge and try again (never
+  // 'failure', D-001); the skip pill moves past freely.
+  Widget _contextCard() => Container(
+        padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
+        decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: BhasagoTheme.outline)),
+        child: Column(children: [
+          Text('বাক্যটা পূরণ করো 🧩', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+          const SizedBox(height: 10),
+          Text(q.gapText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 26, fontWeight: FontWeight.w900, height: 1.5)),
+          Text('(${q.options[q.answerIndex]})',
+              style: const TextStyle(fontSize: 12, color: BhasagoTheme.muted)),
+          const SizedBox(height: 14),
+          GridView.count(
+            crossAxisCount: 2, shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
+            mainAxisSpacing: 9, crossAxisSpacing: 9, childAspectRatio: 3.2,
+            children: List.generate(q.gapOptions.length, (i) {
+              final isPicked = gapPicked == i;
+              final correct = i == q.gapAnswerIndex;
+              final bd = isPicked
+                  ? (correct ? m.color : const Color(0xFFF0954B))
+                  : BhasagoTheme.pillOutline;
+              return OutlinedButton(
+                onPressed: () {
+                  if (i == q.gapAnswerIndex) {
+                    setState(() {
+                      gapPicked = i;
+                      teacherNote = '「${q.jp}」 — পুরো বাক্যটা এখন তোমার! ${q.noteBn}';
+                    });
+                    Future.delayed(const Duration(milliseconds: 700), () {
+                      if (mounted) setState(_advance);
+                    });
+                  } else {
+                    setState(() => gapPicked = i); // nudge — try again freely
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 46),
+                  backgroundColor: isPicked && correct ? m.color : Colors.transparent,
+                  foregroundColor: isPicked && correct ? const Color(0xFF111111) : BhasagoTheme.text,
+                  side: BorderSide(color: bd, width: 1.5),
+                  shape: const StadiumBorder(),
+                  textStyle: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 15, fontWeight: FontWeight.w800)),
+                child: Text(q.gapOptions[i]),
+              );
+            }),
+          ),
+        ]),
+      );
+
   Widget _hintCard() => Container(
         padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
         decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(16),
@@ -605,6 +672,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     if (writingPhase) {
       // Phase 3 — writing, announced like a teacher would.
       return 'দারুণ, চিনেছ! এবার হাতে লেখো ✍️ — আগে ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর গাইড ধরে নিজে।';
+    }
+    if (contextPhase) {
+      // Phase 4 — context: complete the sentence with the known word.
+      return 'চমৎকার! এবার বাক্যটা নিজে গড়ো — ফাঁকা জায়গায় ঠিক শব্দটা বসাও। ভুল হলে আবার চেষ্টা, কোনো চাপ নেই।';
     }
     // Phase 2 — recognition: after a correct answer the WHY/WHEN (verified
     // note.bn); otherwise a stage announcement or the mood line.

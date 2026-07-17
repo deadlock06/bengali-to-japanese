@@ -43,9 +43,12 @@ script — checkboxes below are for the steps the machine can't measure.
       (`reviewed_by`). BLOCKS PUBLISH. _needs: A1 (rolling)_ · size M-human
 
 ## PHASE B — PRACTICE completion (the 5-phase loop, then some)
-- [ ] **B1 · Vocab Phase-4: word-block sentence building** — deterministic blocks from
-      verified items (srs_words order), classroom step after Recognition for phrases.
-      _needs: —_ · size M
+- [x] **B1 · Vocab Phase-4: context practice** — DONE 2026-07-17 as boundary-guarded
+      GAP-FILL (spec 09 allows 'word-block build or gap-fill'; kana word-splitting
+      would teach wrong boundaries): sentence items with a known word at a particle
+      boundary get a 'বাক্যটা পূরণ করো 🧩' step after Recognition — wrong pick =
+      orange nudge + retry (never failure), skip free. 70+ sentences today, grows
+      with vocab. Proven by test/gap_fill_test.dart. _needs: —_ · size M
 - [ ] **B2 · Vocab Phase-3: say-it (Tier-0)** — record → replay next to native clip →
       self-compare (NO scoring without STT; D-002). `record` package. _needs: —_ · size M
 - [ ] **B3 · Kana completion** — yōon (きゃ…), sokuon っ, long-vowel ー recognition

@@ -25,6 +25,9 @@ class ClassroomQuestion {
     this.prompt = 'এর মানে কী?',
     this.introBn = '',
     this.audioKey = '',
+    this.gapText = '',
+    this.gapOptions = const [],
+    this.gapAnswerIndex = -1,
   });
 
   final String itemId, jp, yomi, hint, noteBn;
@@ -41,6 +44,14 @@ class ClassroomQuestion {
   /// assets/audio manifest key for the 🔊 button (lesson item id for vocab,
   /// 'kana_hira_a' etc. for kana). Empty = no audio.
   final String audioKey;
+
+  /// Phase 4 (Context, 09 micro-loop): gap-fill built by blanking a KNOWN word
+  /// inside this sentence (boundary-guarded — only at particle/edge boundaries,
+  /// so kana substrings never split mid-word). Empty gapText = no Phase 4.
+  final String gapText;
+  final List<String> gapOptions;
+  final int gapAnswerIndex;
+  bool get hasGap => gapText.isNotEmpty;
 }
 
 class ClassroomBatch {
@@ -57,6 +68,31 @@ class ClassroomBatch {
 
 /// Stable tiny hash — keeps the answer position varied but reproducible.
 int _seed(String s) => s.codeUnits.fold(0, (a, c) => (a + c) & 0x7fffffff);
+
+// ── Phase 4 (Context) gap-fill ────────────────────────────────────────────────
+const _boundary = 'をがはにでとのへも、 ';
+bool _sentencey(String jp) =>
+    jp.length > 7 || jp.contains('です') || jp.contains('ます') ||
+    jp.contains('か') || jp.contains('ください');
+
+/// Blank a known word inside [jp] — only at particle/edge boundaries so kana
+/// never splits mid-word (e.g. せん must NOT match inside いけません).
+({String gap, String word})? _findGap(String jp, List<String> wordPool) {
+  for (final w in wordPool) {
+    if (w == jp) continue;
+    var idx = jp.indexOf(w);
+    while (idx != -1) {
+      final preOk = idx == 0 || _boundary.contains(jp[idx - 1]);
+      final after = idx + w.length;
+      final nxtOk = after >= jp.length || _boundary.contains(jp[after]);
+      if (preOk && nxtOk) {
+        return (gap: jp.replaceRange(idx, after, '＿＿'), word: w);
+      }
+      idx = jp.indexOf(w, idx + 1);
+    }
+  }
+  return null;
+}
 
 /// Builds the next lesson's question batch, or null when every candidate
 /// lesson is completed (caller decides what "all done" looks like).
@@ -89,6 +125,15 @@ ClassroomBatch? buildClassroomBatch({
     }
   }
 
+  // Phase-4 word pool: every verified single WORD in the whole curriculum
+  // (≥2 chars), longest first so the most specific word wins the gap.
+  final wordPool = <String>{
+    for (final l in curriculumOrdered)
+      for (final it in l.items)
+        if (!_sentencey(it.jp) && it.jp.length >= 2) it.jp,
+  }.toList()
+    ..sort((a, b) => b.length.compareTo(a.length));
+
   final questions = <ClassroomQuestion>[];
   final items = next.items.take(maxItems).toList(growable: false);
   for (var i = 0; i < items.length; i++) {
@@ -110,6 +155,29 @@ ClassroomBatch? buildClassroomBatch({
     final options = [...distractors]..insert(answerIndex, correct);
 
     final kanaHead = it.kana.isEmpty ? it.jp[0] : it.kana[0];
+
+    // Phase 4 (Context): gap-fill for sentence items containing a known word.
+    var gapText = '';
+    var gapOptions = const <String>[];
+    var gapAnswer = -1;
+    if (_sentencey(it.jp)) {
+      final g = _findGap(it.jp, wordPool);
+      if (g != null) {
+        final ds = <String>[];
+        final cands = wordPool.where((w) => w != g.word).toList()
+          ..sort((a, b) => _seed('$a${it.id}').compareTo(_seed('$b${it.id}')));
+        for (final c in cands) {
+          if (ds.length == 3) break;
+          ds.add(c);
+        }
+        if (ds.length == 3) {
+          gapAnswer = _seed('gap${it.id}') % 4;
+          gapOptions = [...ds]..insert(gapAnswer, g.word);
+          gapText = g.gap;
+        }
+      }
+    }
+
     questions.add(ClassroomQuestion(
       itemId: it.id,
       jp: it.jp,
@@ -119,6 +187,9 @@ ClassroomBatch? buildClassroomBatch({
       hint: '「$kanaHead」 দিয়ে শুরু — ${it.note.bn}',
       noteBn: it.note.bn,
       audioKey: it.id, // lesson audio is keyed by item id
+      gapText: gapText,
+      gapOptions: gapOptions,
+      gapAnswerIndex: gapAnswer,
     ));
   }
   if (questions.isEmpty) return null;

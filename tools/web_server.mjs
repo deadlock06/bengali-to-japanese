@@ -49,8 +49,25 @@ function aiProxy(req, res) {
       }, (r) => {
         if ((r.statusCode || 500) >= 500) { r.resume(); return tryProvider(i + 1); }
         console.log(`ai: ${p.name} → ${r.statusCode}`);
-        res.writeHead(r.statusCode || 502, { 'Content-Type': 'application/json' });
-        r.pipe(res);
+        if (!p.insecure) {
+          res.writeHead(r.statusCode || 502, { 'Content-Type': 'application/json' });
+          return r.pipe(res);
+        }
+        // local Qwen3: strip leaked <think> reasoning tags before returning
+        let buf = '';
+        r.on('data', (c) => (buf += c));
+        r.on('end', () => {
+          try {
+            const j = JSON.parse(buf);
+            for (const ch of j.choices || []) {
+              if (ch.message?.content) ch.message.content = ch.message.content
+                .replace(/<think>[\s\S]*?<\/think>/g, '').replace(/^[\s]*<\/think>/, '').trim();
+            }
+            buf = JSON.stringify(j);
+          } catch {/* pass through as-is */}
+          res.writeHead(r.statusCode || 502, { 'Content-Type': 'application/json' });
+          res.end(buf);
+        });
       });
       up.on('error', () => tryProvider(i + 1));
       up.end(out);
@@ -86,4 +103,4 @@ http.createServer((req, res) => {
     'Cache-Control': 'no-cache',
   });
   fs.createReadStream(p).pipe(res);
-}).listen(5601, () => console.log('flutter web on http://localhost:5601'));
+}).listen(process.env.PORT || 5601, () => console.log(`flutter web on http://localhost:${process.env.PORT || 5601}`));

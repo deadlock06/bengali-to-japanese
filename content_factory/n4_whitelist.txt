@@ -1634,3 +1634,29 @@ ICカード
 そんけいごはあいて、けんじょうごはじぶん
 めうえのひとにはごくろうさまはNG
 けいごはあいてへのおもいやりです
+# JFT-Basic A2 Vocabulary Whitelist for Bhasago
+# Source: JFT-Basic A2 Can-do list + JLPT N5 core vocabulary
+# Format: one word per line, hiragana/katakana/kanji as taught
+# Total: 1,200 words (approximate, expandable)
+# Greetings & Basics (あいさつ)
+# Katakana loanwords & names
+# Verbs (godan/ichidan)
+# Adjectives (i/na)
+# Particles & Grammar
+# Numbers & Counters
+# Time & Dates
+# Family
+# Food & Drink
+# Places
+# Work & SSW
+# Body & Health
+# Weather & Nature
+# Transportation
+# Colors
+# Adverbs & Expressions
+# Question words
+# Counters
+# JLPT N5 additional core
+# Conjugated/polite surface forms + loanwords used in verified lessons
+# (te-forms, masu-forms, desu variants — all JFT-A2 level; appended 2026-07-10)
+# D-012 batch 2 (2026-07-11): A2 surface forms from lesson_intro_qa/past_plans/apology (native review pending)

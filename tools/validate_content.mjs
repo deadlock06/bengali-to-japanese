@@ -95,6 +95,10 @@ function validateLesson(file, data, reg) {
     const tag = it.id || '(no-id)';
     if (ids.has(it.id)) err(file, `duplicate item id ${it.id}`);
     ids.add(it.id);
+    // GLOBAL uniqueness: item ids key the audio manifest + SRS cards — a
+    // cross-file collision silently plays the WRONG audio (found 2026-07-17).
+    if (reg.itemIds.has(it.id)) err(file, `${tag}: item id also used in ${reg.itemIds.get(it.id)} (audio/SRS key collision)`);
+    else reg.itemIds.set(it.id, file);
     if (!nonEmpty(it.jp)) err(file, `${tag}: empty jp`);
     if (!nonEmpty(it.kana)) err(file, `${tag}: empty kana`);
     if (!nonEmpty(it.romaji)) err(file, `${tag}: empty romaji`);
@@ -198,7 +202,7 @@ const files = fs.readdirSync(CONTENT).filter((f) => f.endsWith('.json'));
 console.log(`Validating ${files.length} content file(s) in assets/content/`);
 console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'} · n4: ${n4Set ? n4List.length + ' words' : 'not authored'}\n`);
 
-const reg = { lessonIds: new Set(), packEdges: [], prereqs: [], srsWords: [] };
+const reg = { lessonIds: new Set(), packEdges: [], prereqs: [], srsWords: [], itemIds: new Map() };
 
 for (const f of files) {
   let data;

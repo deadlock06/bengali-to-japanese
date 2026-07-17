@@ -18,7 +18,7 @@
  ],
  "items": [
   {
-   "id": "tr_01",
+   "id": "ter_01",
    "jp": "ここでたばこをすってはいけません",
    "kana": "ここでたばこをすってはいけません",
    "romaji": "koko de tabako o sutte wa ikemasen",
@@ -37,7 +37,7 @@
    ]
   },
   {
-   "id": "tr_02",
+   "id": "ter_02",
    "jp": "ろうかではしってはいけません",
    "kana": "ろうかではしってはいけません",
    "romaji": "rouka de hashitte wa ikemasen",
@@ -56,7 +56,7 @@
    ]
   },
   {
-   "id": "tr_03",
+   "id": "ter_03",
    "jp": "きかいにさわってはいけません",
    "kana": "きかいにさわってはいけません",
    "romaji": "kikai ni sawatte wa ikemasen",
@@ -75,7 +75,7 @@
    ]
   },
   {
-   "id": "tr_04",
+   "id": "ter_04",
    "jp": "ごみをここにすててはいけません",
    "kana": "ごみをここにすててはいけません",
    "romaji": "gomi o koko ni sutete wa ikemasen",
@@ -94,7 +94,7 @@
    ]
   },
   {
-   "id": "tr_05",
+   "id": "ter_05",
    "jp": "しごとちゅうにけいたいをつかってはいけません",
    "kana": "しごとちゅうにけいたいをつかってはいけません",
    "romaji": "shigotochuu ni keitai o tsukatte wa ikemasen",
@@ -113,7 +113,7 @@
    ]
   },
   {
-   "id": "tr_06",
+   "id": "ter_06",
    "jp": "ヘルメットをわすれてはいけません",
    "kana": "ヘルメットをわすれてはいけません",
    "romaji": "herumetto o wasurete wa ikemasen",
@@ -132,7 +132,7 @@
    ]
   },
   {
-   "id": "tr_07",
+   "id": "ter_07",
    "jp": "おくれてはいけません",
    "kana": "おくれてはいけません",
    "romaji": "okurete wa ikemasen",
@@ -151,7 +151,7 @@
    ]
   },
   {
-   "id": "tr_08",
+   "id": "ter_08",
    "jp": "うそをついてはいけません",
    "kana": "うそをついてはいけません",
    "romaji": "uso o tsuite wa ikemasen",

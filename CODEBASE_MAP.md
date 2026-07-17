@@ -41,7 +41,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore v
 ## ❌ WHAT'S NOT BUILT (the real gaps)
 
 ### The "AI" — ~0%
-- **Offline LLM** (llama.cpp + Qwen3 via MethodChannel FFI, GBNF, RAG, whitelist enforcer) — **0%. No native bridges, no android/cpp.**
+- **Offline LLM** — **DESKTOP FALLBACK LIVE (D-021, 2026-07-17):** llama.cpp + Qwen3-1.7B Q4_K_M (../.claude/llm/, tools/run_local_llm.sh) wired as the AI proxy's LAST provider — sensei answers with zero cloud keys (proven; ~7.6 tok/s CPU; think-tags stripped). Quality: raw 1.7B Bengali weak → cloud=quality, local=availability, verified store=truth. Still ❌: Android MethodChannel FFI, GBNF, RAG, whitelist enforcer (step D4).
 - **Online AI (sensei chat)** — ✅ **WIRED** via a secure same-origin proxy (AiTutorService → /ai/chat → OpenAI gpt-4o-mini, Smart Banglish system prompt). Key stays server-side (tools/web_server.mjs, ENV). Offline/no-key → canned fallback. Still ❌: AI examiner, retrieval/RAG grounding.
 - Sensei chat = ✅ real AI (proxy, when key set); AI examiner still canned/demo.
 - **MASTER VISION execution slice 1 (13_MASTER_VISION / D-016, 2026-07-16):** ✅ sensei conversationally NARRATES every lesson stage (`_senseiNarration`: open greeting → teach → "এবার ছোট্ট পরীক্ষা" → "এবার হাতে লেখো ✍️" → verified WHY) · ✅ **dynamic BN↔JP language balance** (`learnerLevelProvider` → AiTutorService `_balanceLine`: L0/A1 80-90% BN · A2 50/50 · N4 80-90% JP, D-017) · ✅ stage-13 **next-lesson recommendation** in the done overlay (live ladder, recommend-only). Still ❌ from the vision: real-conversation/roleplay stage, voice-first STT, vocab say-it.

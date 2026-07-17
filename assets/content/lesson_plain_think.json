@@ -18,7 +18,7 @@
  ],
  "items": [
   {
-   "id": "po_01",
+   "id": "opn_01",
    "jp": "いいとおもいます",
    "kana": "いいとおもいます",
    "romaji": "ii to omoimasu",
@@ -37,7 +37,7 @@
    ]
   },
   {
-   "id": "po_02",
+   "id": "opn_02",
    "jp": "あしたはあめだとおもいます",
    "kana": "あしたはあめだとおもいます",
    "romaji": "ashita wa ame da to omoimasu",
@@ -56,7 +56,7 @@
    ]
   },
   {
-   "id": "po_03",
+   "id": "opn_03",
    "jp": "むずかしいとおもいます",
    "kana": "むずかしいとおもいます",
    "romaji": "muzukashii to omoimasu",
@@ -75,7 +75,7 @@
    ]
   },
   {
-   "id": "po_04",
+   "id": "opn_04",
    "jp": "だいじょうぶだとおもいます",
    "kana": "だいじょうぶだとおもいます",
    "romaji": "daijoubu da to omoimasu",
@@ -94,7 +94,7 @@
    ]
   },
   {
-   "id": "po_05",
+   "id": "opn_05",
    "jp": "いくとおもいます",
    "kana": "いくとおもいます",
    "romaji": "iku to omoimasu",
@@ -113,7 +113,7 @@
    ]
   },
   {
-   "id": "po_06",
+   "id": "opn_06",
    "jp": "できるとおもいます",
    "kana": "できるとおもいます",
    "romaji": "dekiru to omoimasu",
@@ -132,7 +132,7 @@
    ]
   },
   {
-   "id": "po_07",
+   "id": "opn_07",
    "jp": "そうおもいます",
    "kana": "そうおもいます",
    "romaji": "sou omoimasu",
@@ -151,7 +151,7 @@
    ]
   },
   {
-   "id": "po_08",
+   "id": "opn_08",
    "jp": "どうおもいますか",
    "kana": "どうおもいますか",
    "romaji": "dou omoimasu ka",

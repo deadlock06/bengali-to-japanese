@@ -18,7 +18,7 @@
  ],
  "items": [
   {
-   "id": "st_01",
+   "id": "shp_01",
    "jp": "いらっしゃいませ",
    "kana": "いらっしゃいませ",
    "romaji": "irasshaimase",
@@ -37,7 +37,7 @@
    ]
   },
   {
-   "id": "st_02",
+   "id": "shp_02",
    "jp": "ポイントカードはありますか",
    "kana": "ポイントカードはありますか",
    "romaji": "pointo kaado wa arimasu ka",
@@ -56,7 +56,7 @@
    ]
   },
   {
-   "id": "st_03",
+   "id": "shp_03",
    "jp": "いりません",
    "kana": "いりません",
    "romaji": "irimasen",
@@ -75,7 +75,7 @@
    ]
   },
   {
-   "id": "st_04",
+   "id": "shp_04",
    "jp": "しちゃくしてもいいですか",
    "kana": "しちゃくしてもいいですか",
    "romaji": "shichaku shite mo ii desu ka",
@@ -94,7 +94,7 @@
    ]
   },
   {
-   "id": "st_05",
+   "id": "shp_05",
    "jp": "これとこれをください",
    "kana": "これとこれをください",
    "romaji": "kore to kore o kudasai",
@@ -113,7 +113,7 @@
    ]
   },
   {
-   "id": "st_06",
+   "id": "shp_06",
    "jp": "ぜんぶでいくらですか",
    "kana": "ぜんぶでいくらですか",
    "romaji": "zenbu de ikura desu ka",
@@ -132,7 +132,7 @@
    ]
   },
   {
-   "id": "st_07",
+   "id": "shp_07",
    "jp": "またきます",
    "kana": "またきます",
    "romaji": "mata kimasu",
@@ -151,7 +151,7 @@
    ]
   },
   {
-   "id": "st_08",
+   "id": "shp_08",
    "jp": "おつりをください",
    "kana": "おつりをください",
    "romaji": "otsuri o kudasai",

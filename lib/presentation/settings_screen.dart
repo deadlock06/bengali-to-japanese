@@ -4,6 +4,8 @@ import '../agents/agent_state.dart';
 import '../agents/persona.dart';
 import '../app/providers.dart';
 import '../data/export_service.dart';
+import '../data/sync_service.dart';
+import '../app/theme.dart';
 import 'widgets.dart';
 import '../domain/models.dart';
 
@@ -91,6 +93,13 @@ class SettingsScreen extends ConsumerWidget {
             child: _PersonaPicker(),
           ),
           const SizedBox(height: 24),
+          // D1: OPTIONAL cloud sync — off by default, offline-first untouched.
+          const _Section(
+            title: 'ক্লাউড সিঙ্ক · Cloud sync',
+            icon: Icons.cloud_outlined,
+            child: _CloudSync(),
+          ),
+          const SizedBox(height: 24),
           // Data autonomy is a NON-NEGOTIABLE (00 §5): one-tap export, instant
           // delete with a 7-day grace, no support ticket — first-class UI.
           const _Section(
@@ -154,6 +163,109 @@ class _PersonaPicker extends ConsumerWidget {
 
 /// 00 §5 data autonomy: one-tap ZIP export + delete with 7-day grace
 /// (request / cancel; purge itself runs from the main() bootstrap check).
+/// D1 — opt-in cloud sync toggle. Off by default; the copy makes clear the app
+/// works fully offline and data is device-safe (D-001/07).
+class _CloudSync extends ConsumerStatefulWidget {
+  const _CloudSync();
+  @override
+  ConsumerState<_CloudSync> createState() => _CloudSyncState();
+}
+
+class _CloudSyncState extends ConsumerState<_CloudSync> {
+  bool _on = false;
+  bool _busy = false;
+  String _msg = '';
+  DateTime? _last;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      final on = await SyncService.instance.isEnabled();
+      final last = await SyncService.instance.lastSync();
+      if (mounted) setState(() { _on = on; _last = last; });
+    });
+  }
+
+  Future<void> _toggle(bool v) async {
+    setState(() { _busy = true; _msg = ''; });
+    if (v) {
+      final st = await SyncService.instance.enable(ref.read(srsProvider));
+      if (!mounted) return;
+      setState(() {
+        _busy = false;
+        _on = st.state != SyncState.error;
+        _last = st.lastSync ?? _last;
+        _msg = st.state == SyncState.ok
+            ? 'সিঙ্ক চালু — তোমার অগ্রগতি ক্লাউডে ব্যাকআপ হলো।'
+            : st.message;
+      });
+    } else {
+      await SyncService.instance.disable();
+      if (!mounted) return;
+      setState(() { _busy = false; _on = false; _msg = 'সিঙ্ক বন্ধ।'; });
+    }
+  }
+
+  Future<void> _syncNow() async {
+    setState(() { _busy = true; _msg = ''; });
+    final st = await SyncService.instance.syncNow(ref.read(srsProvider));
+    if (!mounted) return;
+    setState(() {
+      _busy = false;
+      _last = st.lastSync ?? _last;
+      _msg = st.state == SyncState.ok ? 'সিঙ্ক হলো ✓' : st.message;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      SwitchListTile(
+        contentPadding: EdgeInsets.zero,
+        value: _on,
+        onChanged: _busy ? null : _toggle,
+        activeThumbColor: BhasagoColors.green,
+        title: const Text('ক্লাউডে অগ্রগতি ব্যাকআপ',
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),
+        subtitle: const Text(
+            'ঐচ্ছিক — ফোন বদলালেও অগ্রগতি থাকবে। অ্যাপ ইন্টারনেট ছাড়াই পুরো চলে।',
+            style: TextStyle(fontSize: 11.5, color: BhasagoTheme.muted)),
+      ),
+      if (_on && !_busy)
+        Align(
+          alignment: Alignment.centerLeft,
+          child: TextButton.icon(
+            onPressed: _syncNow,
+            icon: const Icon(Icons.sync, size: 16),
+            label: Text(_last == null
+                ? 'এখন সিঙ্ক করো'
+                : 'এখন সিঙ্ক করো (শেষ: ${_ago(_last!)})'),
+            style: TextButton.styleFrom(foregroundColor: BhasagoColors.green),
+          ),
+        ),
+      if (_busy) const Padding(
+        padding: EdgeInsets.symmetric(vertical: 6),
+        child: SizedBox(width: 18, height: 18,
+            child: CircularProgressIndicator(strokeWidth: 2, color: BhasagoColors.green)),
+      ),
+      if (_msg.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(_msg, style: const TextStyle(fontSize: 11.5, color: BhasagoTheme.muted)),
+        ),
+    ]);
+  }
+
+  String _ago(DateTime t) {
+    final d = DateTime.now().difference(t);
+    if (d.inMinutes < 1) return 'এইমাত্র';
+    if (d.inHours < 1) return '${d.inMinutes} মিনিট আগে';
+    if (d.inDays < 1) return '${d.inHours} ঘণ্টা আগে';
+    return '${d.inDays} দিন আগে';
+  }
+}
+
 class _DataAutonomy extends ConsumerWidget {
   const _DataAutonomy();
 

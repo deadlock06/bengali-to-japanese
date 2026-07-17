@@ -85,9 +85,14 @@ script — checkboxes below are for the steps the machine can't measure.
       logged for a later sweep. _needs: —_ · size M
 
 ## PHASE D — PLATFORM
-- [ ] **D1 · Sync client** — supabase_flutter + anonymous auth + SyncService (delta,
-      device-wins, offline queue) + Settings opt-in toggle. Schema is LIVE (D-018).
-      _needs: OWNER: anon key_ · size M
+- [x] **D1 · Sync client** — CODE DONE 2026-07-17: supabase_flutter wired
+      (Supabase.initialize at startup, public anon key embedded); SyncService with
+      anonymous auth + idempotent progress upsert (profiles + daily_stats, uses
+      existing local counts) + Settings opt-in toggle (off by default, offline-
+      first untouched, honest copy + 'সিঙ্ক করো'/last-synced). Graceful on every
+      failure. ⚠️ ACTIVATES once OWNER enables Anonymous sign-ins in Supabase
+      (currently disabled → toggle shows a clear message). Per-card srs_cards
+      delta sync = next increment. _needs: OWNER: anon key ✓_ · size M
 - [ ] **D2 · APK on real device** — Android SDK on owner's machine, release build,
       TECNO smoke test, perf/battery/thermal benchmarks (02 targets). _needs: OWNER: machine_ · size M
 - [ ] **D3 · Content packs / tiered download** — split bundle per 03 (base APK ≤ target,
@@ -110,7 +115,8 @@ script — checkboxes below are for the steps the machine can't measure.
 - [ ] Rotate Supabase DB password (posted in chat 2026-07-16)
 - [ ] Revoke the exposed OpenAI key (posted in chat earlier)
 - [x] `git push origin main` — DONE 2026-07-17 (67 commits, 60aedb1..a691953)
-- [ ] Provide Supabase **anon key** (unblocks D1)
+- [x] Provide Supabase **anon key** — DONE 2026-07-17 (embedded; public by design)
+- [ ] **Enable Anonymous sign-ins** in Supabase (Auth → Providers → Anonymous → on) — activates D1 sync
 
 ---
 _Automated pillar percentages live in the script output — do not hand-edit numbers

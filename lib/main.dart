@@ -35,8 +35,15 @@ import 'presentation/settings_screen.dart';
 import 'presentation/dictionary_screen.dart';
 import 'presentation/selection_explain.dart';
 import 'presentation/writing_screen.dart';
+import 'data/sync_service.dart';
 
-void main() => runApp(const ProviderScope(child: SenseiApp()));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Prepare OPTIONAL cloud sync (D1) — no-op until the user opts in. Never
+  // blocks startup; offline-first is untouched.
+  await SyncService.instance.init();
+  runApp(const ProviderScope(child: SenseiApp()));
+}
 
 class SenseiApp extends ConsumerWidget {
   const SenseiApp({super.key});

@@ -85,7 +85,7 @@ script — checkboxes below are for the steps the machine can't measure.
 ## OWNER-ONLY standing items (nothing ships until these)
 - [ ] Rotate Supabase DB password (posted in chat 2026-07-16)
 - [ ] Revoke the exposed OpenAI key (posted in chat earlier)
-- [ ] `git push origin main` from a credentialed machine
+- [x] `git push origin main` — DONE 2026-07-17 (67 commits, 60aedb1..a691953)
 - [ ] Provide Supabase **anon key** (unblocks D1)
 
 ---

@@ -28,6 +28,7 @@ for (const u of cur.units) {
   let a = 0;
   for (const id of ids) {
     if (id.startsWith('kana_')) a += 46;
+    else if (id.startsWith('mock_')) continue; // virtual: mock completions (A4)
     else if (lessons[id]) a += lessons[id].length;
     else brokenRefs.push(`${u.id}→${id}`);
   }
@@ -48,7 +49,7 @@ const strokeOk = 'あいうえおかきくけこさしすせそたちつてと�
   .split('').every((c) => strokes.hiragana?.[c]);
 const bookSync = (rd('assets/book/book.json').match(/app-synced/g) || []).length;
 const unitChaptersWanted = cur.units.filter((u) =>
-  (u.lesson_id || '').split(',').some((x) => x.trim() && !x.trim().startsWith('kana_'))).length;
+  (u.lesson_id || '').split(',').some((x) => x.trim() && !x.trim().startsWith('kana_') && !x.trim().startsWith('mock_'))).length;
 
 // ── steps from PROJECT_SCALE.md ──────────────────────────────────────────────
 const scale = rd('PROJECT_SCALE.md');

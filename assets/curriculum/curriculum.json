@@ -323,7 +323,7 @@
         "A2.6"
       ],
       "exam_tag": "JFT-A2",
-      "lesson_id": null,
+      "lesson_id": "mock_a2",
       "target_word_count": 0
     },
     {
@@ -447,7 +447,7 @@
         "N4.5"
       ],
       "exam_tag": "JLPT-N4",
-      "lesson_id": null,
+      "lesson_id": "mock_n4",
       "target_word_count": 0
     }
   ]

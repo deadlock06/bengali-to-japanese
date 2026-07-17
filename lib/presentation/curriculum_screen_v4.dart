@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/curriculum_service.dart';
+import 'mock_exam_screen.dart';
 
 const _red = Color(0xFFB3121B);
 const _redSub = Color(0xFFF5B8BC);
@@ -17,10 +18,12 @@ const _redSub = Color(0xFFF5B8BC);
 enum _UnitState { done, current, upcoming }
 
 class _Unit {
-  const _Unit(this.title, this.sub, this.state, [this.pct = 0]);
+  const _Unit(this.title, this.sub, this.state, [this.pct = 0, this.id = '']);
   final String title, sub;
   final _UnitState state;
   final double pct;
+  final String id;
+  bool get isMock => id.endsWith('.M');
 }
 
 // Demo fallback — shown only while the ontology loads (or on error), so the
@@ -50,7 +53,7 @@ class CurriculumScreenV4 extends ConsumerWidget {
     final units = async.maybeWhen(
       data: (list) => [
         for (final u in list)
-          _Unit(u.titleBn, u.canDoBn, _viewState(u.state), u.pct),
+          _Unit(u.titleBn, u.canDoBn, _viewState(u.state), u.pct, u.id),
       ],
       orElse: () => _demoUnits,
     );
@@ -153,6 +156,42 @@ class CurriculumScreenV4 extends ConsumerWidget {
   }
 
   Widget _card(BuildContext context, _Unit u) {
+    // Mock units (A2.M / N4.M) launch the mock exam — an OFFER, tappable in any
+    // state (recommended after the units, never gated — D-001).
+    if (u.isMock) {
+      return Material(
+        color: const Color(0xFF1A1A1A),
+        borderRadius: BorderRadius.circular(16),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (_) => MockExamScreen(kind: u.id == 'N4.M' ? 'n4' : 'jft'))),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: _red, width: 1.3)),
+            child: Row(children: [
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(u.title,
+                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5)),
+                  const SizedBox(height: 2),
+                  Text(u.sub, style: const TextStyle(color: BhasagoTheme.muted, fontSize: 11.5)),
+                ]),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 5),
+                decoration: BoxDecoration(
+                    color: _red, borderRadius: BorderRadius.circular(999)),
+                child: const Text('🎯 মক দাও',
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w800, color: Colors.white)),
+              ),
+            ]),
+          ),
+        ),
+      );
+    }
     if (u.state != _UnitState.current) {
       // Done + upcoming look identical in weight — neutral, no lock icons.
       return Container(

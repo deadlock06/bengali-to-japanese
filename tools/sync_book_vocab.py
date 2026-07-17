@@ -22,7 +22,7 @@ for p in glob.glob("assets/content/lesson_*.json"):
 unit_lessons = {}
 for u in cur["units"]:
     lid = u.get("lesson_id") or ""
-    ids = [x.strip() for x in lid.split(",") if x.strip() and not x.strip().startswith("kana_")]
+    ids = [x.strip() for x in lid.split(",") if x.strip() and not x.strip().startswith(("kana_", "mock_"))]
     if ids:
         unit_lessons[u["id"]] = ids
 

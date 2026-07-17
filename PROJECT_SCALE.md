@@ -33,8 +33,12 @@ script — checkboxes below are for the steps the machine can't measure.
 - [x] **A3 · N4.1–N4.5 content** — DONE 2026-07-17: all 5 N4 units complete (33
       lessons, 248 items: te-form/plain+casual/potential/give-receive/keigo incl.
       uchi-soto rules). Ladder 806/772 = 104%. _needs: A2_ · size L
-- [ ] **A4 · Mock-exam engine + A2.M/N4.M** — CBT-format mock (timer, 4 sections,
-      answer-key scoring, honest band estimate). _needs: A1_ · size L
+- [x] **A4 · Mock-exam engine + A2.M/N4.M** — DONE 2026-07-17: deterministic
+      builder selects from the verified store (never invents); JFT 50Q/60min ×4
+      real sections (incl. listening from bundled clips) + N4 39Q/50min ×3;
+      recommend-only timer, honest band estimate, weakest-section advice;
+      launched from the curriculum ladder (🎯 মক দাও), completion marks the unit
+      done. Proven by test/mock_exam_test.dart. _needs: A1_ · size L
 - [ ] **A5 · Native-speaker review pass** — human-gated; mark reviewed lessons in JSON
       (`reviewed_by`). BLOCKS PUBLISH. _needs: A1 (rolling)_ · size M-human
 

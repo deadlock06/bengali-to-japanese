@@ -2,6 +2,8 @@
 // scheduled cards and review history offline. FSRS math lives in domain/fsrs.dart.
 // Schema is owned by the numbered migrations in db/migrations/ (never inlined here).
 
+import 'dart:io' show Platform;
+
 import 'package:sqflite_sqlcipher/sqflite.dart';
 import 'package:path/path.dart' as p;
 import '../domain/fsrs.dart';
@@ -18,6 +20,17 @@ class SrsLocal {
 
   Future<Database> _open() async {
     if (_db != null) return _db!;
+    // Widget tests have no sqflite plugin and the channel call HANGS (not
+    // throws) — fail fast so every caller's catch-and-default path runs.
+    // FLUTTER_TEST is an OS env var under `flutter test`; Platform.environment
+    // throws on web, hence the try (web uses the real plugin anyway).
+    try {
+      if (Platform.environment.containsKey('FLUTTER_TEST')) {
+        throw StateError('SrsLocal: no database in widget tests');
+      }
+    } on StateError {
+      rethrow;
+    } catch (_) {/* web: Platform unsupported — continue to the real DB */}
     final dir = await getDatabasesPath();
     final password = await _dbKey.obtain();
     _db = await openDatabase(

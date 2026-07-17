@@ -25,7 +25,7 @@ import 'app/theme.dart';
 import 'presentation/home_screen.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
-import 'presentation/lesson_list_screen.dart';
+import 'presentation/journey_map_screen.dart';
 import 'presentation/book_screen_v4.dart';
 import 'presentation/lesson_screen_v4.dart';
 import 'presentation/onboarding_screen.dart';
@@ -137,7 +137,7 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             .push(MaterialPageRoute(builder: (_) => const BookScreenV4())),
         onOpenLearn: () => setState(() => tab = 1), // design: goLearn
       ),
-      const LessonListScreen(),
+      const JourneyMapScreen(),
       // Speak tab: shadowing + pitch entry card (HANDOFF follow-up 2 — the
       // pitch pillar's route until the Speak-tab "conversation corner" design).
       Column(children: [

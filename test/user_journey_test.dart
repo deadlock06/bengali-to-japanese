@@ -70,7 +70,11 @@ void main() {
     await tester.tap(find.textContaining('চলো শুরু করি'));
     await tester.pump();
     await tester.pump();
-    ok(tester, 'onboarding accept');
+    // C1: step 2 — goal select (SSW default highlighted; recommendation only)
+    await tester.tap(find.text('যাত্রা শুরু ⛩️'));
+    await tester.pump();
+    await tester.pump();
+    ok(tester, 'onboarding accept (language + goal)');
 
     // ── 2. Home (Bold Ink) ───────────────────────────────────────────────
     await pumpUntil(tester, find.textContaining('হাই'), what: 'home greeting');
@@ -81,13 +85,14 @@ void main() {
     expect(find.byType(NavigationBar), findsOneWidget);
     ok(tester, 'home');
 
-    // ── 3. Learn tab: full lesson catalogue from packs ───────────────────
+    // ── 3. Learn tab: journey map (C1/D-015) — stations, torii, no locks ──
     await tester.tap(find.byIcon(Icons.school_outlined));
     await tester.pump();
-    await pumpUntil(tester, find.textContaining('শব্দ · ৫ ধাপ'),
-        what: 'lesson list tiles');
-    expect(find.byType(ListTile), findsWidgets);
-    ok(tester, 'lesson list');
+    await pumpUntil(tester, find.textContaining('স্টেশন পেরিয়েছ'),
+        what: 'journey map header');
+    expect(find.text('⛩️'), findsOneWidget);
+    expect(find.text('🔥'), findsOneWidget); // exactly one current station
+    ok(tester, 'journey map');
 
     // ── 4. AI Classroom via the red Home card ───────────────────────────
     // The classroom now opens on the Phase-1 Intro card (sensei presents the

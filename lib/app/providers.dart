@@ -62,6 +62,18 @@ final curriculumProvider = FutureProvider<List<CurriculumUnit>>((ref) async {
   return CurriculumService.load(completed);
 });
 
+/// The learner's GOAL (D-015): 'ssw' | 'jlpt' | 'daily' | '' (unchosen).
+/// Changes journey-map EMPHASIS/recommendation only — never content or locks.
+final goalProvider = FutureProvider<String>((_) async {
+  final p = await SharedPreferences.getInstance();
+  return p.getString('goal') ?? '';
+});
+
+Future<void> setGoal(String g) async {
+  final p = await SharedPreferences.getInstance();
+  await p.setString('goal', g);
+}
+
 /// The learner's current curriculum level (L0/A1/A2/N4) — drives the sensei's
 /// dynamic BN↔JP language balance (13_MASTER_VISION: beginner 80–90% Bengali →
 /// advanced 80–90% Japanese). Derived from the current unit; L0 when unknown.

@@ -37,6 +37,20 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   String _pending = 'bn'; // spec: Bengali-first default
+  // C1 (D-015): step 0 = language, step 1 = GOAL. The goal only changes the
+  // journey map's emphasis/recommendation — same DAG, no locks, changeable
+  // anytime in Settings.
+  int _step = 0;
+  String _goal = 'ssw';
+
+  static const _goals = [
+    (code: 'ssw', icon: '🏭', title: 'জাপানে কাজ করব (SSW)',
+     sub: 'JFT-Basic পাস → কাজের ভিসা — কাজের ভাষায় জোর'),
+    (code: 'jlpt', icon: '🎓', title: 'JLPT পরীক্ষা দেব',
+     sub: 'N5→N4 ধাপে ধাপে — ব্যাকরণ ও লিপিতে জোর'),
+    (code: 'daily', icon: '🗾', title: 'দৈনন্দিন জীবনের জন্য',
+     sub: 'কথা বলা, ঘোরা, বন্ধু বানানো — সহজ পথে'),
+  ];
 
   static const _choices = [
     (code: 'bn', native: 'বাংলা', en: 'Bengali'),
@@ -45,9 +59,15 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   ];
 
   Future<void> _accept() async {
-    ref.read(localeProvider.notifier).state = Locale(_pending);
-    final p = await SharedPreferences.getInstance();
-    await p.setString('locale_chosen', _pending);
+    if (_step == 0) {
+      ref.read(localeProvider.notifier).state = Locale(_pending);
+      final p = await SharedPreferences.getInstance();
+      await p.setString('locale_chosen', _pending);
+      if (mounted) setState(() => _step = 1);
+      return;
+    }
+    await setGoal(_goal);
+    ref.invalidate(goalProvider);
     widget.onDone();
   }
 
@@ -85,19 +105,33 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Center(child: Text('Bhasago', style: text.headlineMedium)),
               const SizedBox(height: 2),
               Center(
-                child: Text('ভাষা বেছে নাও · Select language · 言語を選択',
+                child: Text(
+                    _step == 0
+                        ? 'ভাষা বেছে নাও · Select language · 言語を選択'
+                        : 'তোমার লক্ষ্য কী? — পথ একটাই, জোরটা বদলায়',
                     style: text.bodySmall),
               ),
               const SizedBox(height: 26),
-              for (final c in _choices) ...[
-                _LangCard(
-                  native: c.native,
-                  en: c.en,
-                  selected: _pending == c.code,
-                  onTap: () => setState(() => _pending = c.code),
-                ),
-                const SizedBox(height: 9),
-              ],
+              if (_step == 0)
+                for (final c in _choices) ...[
+                  _LangCard(
+                    native: c.native,
+                    en: c.en,
+                    selected: _pending == c.code,
+                    onTap: () => setState(() => _pending = c.code),
+                  ),
+                  const SizedBox(height: 9),
+                ]
+              else
+                for (final g in _goals) ...[
+                  _LangCard(
+                    native: '${g.icon}  ${g.title}',
+                    en: g.sub,
+                    selected: _goal == g.code,
+                    onTap: () => setState(() => _goal = g.code),
+                  ),
+                  const SizedBox(height: 9),
+                ],
               const Spacer(),
               FilledButton(
                 style: FilledButton.styleFrom(
@@ -107,7 +141,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 ),
                 onPressed: _accept,
                 // Trilingual on purpose: the user hasn't picked a language yet.
-                child: const Text('চলো শুরু করি · Let\'s start · はじめよう'),
+                child: Text(_step == 0
+                    ? 'চলো শুরু করি · Let\'s start · はじめよう'
+                    : 'যাত্রা শুরু ⛩️'),
               ),
             ],
           ),
@@ -148,13 +184,23 @@ class _LangCard extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Text(native,
-                  style: TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.w800, color: fg)),
-              const Spacer(),
-              Text(en,
-                  style: TextStyle(
-                      fontSize: 11, fontFamily: 'Archivo', color: sub)),
+              // Flexible column: language cards stay one-line; the longer
+              // goal cards (C1) wrap title + subtitle without overflowing.
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(native,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w800, color: fg)),
+                    Text(en,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 11, fontFamily: 'Archivo', color: sub)),
+                  ],
+                ),
+              ),
               const SizedBox(width: 10),
               Icon(
                   selected

@@ -62,9 +62,12 @@ script — checkboxes below are for the steps the machine can't measure.
       deferred to C-phase polish. Proven in kana_writing_phase_test. _needs: —_ · size M
 
 ## PHASE C — VISION surfaces
-- [ ] **C1 · Goal-select onboarding + journey-map Learn tab** — SSW/JLPT/daily-life goal
-      → Japan-map journey over the SAME DAG (D-015; design-first per DESIGN_HANDOFF).
-      _needs: —_ · size L
+- [x] **C1 · Goal-select onboarding + journey-map Learn tab** — DONE 2026-07-17:
+      onboarding step 2 asks the goal (SSW🏭/JLPT🎓/daily🗾, 'পথ একটাই, জোরটা বদলায়');
+      Learn tab = winding Japan climb (Kyushu→torii ⛩️) over the SAME DAG — done=
+      hanko 印 stamp, current=🔥, upcoming=neutral (no locks), mock=🎯; goal changes
+      EMPHASIS/badge only (D-015); node sheet: can-do + honest CTA. Also fixed a
+      long-hidden test-env DB hang (SrsLocal fail-fast). _needs: —_ · size L
 - [ ] **C2 · Scenario/roleplay mode** — scripted dialogue trees (verified, 05 schema),
       sensei plays the other role; entry from classroom stage 7. _needs: A1_ · size L
 - [ ] **C3 · State packs + Review/Speak v4 restyle** — loading/empty/error/offline for

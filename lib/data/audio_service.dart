@@ -4,12 +4,25 @@
 // kana key (e.g. 'kana_hira_a'); missing clips are a silent no-op.
 import 'dart:convert';
 
+import 'dart:io' show Platform;
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:just_audio/just_audio.dart';
 
 class AudioService {
   AudioService._();
   static final AudioService instance = AudioService._();
+
+  /// Widget tests: no audio plugin — just_audio spins/retries and slows the
+  /// whole suite. Fast no-op there (env var set by `flutter test`; web throws
+  /// on Platform → treated as false).
+  static bool get _inTest {
+    try {
+      return Platform.environment.containsKey('FLUTTER_TEST');
+    } catch (_) {
+      return false;
+    }
+  }
 
   AudioPlayer? _player;
   Map<String, String>? _manifest;
@@ -32,7 +45,7 @@ class AudioService {
   /// in the say-it phase (blob URL on web, file path on device). Same
   /// fresh-player strategy as [play]; silent no-op on failure.
   Future<void> playUrl(String url) async {
-    if (url.isEmpty) return;
+    if (url.isEmpty || _inTest) return;
     final old = _player;
     final p = AudioPlayer();
     _player = p;
@@ -55,6 +68,7 @@ class AudioService {
   /// element only ever holds one source, so the right clip always plays.
   /// Clips are <1s, so the create/dispose cost is negligible.
   Future<void> play(String key) async {
+    if (_inTest) return;
     final m = await _load();
     final path = m[key];
     if (path == null) return;

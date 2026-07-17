@@ -57,6 +57,15 @@ def collect():
     items["kana_hira_kitte"] = "きって"; items["kana_hira_okaasan"] = "おかあさん"
     items["kana_kata_kappu"] = "カップ"; items["kana_kata_koohii"] = "コーヒー"
 
+    # scenarios (C2): npc line per node + each choice line
+    for pth in glob.glob(os.path.join(CONTENT, "scenario_*.json")):
+        d = json.load(open(pth, encoding="utf-8"))
+        sid = d["id"]
+        for nd in d.get("nodes", []):
+            items[f"{sid}_{nd['id']}"] = nd["npc_jp"]
+            for k, ch in enumerate(nd.get("choices", [])):
+                items[f"{sid}_{nd['id']}_c{k}"] = ch["jp"]
+
     # lesson items: one clip per phrase, keyed by item id
     for p in glob.glob(os.path.join(CONTENT, "lesson_*.json")):
         data = json.load(open(p, encoding="utf-8"))

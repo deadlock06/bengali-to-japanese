@@ -184,6 +184,28 @@ function checkPackAcyclic(reg) {
   for (const pack of graph.keys()) dfs(pack, []);
 }
 
+// C2 scenarios: verified flag, Bengali everywhere, graph integrity (every
+// choice resolves, at least one END reachable), banned-copy scan.
+function validateScenario(file, data) {
+  if (data.verified !== true) err(file, 'scenario not verified');
+  if (!nonEmpty(data.title?.bn)) err(file, 'scenario title.bn missing');
+  if (!nonEmpty(data.setting_bn)) err(file, 'setting_bn missing');
+  const ids = new Set((data.nodes || []).map((n) => n.id));
+  let hasEnd = false;
+  for (const n of data.nodes || []) {
+    const tag = n.id || '(no-id)';
+    if (!nonEmpty(n.npc_jp) || !nonEmpty(n.npc_bn)) err(file, `${tag}: npc line needs jp+bn`);
+    if (n.end_bn) hasEnd = true;
+    for (const c of n.choices || []) {
+      if (!nonEmpty(c.jp) || !nonEmpty(c.bn)) err(file, `${tag}: choice needs jp+bn`);
+      if (!ids.has(c.next)) err(file, `${tag}: choice → unknown node "${c.next}"`);
+    }
+    if (!(n.choices || []).length && !n.end_bn) err(file, `${tag}: dead-end (no choices, no end)`);
+    scanBanned(file, tag, [n.npc_bn, n.end_bn || '', ...(n.choices || []).flatMap((c) => [c.bn])]);
+  }
+  if (!hasEnd) err(file, 'scenario has no ending node');
+}
+
 function checkWhitelist(reg) {
   if (!whitelistSet) return; // scaffold: no list authored yet
   for (const { file, tag, word, lvl } of reg.srsWords) {
@@ -212,6 +234,7 @@ for (const f of files) {
   if (data.type === 'kana') validateKana(f, data);
   else if (data.type === 'lesson') validateLesson(f, data, reg);
   else if (data.type === 'pitch') validatePitch(f, data);
+  else if (data.type === 'scenario') validateScenario(f, data);
   else err(f, `unknown content type "${data.type}"`);
   if (errors === before) console.log(`  ok ${f} (${(data.items || []).length} items)`);
 }

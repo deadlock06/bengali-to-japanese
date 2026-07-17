@@ -26,6 +26,7 @@ import 'presentation/home_screen.dart';
 import 'presentation/screens.dart';
 import 'presentation/accent_screens.dart';
 import 'presentation/journey_map_screen.dart';
+import 'presentation/roleplay_entry.dart';
 import 'presentation/book_screen_v4.dart';
 import 'presentation/lesson_screen_v4.dart';
 import 'presentation/onboarding_screen.dart';
@@ -138,11 +139,14 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         onOpenLearn: () => setState(() => tab = 1), // design: goLearn
       ),
       const JourneyMapScreen(),
-      // Speak tab: shadowing + pitch entry card (HANDOFF follow-up 2 — the
-      // pitch pillar's route until the Speak-tab "conversation corner" design).
+      // Speak tab: roleplay (C2 — the conversation corner) + shadowing + pitch.
       Column(children: [
+        const Padding(
+          padding: EdgeInsets.fromLTRB(16, 12, 16, 0),
+          child: RoleplayEntryCard(),
+        ),
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 4),
           child: Material(
             color: BhasagoTheme.card,
             shape: RoundedRectangleBorder(

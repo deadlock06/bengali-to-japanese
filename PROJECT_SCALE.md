@@ -68,8 +68,12 @@ script — checkboxes below are for the steps the machine can't measure.
       hanko 印 stamp, current=🔥, upcoming=neutral (no locks), mock=🎯; goal changes
       EMPHASIS/badge only (D-015); node sheet: can-do + honest CTA. Also fixed a
       long-hidden test-env DB hang (SrsLocal fail-fast). _needs: —_ · size L
-- [ ] **C2 · Scenario/roleplay mode** — scripted dialogue trees (verified, 05 schema),
-      sensei plays the other role; entry from classroom stage 7. _needs: A1_ · size L
+- [x] **C2 · Scenario/roleplay mode** — DONE 2026-07-17: 3 scripted VERIFIED trees
+      (🏪 konbini · 🩺 clinic · 💼 interview) — sensei plays the NPC (bundled audio
+      per line), learner answers from taught choices only, any choice is fine
+      (D-001), ending = celebration + restart free. Entry: Speak-tab 'conversation
+      corner' card. Validator gained scenario-type graph-integrity checks (every
+      choice resolves, ending reachable) — PASS. _needs: A1_ · size L
 - [ ] **C3 · State packs + Review/Speak v4 restyle** — loading/empty/error/offline for
       every screen; v0.1 screens to Bold Ink. _needs: —_ · size M
 

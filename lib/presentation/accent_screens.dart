@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../domain/pitch.dart';
+import 'state_pack.dart';
 import 'widgets.dart';
 
 /// Draws the high/low accent line over the word's morae.
@@ -47,7 +48,7 @@ class PitchScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lang = ref.watch(localeProvider).languageCode;
     final repo = ref.watch(contentProvider).valueOrNull;
-    if (repo == null) return const Center(child: CircularProgressIndicator());
+    if (repo == null) return const StatePack.loading(bn: 'পিচ ডেটা লোড হচ্ছে…');
     final set = repo.pitchSets.first;
     return ListView(
       padding: const EdgeInsets.all(12),

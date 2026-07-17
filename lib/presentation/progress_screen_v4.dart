@@ -25,6 +25,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
+import 'state_pack.dart';
 
 /// Daily retention % for the chart. TODO(T-108): implement
 /// SrsLocal.retentionByDay() → SELECT day, avg(grade>=good) FROM
@@ -100,7 +101,7 @@ class ProgressScreenV4 extends ConsumerWidget {
                 SizedBox(
                   height: 120,
                   child: series == null
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const StatePack.loading()
                       : CustomPaint(
                           size: const Size(double.infinity, 120),
                           painter: RetentionChartPainter(series,

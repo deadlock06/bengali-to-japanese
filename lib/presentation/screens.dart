@@ -10,7 +10,9 @@ import '../app/providers.dart';
 import '../domain/fsrs.dart';
 import '../domain/models.dart';
 import '../l10n/app_localizations.dart';
+import '../app/theme.dart';
 import 'agent_panel.dart';
+import 'state_pack.dart';
 import 'widgets.dart';
 
 /// Kana grid — tap a character to hear it (TTS hook).
@@ -868,61 +870,88 @@ class _ReviewScreenState extends ConsumerState<ReviewScreen> {
     final s = S.of(context);
     final lang = ref.watch(localeProvider).languageCode;
     final deck = _deck;
-    if (deck == null) return const Center(child: CircularProgressIndicator());
+    if (deck == null) {
+      return const StatePack.loading(
+          bn: 'রিভিউ কার্ড লোড হচ্ছে…', accent: BhasagoColors.pink);
+    }
     if (deck.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32),
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            const Icon(Icons.check_circle_outline,
-                size: 40, color: Color(0xFF00C853)),
-            const SizedBox(height: 12),
-            const Text('এখন রিভিউ নেই · Nothing due right now',
-                textAlign: TextAlign.center),
-            const SizedBox(height: 4),
-            Text('একটা লেসন করলে নতুন কার্ড যোগ হবে · learn a lesson to add cards',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.grey.shade500, fontSize: 12)),
-          ]),
-        ),
+      return const StatePack.empty(
+        emoji: '✅',
+        title: 'এখন রিভিউ নেই',
+        body: 'একটা পাঠ করলে নতুন শব্দ review deck-এ যোগ হবে — কালকে ফিরে আসবে।',
       );
     }
     if (idx >= deck.length) {
-      return Center(child: Text(s.reviewDone));
+      return StatePack.empty(
+          emoji: '🎉', title: s.reviewDone,
+          body: 'আজকের সব কার্ড দেখা শেষ — দারুণ! কাল আবার দেখা হবে।');
     }
     final entry = deck[idx];
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(children: [
-        Card(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Column(children: [
-              Text(entry.word,
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 12),
-              if (revealed)
-                BilingualText(entry.meaning, lang: lang, align: TextAlign.center),
-            ]),
+        // progress dots
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12),
+          child: Text('${idx + 1} / ${deck.length}',
+              style: const TextStyle(
+                  color: BhasagoTheme.muted, fontSize: 12, fontWeight: FontWeight.w700)),
+        ),
+        Expanded(
+          child: Center(
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                  color: BhasagoTheme.card,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: BhasagoColors.pink, width: 1.3)),
+              child: Column(mainAxisSize: MainAxisSize.min, children: [
+                Text(entry.word,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontFamily: 'ZenKakuGothicNew',
+                        fontSize: 34, fontWeight: FontWeight.w900,
+                        color: BhasagoTheme.text)),
+                if (revealed) ...[
+                  const SizedBox(height: 14),
+                  const Divider(color: BhasagoTheme.outline, height: 1),
+                  const SizedBox(height: 14),
+                  BilingualText(entry.meaning, lang: lang, align: TextAlign.center),
+                ],
+              ]),
+            ),
           ),
         ),
         const SizedBox(height: 16),
         if (!revealed)
           FilledButton(
               onPressed: () => setState(() => revealed = true),
-              child: Text(s.showAnswer))
+              style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(50),
+                  backgroundColor: BhasagoColors.pink,
+                  foregroundColor: const Color(0xFF111111),
+                  shape: const StadiumBorder()),
+              child: Text(s.showAnswer,
+                  style: const TextStyle(fontWeight: FontWeight.w800)))
         else
           Row(children: [
             for (final r in Rating.values)
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 3),
-                  child: FilledButton(
+                  child: OutlinedButton(
                     onPressed: () => _rate(r),
+                    style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(0, 56),
+                        foregroundColor: BhasagoTheme.text,
+                        side: const BorderSide(color: BhasagoTheme.pillOutline, width: 1.4),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14))),
                     child: Text(
                         '${_label(s, r)}\n${fsrs.nextInterval(fsrs.review(entry.card, r).stability)}d',
-                        textAlign: TextAlign.center),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
                   ),
                 ),
               ),

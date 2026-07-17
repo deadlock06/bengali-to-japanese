@@ -39,8 +39,10 @@ script — checkboxes below are for the steps the machine can't measure.
       recommend-only timer, honest band estimate, weakest-section advice;
       launched from the curriculum ladder (🎯 মক দাও), completion marks the unit
       done. Proven by test/mock_exam_test.dart. _needs: A1_ · size L
-- [ ] **A5 · Native-speaker review pass** — human-gated; mark reviewed lessons in JSON
-      (`reviewed_by`). BLOCKS PUBLISH. _needs: A1 (rolling)_ · size M-human
+- [ ] **A5 · Native-speaker review pass** — HUMAN work (I can't fake it): a native
+      JP speaker checks each file, adds `"reviewed_by":"<name>"`. TRACKER READY:
+      `node tools/review_status.mjs` reports coverage % + pending files; publish
+      blocked until 100%. Owner must arrange a reviewer. _needs: A1 (rolling)_ · size M-human
 
 ## PHASE B — PRACTICE completion (the 5-phase loop, then some)
 - [x] **B1 · Vocab Phase-4: context practice** — DONE 2026-07-17 as boundary-guarded
@@ -74,8 +76,13 @@ script — checkboxes below are for the steps the machine can't measure.
       (D-001), ending = celebration + restart free. Entry: Speak-tab 'conversation
       corner' card. Validator gained scenario-type graph-integrity checks (every
       choice resolves, ending reachable) — PASS. _needs: A1_ · size L
-- [ ] **C3 · State packs + Review/Speak v4 restyle** — loading/empty/error/offline for
-      every screen; v0.1 screens to Bold Ink. _needs: —_ · size M
+- [x] **C3 · State packs + Review/Speak v4 restyle** — DONE 2026-07-17: reusable
+      `StatePack` (loading/empty/error/offline, Bengali-first, warm — offline
+      reassures 'বাকি সব ইন্টারনেট ছাড়াই চলে'); Review screen fully restyled to
+      Bold Ink (pink card, progress count, StatePack empty/done); Speak(pitch) +
+      Progress tabs use StatePack loading. Proven by test/state_pack_test.dart.
+      Remaining bare spinners are on non-nav v0.1 screens (old lesson/list) —
+      logged for a later sweep. _needs: —_ · size M
 
 ## PHASE D — PLATFORM
 - [ ] **D1 · Sync client** — supabase_flutter + anonymous auth + SyncService (delta,

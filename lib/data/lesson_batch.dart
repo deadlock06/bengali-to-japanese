@@ -230,10 +230,46 @@ const _kanaBnSound = [
 /// Index where the voiced/semi-voiced (dakuten ゛/ handakuten ゜) set begins.
 const _kanaVoicedStart = 46;
 
+// ── B3: yōon (small ゃゅょ combos) + sokuon/long-vowel demo units ─────────────
+// Multi-char units, so they live in (char, romaji, bn) records appended after
+// the 71 single-kana items. Writing stays base-46-only (no stroke data here).
+const _extHira = [
+  ('きゃ','kya','ক্যা'),('きゅ','kyu','কিউ'),('きょ','kyo','কিয়ো'),
+  ('しゃ','sha','শা'),('しゅ','shu','শু'),('しょ','sho','শো'),
+  ('ちゃ','cha','চা'),('ちゅ','chu','চু'),('ちょ','cho','চো'),
+  ('にゃ','nya','নিয়া'),('にゅ','nyu','নিউ'),('にょ','nyo','নিয়ো'),
+  ('ひゃ','hya','হিয়া'),('ひゅ','hyu','হিউ'),('ひょ','hyo','হিয়ো'),
+  ('みゃ','mya','মিয়া'),('みゅ','myu','মিউ'),('みょ','myo','মিয়ো'),
+  ('りゃ','rya','রিয়া'),('りゅ','ryu','রিউ'),('りょ','ryo','রিয়ো'),
+  ('ぎゃ','gya','গিয়া'),('ぎゅ','gyu','গিউ'),('ぎょ','gyo','গিয়ো'),
+  ('じゃ','ja','জা'),('じゅ','ju','জু'),('じょ','jo','জো'),
+  ('びゃ','bya','বিয়া'),('びゅ','byu','বিউ'),('びょ','byo','বিয়ো'),
+  ('ぴゃ','pya','পিয়া'),('ぴゅ','pyu','পিউ'),('ぴょ','pyo','পিয়ো'),
+  // demos: sokuon (double/stop) + hiragana long vowel
+  ('きって','kitte','কিত্তে (মাঝে থামা)'),
+  ('おかあさん','okaasan','ওকাআসান (টানা আ)'),
+];
+const _extKata = [
+  ('キャ','kya','ক্যা'),('キュ','kyu','কিউ'),('キョ','kyo','কিয়ো'),
+  ('シャ','sha','শা'),('シュ','shu','শু'),('ショ','sho','শো'),
+  ('チャ','cha','চা'),('チュ','chu','চু'),('チョ','cho','চো'),
+  ('ニャ','nya','নিয়া'),('ニュ','nyu','নিউ'),('ニョ','nyo','নিয়ো'),
+  ('ヒャ','hya','হিয়া'),('ヒュ','hyu','হিউ'),('ヒョ','hyo','হিয়ো'),
+  ('ミャ','mya','মিয়া'),('ミュ','myu','মিউ'),('ミョ','myo','মিয়ো'),
+  ('リャ','rya','রিয়া'),('リュ','ryu','রিউ'),('リョ','ryo','রিয়ো'),
+  ('ギャ','gya','গিয়া'),('ギュ','gyu','গিউ'),('ギョ','gyo','গিয়ো'),
+  ('ジャ','ja','জা'),('ジュ','ju','জু'),('ジョ','jo','জো'),
+  ('ビャ','bya','বিয়া'),('ビュ','byu','বিউ'),('ビョ','byo','বিয়ো'),
+  ('ピャ','pya','পিয়া'),('ピュ','pyu','পিউ'),('ピョ','pyo','পিয়ো'),
+  // demos: katakana sokuon + the ー long-vowel mark
+  ('カップ','kappu','কাপ্পু (মাঝে থামা)'),
+  ('コーヒー','koohii','কোওহিই (ー=টানা)'),
+];
+
 /// The sensei teaches kana IN the classroom: for each character, an intro
 /// line + a "which sound is this?" recognition question with Bengali-sound
 /// options. Answer-key graded (the correct sound), D-001/00§4. Deterministic.
-ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 71}) {
+ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 200}) {
   final chars = katakana ? _kataChars : _hiraChars;
   final script = katakana ? 'kana_katakana' : 'kana_hiragana';
   final label = katakana ? 'কাতাকানা' : 'হিরাগানা';
@@ -276,6 +312,44 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 71}) {
       audioKey: 'kana_${katakana ? "kata" : "hira"}_${_kanaRomaji[i]}',
     ));
   }
+
+  // B3 — yōon + sokuon/long-vowel: taught after the 71 singles, with the
+  // combination RULE in every intro (small ゃゅょ merges; っ = stop; ー = stretch).
+  final ext = katakana ? _extKata : _extHira;
+  final extBn = [for (final e in ext) e.$3];
+  for (var i = 0; i < ext.length && questions.length < maxItems; i++) {
+    final (ch, romaji, bn) = ext[i];
+    final distractors = <String>[];
+    for (var k = 1; distractors.length < 3 && k <= extBn.length; k++) {
+      final cand = extBn[(i + k) % extBn.length];
+      if (cand != bn && !distractors.contains(cand)) distractors.add(cand);
+    }
+    final answerIndex = (71 + i) % 4;
+    final options = [...distractors]..insert(answerIndex, bn);
+    final isYoon = i < 33;
+    final isSokuon = romaji == 'kitte' || romaji == 'kappu';
+    questions.add(ClassroomQuestion(
+      itemId: '${script}_ext_$i',
+      jp: ch,
+      yomi: '',
+      options: options,
+      answerIndex: answerIndex,
+      prompt: 'এটি কোন ধ্বনি?',
+      introBn: isYoon
+          ? 'এই যে — 「$ch」। ছোট ゃ/ゅ/ょ আগের অক্ষরের সাথে মিশে এক ধ্বনি: "$bn" ($romaji)। আলাদা করে পোড়ো না!'
+          : isSokuon
+              ? 'এই যে — 「$ch」। ছোট্ট っ মানে এক মুহূর্তের থামা: "$bn"। থামাটা না দিলে অন্য শব্দ হয়ে যায়!'
+              : 'এই যে — 「$ch」। লম্বা স্বর — টেনে বলো: "$bn"। ছোট করলে মানে বদলে যায় (おばさん≠おばあさん)!',
+      hint: 'মুখে বলো "$bn" — romaji: $romaji।',
+      noteBn: isYoon
+          ? 'ছোট ゃゅょ = যুক্ত-ধ্বনি (yōon)। きや (কিয়া, ২ ধ্বনি) আর きゃ (ক্যা, ১ ধ্বনি) — পার্থক্যটা কানে গেঁথে নাও।'
+          : isSokuon
+              ? 'っ (sokuon) = দ্বিগুণ ব্যঞ্জন — きて(এসো) vs きって(ডাকটিকিট)। থামাই অর্থ বদলায়!'
+              : 'লম্বা স্বর (long vowel) — হিরাগানায় স্বর দ্বিগুণ, কাতাকানায় ー দাগ।',
+      audioKey: 'kana_${katakana ? "kata" : "hira"}_$romaji',
+    ));
+  }
+
   return ClassroomBatch(
     lessonId: script,
     titleBn: '$label — পড়া ও চেনা',

@@ -55,8 +55,11 @@ script — checkboxes below are for the steps the machine can't measure.
       no-mic surfaces degrade to say-aloud-3-times; skip free. Vocab loop now
       Intro→Recognition→SAY→Context→SRS. Proven by test/say_it_phase_test.dart.
       _needs: —_ · size M
-- [ ] **B3 · Kana completion** — yōon (きゃ…), sokuon っ, long-vowel ー recognition
-      (+audio); katakana name-builder drill. _needs: —_ · size M
+- [x] **B3 · Kana completion** — DONE 2026-07-17: kana batch 71→106 per script —
+      33 yōon (small ゃゅょ merge-rule taught: きや≠きゃ) + sokuon っ (きって demo:
+      'থামাই অর্থ বদলায়') + long vowel (おかあさん/コーヒー) ×both scripts, 70 new
+      audio clips (922 total); yōon get say-it practice via B2. Name-builder drill
+      deferred to C-phase polish. Proven in kana_writing_phase_test. _needs: —_ · size M
 
 ## PHASE C — VISION surfaces
 - [ ] **C1 · Goal-select onboarding + journey-map Learn tab** — SSW/JLPT/daily-life goal

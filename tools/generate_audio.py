@@ -39,6 +39,24 @@ def collect():
     for r, (hira, kata) in VOICED.items():
         items[f"kana_hira_{r}"] = hira
         items[f"kana_kata_{r}"] = kata
+    # B3: yōon combos + sokuon/long-vowel demo units
+    YOON = {"kya":("きゃ","キャ"),"kyu":("きゅ","キュ"),"kyo":("きょ","キョ"),
+        "sha":("しゃ","シャ"),"shu":("しゅ","シュ"),"sho":("しょ","ショ"),
+        "cha":("ちゃ","チャ"),"chu":("ちゅ","チュ"),"cho":("ちょ","チョ"),
+        "nya":("にゃ","ニャ"),"nyu":("にゅ","ニュ"),"nyo":("にょ","ニョ"),
+        "hya":("ひゃ","ヒャ"),"hyu":("ひゅ","ヒュ"),"hyo":("ひょ","ヒョ"),
+        "mya":("みゃ","ミャ"),"myu":("みゅ","ミュ"),"myo":("みょ","ミョ"),
+        "rya":("りゃ","リャ"),"ryu":("りゅ","リュ"),"ryo":("りょ","リョ"),
+        "gya":("ぎゃ","ギャ"),"gyu":("ぎゅ","ギュ"),"gyo":("ぎょ","ギョ"),
+        "ja":("じゃ","ジャ"),"ju":("じゅ","ジュ"),"jo":("じょ","ジョ"),
+        "bya":("びゃ","ビャ"),"byu":("びゅ","ビュ"),"byo":("びょ","ビョ"),
+        "pya":("ぴゃ","ピャ"),"pyu":("ぴゅ","ピュ"),"pyo":("ぴょ","ピョ")}
+    for r, (hira, kata) in YOON.items():
+        items[f"kana_hira_{r}"] = hira
+        items[f"kana_kata_{r}"] = kata
+    items["kana_hira_kitte"] = "きって"; items["kana_hira_okaasan"] = "おかあさん"
+    items["kana_kata_kappu"] = "カップ"; items["kana_kata_koohii"] = "コーヒー"
+
     # lesson items: one clip per phrase, keyed by item id
     for p in glob.glob(os.path.join(CONTENT, "lesson_*.json")):
         data = json.load(open(p, encoding="utf-8"))

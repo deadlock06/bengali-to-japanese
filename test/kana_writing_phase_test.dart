@@ -10,6 +10,18 @@ import 'package:sensei_app/presentation/kana_trace_pad.dart';
 import 'package:sensei_app/presentation/lesson_screen_v4.dart';
 
 void main() {
+  test('B3: kana batch = 71 singles + 35 ext (yōon/sokuon/long-vowel)', () {
+    final b = buildKanaBatch(katakana: false);
+    expect(b.questions.length, 106);
+    expect(b.questions[71].jp, 'きゃ');
+    expect(b.questions[71].options[b.questions[71].answerIndex], 'ক্যা');
+    expect(b.questions.last.jp, 'おかあさん');
+    final k = buildKanaBatch(katakana: true);
+    expect(k.questions.length, 106);
+    expect(k.questions.last.jp, 'コーヒー');
+    expect(k.questions.last.audioKey, 'kana_kata_koohii');
+  });
+
   testWidgets('kana lesson: চেনা → লেখা (writing step) → next item',
       (tester) async {
     tester.view.physicalSize = const Size(420, 900);

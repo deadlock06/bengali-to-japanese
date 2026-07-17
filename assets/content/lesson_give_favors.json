@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_give_favors",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_give_triangle"
+ ],
+ "can_do": {
+  "en": "Talk about kindnesses (nuance)",
+  "bn": "উপকারের সূক্ষ্মতা বলা",
+  "ja": "恩のニュアンス"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_give_triangle"
+ ],
+ "items": [
+  {
+   "id": "gf_01",
+   "jp": "おしえてくれてありがとう",
+   "kana": "おしえてくれてありがとう",
+   "romaji": "oshiete kurete arigatou",
+   "meaning": {
+    "en": "Thanks for teaching me",
+    "bn": "শিখিয়ে দেওয়ার জন্য ধন্যবাদ",
+    "ja": "教えてくれてありがとう"
+   },
+   "note": {
+    "en": "Thanks-for-X template",
+    "bn": "てくれて+ありがとう = কী-র জন্য ধন্যবাদ বলার ছাঁচ।",
+    "ja": "感謝"
+   },
+   "srs_words": [
+    "おしえてくれてありがとう"
+   ]
+  },
+  {
+   "id": "gf_02",
+   "jp": "きてくれてうれしいです",
+   "kana": "きてくれてうれしいです",
+   "romaji": "kite kurete ureshii desu",
+   "meaning": {
+    "en": "I'm glad you came",
+    "bn": "তুমি আসায় খুশি হয়েছি",
+    "ja": "来てくれてうれしいです"
+   },
+   "note": {
+    "en": "Coming counts as kindness",
+    "bn": "আগমনও উপকার — জাপানি উষ্ণতার বাক্য।",
+    "ja": "感謝"
+   },
+   "srs_words": [
+    "きてくれてうれしいです"
+   ]
+  },
+  {
+   "id": "gf_03",
+   "jp": "てつだってくれるひとがいます",
+   "kana": "てつだってくれるひとがいます",
+   "romaji": "tetsudatte kureru hito ga imasu",
+   "meaning": {
+    "en": "There are people who help me",
+    "bn": "সাহায্য করার মানুষ আছে",
+    "ja": "手伝ってくれる人がいます"
+   },
+   "note": {
+    "en": "You're not alone grammar",
+    "bn": "একা-না-থাকার ঘোষণা — মন ভালো করা ব্যাকরণ।",
+    "ja": "感謝"
+   },
+   "srs_words": [
+    "てつだってくれるひとがいます"
+   ]
+  },
+  {
+   "id": "gf_04",
+   "jp": "だれかてつだってくれませんか",
+   "kana": "だれかてつだってくれませんか",
+   "romaji": "dareka tetsudatte kuremasen ka",
+   "meaning": {
+    "en": "Won't someone help me?",
+    "bn": "কেউ কি সাহায্য করবে?",
+    "ja": "誰か手伝ってくれませんか"
+   },
+   "note": {
+    "en": "Open call to the team",
+    "bn": "くれませんか = দেবে-না-কি? — দলের কাছে খোলা ডাক।",
+    "ja": "依頼"
+   },
+   "srs_words": [
+    "だれかてつだってくれませんか"
+   ]
+  },
+  {
+   "id": "gf_05",
+   "jp": "みちをおしえてもらえてたすかりました",
+   "kana": "みちをおしえてもらえてたすかりました",
+   "romaji": "michi o oshiete moraete tasukarimashita",
+   "meaning": {
+    "en": "Getting directions saved me",
+    "bn": "পথ দেখিয়ে দেওয়ায় বেঁচে গেলাম",
+    "ja": "道を教えてもらえて助かりました"
+   },
+   "note": {
+    "en": "tasukarimashita = lifesaver",
+    "bn": "たすかりました = উপকৃত হলাম — কৃতজ্ঞতার সমাপ্তি-শব্দ।",
+    "ja": "感謝"
+   },
+   "srs_words": [
+    "みちをおしえてもらえてたすかりました"
+   ]
+  },
+  {
+   "id": "gf_06",
+   "jp": "なんでもいってください",
+   "kana": "なんでもいってください",
+   "romaji": "nandemo itte kudasai",
+   "meaning": {
+    "en": "Tell me whatever you need",
+    "bn": "যা লাগে বলবেন",
+    "ja": "何でも言ってください"
+   },
+   "note": {
+    "en": "Being the giver",
+    "bn": "নিজে উপকার-দাতা হওয়ার লাইন — সম্পর্কের বিনিয়োগ।",
+    "ja": "申し出"
+   },
+   "srs_words": [
+    "なんでもいってください"
+   ]
+  },
+  {
+   "id": "gf_07",
+   "jp": "こんどはわたしがてつだいます",
+   "kana": "こんどはわたしがてつだいます",
+   "romaji": "kondo wa watashi ga tetsudaimasu",
+   "meaning": {
+    "en": "This time I'll help",
+    "bn": "এবার আমি সাহায্য করব",
+    "ja": "今度は私が手伝います"
+   },
+   "note": {
+    "en": "Repaying kindness",
+    "bn": "こんど = এবার/পরেরবার — ঋণ শোধের ঘোষণা।",
+    "ja": "申し出"
+   },
+   "srs_words": [
+    "こんどはわたしがてつだいます"
+   ]
+  },
+  {
+   "id": "gf_08",
+   "jp": "おかげさまで",
+   "kana": "おかげさまで",
+   "romaji": "okagesama de",
+   "meaning": {
+    "en": "Thanks to you (all)",
+    "bn": "আপনাদের দোয়ায়",
+    "ja": "おかげさまで"
+   },
+   "note": {
+    "en": "THE magic gratitude word",
+    "bn": "জাদু-শব্দ: 'কেমন আছ?' → おかげさまで、げんきです।",
+    "ja": "感謝"
+   },
+   "srs_words": [
+    "おかげさまで"
+   ]
+  }
+ ]
+}

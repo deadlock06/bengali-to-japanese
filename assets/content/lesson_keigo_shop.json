@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_shop",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_keigo_hear"
+ ],
+ "can_do": {
+  "en": "Decode service-keigo at shops",
+  "bn": "দোকানের keigo বোঝা",
+  "ja": "お店の敬語"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_keigo_hear"
+ ],
+ "items": [
+  {
+   "id": "ks_01",
+   "jp": "かしこまりました",
+   "kana": "かしこまりました",
+   "romaji": "kashikomarimashita",
+   "meaning": {
+    "en": "Certainly (service)",
+    "bn": "জি, বুঝেছি (সেবক-ভদ্র)",
+    "ja": "かしこまりました"
+   },
+   "note": {
+    "en": "Service wakarimashita",
+    "bn": "わかりました-র service-রূপ — অর্ডার নেওয়ার পরে শুনবে।",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "かしこまりました"
+   ]
+  },
+  {
+   "id": "ks_02",
+   "jp": "しょうしょうおまちください",
+   "kana": "しょうしょうおまちください",
+   "romaji": "shoushou omachi kudasai",
+   "meaning": {
+    "en": "One moment please",
+    "bn": "একটু অপেক্ষা করুন (অতি-ভদ্র)",
+    "ja": "少々お待ちください"
+   },
+   "note": {
+    "en": "Phone-hold classic",
+    "bn": "しょうしょう = অল্প — ফোন/কাউন্টারের স্থায়ী লাইন।",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "しょうしょうおまちください"
+   ]
+  },
+  {
+   "id": "ks_03",
+   "jp": "おまたせしました",
+   "kana": "おまたせしました",
+   "romaji": "omatase shimashita",
+   "meaning": {
+    "en": "Sorry to keep you waiting",
+    "bn": "অপেক্ষা করানোর জন্য দুঃখিত",
+    "ja": "お待たせしました"
+   },
+   "note": {
+    "en": "Just smile back",
+    "bn": "খাবার এলে/লাইন শেষে — জবাব লাগে না, হাসি দাও।",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "おまたせしました"
+   ]
+  },
+  {
+   "id": "ks_04",
+   "jp": "ごちゅうもんはおきまりですか",
+   "kana": "ごちゅうもんはおきまりですか",
+   "romaji": "gochuumon wa okimari desu ka",
+   "meaning": {
+    "en": "Have you decided your order?",
+    "bn": "অর্ডার ঠিক করেছেন?",
+    "ja": "ご注文はお決まりですか"
+   },
+   "note": {
+    "en": "No more menu-fear",
+    "bn": "রেস্টুরেন্টের প্রশ্ন — এবার আর ভয় নেই!",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "ごちゅうもんはおきまりですか"
+   ]
+  },
+  {
+   "id": "ks_05",
+   "jp": "おしはらいはどうなさいますか",
+   "kana": "おしはらいはどうなさいますか",
+   "romaji": "oshiharai wa dou nasaimasu ka",
+   "meaning": {
+    "en": "How will you pay?",
+    "bn": "কীভাবে পেমেন্ট করবেন?",
+    "ja": "お支払いはどうなさいますか"
+   },
+   "note": {
+    "en": "You know the answers!",
+    "bn": "জবাব: カードで / げんきんで — আগেই শেখা!",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "おしはらいはどうなさいますか"
+   ]
+  },
+  {
+   "id": "ks_06",
+   "jp": "ふくろにおいれしますか",
+   "kana": "ふくろにおいれしますか",
+   "romaji": "fukuro ni oire shimasu ka",
+   "meaning": {
+    "en": "Shall I bag it?",
+    "bn": "ব্যাগে ভরে দেব?",
+    "ja": "袋にお入れしますか"
+   },
+   "note": {
+    "en": "Onegai or irimasen",
+    "bn": "জবাব: おねがいします বা いりません।",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "ふくろにおいれしますか"
+   ]
+  },
+  {
+   "id": "ks_07",
+   "jp": "またおこしくださいませ",
+   "kana": "またおこしくださいませ",
+   "romaji": "mata okoshi kudasaimase",
+   "meaning": {
+    "en": "Please come again",
+    "bn": "আবার আসবেন",
+    "ja": "またお越しくださいませ"
+   },
+   "note": {
+    "en": "Nod and go",
+    "bn": "বেরোনোর সময়ের বিদায় — জবাব ঐচ্ছিক, মাথা নোয়াও।",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "またおこしくださいませ"
+   ]
+  },
+  {
+   "id": "ks_08",
+   "jp": "ポイントカードはおもちですか",
+   "kana": "ポイントカードはおもちですか",
+   "romaji": "pointo kaado wa omochi desu ka",
+   "meaning": {
+    "en": "Do you have a point card? (keigo)",
+    "bn": "পয়েন্ট কার্ড আছে কি? (keigo)",
+    "ja": "ポイントカードはお持ちですか"
+   },
+   "note": {
+    "en": "Same Q, keigo dress",
+    "bn": "আগের সেই প্রশ্নই keigo-পোশাকে — এবার দুই রূপেই চেনো!",
+    "ja": "接客敬語"
+   },
+   "srs_words": [
+    "ポイントカードはおもちですか"
+   ]
+  }
+ ]
+}

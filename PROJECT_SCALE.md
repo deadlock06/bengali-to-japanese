@@ -30,8 +30,9 @@ script — checkboxes below are for the steps the machine can't measure.
 - [x] **A2 · N4 whitelist** — DONE 2026-07-17: `content_factory/n4_whitelist.txt`
       (1402 words = full JFT-A2 superset + curated standard JLPT-N4 core); validator
       now level-scoped (N4-tagged lessons check n4, others jft_a2). _needs: —_ · size M
-- [ ] **A3 · N4.1–N4.5 content** — te-form/plain/potential/give-receive/keigo lessons
-      (verified grammar ONLY — never generated; D-001). _needs: A2_ · size L
+- [x] **A3 · N4.1–N4.5 content** — DONE 2026-07-17: all 5 N4 units complete (33
+      lessons, 248 items: te-form/plain+casual/potential/give-receive/keigo incl.
+      uchi-soto rules). Ladder 806/772 = 104%. _needs: A2_ · size L
 - [ ] **A4 · Mock-exam engine + A2.M/N4.M** — CBT-format mock (timer, 4 sections,
       answer-key scoring, honest band estimate). _needs: A1_ · size L
 - [ ] **A5 · Native-speaker review pass** — human-gated; mark reviewed lessons in JSON

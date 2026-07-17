@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_give_situations",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_give_triangle"
+ ],
+ "can_do": {
+  "en": "Handle giving situations",
+  "bn": "দেওয়া-নেওয়ার পরিস্থিতি সামলানো",
+  "ja": "贈り物の場面"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_give_triangle"
+ ],
+ "items": [
+  {
+   "id": "gs_01",
+   "jp": "これ、みんなでどうぞ",
+   "kana": "これ、みんなでどうぞ",
+   "romaji": "kore, minna de douzo",
+   "meaning": {
+    "en": "Here, share this everyone",
+    "bn": "এটা সবাই মিলে খান",
+    "ja": "これ、みんなでどうぞ"
+   },
+   "note": {
+    "en": "The omiyage-sharing line",
+    "bn": "দেশ থেকে ফিরে মিষ্টি বিলোনোর লাইন — মন জয় নিশ্চিত!",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "これ、みんなでどうぞ"
+   ]
+  },
+  {
+   "id": "gs_02",
+   "jp": "ほんのきもちです",
+   "kana": "ほんのきもちです",
+   "romaji": "hon no kimochi desu",
+   "meaning": {
+    "en": "Just a small token",
+    "bn": "সামান্য মনের টান মাত্র",
+    "ja": "ほんの気持ちです"
+   },
+   "note": {
+    "en": "Softer humble opener",
+    "bn": "つまらないもの-র নরম ভাই — ছোট উপহারে।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "ほんのきもちです"
+   ]
+  },
+  {
+   "id": "gs_03",
+   "jp": "えんりょしないでください",
+   "kana": "えんりょしないでください",
+   "romaji": "enryo shinaide kudasai",
+   "meaning": {
+    "en": "Don't hold back",
+    "bn": "সংকোচ করবেন না",
+    "ja": "遠慮しないでください"
+   },
+   "note": {
+    "en": "They refuse thrice; offer thrice",
+    "bn": "えんりょ = সংকোচ — জাপানিরা ৩ বার না বলে, তুমি ৩ বার সাধো!",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "えんりょしないでください"
+   ]
+  },
+  {
+   "id": "gs_04",
+   "jp": "では、いただきます",
+   "kana": "では、いただきます",
+   "romaji": "dewa, itadakimasu",
+   "meaning": {
+    "en": "Well then, I'll accept",
+    "bn": "তাহলে নিচ্ছি (সসম্মানে)",
+    "ja": "では、いただきます"
+   },
+   "note": {
+    "en": "Accepting after the dance",
+    "bn": "সাধাসাধির পরে নেওয়ার ভদ্র সমাপ্তি।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "では、いただきます"
+   ]
+  },
+  {
+   "id": "gs_05",
+   "jp": "おきづかいなく",
+   "kana": "おきづかいなく",
+   "romaji": "okizukai naku",
+   "meaning": {
+    "en": "Please don't trouble yourself",
+    "bn": "ব্যস্ত হবেন না",
+    "ja": "お気遣いなく"
+   },
+   "note": {
+    "en": "Gentle stop-fussing",
+    "bn": "কেউ বেশি করছে মনে হলে — নরম থামানো।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "おきづかいなく"
+   ]
+  },
+  {
+   "id": "gs_06",
+   "jp": "たいしたものじゃないです",
+   "kana": "たいしたものじゃないです",
+   "romaji": "taishita mono ja nai desu",
+   "meaning": {
+    "en": "It's nothing much",
+    "bn": "তেমন কিছু না",
+    "ja": "大したものじゃないです"
+   },
+   "note": {
+    "en": "Another humility shade",
+    "bn": "নিজের উপহার ছোট করা — জাপানি বিনয়ের আরেক রং।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "たいしたものじゃないです"
+   ]
+  },
+  {
+   "id": "gs_07",
+   "jp": "よろこんでもらえてよかったです",
+   "kana": "よろこんでもらえてよかったです",
+   "romaji": "yorokonde moraete yokatta desu",
+   "meaning": {
+    "en": "Glad you liked it",
+    "bn": "পছন্দ হয়েছে জেনে ভালো লাগল",
+    "ja": "喜んでもらえてよかったです"
+   },
+   "note": {
+    "en": "Gift-success line",
+    "bn": "うপहার সফল হওয়ার আনন্দ-বাক্য।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "よろこんでもらえてよかったです"
+   ]
+  },
+  {
+   "id": "gs_08",
+   "jp": "おせわになりました",
+   "kana": "おせわになりました",
+   "romaji": "osewa ni narimashita",
+   "meaning": {
+    "en": "Thank you for everything",
+    "bn": "আপনার অনেক সাহায্য পেয়েছি",
+    "ja": "お世話になりました"
+   },
+   "note": {
+    "en": "THE farewell line",
+    "bn": "বিদায়/transfer-এ THE লাইন — চোখ ভিজে যাওয়ার ব্যাকরণ।",
+    "ja": "場面"
+   },
+   "srs_words": [
+    "おせわになりました"
+   ]
+  }
+ ]
+}

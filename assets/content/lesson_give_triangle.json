@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_give_triangle",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_te_giving"
+ ],
+ "can_do": {
+  "en": "Use the give-receive triangle",
+  "bn": "আগেরু-মোরাউ-কুরেরু ত্রিভুজ",
+  "ja": "あげる・もらう・くれる"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_te_giving"
+ ],
+ "items": [
+  {
+   "id": "gt_01",
+   "jp": "ともだちにプレゼントをあげました",
+   "kana": "ともだちにプレゼントをあげました",
+   "romaji": "tomodachi ni purezento o agemashita",
+   "meaning": {
+    "en": "I gave a friend a present",
+    "bn": "বন্ধুকে উপহার দিলাম",
+    "ja": "友達にプレゼントをあげました"
+   },
+   "note": {
+    "en": "I → others",
+    "bn": "あげる = আমি→অন্যকে। দিক-ই এই ব্যাকরণের প্রাণ।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "ともだちにプレゼントをあげました"
+   ]
+  },
+  {
+   "id": "gt_02",
+   "jp": "せんぱいにおみやげをもらいました",
+   "kana": "せんぱいにおみやげをもらいました",
+   "romaji": "senpai ni omiyage o moraimashita",
+   "meaning": {
+    "en": "I received a souvenir from senpai",
+    "bn": "সিনিয়রের কাছ থেকে উপহার পেলাম",
+    "ja": "先輩にお土産をもらいました"
+   },
+   "note": {
+    "en": "I ← others",
+    "bn": "もらう = আমি←অন্যের থেকে — に/から দুটোই চলে।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "せんぱいにおみやげをもらいました"
+   ]
+  },
+  {
+   "id": "gt_03",
+   "jp": "はんちょうがおかしをくれました",
+   "kana": "はんちょうがおかしをくれました",
+   "romaji": "hanchou ga okashi o kuremashita",
+   "meaning": {
+    "en": "The leader gave me sweets",
+    "bn": "দলনেতা আমাকে মিষ্টি দিলেন",
+    "ja": "班長がお菓子をくれました"
+   },
+   "note": {
+    "en": "Others → me; giver takes GA",
+    "bn": "くれる = অন্য→আমাকে — দাতা が-তে। উষ্ণতম verb।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "はんちょうがおかしをくれました"
+   ]
+  },
+  {
+   "id": "gt_04",
+   "jp": "なにをあげましたか",
+   "kana": "なにをあげましたか",
+   "romaji": "nani o agemashita ka",
+   "meaning": {
+    "en": "What did you give?",
+    "bn": "কী দিলে?",
+    "ja": "何をあげましたか"
+   },
+   "note": {
+    "en": "Gift-culture question",
+    "bn": "গল্প শোনার প্রশ্ন — উপহার-সংস্কৃতির দেশে রোজ লাগে।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "なにをあげましたか"
+   ]
+  },
+  {
+   "id": "gt_05",
+   "jp": "だれにもらいましたか",
+   "kana": "だれにもらいましたか",
+   "romaji": "dare ni moraimashita ka",
+   "meaning": {
+    "en": "Who did you get it from?",
+    "bn": "কার কাছ থেকে পেলে?",
+    "ja": "誰にもらいましたか"
+   },
+   "note": {
+    "en": "Asking the source",
+    "bn": "だれに+もらう — উৎস জানার প্রশ্ন।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "だれにもらいましたか"
+   ]
+  },
+  {
+   "id": "gt_06",
+   "jp": "ちちがとけいをくれました",
+   "kana": "ちちがとけいをくれました",
+   "romaji": "chichi ga tokei o kuremashita",
+   "meaning": {
+    "en": "Dad gave me this watch",
+    "bn": "বাবা আমাকে ঘড়িটা দিয়েছিলেন",
+    "ja": "父が時計をくれました"
+   },
+   "note": {
+    "en": "Keepsake stories",
+    "bn": "স্মৃতির জিনিসের গল্প — くれました-তে ভালোবাসা থাকে।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "ちちがとけいをくれました"
+   ]
+  },
+  {
+   "id": "gt_07",
+   "jp": "いもうとにおかねをあげます",
+   "kana": "いもうとにおかねをあげます",
+   "romaji": "imouto ni okane o agemasu",
+   "meaning": {
+    "en": "I give money to my little sister",
+    "bn": "ছোট বোনকে টাকা পাঠাই",
+    "ja": "妹にお金をあげます"
+   },
+   "note": {
+    "en": "The remittance story",
+    "bn": "দেশে টাকা পাঠানোর গল্প — প্রবাসীর বাস্তবতা।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "いもうとにおかねをあげます"
+   ]
+  },
+  {
+   "id": "gt_08",
+   "jp": "かいしゃからせいふくをもらいます",
+   "kana": "かいしゃからせいふくをもらいます",
+   "romaji": "kaisha kara seifuku o moraimasu",
+   "meaning": {
+    "en": "I get a uniform from the company",
+    "bn": "কোম্পানি থেকে ইউনিফর্ম পাই",
+    "ja": "会社から制服をもらいます"
+   },
+   "note": {
+    "en": "Institutions take kara",
+    "bn": "প্রতিষ্ঠান থেকে পেলে から-ই স্বাভাবিক।",
+    "ja": "授受"
+   },
+   "srs_words": [
+    "かいしゃからせいふくをもらいます"
+   ]
+  }
+ ]
+}

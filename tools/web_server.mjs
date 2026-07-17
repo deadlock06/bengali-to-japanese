@@ -22,11 +22,16 @@ const PROVIDERS = [
   { name: 'openai', host: 'api.openai.com',
     key: process.env.OPENAI_API_KEY, model: 'gpt-4o-mini' },
 ].filter((p) => p.key);
+// OFFLINE fallback (arch 08: llama.cpp + Qwen3 1.7B Q4_K_M): a local
+// llama-server speaking the same OpenAI API. LAST in the chain — used when no
+// cloud key works (or none set), so the sensei answers even fully offline.
+//   tools/run_local_llm.sh   (starts it on 127.0.0.1:8089)
+PROVIDERS.push({ name: 'local-qwen3', host: '127.0.0.1', port: 8089,
+  insecure: true, key: 'local', model: 'qwen3' });
 
 // POST /ai/chat → forward the chat body to the first available provider (with
 // its own model), failing over to the next on any 5xx / network error.
 function aiProxy(req, res) {
-  if (PROVIDERS.length === 0) { res.writeHead(400); return res.end('{"error":"no provider key set"}'); }
   let body = '';
   req.on('data', (c) => (body += c));
   req.on('end', () => {
@@ -36,8 +41,9 @@ function aiProxy(req, res) {
       if (i >= PROVIDERS.length) { res.writeHead(502); return res.end('{"error":"all providers failed"}'); }
       const p = PROVIDERS[i];
       const out = Buffer.from(JSON.stringify({ ...payload, model: p.model }));
-      const up = https.request({
-        host: p.host, path: '/v1/chat/completions', method: 'POST',
+      const lib = p.insecure ? http : https; // local llama-server is plain http
+      const up = lib.request({
+        host: p.host, port: p.port, path: '/v1/chat/completions', method: 'POST',
         headers: { 'Content-Type': 'application/json',
           'Authorization': `Bearer ${p.key}`, 'Content-Length': out.length },
       }, (r) => {

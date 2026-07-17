@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_work",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_keigo_humble"
+ ],
+ "can_do": {
+  "en": "Use keigo with bosses & customers",
+  "bn": "বস-গ্রাহকের সাথে keigo",
+  "ja": "職場の敬語"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_keigo_humble"
+ ],
+ "items": [
+  {
+   "id": "kw_01",
+   "jp": "しゃちょうはいらっしゃいますか",
+   "kana": "しゃちょうはいらっしゃいますか",
+   "romaji": "shachou wa irasshaimasu ka",
+   "meaning": {
+    "en": "Is the president in?",
+    "bn": "প্রেসিডেন্ট কি আছেন?",
+    "ja": "社長はいらっしゃいますか"
+   },
+   "note": {
+    "en": "Asking for superiors",
+    "bn": "ফোনে/দরজায় — উপরের মানুষ খোঁজার রূপ।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "しゃちょうはいらっしゃいますか"
+   ]
+  },
+  {
+   "id": "kw_02",
+   "jp": "すこしおまちいただけますか",
+   "kana": "すこしおまちいただけますか",
+   "romaji": "sukoshi omachi itadakemasu ka",
+   "meaning": {
+    "en": "Could you wait a moment? (very polite)",
+    "bn": "একটু অপেক্ষা করবেন কি? (অতি-ভদ্র)",
+    "ja": "少しお待ちいただけますか"
+   },
+   "note": {
+    "en": "The politeness Everest",
+    "bn": "お+stem+いただけますか — অনুরোধের এভারেস্ট।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "すこしおまちいただけますか"
+   ]
+  },
+  {
+   "id": "kw_03",
+   "jp": "ごせつめいいたします",
+   "kana": "ごせつめいいたします",
+   "romaji": "gosetsumei itashimasu",
+   "meaning": {
+    "en": "Allow me to explain (humble)",
+    "bn": "আমি ব্যাখ্যা করছি (বিনীত)",
+    "ja": "ご説明いたします"
+   },
+   "note": {
+    "en": "Presentation opener",
+    "bn": "ご+noun+いたします — presentation-এর শুরুর লাইন।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "ごせつめいいたします"
+   ]
+  },
+  {
+   "id": "kw_04",
+   "jp": "かくにんさせていただきます",
+   "kana": "かくにんさせていただきます",
+   "romaji": "kakunin sasete itadakimasu",
+   "meaning": {
+    "en": "Let me confirm (with your leave)",
+    "bn": "যাচাই করে নিচ্ছি (অনুমতি-বিনয়)",
+    "ja": "確認させていただきます"
+   },
+   "note": {
+    "en": "With-your-leave form",
+    "bn": "させていただく = আপনার অনুমতিতে করছি — ultra-soft।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "かくにんさせていただきます"
+   ]
+  },
+  {
+   "id": "kw_05",
+   "jp": "もうしわけございません",
+   "kana": "もうしわけございません",
+   "romaji": "moushiwake gozaimasen",
+   "meaning": {
+    "en": "I sincerely apologize (highest)",
+    "bn": "গভীরভাবে দুঃখিত (সর্বোচ্চ)",
+    "ja": "申し訳ございません"
+   },
+   "note": {
+    "en": "Apology's top tier",
+    "bn": "ありません→ございません — ক্ষমার সর্বোচ্চ স্তর, গ্রাহকের সামনে।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "もうしわけございません"
+   ]
+  },
+  {
+   "id": "kw_06",
+   "jp": "おつたえいたします",
+   "kana": "おつたえいたします",
+   "romaji": "otsutae itashimasu",
+   "meaning": {
+    "en": "I'll pass on the message (humble)",
+    "bn": "পৌঁছে দেব (বার্তা, বিনীত)",
+    "ja": "お伝えいたします"
+   },
+   "note": {
+    "en": "Phone-message line",
+    "bn": "ফোনে message নেওয়ার লাইন — でんごんをおつたえいたします।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "おつたえいたします"
+   ]
+  },
+  {
+   "id": "kw_07",
+   "jp": "いってまいります",
+   "kana": "いってまいります",
+   "romaji": "itte mairimasu",
+   "meaning": {
+    "en": "I'm off (humble)",
+    "bn": "যাচ্ছি, ফিরব (বিনীত)",
+    "ja": "行って参ります"
+   },
+   "note": {
+    "en": "Workplace ittekimasu",
+    "bn": "いってきます-র কর্মস্থল-রূপ — বাইরে কাজে গেলে।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "いってまいります"
+   ]
+  },
+  {
+   "id": "kw_08",
+   "jp": "おさきにしつれいいたします",
+   "kana": "おさきにしつれいいたします",
+   "romaji": "osaki ni shitsurei itashimasu",
+   "meaning": {
+    "en": "Excuse me for leaving first (extra polite)",
+    "bn": "আগে যাচ্ছি (অতি-ভদ্র)",
+    "ja": "お先に失礼いたします"
+   },
+   "note": {
+    "en": "When the boss is present",
+    "bn": "চেনা লাইনের keigo-স্তর — বস উপস্থিত থাকলে এটাই।",
+    "ja": "職場敬語"
+   },
+   "srs_words": [
+    "おさきにしつれいいたします"
+   ]
+  }
+ ]
+}

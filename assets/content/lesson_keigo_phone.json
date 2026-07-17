@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_phone",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_keigo_humble"
+ ],
+ "can_do": {
+  "en": "Survive phone calls in keigo",
+  "bn": "ফোনালাপ সামলানো (keigo)",
+  "ja": "電話の敬語"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_keigo_humble"
+ ],
+ "items": [
+  {
+   "id": "kp_01",
+   "jp": "おでんわありがとうございます",
+   "kana": "おでんわありがとうございます",
+   "romaji": "odenwa arigatou gozaimasu",
+   "meaning": {
+    "en": "Thank you for calling",
+    "bn": "ফোনের জন্য ধন্যবাদ",
+    "ja": "お電話ありがとうございます"
+   },
+   "note": {
+    "en": "Answering line #1",
+    "bn": "ব্যবসায়িক ফোন ধরার লাইন #১।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "おでんわありがとうございます"
+   ]
+  },
+  {
+   "id": "kp_02",
+   "jp": "〇〇でございます",
+   "kana": "〇〇でございます",
+   "romaji": "marumaru de gozaimasu",
+   "meaning": {
+    "en": "This is ○○ (super-polite desu)",
+    "bn": "আমি/এটা 〇〇 (অতি-ভদ্র です)",
+    "ja": "○○でございます"
+   },
+   "note": {
+    "en": "desu → de gozaimasu",
+    "bn": "です→でございます — নিজের কোম্পানি/নাম বসাও।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "〇〇でございます"
+   ]
+  },
+  {
+   "id": "kp_03",
+   "jp": "どちらさまですか",
+   "kana": "どちらさまですか",
+   "romaji": "dochira-sama desu ka",
+   "meaning": {
+    "en": "Who's calling please?",
+    "bn": "কে বলছেন? (ভদ্র)",
+    "ja": "どちら様ですか"
+   },
+   "note": {
+    "en": "Polite who",
+    "bn": "だれ nয় — どちらさま। ফোনের ভদ্র 'কে'।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "どちらさまですか"
+   ]
+  },
+  {
+   "id": "kp_04",
+   "jp": "でんわがとおいようです",
+   "kana": "でんわがとおいようです",
+   "romaji": "denwa ga tooi you desu",
+   "meaning": {
+    "en": "The line seems faint",
+    "bn": "আওয়াজ কম আসছে",
+    "ja": "電話が遠いようです"
+   },
+   "note": {
+    "en": "Blame the line, not them",
+    "bn": "'শুনতে পাচ্ছি না'-র ভদ্র রূপ — দোষ লাইনের, মানুষের না!",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "でんわがとおいようです"
+   ]
+  },
+  {
+   "id": "kp_05",
+   "jp": "もういちどおっしゃっていただけますか",
+   "kana": "もういちどおっしゃっていただけますか",
+   "romaji": "mou ichido osshatte itadakemasu ka",
+   "meaning": {
+    "en": "Could you say that again? (keigo)",
+    "bn": "আরেকবার বলবেন কি? (keigo)",
+    "ja": "もう一度おっしゃっていただけますか"
+   },
+   "note": {
+    "en": "All tiers in one line!",
+    "bn": "শেখা সব স্তর এক বাক্যে — এটা পারলে keigo জয়!",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "もういちどおっしゃっていただけますか"
+   ]
+  },
+  {
+   "id": "kp_06",
+   "jp": "のちほどおかけなおします",
+   "kana": "のちほどおかけなおします",
+   "romaji": "nochihodo okake naoshimasu",
+   "meaning": {
+    "en": "I'll call back later",
+    "bn": "পরে আবার ফোন করব",
+    "ja": "後ほどおかけ直します"
+   },
+   "note": {
+    "en": "nochihodo = polite atode",
+    "bn": "のちほど = পরে (ভদ্র) — あとで-র অফিস-রূপ।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "のちほどおかけなおします"
+   ]
+  },
+  {
+   "id": "kp_07",
+   "jp": "でんごんをおねがいできますか",
+   "kana": "でんごんをおねがいできますか",
+   "romaji": "dengon o onegai dekimasu ka",
+   "meaning": {
+    "en": "May I leave a message?",
+    "bn": "একটা বার্তা রাখতে পারি?",
+    "ja": "伝言をお願いできますか"
+   },
+   "note": {
+    "en": "dengon = message",
+    "bn": "でんごん = বার্তা — না-থাকলে এটাই পথ।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "でんごんをおねがいできますか"
+   ]
+  },
+  {
+   "id": "kp_08",
+   "jp": "しつれいですが、おなまえは",
+   "kana": "しつれいですが、おなまえは",
+   "romaji": "shitsurei desu ga, onamae wa",
+   "meaning": {
+    "en": "Excuse me, your name is?",
+    "bn": "মাফ করবেন, নামটা?",
+    "ja": "失礼ですが、お名前は"
+   },
+   "note": {
+    "en": "The polite preface",
+    "bn": "しつれいですが = ভদ্র ভূমিকা — ব্যক্তিগত প্রশ্নের আগে।",
+    "ja": "電話"
+   },
+   "srs_words": [
+    "しつれいですが、おなまえは"
+   ]
+  }
+ ]
+}

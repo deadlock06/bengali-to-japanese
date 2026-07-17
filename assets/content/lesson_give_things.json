@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_give_things",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_give_triangle"
+ ],
+ "can_do": {
+  "en": "Name gift-culture things",
+  "bn": "উপহার-সংস্কৃতির জিনিস",
+  "ja": "贈り物のことば"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_give_triangle"
+ ],
+ "items": [
+  {
+   "id": "gg_01",
+   "jp": "おみやげ",
+   "kana": "おみやげ",
+   "romaji": "omiyage",
+   "meaning": {
+    "en": "Souvenir",
+    "bn": "ভ্রমণ-উপহার",
+    "ja": "お土産"
+   },
+   "note": {
+    "en": "The near-mandatory custom",
+    "bn": "কোথাও গেলে সহকর্মীদের জন্য おみやげ আনা প্রায় নিয়ম!",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "おみやげ"
+   ]
+  },
+  {
+   "id": "gg_02",
+   "jp": "プレゼント",
+   "kana": "プレゼント",
+   "romaji": "purezento",
+   "meaning": {
+    "en": "Present",
+    "bn": "উপহার",
+    "ja": "プレゼント"
+   },
+   "note": {
+    "en": "Birthdays, farewells",
+    "bn": "জন্মদিন/বিদায় — কাতাকানা সহজ।",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "プレゼント"
+   ]
+  },
+  {
+   "id": "gg_03",
+   "jp": "おかえし",
+   "kana": "おかえし",
+   "romaji": "okaeshi",
+   "meaning": {
+    "en": "Return gift",
+    "bn": "ফিরতি উপহার",
+    "ja": "お返し"
+   },
+   "note": {
+    "en": "The half-value return",
+    "bn": "উপহার পেলে অর্ধেক দামের ফিরতি — জাপানি ভারসাম্য!",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "おかえし"
+   ]
+  },
+  {
+   "id": "gg_04",
+   "jp": "おいわい",
+   "kana": "おいわい",
+   "romaji": "oiwai",
+   "meaning": {
+    "en": "Celebration gift",
+    "bn": "শুভেচ্ছা-উপহার",
+    "ja": "お祝い"
+   },
+   "note": {
+    "en": "Weddings, new jobs",
+    "bn": "বিয়ে/নতুন চাকরি/জন্ম — খামে টাকাও চলে।",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "おいわい"
+   ]
+  },
+  {
+   "id": "gg_05",
+   "jp": "おとしだま",
+   "kana": "おとしだま",
+   "romaji": "otoshidama",
+   "meaning": {
+    "en": "New Year money gift",
+    "bn": "নববর্ষের সালামি",
+    "ja": "お年玉"
+   },
+   "note": {
+    "en": "Japan's eidi!",
+    "bn": "বাচ্চাদের নববর্ষের খাম — সালামির জাপানি ভাই!",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "おとしだま"
+   ]
+  },
+  {
+   "id": "gg_06",
+   "jp": "チョコレート",
+   "kana": "チョコレート",
+   "romaji": "chokoreeto",
+   "meaning": {
+    "en": "Chocolate",
+    "bn": "চকলেট",
+    "ja": "チョコレート"
+   },
+   "note": {
+    "en": "The Feb/Mar exchange",
+    "bn": "ভ্যালেন্টাইনে মেয়েরা দেয়, White Day-তে ছেলেরা ফেরত!",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "チョコレート"
+   ]
+  },
+  {
+   "id": "gg_07",
+   "jp": "はな",
+   "kana": "はな",
+   "romaji": "hana",
+   "meaning": {
+    "en": "Flower",
+    "bn": "ফুল",
+    "ja": "花"
+   },
+   "note": {
+    "en": "No potted plants at hospitals!",
+    "bn": "বিদায়/হাসপাতাল-দর্শনে はな — তবে টবের গাছ নয় (শেকড়=দীর্ঘ অসুখ!)।",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "はな"
+   ]
+  },
+  {
+   "id": "gg_08",
+   "jp": "てがみ",
+   "kana": "てがみ",
+   "romaji": "tegami",
+   "meaning": {
+    "en": "Letter",
+    "bn": "চিঠি",
+    "ja": "手紙"
+   },
+   "note": {
+    "en": "Handwritten still matters",
+    "bn": "হাতে-লেখা てがみ-র কদর জাপানে এখনো — বিদায়ে লিখো।",
+    "ja": "贈り物"
+   },
+   "srs_words": [
+    "てがみ"
+   ]
+  }
+ ]
+}

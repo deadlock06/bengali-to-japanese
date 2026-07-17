@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_hear",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_casual_register"
+ ],
+ "can_do": {
+  "en": "UNDERSTAND respect-keigo said to you",
+  "bn": "তোমাকে বলা সম্মান-ভাষা বোঝা",
+  "ja": "尊敬語を聞き取る"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_casual_register"
+ ],
+ "items": [
+  {
+   "id": "kh_01",
+   "jp": "いらっしゃいます",
+   "kana": "いらっしゃいます",
+   "romaji": "irasshaimasu",
+   "meaning": {
+    "en": "Is/comes/goes (respectful)",
+    "bn": "আছেন/আসছেন/যাচ্ছেন (সম্মানে)",
+    "ja": "いらっしゃいます"
+   },
+   "note": {
+    "en": "3 verbs, 1 keigo",
+    "bn": "৩টা verb-এর সম্মান-রূপ একটাই! しゃちょうはいらっしゃいますか।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "いらっしゃいます"
+   ]
+  },
+  {
+   "id": "kh_02",
+   "jp": "めしあがってください",
+   "kana": "めしあがってください",
+   "romaji": "meshiagatte kudasai",
+   "meaning": {
+    "en": "Please eat (respectful)",
+    "bn": "খান (সম্মানে)",
+    "ja": "召し上がってください"
+   },
+   "note": {
+    "en": "Respectful taberu",
+    "bn": "たべる-র সম্মান-রূপ — দাওয়াতে তোমাকে বলবে।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "めしあがってください"
+   ]
+  },
+  {
+   "id": "kh_03",
+   "jp": "おっしゃってください",
+   "kana": "おっしゃってください",
+   "romaji": "osshatte kudasai",
+   "meaning": {
+    "en": "Please say (respectful)",
+    "bn": "বলুন (সম্মানে)",
+    "ja": "おっしゃってください"
+   },
+   "note": {
+    "en": "iu → ossharu",
+    "bn": "いう→おっしゃる — なんとおっしゃいましたか?",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "おっしゃってください"
+   ]
+  },
+  {
+   "id": "kh_04",
+   "jp": "ごらんください",
+   "kana": "ごらんください",
+   "romaji": "goran kudasai",
+   "meaning": {
+    "en": "Please look (respectful)",
+    "bn": "দেখুন (সম্মানে)",
+    "ja": "ご覧ください"
+   },
+   "note": {
+    "en": "miru → goran",
+    "bn": "みる→ごらんになる — দোকান/ঘোষণায় শুনবে।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "ごらんください"
+   ]
+  },
+  {
+   "id": "kh_05",
+   "jp": "どうなさいますか",
+   "kana": "どうなさいますか",
+   "romaji": "dou nasaimasu ka",
+   "meaning": {
+    "en": "What will you do? (respectful)",
+    "bn": "কী করবেন? (সম্মানে)",
+    "ja": "どうなさいますか"
+   },
+   "note": {
+    "en": "suru → nasaru",
+    "bn": "する→なさる — দোকানে তোমার সিদ্ধান্ত চাইছে।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "どうなさいますか"
+   ]
+  },
+  {
+   "id": "kh_06",
+   "jp": "おまちください",
+   "kana": "おまちください",
+   "romaji": "omachi kudasai",
+   "meaning": {
+    "en": "Please wait (polite)",
+    "bn": "অপেক্ষা করুন (ভদ্র)",
+    "ja": "お待ちください"
+   },
+   "note": {
+    "en": "o-stem-kudasai mold",
+    "bn": "お+stem+ください ছাঁচ — ঘোষণায় সর্বত্র।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "おまちください"
+   ]
+  },
+  {
+   "id": "kh_07",
+   "jp": "おかけください",
+   "kana": "おかけください",
+   "romaji": "okake kudasai",
+   "meaning": {
+    "en": "Please have a seat",
+    "bn": "বসুন (ভদ্র)",
+    "ja": "おかけください"
+   },
+   "note": {
+    "en": "Interview line #1",
+    "bn": "interview-র প্রথম বাক্য — শুনে বসতে জানলে অর্ধেক জয়!",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "おかけください"
+   ]
+  },
+  {
+   "id": "kh_08",
+   "jp": "ごじゆうにどうぞ",
+   "kana": "ごじゆうにどうぞ",
+   "romaji": "gojiyuu ni douzo",
+   "meaning": {
+    "en": "Please feel free",
+    "bn": "স্বাচ্ছন্দ্যে নিন/করুন",
+    "ja": "ご自由にどうぞ"
+   },
+   "note": {
+    "en": "The free-stuff sign",
+    "bn": "ফ্রি জিনিসের সাইন — ご+noun+に।",
+    "ja": "尊敬語"
+   },
+   "srs_words": [
+    "ごじゆうにどうぞ"
+   ]
+  }
+ ]
+}

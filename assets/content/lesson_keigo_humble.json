@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_humble",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_keigo_hear"
+ ],
+ "can_do": {
+  "en": "Humble yourself (kenjougo)",
+  "bn": "নিজেকে নামিয়ে বলা (বিনয়-ভাষা)",
+  "ja": "謙譲語"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_keigo_hear"
+ ],
+ "items": [
+  {
+   "id": "ku_01",
+   "jp": "モハメドともうします",
+   "kana": "モハメドともうします",
+   "romaji": "mohamedo to moushimasu",
+   "meaning": {
+    "en": "My name is Mohamed (humble)",
+    "bn": "আমার নাম মোহামেদ (বিনীত)",
+    "ja": "モハメドと申します"
+   },
+   "note": {
+    "en": "THE humble self-intro",
+    "bn": "いう→もうす — self-intro-র সবচেয়ে ভদ্র রূপ। নিজের নাম বসাও।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "モハメドともうします"
+   ]
+  },
+  {
+   "id": "ku_02",
+   "jp": "あしたまいります",
+   "kana": "あしたまいります",
+   "romaji": "ashita mairimasu",
+   "meaning": {
+    "en": "I'll come tomorrow (humble)",
+    "bn": "কাল আসব (বিনীত)",
+    "ja": "明日参ります"
+   },
+   "note": {
+    "en": "iku/kuru → mairu",
+    "bn": "いく/くる→まいる — অফিসে/গ্রাহককে।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "あしたまいります"
+   ]
+  },
+  {
+   "id": "ku_03",
+   "jp": "わたしがいたします",
+   "kana": "わたしがいたします",
+   "romaji": "watashi ga itashimasu",
+   "meaning": {
+    "en": "I will do it (humble)",
+    "bn": "আমি করব (বিনীত)",
+    "ja": "私がいたします"
+   },
+   "note": {
+    "en": "suru → itasu",
+    "bn": "する→いたす — দায়িত্ব নেওয়ার বিনীত ঘোষণা।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "わたしがいたします"
+   ]
+  },
+  {
+   "id": "ku_04",
+   "jp": "はいけんしました",
+   "kana": "はいけんしました",
+   "romaji": "haiken shimashita",
+   "meaning": {
+    "en": "I saw it (humble)",
+    "bn": "দেখলাম (বিনীত)",
+    "ja": "拝見しました"
+   },
+   "note": {
+    "en": "miru → haiken suru",
+    "bn": "みる→はいけんする — বসের document দেখে বলো।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "はいけんしました"
+   ]
+  },
+  {
+   "id": "ku_05",
+   "jp": "うかがいます",
+   "kana": "うかがいます",
+   "romaji": "ukagaimasu",
+   "meaning": {
+    "en": "I'll visit/ask (humble)",
+    "bn": "যাব/জিজ্ঞেস করব (বিনীত)",
+    "ja": "伺います"
+   },
+   "note": {
+    "en": "Visit AND ask",
+    "bn": "২-মুখো বিনয়: যাওয়া+জিজ্ঞেস — অফিস-জীবনের রোজ।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "うかがいます"
+   ]
+  },
+  {
+   "id": "ku_06",
+   "jp": "おねがいいたします",
+   "kana": "おねがいいたします",
+   "romaji": "onegai itashimasu",
+   "meaning": {
+    "en": "I humbly request",
+    "bn": "অনুরোধ করছি (অতি-বিনীত)",
+    "ja": "お願いいたします"
+   },
+   "note": {
+    "en": "The formal closer",
+    "bn": "おねがいします-র উপরের স্তর — মেইল/ফর্মাল শেষ-লাইন।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "おねがいいたします"
+   ]
+  },
+  {
+   "id": "ku_07",
+   "jp": "しつれいいたします",
+   "kana": "しつれいいたします",
+   "romaji": "shitsurei itashimasu",
+   "meaning": {
+    "en": "Excuse me (entering/hanging up)",
+    "bn": "অনুমতি নিচ্ছি (ঢোকা/রাখা)",
+    "ja": "失礼いたします"
+   },
+   "note": {
+    "en": "Enter rooms, end calls",
+    "bn": "ঘরে ঢোকা, ফোন রাখা — দুটোরই ভদ্র চাবি।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "しつれいいたします"
+   ]
+  },
+  {
+   "id": "ku_08",
+   "jp": "おせわになっております",
+   "kana": "おせわになっております",
+   "romaji": "osewa ni natte orimasu",
+   "meaning": {
+    "en": "We're in your care (business)",
+    "bn": "আপনার সহায়তায় আছি (ব্যবসায়িক)",
+    "ja": "お世話になっております"
+   },
+   "note": {
+    "en": "Business call line #1",
+    "bn": "ব্যবসায়িক ফোন/মেইলের প্রথম লাইন — মুখস্থ রাখো।",
+    "ja": "謙譲語"
+   },
+   "srs_words": [
+    "おせわになっております"
+   ]
+  }
+ ]
+}

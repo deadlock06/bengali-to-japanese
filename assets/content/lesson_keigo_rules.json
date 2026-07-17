@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_keigo_rules",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_keigo_hear"
+ ],
+ "can_do": {
+  "en": "Know keigo's golden rules",
+  "bn": "Keigo-র সোনার নিয়ম",
+  "ja": "敬語のルール"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_keigo_hear"
+ ],
+ "items": [
+  {
+   "id": "kr_01",
+   "jp": "うちとそと",
+   "kana": "うちとそと",
+   "romaji": "uchi to soto",
+   "meaning": {
+    "en": "In-group vs out-group",
+    "bn": "নিজের-দল বনাম বাইরের-দল",
+    "ja": "内と外"
+   },
+   "note": {
+    "en": "Lower your OWN boss outside",
+    "bn": "Keigo-র মূলমন্ত্র: বাইরের মানুষের কাছে নিজের বসকেও নামিয়ে বলো!",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "うちとそと"
+   ]
+  },
+  {
+   "id": "kr_02",
+   "jp": "おきゃくさまはそとです",
+   "kana": "おきゃくさまはそとです",
+   "romaji": "okyakusama wa soto desu",
+   "meaning": {
+    "en": "Customers are always out-group",
+    "bn": "গ্রাহক সবসময় 'বাইরে' (সর্বোচ্চ সম্মান)",
+    "ja": "お客様は外です"
+   },
+   "note": {
+    "en": "Customers get max keigo",
+    "bn": "গ্রাহক = সর্বোচ্চ keigo, সবসময়।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "おきゃくさまはそとです"
+   ]
+  },
+  {
+   "id": "kr_03",
+   "jp": "かぞくにはけいごをつかいません",
+   "kana": "かぞくにはけいごをつかいません",
+   "romaji": "kazoku ni wa keigo o tsukaimasen",
+   "meaning": {
+    "en": "No keigo within family",
+    "bn": "পরিবারে keigo চলে না",
+    "ja": "家族には敬語を使いません"
+   },
+   "note": {
+    "en": "In-group stays plain",
+    "bn": "নিজের-দলে (家族/নিজের কোম্পানি) বাইরের কাছে বিনয়।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "かぞくにはけいごをつかいません"
+   ]
+  },
+  {
+   "id": "kr_04",
+   "jp": "まちがえてもだいじょうぶ",
+   "kana": "まちがえてもだいじょうぶ",
+   "romaji": "machigaete mo daijoubu",
+   "meaning": {
+    "en": "Mistakes are OK",
+    "bn": "ভুল হলেও সমস্যা নেই",
+    "ja": "間違えても大丈夫"
+   },
+   "note": {
+    "en": "Effort > perfection",
+    "bn": "বিদেশির keigo-চেষ্টাই জাপানিদের মুগ্ধ করে — ভয় পেয়ো না!",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "まちがえてもだいじょうぶ"
+   ]
+  },
+  {
+   "id": "kr_05",
+   "jp": "まずですますをかんぺきに",
+   "kana": "まずですますをかんぺきに",
+   "romaji": "mazu desu-masu o kanpeki ni",
+   "meaning": {
+    "en": "First perfect desu-masu",
+    "bn": "আগে ですます নিখুঁত করো",
+    "ja": "まずですますを完璧に"
+   },
+   "note": {
+    "en": "Desu-masu = 80% safe",
+    "bn": "Keigo-র সিঁড়ি: ですます (থাকলেই ৮০% নিরাপদ) → তারপর বাকি।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "まずですますをかんぺきに"
+   ]
+  },
+  {
+   "id": "kr_06",
+   "jp": "そんけいごはあいて、けんじょうごはじぶん",
+   "kana": "そんけいごはあいて、けんじょうごはじぶん",
+   "romaji": "sonkeigo wa aite, kenjougo wa jibun",
+   "meaning": {
+    "en": "Respect for THEIR acts, humble for YOURS",
+    "bn": "সম্মান-ভাষা অন্যের কাজে, বিনয়-ভাষা নিজের কাজে",
+    "ja": "尊敬語は相手、謙譲語は自分"
+   },
+   "note": {
+    "en": "The direction compass",
+    "bn": "দিক-নির্ণয়ের কম্পাস — কার কাজ বলছ সেটাই ঠিক করে রূপ।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "そんけいごはあいて、けんじょうごはじぶん"
+   ]
+  },
+  {
+   "id": "kr_07",
+   "jp": "めうえのひとにはごくろうさまはNG",
+   "kana": "めうえのひとにはごくろうさまはNG",
+   "romaji": "meue no hito ni wa gokurousama wa NG",
+   "meaning": {
+    "en": "Never gokurousama to superiors",
+    "bn": "উপরের মানুষকে ごくろうさま বলা নিষেধ",
+    "ja": "目上の人にはご苦労様はNG"
+   },
+   "note": {
+    "en": "That's a downward word",
+    "bn": "ওটা উপর→নিচের শব্দ — উপরের মানুষকে おつかれさまです।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "めうえのひとにはごくろうさまはNG"
+   ]
+  },
+  {
+   "id": "kr_08",
+   "jp": "けいごはあいてへのおもいやりです",
+   "kana": "けいごはあいてへのおもいやりです",
+   "romaji": "keigo wa aite e no omoiyari desu",
+   "meaning": {
+    "en": "Keigo is care for others",
+    "bn": "Keigo মানে অন্যের প্রতি মমতা",
+    "ja": "敬語は相手への思いやりです"
+   },
+   "note": {
+    "en": "Heart, not rules",
+    "bn": "নিয়ম নয়, মন — এটা বুঝলেই keigo আর ভয়ের না।",
+    "ja": "ルール"
+   },
+   "srs_words": [
+    "けいごはあいてへのおもいやりです"
+   ]
+  }
+ ]
+}

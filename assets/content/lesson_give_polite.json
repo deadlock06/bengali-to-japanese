@@ -1,0 +1,173 @@
+{
+ "type": "lesson",
+ "id": "lesson_give_polite",
+ "pack_id": "n4_grammar",
+ "depends_on": [
+  "lesson_give_triangle"
+ ],
+ "can_do": {
+  "en": "Give & receive upward (polite)",
+  "bn": "উপর-দিকে দেওয়া-নেওয়া (ভদ্র)",
+  "ja": "さしあげる・いただく・くださる"
+ },
+ "jlpt_or_jft": "JLPT N4",
+ "source": "Standard JLPT N4 canon (Minna no Nihongo / Irodori patterns)",
+ "verified": true,
+ "prerequisites": [
+  "lesson_give_triangle"
+ ],
+ "items": [
+  {
+   "id": "gp_01",
+   "jp": "せんせいにおみやげをさしあげました",
+   "kana": "せんせいにおみやげをさしあげました",
+   "romaji": "sensei ni omiyage o sashiagemashita",
+   "meaning": {
+    "en": "I gave the teacher a gift (humble)",
+    "bn": "শিক্ষককে উপহার দিলাম (বিনীত)",
+    "ja": "先生にお土産をさしあげました"
+   },
+   "note": {
+    "en": "Humble ageru",
+    "bn": "あげる-র বিনীত রূপ さしあげる — উপরের মানুষে।",
+    "ja": "敬語授受"
+   },
+   "srs_words": [
+    "せんせいにおみやげをさしあげました"
+   ]
+  },
+  {
+   "id": "gp_02",
+   "jp": "しゃちょうにめいしをいただきました",
+   "kana": "しゃちょうにめいしをいただきました",
+   "romaji": "shachou ni meishi o itadakimashita",
+   "meaning": {
+    "en": "I received the president's card (humble)",
+    "bn": "প্রেসিডেন্টের কার্ড পেলাম (বিনীত)",
+    "ja": "社長に名刺をいただきました"
+   },
+   "note": {
+    "en": "Business cards: two hands!",
+    "bn": "もらう→いただく — めいし দুই হাতে নাও!",
+    "ja": "敬語授受"
+   },
+   "srs_words": [
+    "しゃちょうにめいしをいただきました"
+   ]
+  },
+  {
+   "id": "gp_03",
+   "jp": "せんせいがほんをくださいました",
+   "kana": "せんせいがほんをくださいました",
+   "romaji": "sensei ga hon o kudasaimashita",
+   "meaning": {
+    "en": "The teacher gave me a book (respectful)",
+    "bn": "শিক্ষক আমাকে বই দিলেন (সম্মানে)",
+    "ja": "先生が本をくださいました"
+   },
+   "note": {
+    "en": "kudasai comes from THIS",
+    "bn": "くれる→くださる — ください আসলে এরই রূপ!",
+    "ja": "敬語授受"
+   },
+   "srs_words": [
+    "せんせいがほんをくださいました"
+   ]
+  },
+  {
+   "id": "gp_04",
+   "jp": "おきゃくさまにおちゃをおだしします",
+   "kana": "おきゃくさまにおちゃをおだしします",
+   "romaji": "okyakusama ni ocha o odashi shimasu",
+   "meaning": {
+    "en": "I serve tea to the guest",
+    "bn": "অতিথিকে চা পরিবেশন করি",
+    "ja": "お客様にお茶をお出しします"
+   },
+   "note": {
+    "en": "o-stem-shimasu pattern",
+    "bn": "お+stem+します = বিনীত করার ছাঁচ।",
+    "ja": "敬語授受"
+   },
+   "srs_words": [
+    "おきゃくさまにおちゃをおだしします"
+   ]
+  },
+  {
+   "id": "gp_05",
+   "jp": "りょうてでわたします",
+   "kana": "りょうてでわたします",
+   "romaji": "ryoute de watashimasu",
+   "meaning": {
+    "en": "I hand it over with both hands",
+    "bn": "দুই হাতে দিই",
+    "ja": "両手で渡します"
+   },
+   "note": {
+    "en": "Both hands = respect",
+    "bn": "জিনিস দেওয়া-নেওয়া দুই হাতে = সম্মান — কার্ড/উপহার/টাকা।",
+    "ja": "マナー"
+   },
+   "srs_words": [
+    "りょうてでわたします"
+   ]
+  },
+  {
+   "id": "gp_06",
+   "jp": "りょうてでうけとります",
+   "kana": "りょうてでうけとります",
+   "romaji": "ryoute de uketorimasu",
+   "meaning": {
+    "en": "I receive with both hands",
+    "bn": "দুই হাতে নিই",
+    "ja": "両手で受け取ります"
+   },
+   "note": {
+    "en": "uketoru = receive",
+    "bn": "うけとる = গ্রহণ করা — নেওয়ার ভদ্রতা।",
+    "ja": "マナー"
+   },
+   "srs_words": [
+    "りょうてでうけとります"
+   ]
+  },
+  {
+   "id": "gp_07",
+   "jp": "つまらないものですが",
+   "kana": "つまらないものですが",
+   "romaji": "tsumaranai mono desu ga",
+   "meaning": {
+    "en": "It's a trifle, but…",
+    "bn": "সামান্য জিনিস, তবুও…",
+    "ja": "つまらないものですが"
+   },
+   "note": {
+    "en": "The humble gift-opener",
+    "bn": "উপহার দেওয়ার নম্র মুখবন্ধ — জিনিস দামি হলেও এটাই বলে!",
+    "ja": "マナー"
+   },
+   "srs_words": [
+    "つまらないものですが"
+   ]
+  },
+  {
+   "id": "gp_08",
+   "jp": "おれいにこれをどうぞ",
+   "kana": "おれいにこれをどうぞ",
+   "romaji": "orei ni kore o douzo",
+   "meaning": {
+    "en": "Please take this as thanks",
+    "bn": "কৃতজ্ঞতায় এটা রাখুন",
+    "ja": "お礼にこれをどうぞ"
+   },
+   "note": {
+    "en": "orei = thanks-gift",
+    "bn": "おれい = কৃতজ্ঞতা-উপহার — সাহায্যের ফিরতি।",
+    "ja": "マナー"
+   },
+   "srs_words": [
+    "おれいにこれをどうぞ"
+   ]
+  }
+ ]
+}

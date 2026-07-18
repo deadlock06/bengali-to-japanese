@@ -50,7 +50,6 @@ class HomeScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // NOTE: strings are hardcoded BN for design parity; a later step moves
     // them to lib/l10n ARB keys (S.homeGreeting etc.) + BilingualText.
-    final repo = ref.watch(contentProvider).valueOrNull;
     final text = Theme.of(context).textTheme;
     // Course % = mean unit progress from the live curriculum ladder (T-120).
     // 0 for a fresh learner; demo-free.
@@ -233,16 +232,26 @@ class HomeScreen extends ConsumerWidget {
         ),
         SizedBox(
           height: 96,
-          child: repo == null
+          child: units == null
               ? const Center(child: CircularProgressIndicator())
               : ListView(
                   scrollDirection: Axis.horizontal,
+                  // REAL topics from the curriculum ladder — level chip, title,
+                  // and live per-unit % (never fabricated). Colours cycle.
                   children: [
-                    // TODO: derive from repo.lessons + per-lesson progress
-                    _TopicCard(jp: 'かな', label: 'হিরাগানা', pct: 0.64, color: BhasagoColors.yellow, onTap: onOpenLearn),
-                    _TopicCard(jp: '買い物', label: 'কেনাকাটা', pct: 0.42, color: BhasagoColors.green, onTap: onOpenLearn),
-                    _TopicCard(jp: '挨拶', label: 'অভিবাদন', pct: 0.80, color: BhasagoColors.pink, onTap: onOpenLearn),
-                    _TopicCard(jp: '仕事', label: 'কাজের ভাষা', pct: 0.18, color: BhasagoColors.blue, onTap: onOpenLearn),
+                    for (final (i, u) in units.indexed)
+                      _TopicCard(
+                        jp: u.level,
+                        label: u.titleBn.isEmpty ? u.id : u.titleBn,
+                        pct: u.pct,
+                        color: const [
+                          BhasagoColors.yellow,
+                          BhasagoColors.green,
+                          BhasagoColors.pink,
+                          BhasagoColors.blue,
+                        ][i % 4],
+                        onTap: onOpenLearn,
+                      ),
                   ],
                 ),
         ),

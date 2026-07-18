@@ -9,9 +9,9 @@
 //  - Locale + theme wiring unchanged (localeProvider, BhasagoTheme.dark())
 //
 // Wiring: replace lib/main.dart with this AFTER steps 1-2 are in place.
-// Steps 4 (onboarding gate) and 5 (ProgressScreenV4 + AiCheckScreen) are
-// wired in below, exactly per the handoff. The v0.1 ProgressScreen file is
-// kept in the repo (its T-108 queries feed V4 later) but is not in the UI.
+// Steps 4 (onboarding gate) and 5 (ProgressScreenV4) are wired in below.
+// The "AI চেক" entry points open the real deterministic MockExamScreen
+// (answer-key graded) — never an LLM/coin-flip grader.
 
 import 'dart:math' as math;
 
@@ -29,6 +29,7 @@ import 'presentation/journey_map_screen.dart';
 import 'presentation/roleplay_entry.dart';
 import 'presentation/book_screen_v4.dart';
 import 'presentation/lesson_screen_v4.dart';
+import 'presentation/mock_exam_screen.dart';
 import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
@@ -137,8 +138,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
             .push(MaterialPageRoute(builder: (_) => const LessonScreenV4())),
         onOpenReview: () =>
             _push(context, s.navReview, const ReviewScreen()),
-        onOpenAiCheck: () =>
-            _push(context, 'AI চেক', const AiCheckScreen()),
+        onOpenAiCheck: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => const MockExamScreen(kind: 'jft'))),
         onOpenProgress: () => setState(() => tab = 3),
         // Book has its own header/back — plain push, no _push scaffold.
         onOpenBook: () => Navigator.of(context)
@@ -180,7 +181,8 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         const Expanded(child: ShadowingScreen()),
       ]),
       ProgressScreenV4(
-        onOpenAiCheck: () => _push(context, 'AI চেক', const AiCheckScreen()),
+        onOpenAiCheck: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (_) => const MockExamScreen(kind: 'jft'))),
       ),
     ];
 

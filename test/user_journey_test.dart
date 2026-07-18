@@ -147,16 +147,14 @@ void main() {
     await tester.tap(find.byIcon(Icons.monitor_heart_outlined));
     await tester.pump();
     await pumpUntil(tester, find.text('তোমার অগ্রগতি'), what: 'progress v4');
-    expect(find.text('N5 · 72%'), findsOneWidget);
+    // Real retention card is always present (no fabricated level chip anymore).
+    expect(find.text('রিটেনশন স্কোর ২০২৬'), findsOneWidget);
+    // AI চেক now opens the REAL deterministic mock exam (answer-key graded),
+    // never the old coin-flip AiCheckScreen.
     await tester.tap(find.byIcon(Icons.psychology).first);
     await tester.pump();
-    await pumpUntil(tester, find.text('AI এক্সামিনার'), what: 'AI examiner');
-    await tester.tap(find.text('মক এক্সাম শুরু করো'));
-    await tester.pump(); // checking spinner
-    await tester.pump(const Duration(seconds: 3)); // exam runs (demo 2.4s)
-    expect(find.text('মক এক্সাম শুরু করো'), findsNothing,
-        reason: 'exam should have started');
-    ok(tester, 'AI check mock exam');
+    await tester.pump(const Duration(milliseconds: 400));
+    ok(tester, 'AI check → mock exam');
     await back(tester);
 
     // ── 8. Home AppBar: Kana/Write/Settings reachable; one push+pop works ─

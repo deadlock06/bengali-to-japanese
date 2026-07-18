@@ -1,11 +1,13 @@
-// Accent training: Shadowing (record & score your pitch) and Pitch minimal
-// pairs (high/low visualization). Uses domain/pitch.dart for scoring.
+// Accent training: Shadowing (listen, then a REAL device speech-recognition
+// self-check — no fabricated score) and Pitch minimal pairs (high/low
+// visualization). Real pitch-accent f0 scoring is a later on-device step; until
+// it ships we never invent a number (correctness over generation, docs/00).
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
-import '../domain/pitch.dart';
 import '../data/audio_service.dart';
+import '../data/voice_input_service.dart';
 import 'state_pack.dart';
 import 'widgets.dart';
 
@@ -99,33 +101,62 @@ class PitchScreen extends ConsumerWidget {
   }
 }
 
-/// Shadowing screen — listen, record, and get a pitch-accent score.
+/// Shadowing screen — listen to the target phrase, then a REAL self-check:
+/// the device speech recognizer transcribes what you said and we show whether
+/// it heard the target phrase. No fabricated pitch score is ever shown; when
+/// the device has no recognizer we say so honestly and keep Listen working.
 class ShadowingScreen extends ConsumerStatefulWidget {
   const ShadowingScreen({super.key});
   @override
   ConsumerState<ShadowingScreen> createState() => _ShadowingScreenState();
 }
 
+// The shadowing target (lesson item wi_04). Matching is lenient: the recognizer
+// may drop the trailing ます or mis-segment, so hearing either key chunk counts.
+const _shadowTarget = 'よろしくおねがいします';
+const _shadowKeys = ['よろしく', 'おねがい'];
+
 class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
-  bool recording = false;
-  double? score;
+  bool _recording = false;
+  bool _unavailable = false; // device has no usable speech recognizer
+  String? _heard; // live/final transcript
+  bool? _matched; // set only on a final result
 
-  // In the full app: the native reference contour ships with the audio; the
-  // learner contour comes from record -> pitch.f0Contour(). Here we show the
-  // wiring with representative contours so the score path is exercised.
-  final List<double> _referenceContour = const [180, 200, 235, 250, 250, 240];
+  bool _isMatch(String text) {
+    final t = text.replaceAll(RegExp(r'\s+'), '');
+    return _shadowKeys.any(t.contains);
+  }
 
-  void _toggleRecord() {
+  Future<void> _toggleRecord() async {
+    if (_recording) {
+      await VoiceInputService.instance.stop();
+      setState(() => _recording = false);
+      return;
+    }
     setState(() {
-      if (recording) {
-        recording = false;
-        // TODO: stop `record`, decode PCM, learner = f0Contour(pcm, 16000).
-        const learner = <double>[178, 205, 232, 248, 246, 238]; // demo capture
-        score = accentScore(_referenceContour, learner);
+      _heard = null;
+      _matched = null;
+      _unavailable = false;
+    });
+    final ok = await VoiceInputService.instance.start(
+      japanese: true,
+      onResult: (text, isFinal) {
+        if (!mounted) return;
+        setState(() {
+          _heard = text;
+          if (isFinal) {
+            _matched = _isMatch(text);
+            _recording = false;
+          }
+        });
+      },
+    );
+    if (!mounted) return;
+    setState(() {
+      if (ok) {
+        _recording = true;
       } else {
-        recording = true;
-        score = null;
-        // TODO: start `record` at 16 kHz mono.
+        _unavailable = true; // keep Listen; never block (D-001)
       }
     });
   }
@@ -139,14 +170,13 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(children: [
-              const Text('よろしくおねがいします',
+              const Text(_shadowTarget,
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
               const Text('yoroshiku onegai shimasu',
                   style: TextStyle(color: Colors.grey)),
               const SizedBox(height: 8),
               FilledButton.icon(
-                // The shadowing target is よろしくおねがいします — reuse its
-                // bundled clip (lesson item wi_04). Fully offline.
+                // Reuse the bundled clip for wi_04 — fully offline.
                 onPressed: () => AudioService.instance.play('wi_04'),
                 icon: const Icon(Icons.volume_up),
                 label: const Text('Listen'),
@@ -157,21 +187,38 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
         const SizedBox(height: 16),
         FilledButton.icon(
           onPressed: _toggleRecord,
-          icon: Icon(recording ? Icons.stop : Icons.mic),
-          label: Text(recording ? 'Stop & score' : 'Record'),
+          icon: Icon(_recording ? Icons.stop : Icons.mic),
+          label: Text(_recording
+              ? 'শুনছি… থামাও'
+              : 'বলে দেখাও · Record'),
         ),
         const SizedBox(height: 20),
-        if (score != null)
+        if (_unavailable)
+          Text(
+            'এই ডিভাইসে ভয়েস রেকগনিশন নেই — উপরের Listen চেপে শুনে শুনে '
+            'অনুশীলন করো।',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey.shade400),
+          )
+        else if (_heard != null)
           Column(children: [
-            Text('${score!.round()}/100',
+            Text('শোনা গেছে: ${_heard!.isEmpty ? '…' : _heard!}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 18)),
+            const SizedBox(height: 8),
+            if (_matched != null)
+              Text(
+                _matched!
+                    ? '✓ ঠিক আছে! আবার বলে আরও পরিষ্কার করো।'
+                    : 'আবার চেষ্টা করো — Listen চেপে সুরটা মিলিয়ে নাও।',
+                textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: score! >= 70
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: _matched!
                         ? const Color(0xFF34D399)
-                        : const Color(0xFFFBBF24))),
-            Text(score! >= 70 ? 'Great pitch match!' : 'Follow the pitch line more closely',
-                style: TextStyle(color: Colors.grey.shade400)),
+                        : const Color(0xFFFBBF24)),
+              ),
           ]),
       ]),
     );

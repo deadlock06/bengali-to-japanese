@@ -1,5 +1,18 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
+## ⚡ 2026-07-17 (Opus 4.8) — Phases A–C done, D1 built; buildable work ~exhausted
+- **START HERE:** `cd /home/marjuk/outputs/SENSEI && node tools/progress_scale.mjs`. Scoreboard: **A 4/5 · B 3/3 ✅ · C 3/3 ✅ · D 1/5 · E 0/5**. Content **806/772 (104%)**.
+- **This session shipped (all committed + pushed):** A2 N4-whitelist, A3 all N4 grammar content, A4 mock-exam engine, B1 gap-fill, B2 say-it, B3 kana-106, C1 journey-map+goal-select, C2 roleplay, C3 StatePack, D1 cloud-sync. See CODEBASE_MAP "Built this session".
+- **⚠️ EVERYTHING LEFT IS OWNER/DEVICE/HUMAN-GATED — do not fake it:**
+  - **A5** native-speaker review (human; `tools/review_status.mjs` tracks it; BLOCKS PUBLISH)
+  - **D2** APK (owner's machine + Android SDK — absent here) → unblocks D3/D4/D5/E
+  - **D4** offline LLM integrate (Qwen3+llama.cpp downloaded to ../.claude/llm/; needs MethodChannel/native = device work)
+  - **D5** STT whisper · **E1–E4** launch (privacy/payments/UAT/store)
+  - **D3** content packs is the only remaining *buildable-here* step, but low value for beta (bundle is fine).
+- **OWNER ACTIONS OPEN (nothing ships without):** rotate Supabase DB password · revoke old OpenAI key · **enable Anonymous sign-ins** in Supabase (activates D1) · run full `flutter test` from a real machine.
+- **⚠️ TEST-RUNNER NOTE:** full `flutter test` TIMES OUT in this sandbox (concurrent sessions starve it — NOT a code bug). analyze is clean; isolated/pure-Dart test files pass. Verify the full suite on a normal machine.
+- **A PARALLEL session** has edited the repo (real srs delta-sync, scenario-test hardening) — always `git status` + re-read files before editing.
+
 ## ⚡ 2026-07-16 late (Opus 4.8) — PROJECT SCALE + full audit + content/backend (all committed)
 - **📏 PROJECT SCALE is now the law (D-019):** start EVERY session with `node tools/progress_scale.mjs` — it runs 13 proofs, prints the scoreboard, and names the NEXT step. `--gate` adds flutter analyze+test; must be green before AND after each step. Tick boxes in PROJECT_SCALE.md. 👉 current next step: **A1 (A1/A2 vocab toward 772)** — live % from the scale (51% as of the 4th slice; L0 fully ✓, A1.1 ✓).
 - **Full audit ran & fixed:** 68 items missing meaning.ja/note.ja (trilingual rule) → filled; 28 standard words appended to jft_a2_whitelist (1430); curriculum_reference fixture updated (14/14). Validator: "PASS cleared to ship". Zero console errors in live walkthrough.

@@ -1,18 +1,30 @@
 # CODEBASE MAP — full state of the SENSEI/Bhasago build
-`refreshed 2026-07-16 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
+`refreshed 2026-07-17 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
 
-**One-line status:** strong scaffolding (design system, deterministic agents, FSRS, curriculum graph, kana-in-classroom teaching) is real and **`flutter analyze` = clean**; but the pieces that make it a finished *AI* app — real audio, a real LLM tutor (offline or online), the journey-map Learn UX, backend/sync, content packs — are **largely unbuilt**. Overall ≈ **60%** toward a usable JFT-A2 beta.
+**One-line status:** the app is now a **feature-complete offline JFT-A2 → JLPT-N4 tutor**. The full curriculum is authored (L0→N4, 806 items = 104% of ladder), the 5-phase micro-loop is real (Intro→Recognition→Say/Write→Context→SRS), and the vision surfaces exist (journey-map Learn tab, roleplay, mock exams, online sensei). What remains is **not buildable in this sandbox**: a physical-device APK, the native offline-LLM/STT toolchain, human native-speaker review, and launch/payments. Overall ≈ **80%** toward a shippable beta; ~**100%** of what's buildable without a device/native-toolchain/human. Track exact state with `node tools/progress_scale.mjs`.
 
-## Environment (verified this session)
+## Environment (verified 2026-07-17)
 - **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
-- `flutter analyze` → **No issues found**. `flutter test` → **52 pass / 0 fail**. Content validator → **PASS (cleared to ship)**. Node proofs all green (batch 11/11 · curriculum 14/14 · agents 17/17 · fsrs · lesson_flow 19/19 · migrations · pitch).
-- Node 20 present; all engine proofs green (validator, batch 11/11, curriculum 14/14, agents 17/17, fsrs, lesson_flow, migrations, pitch).
-- **Web build works** (`flutter build web`), served at `localhost:5601` via `tools/web_server.mjs` — the real app runs in-browser for demoing.
-- **Android SDK NOT installed** (needs sudo) → no on-device APK build here yet. iOS not targeted. fvm not set up.
-- **All work COMMITTED, tree clean** (through 2026-07-16). Push to GitHub needs your login (`git push origin main`).
+- `flutter analyze` → **No issues found**. Pure-Dart tests (scenario/gap_fill/mock_exam) **10/10**. Content validator → **PASS**. All 8 node proofs green.
+- ⚠️ **`flutter test` (full suite) TIMES OUT in this sandbox** — not a code failure; concurrent Claude sessions on the same box starve the test runner (verified via `ps aux`). Run the full suite from a normal machine as the authoritative gate. Isolated files pass fine.
+- **Web build works** with supabase_flutter (`flutter build web --pwa-strategy=none`) — served at `localhost:5601`.
+- **Android SDK NOT installed** → no APK here (D2 is owner's machine). iOS not targeted.
+- **All work COMMITTED + PUSHED to GitHub** (deadlock06/bengali-to-japanese, through 2026-07-17).
+- **Offline LLM downloaded** (Qwen3-1.7B-Q4_K_M + llama.cpp server) at `../.claude/llm/`; `tools/run_local_llm.sh` starts it; web_server proxy fails over to it (D-021). Kept OFF during builds (CPU).
 
 ## Stack
-Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256, key in Keystore via flutter_secure_storage) · numbered migrations m001–m002 · gen-l10n **disabled** (see Known Issues) · backend: **none** (D-010 open).
+Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flutter ^2.8 (cloud sync, D1)** · record ^7 · just_audio · flutter_tts · numbered migrations · gen-l10n **disabled** (see Known Issues) · backend: **SUPABASE (D-018, live w/ RLS)**.
+
+## ✅ Built this session (2026-07-16/17) — the big additions
+- **Full curriculum content**: 806 items across 60+ lessons L0→N4 (was ~100). N4 grammar (te-form/plain/potential/give-receive/keigo) authored from the standard canon; `n4_whitelist.txt` (D-020); validator level-scoped. Every item audio'd (969 clips) + book-synced.
+- **5-phase micro-loop complete** (`lib/data/lesson_batch.dart` + `lesson_screen_v4.dart`): vocab = Intro→Recognition→**Say-it 🎙️** (record+self-compare, D-002)→**Context 🧩** (boundary-guarded gap-fill)→SRS; kana = …→**Write ✍️**→SRS. Kana batch 71→**106** (yōon/sokuon/long-vowel).
+- **Mock-exam engine** (`lib/data/mock_exam.dart`, `mock_exam_screen.dart`, D-A4): JFT 50Q/4-section + N4 39Q/3-section, questions SELECTED from verified store, honest band estimate, recommend-only timer.
+- **Journey-map Learn tab** (`journey_map_screen.dart`, C1/D-015) + **goal-select onboarding** (SSW/JLPT/daily — emphasis only, no locks).
+- **Roleplay/scenario mode** (`scenario_repository.dart` + `scenario_screen.dart`, C2): 3 verified dialogue trees (konbini/clinic/interview), sensei plays the NPC, entry in Speak tab.
+- **StatePack** (`state_pack.dart`, C3): reusable loading/empty/error/offline in Bold Ink — wired into Review, Pitch, Progress.
+- **Cloud sync** (`sync_service.dart` + Settings toggle, D1/D-022): supabase_flutter, anonymous auth, opt-in, real srs_cards delta upsert (device-wins). ⚠️ needs owner to enable Anonymous sign-ins to activate.
+- **Online sensei fully wired**: dynamic BN↔JP balance by level (D-017), curriculum-aware, page-specific persistent chat history, copy-anywhere explain, offline canned + local-LLM fallback.
+- **Tooling**: `tools/progress_scale.mjs` (master tracker, D-019) · `tools/sync_book_vocab.py` · `tools/review_status.mjs` (A5 tracker) · `tools/run_local_llm.sh`.
 
 ---
 

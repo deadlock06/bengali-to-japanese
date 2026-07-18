@@ -90,8 +90,8 @@ script — checkboxes below are for the steps the machine can't measure.
       anonymous auth + idempotent progress upsert (profiles + daily_stats, uses
       existing local counts) + Settings opt-in toggle (off by default, offline-
       first untouched, honest copy + 'সিঙ্ক করো'/last-synced). Graceful on every
-      failure. ⚠️ ACTIVATES once OWNER enables Anonymous sign-ins in Supabase
-      (currently disabled → toggle shows a clear message). Per-card srs_cards
+      failure. ✅ ACTIVE 2026-07-17: owner enabled Anonymous sign-ins; full round-trip verified
+      (sign-in → profile+srs_cards upsert → read-back → RLS isolation confirmed). Per-card srs_cards
       delta sync = next increment. _needs: OWNER: anon key ✓_ · size M
 - [ ] **D2 · APK on real device** — Android SDK on owner's machine, release build,
       TECNO smoke test, perf/battery/thermal benchmarks (02 targets). _needs: OWNER: machine_ · size M
@@ -116,7 +116,7 @@ script — checkboxes below are for the steps the machine can't measure.
 - [ ] Revoke the exposed OpenAI key (posted in chat earlier)
 - [x] `git push origin main` — DONE 2026-07-17 (67 commits, 60aedb1..a691953)
 - [x] Provide Supabase **anon key** — DONE 2026-07-17 (embedded; public by design)
-- [ ] **Enable Anonymous sign-ins** in Supabase (Auth → Providers → Anonymous → on) — activates D1 sync
+- [x] **Enable Anonymous sign-ins** in Supabase — DONE 2026-07-17 (D1 sync verified live)
 
 ---
 _Automated pillar percentages live in the script output — do not hand-edit numbers

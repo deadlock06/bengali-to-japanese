@@ -59,7 +59,6 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   late final AnimationController _anim =
       AnimationController(vsync: this, duration: const Duration(milliseconds: 900))
         ..repeat();
-  int _cannedIdx = 0;
 
   // Context the AI reasons with: the seeded text (copy-anywhere) or the
   // classroom item.
@@ -69,11 +68,14 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   /// (13_MASTER_VISION). Empty while the ladder is still loading.
   String get _level => ref.read(learnerLevelProvider).valueOrNull ?? '';
 
-  static const _canned = [
-    '「水 · みず」মানে পানি। মনে রাখো: み(mi) দিয়ে শুরু — যেটা তুমি পান করো। উদাহরণ: 水をください — একটু পানি দিন।',
-    'ভালো প্রশ্ন! উচ্চারণটা ভেঙে বলি: go-HAN — দ্বিতীয় অংশে একটু জোর। আস্তে আস্তে ৩ বার বলো।',
-    'উদাহরণ বাক্য: お茶をのみます — আমি চা খাই। のみます মানে পান করা।',
-  ];
+  // Offline honesty (D-025 / correctness): when there's no cloud AI AND no
+  // verified match, we do NOT fabricate an answer — a wrong reply is worse than
+  // none. We say so and point to what DOES work offline (select any verified
+  // word → real explanation).
+  static const _offlineHonest =
+      'এখন অফলাইন — এই প্রশ্নের উত্তর বানিয়ে বললে ভুল হতে পারে, তাই বলছি না। '
+      'নেট এলে বিস্তারিত বুঝিয়ে দেব। এখন যা পারি: অ্যাপের যেকোনো জাপানি শব্দ বা '
+      'বাক্য select করো — verified ব্যাখ্যা সাথে সাথেই দিতে পারব।';
 
   @override
   void initState() {
@@ -182,13 +184,15 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
       return;
     }
 
-    final offlineResponse = ref.read(contentProvider).valueOrNull?.handleOfflineChat(t, _ctx);
+    // Offline: ONLY a verified-content answer (handleOfflineChat searches the
+    // store), else the honest "can't fabricate" line — never invented grammar.
+    final offlineResponse =
+        ref.read(contentProvider).valueOrNull?.handleOfflineChat(t, _ctx);
 
     Future.delayed(const Duration(milliseconds: 500), () {
       if (!mounted) return;
       setState(() {
-        _msgs.insert(0, _ChatMsg(false, offlineResponse ?? _canned[_cannedIdx % _canned.length]));
-        _cannedIdx++;
+        _msgs.insert(0, _ChatMsg(false, offlineResponse ?? _offlineHonest));
         _typing = false;
       });
       _persist();

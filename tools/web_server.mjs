@@ -22,12 +22,19 @@ const PROVIDERS = [
   { name: 'openai', host: 'api.openai.com',
     key: process.env.OPENAI_API_KEY, model: 'gpt-4o-mini' },
 ].filter((p) => p.key);
-// OFFLINE fallback (arch 08: llama.cpp + Qwen3 1.7B Q4_K_M): a local
-// llama-server speaking the same OpenAI API. LAST in the chain — used when no
-// cloud key works (or none set), so the sensei answers even fully offline.
-//   tools/run_local_llm.sh   (starts it on 127.0.0.1:8089)
-PROVIDERS.push({ name: 'local-qwen3', host: '127.0.0.1', port: 8089,
-  insecure: true, key: 'local', model: 'qwen3' });
+// Local Qwen3-1.7B fallback — DISABLED by default (D-025 / correctness). A raw
+// 1.7B model's Bengali↔Japanese is weak and can INVENT grammar, which violates
+// "correctness over generation" (docs/00). So it is NOT in the learner-facing
+// chain: when every cloud provider fails, the proxy returns nothing and the app
+// falls back to VERIFIED content (ContentRepository.explainOffline /
+// handleOfflineChat) — never fabricated grammar. Enable only for local dev
+// experiments with ENABLE_LOCAL_LLM=1 (its output is UNVERIFIED — never ship it
+// as the default). Real offline AI = the constrained on-device path (GBNF +
+// whitelist + RAG), which is step D4, not this raw server.
+if (process.env.ENABLE_LOCAL_LLM === '1') {
+  PROVIDERS.push({ name: 'local-qwen3', host: '127.0.0.1', port: 8089,
+    insecure: true, key: 'local', model: 'qwen3', unverified: true });
+}
 
 // POST /ai/chat → forward the chat body to the first available provider (with
 // its own model), failing over to the next on any 5xx / network error.

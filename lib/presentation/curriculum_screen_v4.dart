@@ -165,7 +165,8 @@ class CurriculumScreenV4 extends ConsumerWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
           onTap: () => Navigator.of(context).push(MaterialPageRoute(
-              builder: (_) => MockExamScreen(kind: u.id == 'N4.M' ? 'n4' : 'jft'))),
+              builder: (_) =>
+                  MockExamScreen(kind: MockExamScreen.kindForUnit(u.id)))),
           child: Container(
             padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
             decoration: BoxDecoration(

@@ -32,7 +32,7 @@ const t = (name, cond) => { cond ? pass++ : (fail++, console.log('  FAIL:', name
 
 // 1. ontology integrity
 const ids = new Set(root.units.map(u => u.id));
-t('20 units', root.units.length === 20);
+t('23 units (L0→N1 ladder incl. N3/N2/N1 mocks)', root.units.length === 23);
 t('all prereq ids resolve', root.units.every(u => (u.prerequisites ?? []).every(p => ids.has(p))));
 { // acyclic
   const g = Object.fromEntries(root.units.map(u => [u.id, u.prerequisites ?? []]));
@@ -47,7 +47,10 @@ const realIds = new Set(fs.readdirSync('assets/content')
   .map(f => { try { return JSON.parse(fs.readFileSync('assets/content/' + f, 'utf8')).id; } catch { return null; } })
   .filter(Boolean));
 realIds.add('kana_hiragana'); realIds.add('kana_katakana'); // kana screens' ids
-realIds.add('mock_a2'); realIds.add('mock_n4'); // virtual mock-completion ids (A4)
+// virtual mock-completion ids (A4) — one per exam level; N3/N2/N1 mocks show an
+// honest "content pack coming" state until their content is authored (D-028).
+realIds.add('mock_a2'); realIds.add('mock_n4');
+realIds.add('mock_n3'); realIds.add('mock_n2'); realIds.add('mock_n1');
 const withLessons = root.units.filter(u => u.lesson_id);
 // Intent (not a hardcoded count — content grows): every NON-MOCK unit is either
 // wired to lessons or is a known not-yet-authored N4 unit.

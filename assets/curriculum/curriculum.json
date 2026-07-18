@@ -36,11 +36,35 @@
       "cefr": "A2+/B1",
       "exam": "JLPT N4",
       "order": 3
+    },
+    {
+      "id": "N3",
+      "name": "Bridge to fluency",
+      "cefr": "B1",
+      "exam": "JLPT N3",
+      "order": 4
+    },
+    {
+      "id": "N2",
+      "name": "Pre-advanced",
+      "cefr": "B2",
+      "exam": "JLPT N2",
+      "order": 5
+    },
+    {
+      "id": "N1",
+      "name": "Advanced / near-native",
+      "cefr": "C1",
+      "exam": "JLPT N1",
+      "order": 6
     }
   ],
   "whitelists": {
     "jft_a2": "~1200-word JFT-Basic/A2 list (JMdict-filtered). LLM learner-facing JP must stay within this at A2.",
-    "n4": "JLPT N4 list superset."
+    "n4": "JLPT N4 list superset.",
+    "n3": "JLPT N3 list superset (content program — authored + native-reviewed before verified).",
+    "n2": "JLPT N2 list superset (content program — authored + native-reviewed before verified).",
+    "n1": "JLPT N1 list superset (content program — authored + native-reviewed before verified)."
   },
   "units": [
     {
@@ -448,6 +472,66 @@
       ],
       "exam_tag": "JLPT-N4",
       "lesson_id": "mock_n4",
+      "target_word_count": 0
+    },
+    {
+      "id": "N3.M",
+      "level": "N3",
+      "order": 1,
+      "title": {
+        "bn": "JLPT N3 Mock",
+        "en": "JLPT N3 mock test",
+        "ja": "N3模擬試験"
+      },
+      "can_do": {
+        "bn": "N3 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+        "en": "Take a full N3 mock (content pack coming)"
+      },
+      "prerequisites": [
+        "N4.M"
+      ],
+      "exam_tag": "JLPT-N3",
+      "lesson_id": "mock_n3",
+      "target_word_count": 0
+    },
+    {
+      "id": "N2.M",
+      "level": "N2",
+      "order": 1,
+      "title": {
+        "bn": "JLPT N2 Mock",
+        "en": "JLPT N2 mock test",
+        "ja": "N2模擬試験"
+      },
+      "can_do": {
+        "bn": "N2 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+        "en": "Take a full N2 mock (content pack coming)"
+      },
+      "prerequisites": [
+        "N3.M"
+      ],
+      "exam_tag": "JLPT-N2",
+      "lesson_id": "mock_n2",
+      "target_word_count": 0
+    },
+    {
+      "id": "N1.M",
+      "level": "N1",
+      "order": 1,
+      "title": {
+        "bn": "JLPT N1 Mock",
+        "en": "JLPT N1 mock test",
+        "ja": "N1模擬試験"
+      },
+      "can_do": {
+        "bn": "N1 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+        "en": "Take a full N1 mock (content pack coming)"
+      },
+      "prerequisites": [
+        "N2.M"
+      ],
+      "exam_tag": "JLPT-N1",
+      "lesson_id": "mock_n1",
       "target_word_count": 0
     }
   ]

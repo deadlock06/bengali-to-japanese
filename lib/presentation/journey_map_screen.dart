@@ -198,8 +198,8 @@ class JourneyMapScreen extends ConsumerWidget {
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => MockExamScreen(
-                        kind: u.id == 'N4.M' ? 'n4' : 'jft')));
+                    builder: (_) =>
+                        MockExamScreen(kind: MockExamScreen.kindForUnit(u.id))));
               },
               style: FilledButton.styleFrom(
                   minimumSize: const Size.fromHeight(48),

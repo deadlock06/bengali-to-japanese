@@ -16,9 +16,16 @@ const _red = Color(0xFFB3121B);
 
 class MockExamScreen extends ConsumerStatefulWidget {
   const MockExamScreen({super.key, required this.kind});
-  final String kind; // 'jft' | 'n4'
+  final String kind; // 'jft' | 'n5' | 'n4' | 'n3' | 'n2' | 'n1'
   @override
   ConsumerState<MockExamScreen> createState() => _MockExamScreenState();
+
+  /// Maps a mock curriculum-unit id ('N4.M', 'A2.M', 'N2.M'…) to a mock kind.
+  /// A2.M → JFT-Basic; every N-level mock → its own JLPT kind.
+  static String kindForUnit(String unitId) {
+    final lvl = unitId.split('.').first.toLowerCase(); // 'n4', 'a2', 'n3'…
+    return lvl.startsWith('n') ? lvl : 'jft';
+  }
 }
 
 class _MockExamScreenState extends ConsumerState<MockExamScreen> {
@@ -63,7 +70,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     try {
       final r = scoreMockExam(exam!, answers);
       await ref.read(srsProvider).recordLessonCompletion(
-            lessonId: widget.kind == 'n4' ? 'mock_n4' : 'mock_a2',
+            lessonId: 'mock_${widget.kind == 'jft' ? 'a2' : widget.kind}',
             items: r.total,
             correct: r.correct,
             hints: 0,
@@ -168,7 +175,9 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
                 for (final s in e.sections)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 6),
-                    child: Text('•  ${s.titleBn} — ${s.questions.length}টি',
+                    child: Text(
+                        '•  ${s.titleBn} — ${s.questions.length}টি'
+                        '${s.minutes != null ? ' · ${s.minutes} মিনিট' : ''}',
                         style: const TextStyle(fontSize: 12.5, color: BhasagoTheme.muted)),
                   ),
                 const SizedBox(height: 8),

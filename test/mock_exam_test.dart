@@ -3,6 +3,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sensei_app/data/mock_exam.dart';
 import 'package:sensei_app/domain/models.dart';
+import 'package:sensei_app/presentation/mock_exam_screen.dart';
 
 Lesson mkLesson(String id, String level, int n, {bool sentences = false}) =>
     Lesson.fromJson({
@@ -54,14 +55,68 @@ void main() {
     }
   });
 
-  test('N4 mock draws only N4 items; 39 questions', () {
+  test('N4 mock: official 3-section blueprint, real times, N4-only items', () {
     final e = buildMockExam(lessons: lessons, kind: 'n4', seed: 3)!;
-    expect(e.totalQuestions, 39);
+    // Content-bounded practice subset weighted like the real exam (14+16+12).
+    expect(e.totalQuestions, 42);
+    // Official JLPT N4 times (jlpt.jp): 25 + 55 + 35 = 115 min total.
+    expect(e.minutes, 115);
+    expect(e.sections.map((s) => s.minutes).toList(), [25, 55, 35]);
     for (final s in e.sections) {
       for (final q in s.questions) {
         expect(q.itemId.startsWith(RegExp('[cd]_')), true);
       }
     }
+  });
+
+  test('N5 mock: official 3-section blueprint + real times, basic items only', () {
+    final e = buildMockExam(lessons: lessons, kind: 'n5', seed: 5)!;
+    expect(e.sections.map((s) => s.id), ['moji', 'bunpou', 'choukai']);
+    expect(e.minutes, 90);
+    expect(e.sections.map((s) => s.minutes).toList(), [20, 40, 30]);
+    // draws only from basic (non-N4) items
+    for (final s in e.sections) {
+      for (final q in s.questions) {
+        expect(q.itemId.startsWith(RegExp('[ab]_')), true);
+      }
+    }
+    // JLPT levels score out of 180 with published pass marks
+    final perfect = {
+      for (final s in e.sections) for (final q in s.questions) q.itemId: q.answerIndex
+    };
+    final r = scoreMockExam(e, perfect);
+    expect(r.estimateLabel.contains('180'), true);
+    expect(r.passed, true);
+  });
+
+  test('N3/N2/N1 return null until content authored (no faking, D-004)', () {
+    // No N3/N2/N1 items in the store → honest null; the screen shows "coming".
+    expect(buildMockExam(lessons: lessons, kind: 'n3', seed: 1), isNull);
+    expect(buildMockExam(lessons: lessons, kind: 'n2', seed: 1), isNull);
+    expect(buildMockExam(lessons: lessons, kind: 'n1', seed: 1), isNull);
+    // With N2 content present, N2 = 2 sections (combined LK·Reading + Listening).
+    final withN2 = [
+      ...lessons,
+      mkLesson('e', 'JLPT N2', 30),
+      mkLesson('f', 'JLPT N2', 30, sentences: true),
+    ];
+    final e = buildMockExam(lessons: withN2, kind: 'n2', seed: 2)!;
+    expect(e.sections.map((s) => s.id), ['gengo', 'choukai']);
+    expect(e.minutes, 155);
+    expect(e.sections.map((s) => s.minutes).toList(), [105, 50]);
+    for (final s in e.sections) {
+      for (final q in s.questions) {
+        expect(q.itemId.startsWith(RegExp('[ef]_')), true);
+      }
+    }
+  });
+
+  test('kindForUnit maps mock unit ids to exam kinds', () {
+    expect(MockExamScreen.kindForUnit('A2.M'), 'jft');
+    expect(MockExamScreen.kindForUnit('N4.M'), 'n4');
+    expect(MockExamScreen.kindForUnit('N3.M'), 'n3');
+    expect(MockExamScreen.kindForUnit('N2.M'), 'n2');
+    expect(MockExamScreen.kindForUnit('N1.M'), 'n1');
   });
 
   test('scoring: all correct passes, all skipped fails, weakest found', () {

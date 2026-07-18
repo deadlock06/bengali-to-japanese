@@ -18,7 +18,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flu
 ## ✅ Built this session (2026-07-16/17) — the big additions
 - **Full curriculum content**: 806 items across 60+ lessons L0→N4 (was ~100). N4 grammar (te-form/plain/potential/give-receive/keigo) authored from the standard canon; `n4_whitelist.txt` (D-020); validator level-scoped. Every item audio'd (969 clips) + book-synced.
 - **5-phase micro-loop complete** (`lib/data/lesson_batch.dart` + `lesson_screen_v4.dart`): vocab = Intro→Recognition→**Say-it 🎙️** (record+self-compare, D-002)→**Context 🧩** (boundary-guarded gap-fill)→SRS; kana = …→**Write ✍️**→SRS. Kana batch 71→**106** (yōon/sokuon/long-vowel).
-- **Mock-exam engine** (`lib/data/mock_exam.dart`, `mock_exam_screen.dart`, D-A4): JFT 50Q/4-section + N4 39Q/3-section, questions SELECTED from verified store, honest band estimate, recommend-only timer.
+- **Mock-exam engine** (`lib/data/mock_exam.dart`, `mock_exam_screen.dart`, D-A4/D-027/D-028): level-parameterized to the official jlpt.jp blueprint — JFT 50Q/4-section · **N5/N4/N3 = 3 sections** (Vocab/Grammar·Reading/Listening) · **N2/N1 = 2 sections** (combined Language Knowledge·Reading + Listening), real section times + published JLPT pass marks. Questions SELECTED from verified store; N3/N2/N1 honestly return "content coming" until authored. Honest band estimate, recommend-only timer.
 - **Journey-map Learn tab** (`journey_map_screen.dart`, C1/D-015) + **goal-select onboarding** (SSW/JLPT/daily — emphasis only, no locks).
 - **Roleplay/scenario mode** (`scenario_repository.dart` + `scenario_screen.dart`, C2): 3 verified dialogue trees (konbini/clinic/interview), sensei plays the NPC, entry in Speak tab.
 - **StatePack** (`state_pack.dart`, C3): reusable loading/empty/error/offline in Bold Ink — wired into Review, Pitch, Progress.
@@ -43,7 +43,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flu
 - **Kana-first sequencing** — numbers requires hiragana (ontology); the classroom teaches kana first.
 
 ### Content / data
-- 60+ verified lesson JSONs (**806 items**, L0→N4 — live count via `node tools/progress_scale.mjs`; ALL ≤8-item lessons, validator-clean incl. trilingual + level-scoped whitelist) + kana×2 + pitch + **3 scenario trees** · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
+- 60+ verified lesson JSONs (**806 items**, L0→N4 — live count via `node tools/progress_scale.mjs`; ALL ≤8-item lessons, validator-clean incl. trilingual + level-scoped whitelist) + kana×2 + pitch + **3 scenario trees** · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (**23 units, L0→N1 ladder** incl. N3/N2/N1 mock units — D-028; no broken refs; `item_type` schema field ready for 問題-tagged content) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
 
 ### Platform
 - SQLCipher DB + migrations · one-tap ZIP export + 7-day-grace deletion + boot purge check · persona persistence · device build **verified once** on TECNO (07-10).

@@ -39,6 +39,35 @@ class AudioType(str, Enum):
     LESSON = "lesson"
     FORCED_ALIGNMENT = "forced_alignment"
 
+class ExamItemType(str, Enum):
+    """Official JLPT exam item types (jlpt.jp "Composition of test items").
+    Mirrors lib/domain/models.dart ItemType; drives item-type-granular mocks."""
+    # Vocabulary
+    KANJI_READING = "kanji_reading"
+    ORTHOGRAPHY = "orthography"
+    WORD_FORMATION = "word_formation"
+    CONTEXTUAL = "contextual"
+    PARAPHRASE = "paraphrase"
+    USAGE = "usage"
+    # Grammar
+    GRAMMAR_FORM = "grammar_form"
+    SENTENCE_COMPOSITION = "sentence_composition"
+    TEXT_GRAMMAR = "text_grammar"
+    # Reading
+    READING_SHORT = "reading_short"
+    READING_MID = "reading_mid"
+    READING_LONG = "reading_long"
+    READING_INTEGRATED = "reading_integrated"
+    READING_THEMATIC = "reading_thematic"
+    INFO_RETRIEVAL = "info_retrieval"
+    # Listening
+    LISTEN_TASK = "listen_task"
+    LISTEN_KEYPOINT = "listen_keypoint"
+    LISTEN_OUTLINE = "listen_outline"
+    LISTEN_VERBAL = "listen_verbal"
+    LISTEN_QUICK = "listen_quick"
+    LISTEN_INTEGRATED = "listen_integrated"
+
 # ─── Vocabulary ─────────────────────────────────────────────
 
 class VocabularyItem(BaseModel):
@@ -57,6 +86,9 @@ class VocabularyItem(BaseModel):
     frequency_rank: Optional[int] = None
     lesson_refs: List[str] = []
     audio_id: Optional[str] = None
+    # Optional JLPT exam item-type tag → serialized as `item_type` in the app's
+    # lesson JSON (lib/domain/models.dart LessonItem.itemType). Back-compatible.
+    exam_item_type: Optional[ExamItemType] = None
 
 # ─── Grammar ────────────────────────────────────────────────
 

@@ -41,9 +41,19 @@ class AiTutorService {
 
   /// Dynamic BN↔JP language balance (13_MASTER_VISION): the sensei's mix of
   /// Bengali and Japanese follows the learner's curriculum level — beginner
-  /// mostly Bengali, advanced mostly Japanese. D-017 mapping:
-  /// L0/A1 → beginner · A2 → intermediate · N4 → advanced.
+  /// mostly Bengali, advanced mostly Japanese. D-017/D-028 mapping:
+  /// L0/A1 → beginner · A2 → intermediate · N4 → advanced ·
+  /// N3 → advanced+ · N2 → near-native · N1 → native-like.
   static String _balanceLine(String level) => switch (level) {
+        'N1' =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী NATIVE-LIKE (N1) স্তরে। প্রায় পুরোটাই স্বাভাবিক '
+              'native register জাপানিতে দাও — বাংলা শুধু ব্যবহারকারী স্পষ্ট চাইলে।',
+        'N2' =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী NEAR-NATIVE (N2) স্তরে। ~৯০-৯৫% জাপানিতে দাও '
+              '(kana/kanji সহ) — বাংলা শুধু সত্যিই কঠিন nuance-এ, খুব সংক্ষেপে।',
+        'N3' =>
+          '\nভাষার ভারসাম্য: শিক্ষার্থী ADVANCED+ (N3) স্তরে। ~৯০% জাপানিতে দাও — '
+              'বাংলা শুধু নতুন grammar/শব্দের ছোট ব্যাখ্যায়।',
         'N4' =>
           '\nভাষার ভারসাম্য: শিক্ষার্থী ADVANCED (N4) স্তরে। উত্তরের ৮০-৯০% জাপানিতে দাও '
               '(স্বাভাবিক বাক্যে, kana/kanji সহ) — বাংলা শুধু কঠিন জায়গার ছোট ব্যাখ্যায়।',

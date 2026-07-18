@@ -34,9 +34,13 @@ function loadLines(file) {
 const banned = (loadLines(path.join(FACTORY, 'banned_phrases.txt')) || []).map((s) => s.toLowerCase());
 const whitelist = loadLines(path.join(FACTORY, 'jft_a2_whitelist.txt')); // null until authored
 const whitelistSet = whitelist ? new Set(whitelist) : null;
-// N4 superset list (D-011: whitelist per level — jft_a2 at L0–A2, n4 at N4).
-const n4List = loadLines(path.join(FACTORY, 'n4_whitelist.txt'));
-const n4Set = n4List ? new Set(n4List) : null;
+// Level-scoped whitelists (D-011/D-028): jft_a2 at L0–A2, then one superset per
+// JLPT level. Each is null until its list is authored (content program) → the
+// check for that level is scaffolded (skipped), never a false-fail.
+const levelLists = Object.fromEntries(
+  ['n4', 'n3', 'n2', 'n1'].map((k) => [k, loadLines(path.join(FACTORY, `${k}_whitelist.txt`))]));
+const levelSets = Object.fromEntries(
+  Object.entries(levelLists).map(([k, v]) => [k, v ? new Set(v) : null]));
 
 const HALFWIDTH_KATAKANA = /[｡-ﾟ]/; // rule 7
 
@@ -209,10 +213,16 @@ function validateScenario(file, data) {
 function checkWhitelist(reg) {
   if (!whitelistSet) return; // scaffold: no list authored yet
   for (const { file, tag, word, lvl } of reg.srsWords) {
-    // Level-scoped bound (D-011): N4-tagged lessons check the N4 superset;
-    // everything else stays inside JFT-A2.
-    if (/N4/i.test(lvl) && n4Set) {
-      if (!n4Set.has(word)) err(file, `${tag}: "${word}" outside N4 whitelist (05 rule 3)`);
+    // Level-scoped bound (D-011/D-028): an N1–N4-tagged lesson checks that
+    // level's superset when authored; if that list isn't authored yet, skip
+    // (scaffold) — never false-fail an unbuilt level. Everything else (L0–A2,
+    // N5) stays inside the JFT-A2 base list.
+    const m = /N([1-4])/i.exec(lvl || '');
+    if (m) {
+      const set = levelSets['n' + m[1]];
+      if (set && !set.has(word)) {
+        err(file, `${tag}: "${word}" outside N${m[1]} whitelist (05 rule 3)`);
+      }
     } else if (!whitelistSet.has(word)) {
       err(file, `${tag}: "${word}" outside JFT-A2 whitelist (05 rule 3)`);
     }
@@ -222,7 +232,7 @@ function checkWhitelist(reg) {
 // --- run --------------------------------------------------------------------
 const files = fs.readdirSync(CONTENT).filter((f) => f.endsWith('.json'));
 console.log(`Validating ${files.length} content file(s) in assets/content/`);
-console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'} · n4: ${n4Set ? n4List.length + ' words' : 'not authored'}\n`);
+console.log(`  banned phrases: ${banned.length} · whitelist: ${whitelistSet ? whitelist.length + ' words' : 'not authored (rule 3 scaffolded)'} · levels: ${['n4', 'n3', 'n2', 'n1'].map((k) => `${k}:${levelSets[k] ? levelLists[k].length : '—'}`).join(' ')}\n`);
 
 const reg = { lessonIds: new Set(), packEdges: [], prereqs: [], srsWords: [], itemIds: new Map() };
 

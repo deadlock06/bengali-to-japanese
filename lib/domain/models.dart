@@ -44,6 +44,11 @@ class LessonItem {
   final Tri meaning, note;
   final List<String> srsWords;
 
+  /// Optional JLPT exam item-type tag (jlpt.jp 問題 taxonomy) — drives
+  /// item-type-granular mock sections. See [ItemType]. Null on the ~714 legacy
+  /// items (back-compatible); the mock builder falls back to broad sections.
+  final String? itemType;
+
   const LessonItem({
     required this.id,
     required this.jp,
@@ -52,6 +57,7 @@ class LessonItem {
     required this.meaning,
     required this.note,
     required this.srsWords,
+    this.itemType,
   });
 
   factory LessonItem.fromJson(Map<String, dynamic> j) => LessonItem(
@@ -62,7 +68,51 @@ class LessonItem {
         meaning: Tri.fromJson(j['meaning']),
         note: Tri.fromJson(j['note']),
         srsWords: (j['srs_words'] as List).cast<String>(),
+        itemType: j['item_type'] as String?,
       );
+}
+
+/// The official JLPT exam item types (jlpt.jp "Composition of test items").
+/// Content items may be tagged with one of these `id`s so mock exams can build
+/// the real 問題 structure per level. Grouped by the section they belong to.
+class ItemType {
+  static const vocabulary = <String>[
+    'kanji_reading', // 漢字読み — read the kanji
+    'orthography', // 表記 — choose the correct spelling
+    'word_formation', // 語形成 — build the word
+    'contextual', // 文脈規定 — contextually-defined expression
+    'paraphrase', // 言い換え類義 — paraphrase / synonym
+    'usage', // 用法 — correct usage
+  ];
+  static const grammar = <String>[
+    'grammar_form', // 文法形式の判断 — select the grammar form
+    'sentence_composition', // 文の組み立て — sentence composition
+    'text_grammar', // 文章の文法 — text grammar
+  ];
+  static const reading = <String>[
+    'reading_short', // 内容理解（短文）
+    'reading_mid', // 内容理解（中文）
+    'reading_long', // 内容理解（長文）
+    'reading_integrated', // 統合理解
+    'reading_thematic', // 主張理解（長文）
+    'info_retrieval', // 情報検索
+  ];
+  static const listening = <String>[
+    'listen_task', // 課題理解 — task-based comprehension
+    'listen_keypoint', // ポイント理解 — comprehension of key points
+    'listen_outline', // 概要理解 — comprehension of general outline
+    'listen_verbal', // 発話表現 — verbal expressions
+    'listen_quick', // 即時応答 — quick response
+    'listen_integrated', // 統合理解
+  ];
+
+  /// All valid item-type ids (validation + tests).
+  static const all = <String>[
+    ...vocabulary,
+    ...grammar,
+    ...reading,
+    ...listening,
+  ];
 }
 
 /// A Can-do lesson (exam-aligned unit).

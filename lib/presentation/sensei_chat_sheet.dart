@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/ai_tutor_service.dart';
+import '../data/curriculum_service.dart';
 import '../data/voice_input_service.dart';
 import '../data/chat_history_store.dart';
 
@@ -64,9 +65,41 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   // classroom item.
   String get _ctx => widget.seedText.isNotEmpty ? widget.seedText : widget.contextJp;
 
-  /// Curriculum level (L0/A1/A2/N4) → the sensei's BN↔JP language balance
+  /// Curriculum level (L0/A1/A2/N4…N1) → the sensei's BN↔JP language balance
   /// (13_MASTER_VISION). Empty while the ladder is still loading.
   String get _level => ref.read(learnerLevelProvider).valueOrNull ?? '';
+
+  /// Taught-scope hint (docs/14 teaching philosophy, D-030): tells the tutor
+  /// what the learner has ALREADY completed and what unit is current, so it
+  /// never assumes untaught knowledge and can connect new material to old.
+  /// Built here (not per-caller) so every chat entry point gets it for free.
+  String get _hint {
+    final parts = <String>[];
+    final units = ref.read(curriculumProvider).valueOrNull;
+    if (units != null) {
+      final done = [
+        for (final u in units)
+          if (u.state == UnitProgress.done && u.titleBn.trim().isNotEmpty)
+            u.titleBn.trim()
+      ];
+      CurriculumUnit? cur;
+      for (final u in units) {
+        if (u.state == UnitProgress.current) { cur = u; break; }
+      }
+      if (done.isNotEmpty) {
+        parts.add('শেখা শেষ: ${done.join(', ')}।');
+      } else {
+        parts.add('শিক্ষার্থী একদম নতুন — এখনো কিছু শেখেনি।');
+      }
+      if (cur != null && cur.titleBn.trim().isNotEmpty) {
+        parts.add('এখন শিখছে: "${cur.titleBn.trim()}" (${cur.level})।');
+      }
+      parts.add('এই স্কোপের বাইরের grammar/শব্দ দিয়ে প্রশ্ন-উদাহরণ দেবে না; '
+          'নতুন কিছু লাগলে আগে শিখিয়ে নেবে।');
+    }
+    if (widget.curriculumHint.isNotEmpty) parts.add(widget.curriculumHint);
+    return parts.join(' ');
+  }
 
   // Offline honesty (D-025 / correctness): when there's no cloud AI AND no
   // verified match, we do NOT fabricate an answer — a wrong reply is worse than
@@ -137,7 +170,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   Future<void> _bootstrapExplain() async {
     setState(() => _typing = true);
     final ai = await AiTutorService.instance.explain(widget.seedText,
-        curriculumHint: widget.curriculumHint, level: _level);
+        curriculumHint: _hint, level: _level);
     if (!mounted) return;
     
     final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText);
@@ -173,7 +206,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     });
     // Online AI (Smart Banglish) if a key is configured; else canned/offline.
     final ai = await AiTutorService.instance.reply(t,
-        contextJp: _ctx, curriculumHint: widget.curriculumHint, level: _level);
+        contextJp: _ctx, curriculumHint: _hint, level: _level);
     if (!mounted) return;
     if (ai != null) {
       setState(() {

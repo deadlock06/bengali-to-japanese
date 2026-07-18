@@ -23,24 +23,45 @@
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="sensei_app">
+  <meta name="apple-mobile-web-app-title" content="Bhasago">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>sensei_app</title>
+  <title>Bhasago — ভাষাGO</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <!-- Branded boot splash (D-032): the engine takes seconds to load — show the
+       brand instead of a blank white page. Removed on flutter-first-frame. -->
+  <style>
+    html, body { background: #111111; margin: 0; }
+    #boot {
+      position: fixed; inset: 0; background: #111111; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 18px; transition: opacity .4s;
+      font-family: system-ui, sans-serif;
+    }
+    #boot img { width: 96px; height: 96px; border-radius: 24px;
+      animation: pulse 1.6s ease-in-out infinite; }
+    #boot .t { color: #F5F5F0; font-size: 20px; font-weight: 800;
+      letter-spacing: .5px; }
+    #boot .s { color: #8B8B85; font-size: 13px; }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(.94); opacity: .8; } }
+  </style>
+  <div id="boot">
+    <img src="icons/Icon-192.png" alt="">
+    <div class="t">Bhasago</div>
+    <div class="s">লোড হচ্ছে… একটু দাঁড়াও</div>
+  </div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var b = document.getElementById('boot');
+      if (b) { b.style.opacity = '0'; setTimeout(function(){ b.remove(); }, 450); }
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

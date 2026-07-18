@@ -8,6 +8,11 @@ import asyncio, json, os, glob, sys
 import edge_tts
 
 VOICE = "ja-JP-NanamiNeural"   # natural female JP voice
+# Learner-friendly delivery (D-032): native-speed single words sounded abrupt
+# and rushed ("nothing attractive"). -12% rate = clear but still natural;
+# +5% pitch keeps single-word clips from sounding flat/clipped.
+RATE, PITCH = "-12%", "+5Hz"
+FORCE = "--force" in sys.argv  # regenerate everything (voice/rate changes)
 OUT_DIR = "assets/audio"
 CONTENT = "assets/content"
 
@@ -86,9 +91,9 @@ def collect():
 
 async def synth(key, text):
     out = os.path.join(OUT_DIR, f"{key}.mp3")
-    if os.path.exists(out) and os.path.getsize(out) > 0:
+    if not FORCE and os.path.exists(out) and os.path.getsize(out) > 0:
         return "skip"
-    await edge_tts.Communicate(text, VOICE).save(out)
+    await edge_tts.Communicate(text, VOICE, rate=RATE, pitch=PITCH).save(out)
     return "new"
 
 async def main():

@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/ai_tutor_service.dart';
+import '../data/voice_input_service.dart';
 import '../data/chat_history_store.dart';
 
 class SenseiChatSheet extends ConsumerStatefulWidget {
@@ -247,17 +248,41 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     }
   }
 
-  void _toggleMic() {
+  // REAL voice input (talk to the sensei) — device/browser STT. Speaking
+  // practice, so Japanese first (falls back to Bengali). Live transcript fills
+  // the box; stopping sends it. No STT on this device → snackbar + text box
+  // stays (never blocks, D-001).
+  Future<void> _toggleMic() async {
     if (_listening) {
+      await VoiceInputService.instance.stop();
+      if (!mounted) return;
+      final said = _input.text.trim();
       setState(() => _listening = false);
+      if (said.isNotEmpty) _send(said);
       return;
     }
-    setState(() => _listening = true);
-    Future.delayed(const Duration(milliseconds: 1800), () {
-      if (!mounted || !_listening) return;
-      setState(() => _listening = false);
-      _send('「ご飯」মানে কী আবার বুঝিয়ে দাও');
-    });
+    final ok = await VoiceInputService.instance.start(
+      japanese: true,
+      onResult: (text, isFinal) {
+        if (!mounted) return;
+        _input.text = text; // live transcript into the input box
+        if (isFinal) {
+          setState(() => _listening = false);
+          final said = text.trim();
+          if (said.isNotEmpty) _send(said);
+        }
+      },
+    );
+    if (!mounted) return;
+    if (ok) {
+      setState(() => _listening = true);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('এই ডিভাইসে ভয়েস চেনা নেই/অনুমতি নেই — লিখে জিজ্ঞেস করো। '
+            '(মোবাইলে জাপানি/বাংলা ভয়েস থাকলে বলে কথা বলা যায়।)'),
+        duration: Duration(seconds: 4),
+      ));
+    }
   }
 
   @override

@@ -30,6 +30,7 @@ dependencies:
   crypto: ^3.0.5
   flutter_tts: ^4.2.0  # on-device Bengali TTS for reading AI explanations aloud
   supabase_flutter: ^2.8.0 # OPTIONAL cloud sync (D1) — anon key is public; RLS guards data
+  speech_to_text: ^7.0.0 # voice input for talk-to-sensei (device/browser STT)
 
 dev_dependencies:
   flutter_test:

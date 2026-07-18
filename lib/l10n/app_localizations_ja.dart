@@ -9,13 +9,13 @@ class SJa extends S {
   SJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appTitle => 'Bhasago';
+  String get appTitle => '言語GO';
 
   @override
   String get kanaTitle => 'かな';
 
   @override
-  String get navLearn => '学習';
+  String get navLearn => '学ぶ';
 
   @override
   String get navSpeak => '話す';
@@ -30,7 +30,7 @@ class SJa extends S {
   String get showAnswer => '答えを見る';
 
   @override
-  String get reviewDone => '完了！';
+  String get reviewDone => 'お疲れ様でした！';
 
   @override
   String get rAgain => 'もう一度';
@@ -39,7 +39,7 @@ class SJa extends S {
   String get rHard => '難しい';
 
   @override
-  String get rGood => '良い';
+  String get rGood => '普通';
 
   @override
   String get rEasy => '簡単';
@@ -51,10 +51,10 @@ class SJa extends S {
   String get hintLabel => 'ヒント';
 
   @override
-  String get quitLabel => '終了';
+  String get quitLabel => 'やめる';
 
   @override
-  String get startLesson => '開始';
+  String get startLesson => '始める';
 
   @override
   String get nextLabel => '次へ';
@@ -66,5 +66,5 @@ class SJa extends S {
   String get recordLabel => '録音';
 
   @override
-  String get lessonComplete => 'レッスン完了';
+  String get lessonComplete => '完了';
 }

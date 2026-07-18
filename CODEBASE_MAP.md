@@ -13,7 +13,7 @@
 - **Offline LLM downloaded** (Qwen3-1.7B-Q4_K_M + llama.cpp server) at `../.claude/llm/`; `tools/run_local_llm.sh` starts it; web_server proxy fails over to it (D-021). Kept OFF during builds (CPU).
 
 ## Stack
-Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flutter ^2.8 (cloud sync, D1)** · record ^7 · just_audio · flutter_tts · numbered migrations · gen-l10n **disabled** (see Known Issues) · backend: **SUPABASE (D-018, live w/ RLS)**.
+Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flutter ^2.8 (cloud sync, D1)** · record ^7 · just_audio · flutter_tts · numbered migrations · gen-l10n **enabled** (l10n migration done) · backend: **SUPABASE (D-018, live w/ RLS)**.
 
 ## ✅ Built this session (2026-07-16/17) — the big additions
 - **Full curriculum content**: 806 items across 60+ lessons L0→N4 (was ~100). N4 grammar (te-form/plain/potential/give-receive/keigo) authored from the standard canon; `n4_whitelist.txt` (D-020); validator level-scoped. Every item audio'd (969 clips) + book-synced.
@@ -43,7 +43,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flu
 - **Kana-first sequencing** — numbers requires hiragana (ontology); the classroom teaches kana first.
 
 ### Content / data
-- 32 verified lesson JSONs (256 items — live count in `node tools/progress_scale.mjs`; ALL ≤8-item lessons, validator-clean incl. trilingual + whitelist) + kana×2 + pitch · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
+- 60+ verified lesson JSONs (**806 items**, L0→N4 — live count via `node tools/progress_scale.mjs`; ALL ≤8-item lessons, validator-clean incl. trilingual + level-scoped whitelist) + kana×2 + pitch + **3 scenario trees** · **Bhasha Go book** 32 chapters incl. 11 app-synced vocab tables (tools/sync_book_vocab.py) · curriculum.json ontology (20 units, no broken refs) · KanjiVG stroke data (46+46 full coverage) · content validator (in CI).
 
 ### Platform
 - SQLCipher DB + migrations · one-tap ZIP export + 7-day-grace deletion + boot purge check · persona persistence · device build **verified once** on TECNO (07-10).
@@ -105,7 +105,7 @@ Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flu
 ---
 
 ## ⚠️ KNOWN ISSUES / TRAPS (read before touching these)
-1. **l10n is broken + DISABLED.** `lib/l10n/app_*.arb` are EMPTY; `flutter gen-l10n` regenerates `app_localizations.dart` from them and WIPES the hand-maintained getters (navReview/kanaTitle/…). To make the app *build* I set `flutter: generate: false` in pubspec and moved `l10n.yaml` → `l10n.yaml.disabled`. The committed `lib/l10n/app_localizations*.dart` are authoritative. **Do NOT run gen-l10n.** Proper fix = the l10n migration (populate ARBs, then re-enable).
+1. ~~l10n broken + DISABLED~~ **RESOLVED 2026-07-17.** The l10n migration is done: `lib/l10n/app_{bn,en,ja}.arb` now carry the ~20 strings the code uses, `pubspec generate: true`, `l10n.yaml` restored. `flutter gen-l10n` regenerates `app_localizations.dart` correctly (verified: getters preserved, analyze clean, build passes) — it no longer wipes anything. Adding a NEW localized string = add its key to all three ARBs (template = app_en.arb).
 2. ~~Journey smoke test red~~ **FIXED** — tests are 50/50 green. (Section-8 note: a push→pop→push loop is flaky under fake-async; the test asserts affordances + one push+pop instead.)
 3. **Screenshots of the running web app time out** — canvaskit never idles with the animations, so the automated screenshot tool can't capture it; the app is fine live in the browser.
 4. **Analyze/test don't auto-run gen-l10n; build/run DO** — that's why analyze was green but `flutter build web` first failed on l10n until disabled.

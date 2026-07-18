@@ -1,1 +1,23 @@
-﻿
+{
+  "@@locale": "ja",
+  "appTitle": "言語GO",
+  "kanaTitle": "かな",
+  "navLearn": "学ぶ",
+  "navSpeak": "話す",
+  "pitchTitle": "アクセント",
+  "navReview": "復習",
+  "showAnswer": "答えを見る",
+  "reviewDone": "お疲れ様でした！",
+  "rAgain": "もう一度",
+  "rHard": "難しい",
+  "rGood": "普通",
+  "rEasy": "簡単",
+  "skipLabel": "スキップ",
+  "hintLabel": "ヒント",
+  "quitLabel": "やめる",
+  "startLesson": "始める",
+  "nextLabel": "次へ",
+  "listenLabel": "聞く",
+  "recordLabel": "録音",
+  "lessonComplete": "完了"
+}

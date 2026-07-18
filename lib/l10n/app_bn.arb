@@ -1,1 +1,23 @@
-﻿
+{
+  "@@locale": "bn",
+  "appTitle": "ভাষাগো",
+  "kanaTitle": "কানা",
+  "navLearn": "শেখো",
+  "navSpeak": "বলো",
+  "pitchTitle": "স্বর",
+  "navReview": "রিভিউ",
+  "showAnswer": "উত্তর দেখাও",
+  "reviewDone": "সব শেষ!",
+  "rAgain": "আবার",
+  "rHard": "কঠিন",
+  "rGood": "ভালো",
+  "rEasy": "সহজ",
+  "skipLabel": "বাদ",
+  "hintLabel": "ইঙ্গিত",
+  "quitLabel": "বন্ধ",
+  "startLesson": "শুরু করো",
+  "nextLabel": "পরের",
+  "listenLabel": "শুনুন",
+  "recordLabel": "রেকর্ড",
+  "lessonComplete": "লেসন শেষ"
+}

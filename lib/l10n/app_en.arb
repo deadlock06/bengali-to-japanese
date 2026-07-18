@@ -1,1 +1,83 @@
-﻿
+{
+  "@@locale": "en",
+  "appTitle": "Bhasago",
+  "@appTitle": {
+    "description": "App display name"
+  },
+  "kanaTitle": "Kana",
+  "@kanaTitle": {
+    "description": "Kana grid screen title"
+  },
+  "navLearn": "Learn",
+  "@navLearn": {
+    "description": "Bottom nav: learn tab"
+  },
+  "navSpeak": "Speak",
+  "@navSpeak": {
+    "description": "Bottom nav: speak tab"
+  },
+  "pitchTitle": "Pitch",
+  "@pitchTitle": {
+    "description": "Bottom nav: pitch accent tab"
+  },
+  "navReview": "Review",
+  "@navReview": {
+    "description": "Bottom nav: review tab"
+  },
+  "showAnswer": "Show answer",
+  "@showAnswer": {
+    "description": "Review screen reveal button"
+  },
+  "reviewDone": "All done!",
+  "@reviewDone": {
+    "description": "Review screen completion message"
+  },
+  "rAgain": "Again",
+  "@rAgain": {
+    "description": "FSRS rating: again"
+  },
+  "rHard": "Hard",
+  "@rHard": {
+    "description": "FSRS rating: hard"
+  },
+  "rGood": "Good",
+  "@rGood": {
+    "description": "FSRS rating: good"
+  },
+  "rEasy": "Easy",
+  "@rEasy": {
+    "description": "FSRS rating: easy"
+  },
+  "skipLabel": "Skip",
+  "@skipLabel": {
+    "description": "Skip button label"
+  },
+  "hintLabel": "Hint",
+  "@hintLabel": {
+    "description": "Hint button label"
+  },
+  "quitLabel": "Quit",
+  "@quitLabel": {
+    "description": "Quit button label"
+  },
+  "startLesson": "Start",
+  "@startLesson": {
+    "description": "Lesson start button"
+  },
+  "nextLabel": "Next",
+  "@nextLabel": {
+    "description": "Next step button"
+  },
+  "listenLabel": "Listen",
+  "@listenLabel": {
+    "description": "Audio play button"
+  },
+  "recordLabel": "Record",
+  "@recordLabel": {
+    "description": "Microphone record button"
+  },
+  "lessonComplete": "Lesson complete",
+  "@lessonComplete": {
+    "description": "Lesson completion heading"
+  }
+}

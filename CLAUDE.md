@@ -30,4 +30,4 @@ export PATH="$HOME/flutter/bin:$PATH"
 flutter analyze        # expect: No issues found!
 ```
 Web build serves the real app at `localhost:5601` (tools/web_server.mjs).
-**Do NOT run `flutter gen-l10n`** — l10n is disabled (empty ARBs would wipe the hand-maintained localizations; see CODEBASE_MAP.md → Known Issues).
+**l10n migration DONE (2026-07-17)** — ARBs (bn/en/ja) are populated, `generate: true`, `flutter gen-l10n` is safe (regenerates correctly, no wipe). Add a new localized string = add its key to all three `lib/l10n/app_*.arb`.

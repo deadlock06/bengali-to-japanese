@@ -38,11 +38,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  # gen-l10n DISABLED: the ARBs are empty and lib/l10n/app_localizations*.dart
-  # are hand-maintained + authoritative. With generate:true the build re-runs
-  # gen-l10n and wipes them. Re-enable only after populating the ARBs (the
-  # deferred l10n migration). See NEXT_SESSION.md "l10n TRAP".
-  generate: false
+  # gen-l10n ENABLED (l10n migration done 2026-07-17): the ARBs (bn/en/ja) now
+  # carry the ~20 strings the code uses, so build-time gen-l10n regenerates
+  # lib/l10n/app_localizations*.dart correctly instead of wiping them. Verified:
+  # `flutter gen-l10n` keeps all getters + analyze clean. Adding a NEW localized
+  # string = add its key to ALL three .arb files (template = app_en.arb).
+  generate: true
   assets:
     - assets/content/
     - assets/stroke/

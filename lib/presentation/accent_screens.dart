@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../domain/pitch.dart';
+import '../data/audio_service.dart';
 import 'state_pack.dart';
 import 'widgets.dart';
 
@@ -71,7 +72,10 @@ class PitchScreen extends ConsumerWidget {
                       const Spacer(),
                       IconButton(
                         icon: const Icon(Icons.volume_up),
-                        onPressed: () {/* TODO: ttsService.speak(it.word) */},
+                        // Bundled offline clip per pitch item (pa_01…). edge-tts
+                        // can't render minimal-pair pitch, but the learner hears
+                        // the word — no longer a dead button.
+                        onPressed: () => AudioService.instance.play(it.id),
                       ),
                     ],
                   ),
@@ -141,7 +145,9 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                   style: TextStyle(color: Colors.grey)),
               const SizedBox(height: 8),
               FilledButton.icon(
-                onPressed: () {/* TODO: play native reference audio */},
+                // The shadowing target is よろしくおねがいします — reuse its
+                // bundled clip (lesson item wi_04). Fully offline.
+                onPressed: () => AudioService.instance.play('wi_04'),
                 icon: const Icon(Icons.volume_up),
                 label: const Text('Listen'),
               ),

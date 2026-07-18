@@ -66,6 +66,15 @@ def collect():
             for k, ch in enumerate(nd.get("choices", [])):
                 items[f"{sid}_{nd['id']}_c{k}"] = ch["jp"]
 
+    # pitch minimal-pairs: one clip per item (offline audio for the 🔊 button).
+    # NOTE: edge-tts can't reliably render HL vs LH minimal-pair pitch — the
+    # clip lets the learner HEAR the word; true contrast needs recorded native
+    # audio (post-beta). Still far better than a dead button.
+    pp = os.path.join(CONTENT, "pitch_accent.json")
+    if os.path.exists(pp):
+        for it in json.load(open(pp, encoding="utf-8")).get("items", []):
+            items[it["id"]] = it["word"]
+
     # lesson items: one clip per phrase, keyed by item id
     for p in glob.glob(os.path.join(CONTENT, "lesson_*.json")):
         data = json.load(open(p, encoding="utf-8"))

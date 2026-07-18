@@ -122,7 +122,7 @@ class _WritingScreenState extends State<WritingScreen>
           seedText: _cur,
           // Page-specific history: this character's chat stays with this kana.
           chatKey: 'kana:$_cur',
-          curriculumHint: 'শিক্ষার্থী এখন 「$_cur」 (${_romaji[_idx]}) ${_kata ? "কাতাকানা" : "হিরাগানা"} অক্ষরটি লিখতে ও আঁকতে শিখছে। এটি কীভাবে সহজে মনে রাখবে (mnemonic), লিখবে (stroke order/tip) এবং উচ্চারণ করবে তা বুঝিয়ে বলো।',
+          curriculumHint: 'শিক্ষার্থী এখন 「$_cur」 (${_romaji[_idx]}) ${_kata ? "কাতাকানা" : "হিরাগানা"} অক্ষরটা লিখতে শিখছে। সহজে মনে রাখার ট্রিক (mnemonic), লেখার নিয়ম (stroke order) আর উচ্চারণ — মুখের ভাষায় বুঝিয়ে দাও।',
         ),
       );
 
@@ -139,7 +139,7 @@ class _WritingScreenState extends State<WritingScreen>
     final r = _romaji[_idx], bn = _bnSound[_idx];
     final head = 'এই যে — 「$_cur」। উচ্চারণ "$bn" (romaji: $r)। ';
     if (_idx < 5) {
-      return '$head এটি জাপানির ৫টি মূল স্বরের একটি — সব অক্ষর এই স্বরগুলোর উপরে দাঁড়ানো। ভালো করে চিনে নাও।';
+      return '$head এটা জাপানির ৫টা মূল স্বরের একটা — বাকি সব অক্ষর এই স্বরগুলোর উপরেই দাঁড়িয়ে। ভালো করে চিনে নাও।';
     }
     return '$head ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর আঙুল দিয়ে নিজে লিখে ফেলো।';
   }

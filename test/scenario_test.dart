@@ -1,12 +1,23 @@
 // C2 proof: scenario trees load, graphs are sound, and the roleplay flow
 // walks a full conversation (choice → NPC reply → ending) with restart free.
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sensei_app/data/scenario_repository.dart';
 
+List<Scenario> loadScenariosFromDisk() {
+  final out = <Scenario>[];
+  for (final f in ScenarioRepository.files) {
+    final file = File(f);
+    final content = file.readAsStringSync();
+    out.add(Scenario.fromJson(json.decode(content) as Map));
+  }
+  return out;
+}
+
 void main() {
-  testWidgets('all scenarios: verified, every choice resolves, end reachable',
-      (tester) async {
-    final list = await ScenarioRepository.load();
+  test('all scenarios: verified, every choice resolves, end reachable', () {
+    final list = loadScenariosFromDisk();
     expect(list.length, 3);
     for (final s in list) {
       final ids = {for (final n in s.nodes) n.id};
@@ -24,11 +35,10 @@ void main() {
     }
   });
 
-  testWidgets('every path in every scenario reaches an ending (pure walk)',
-      (tester) async {
+  test('every path in every scenario reaches an ending (pure walk)', () {
     // Deterministic graph walk — stronger than a UI tap-through (covers EVERY
     // branch, not just first-choice) and immune to suite-order flake.
-    for (final s in await ScenarioRepository.load()) {
+    for (final s in loadScenariosFromDisk()) {
       final visited = <String>{};
       void walk(ScenarioNode n, int depth) {
         expect(depth < 30, true, reason: '${s.id}: cycle without ending?');
@@ -42,6 +52,4 @@ void main() {
       expect(visited.isNotEmpty, true);
     }
   });
-
-
 }

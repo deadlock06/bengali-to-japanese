@@ -121,6 +121,27 @@ class SyncService {
         'minutes': due,       // due backlog snapshot
       });
 
+      // Push all SRS cards (delta sync). Supabase upsert handles conflicts
+      // (device wins). We batch them to avoid large payloads.
+      final allCards = await srs.allCards();
+      final cardRows = allCards.map((c) => {
+            'user_id': uid,
+            'card_id': c.card.id,
+            'word': c.word,
+            'reading': '', // Fallback, real reading is in content if needed
+            'meaning_bn': c.meaningBn,
+            'stability': c.card.stability,
+            'difficulty': c.card.difficulty,
+            'due_at': c.card.due.toUtc().toIso8601String(),
+            'state': c.card.state.name,
+          }).toList();
+
+      // Upsert in batches of 100
+      for (var i = 0; i < cardRows.length; i += 100) {
+        final end = (i + 100 < cardRows.length) ? i + 100 : cardRows.length;
+        await sb.from('srs_cards').upsert(cardRows.sublist(i, end));
+      }
+
       final p = await SharedPreferences.getInstance();
       await p.setString(_lastSyncKey, now.toIso8601String());
       return SyncStatus(SyncState.ok, lastSync: now);

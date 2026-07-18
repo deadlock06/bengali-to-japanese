@@ -46,6 +46,18 @@ final dueCountProvider = FutureProvider<int>((ref) async {
   return ref.read(srsProvider).dueCount();
 });
 
+/// Concepts learned "perfectly" (D-031 / docs/14): words whose FSRS stability
+/// is ≥ 7 days — i.e. the memory model says they'll stick for a week+ without
+/// review. This is the REAL mastery signal that feeds the Progress screen;
+/// never a guess, never LLM-judged. 0 off-device (DB absent).
+final masteredCountProvider = FutureProvider<int>((ref) async {
+  try {
+    return await ref.read(srsProvider).retainedWordCount();
+  } catch (_) {
+    return 0;
+  }
+});
+
 /// The four-agent state bus (04). One per app; sessions restart via
 /// [AgentBus.startSession]. UI reads the merged [AgentState] only.
 final agentBusProvider =

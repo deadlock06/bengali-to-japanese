@@ -9,18 +9,36 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'build', 'web');
 
-// OpenAI-compatible providers. Each is used only if its key env var is set.
-// Tried in order (DeepSeek → Kimi → OpenAI) with automatic failover, so free
-// tiers that rate-limit degrade gracefully. Set one or more:
-//   DEEPSEEK_API_KEY=...  MOONSHOT_API_KEY=...  OPENAI_API_KEY=...
-// Hosts overridable (e.g. MOONSHOT_HOST=api.moonshot.cn for the CN endpoint).
-const PROVIDERS = [
-  { name: 'deepseek', host: process.env.DEEPSEEK_HOST || 'api.deepseek.com',
-    key: process.env.DEEPSEEK_API_KEY, model: 'deepseek-chat' },
-  { name: 'kimi', host: process.env.MOONSHOT_HOST || 'api.moonshot.ai',
-    key: process.env.MOONSHOT_API_KEY || process.env.KIMI_API_KEY, model: 'kimi-latest' },
-  { name: 'openai', host: 'api.openai.com',
-    key: process.env.OPENAI_API_KEY, model: 'gpt-4o-mini' },
+// ── TIERED PROVIDER ROUTING (D-031: minimize API cost, maximize teaching) ──
+// The client tags each request with `tier`:
+//   'quick' → CHEAP chain — free/cheap models for dictionary lookups & small
+//             answers (DeepSeek → Kimi → Gemini Flash → GPT-4o-mini).
+//   'teach' → TEACH chain — the strongest available model for real teaching
+//             (Claude → Gemini Pro → GPT-4o), falling back to the cheap chain.
+// Each provider is used only if its key env var is set:
+//   ANTHROPIC_API_KEY  GEMINI_API_KEY  DEEPSEEK_API_KEY  MOONSHOT_API_KEY
+//   OPENAI_API_KEY
+// kind 'openai'    = OpenAI-compatible /chat/completions (Bearer auth)
+// kind 'anthropic' = native Anthropic Messages API (raw HTTPS, x-api-key) —
+//                    request/response adapted so the Flutter client is unchanged.
+const K = process.env;
+const CHEAP = [
+  { name: 'deepseek', kind: 'openai', host: K.DEEPSEEK_HOST || 'api.deepseek.com',
+    path: '/v1/chat/completions', key: K.DEEPSEEK_API_KEY, model: 'deepseek-chat' },
+  { name: 'kimi', kind: 'openai', host: K.MOONSHOT_HOST || 'api.moonshot.ai',
+    path: '/v1/chat/completions', key: K.MOONSHOT_API_KEY || K.KIMI_API_KEY, model: 'kimi-latest' },
+  { name: 'gemini-flash', kind: 'openai', host: 'generativelanguage.googleapis.com',
+    path: '/v1beta/openai/chat/completions', key: K.GEMINI_API_KEY, model: 'gemini-2.5-flash' },
+  { name: 'openai-mini', kind: 'openai', host: 'api.openai.com',
+    path: '/v1/chat/completions', key: K.OPENAI_API_KEY, model: 'gpt-4o-mini' },
+].filter((p) => p.key);
+const TEACH = [
+  { name: 'claude', kind: 'anthropic', host: 'api.anthropic.com',
+    key: K.ANTHROPIC_API_KEY, model: 'claude-opus-4-8' },
+  { name: 'gemini-pro', kind: 'openai', host: 'generativelanguage.googleapis.com',
+    path: '/v1beta/openai/chat/completions', key: K.GEMINI_API_KEY, model: 'gemini-2.5-pro' },
+  { name: 'openai', kind: 'openai', host: 'api.openai.com',
+    path: '/v1/chat/completions', key: K.OPENAI_API_KEY, model: 'gpt-4o' },
 ].filter((p) => p.key);
 // Local Qwen3-1.7B fallback — DISABLED by default (D-025 / correctness). A raw
 // 1.7B model's Bengali↔Japanese is weak and can INVENT grammar, which violates
@@ -31,31 +49,82 @@ const PROVIDERS = [
 // experiments with ENABLE_LOCAL_LLM=1 (its output is UNVERIFIED — never ship it
 // as the default). Real offline AI = the constrained on-device path (GBNF +
 // whitelist + RAG), which is step D4, not this raw server.
-if (process.env.ENABLE_LOCAL_LLM === '1') {
-  PROVIDERS.push({ name: 'local-qwen3', host: '127.0.0.1', port: 8089,
-    insecure: true, key: 'local', model: 'qwen3', unverified: true });
+if (K.ENABLE_LOCAL_LLM === '1') {
+  CHEAP.push({ name: 'local-qwen3', kind: 'openai', host: '127.0.0.1', port: 8089,
+    path: '/v1/chat/completions', insecure: true, key: 'local', model: 'qwen3' });
 }
 
-// POST /ai/chat → forward the chat body to the first available provider (with
-// its own model), failing over to the next on any 5xx / network error.
+// Native Anthropic Messages API call (raw HTTPS — this server has zero npm
+// deps by design). Adapts the client's OpenAI-style body → /v1/messages and
+// the response back to the OpenAI choices[] shape the app already parses.
+function callAnthropic(p, payload, ok, fail) {
+  const msgs = payload.messages || [];
+  const system = msgs.filter((m) => m.role === 'system').map((m) => m.content).join('\n\n');
+  const turns = msgs.filter((m) => m.role !== 'system')
+    .map((m) => ({ role: m.role === 'assistant' ? 'assistant' : 'user', content: String(m.content) }));
+  if (!turns.length) return fail();
+  const out = Buffer.from(JSON.stringify({
+    model: p.model,
+    max_tokens: payload.max_tokens || 1024,
+    ...(system ? { system } : {}),
+    messages: turns,
+  }));
+  const up = https.request({
+    host: p.host, path: '/v1/messages', method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'x-api-key': p.key,
+      'anthropic-version': '2023-06-01', 'Content-Length': out.length },
+  }, (r) => {
+    let buf = '';
+    r.on('data', (c) => (buf += c));
+    r.on('end', () => {
+      if ((r.statusCode || 500) >= 400) return fail(); // incl. 429 → next provider
+      try {
+        const j = JSON.parse(buf);
+        if (j.stop_reason === 'refusal') return fail(); // safety decline → fall through
+        const text = (j.content || []).filter((b) => b.type === 'text').map((b) => b.text).join('');
+        if (!text) return fail();
+        ok({ choices: [{ message: { role: 'assistant', content: text } }] });
+      } catch { fail(); }
+    });
+  });
+  up.on('error', fail);
+  up.end(out);
+}
+
+// POST /ai/chat → route by tier, failing over down the chain on any error.
 function aiProxy(req, res) {
   let body = '';
   req.on('data', (c) => (body += c));
   req.on('end', () => {
     let payload;
     try { payload = JSON.parse(body); } catch { res.writeHead(400); return res.end('{"error":"bad body"}'); }
+    const tier = payload.tier === 'teach' ? 'teach' : 'quick';
+    delete payload.tier; // internal routing field — never forwarded upstream
+    // teach: strongest first, then the cheap chain as availability fallback
+    const chain = tier === 'teach'
+      ? [...TEACH, ...CHEAP.filter((c) => !TEACH.some((t) => t.name === c.name))]
+      : CHEAP;
     const tryProvider = (i) => {
-      if (i >= PROVIDERS.length) { res.writeHead(502); return res.end('{"error":"all providers failed"}'); }
-      const p = PROVIDERS[i];
+      if (i >= chain.length) { res.writeHead(502); return res.end('{"error":"all providers failed"}'); }
+      const p = chain[i];
+      if (p.kind === 'anthropic') {
+        return callAnthropic(p, payload,
+          (j) => {
+            console.log(`ai[${tier}]: ${p.name} → 200`);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(j));
+          },
+          () => tryProvider(i + 1));
+      }
       const out = Buffer.from(JSON.stringify({ ...payload, model: p.model }));
       const lib = p.insecure ? http : https; // local llama-server is plain http
       const up = lib.request({
-        host: p.host, port: p.port, path: '/v1/chat/completions', method: 'POST',
+        host: p.host, port: p.port, path: p.path, method: 'POST',
         headers: { 'Content-Type': 'application/json',
           'Authorization': `Bearer ${p.key}`, 'Content-Length': out.length },
       }, (r) => {
         if ((r.statusCode || 500) >= 500) { r.resume(); return tryProvider(i + 1); }
-        console.log(`ai: ${p.name} → ${r.statusCode}`);
+        console.log(`ai[${tier}]: ${p.name} → ${r.statusCode}`);
         if (!p.insecure) {
           res.writeHead(r.statusCode || 502, { 'Content-Type': 'application/json' });
           return r.pipe(res);

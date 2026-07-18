@@ -75,6 +75,16 @@ class ProgressScreenV4 extends ConsumerWidget {
           runSpacing: 6,
           children: _levelChips(units, goal),
         ),
+        // Mastered concepts (D-031/docs/14): real FSRS signal — words whose
+        // memory stability is ≥7 days. Shown only when the learner has some.
+        if ((ref.watch(masteredCountProvider).valueOrNull ?? 0) > 0) ...[
+          const SizedBox(height: 8),
+          Text(
+            '🏆 আয়ত্তে: ${ref.watch(masteredCountProvider).valueOrNull} শব্দ '
+            '(৭+ দিন মনে থাকার মতো শেখা)',
+            style: text.bodySmall?.copyWith(color: BhasagoColors.green),
+          ),
+        ],
         const SizedBox(height: 12),
         // live retention chart card
         Card(

@@ -110,7 +110,7 @@ Banglish মেশাও যেভাবে মানুষ সত্যিই �
     }
     ctx.write('শিক্ষার্থীর প্রশ্ন: ');
     final system = level.isEmpty ? _system : '$_system${_balanceLine(level)}';
-    return _complete(system, '$ctx$userText', maxTokens: 300);
+    return _complete(system, '$ctx$userText', maxTokens: 300, tier: 'teach');
   }
 
   static const _dictSystem = '''
@@ -146,10 +146,15 @@ Banglish মেশাও যেভাবে মানুষ সত্যিই �
     final user = curriculumHint.isEmpty ? t : '$curriculumHint\n\nটেক্সট: $t';
     final system =
         level.isEmpty ? _dictSystem : '$_dictSystem${_balanceLine(level)}';
-    return _complete(system, user, maxTokens: 400);
+    return _complete(system, user, maxTokens: 400, tier: 'quick');
   }
 
-  Future<String?> _complete(String system, String user, {int maxTokens = 300}) async {
+  /// [tier] (D-031, cost control): 'teach' routes to the strongest available
+  /// model (Claude/Gemini Pro/GPT-4o) — used for the real teaching conversation;
+  /// 'quick' routes to the free/cheap chain — used for dictionary lookups.
+  /// The proxy owns the actual chains; the client only expresses intent.
+  Future<String?> _complete(String system, String user,
+      {int maxTokens = 300, String tier = 'quick'}) async {
     if (user.isEmpty) return null;
     try {
       final res = await _dio.post(
@@ -159,7 +164,8 @@ Banglish মেশাও যেভাবে মানুষ সত্যিই �
             // A 4xx from the proxy (e.g. no key configured) → fallback, no throw
             validateStatus: (s) => s != null && s < 500),
         data: {
-          'model': 'gpt-4o-mini',
+          'model': 'gpt-4o-mini', // placeholder — proxy overrides per provider
+          'tier': tier,
           'temperature': 0.5,
           'max_tokens': maxTokens,
           'messages': [

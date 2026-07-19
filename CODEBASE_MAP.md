@@ -1,19 +1,26 @@
 # CODEBASE MAP — full state of the SENSEI/Bhasago build
-`refreshed 2026-07-17 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
+`refreshed 2026-07-19 (Claude Opus 4.8, Cowork/Linux). Read this INSTEAD of re-exploring.`
 
-**One-line status (2026-07-18):** a **feature-complete offline JFT-A2 → JLPT-N4 tutor, INSTALLED on the owner's phone (D2 ✅)**, with the N5→N1 ladder scaffolded (D-028), branded (real icon/name/splash, D-032), tiered cloud AI (Claude/Gemini/GPT teach-tier, D-031), owner's teaching philosophy wired (D-030), natural-Banglish AI register (D-029), and zero fabricated UI data (D-026). The full curriculum is authored (L0→N4, 806 items = 104% of ladder), the 5-phase micro-loop is real (Intro→Recognition→Say/Write→Context→SRS), and the vision surfaces exist (journey-map Learn tab, roleplay, mock exams, online sensei). What remains is **not buildable in this sandbox**: a physical-device APK, the native offline-LLM/STT toolchain, human native-speaker review, and launch/payments. Overall ≈ **80%** toward a shippable beta; ~**100%** of what's buildable without a device/native-toolchain/human. Track exact state with `node tools/progress_scale.mjs`.
+**One-line status (2026-07-18):** a **feature-complete offline JFT-A2 → JLPT-N4 tutor, INSTALLED on the owner's phone (D2 ✅)**, with the N5→N1 ladder scaffolded (D-028), branded (real icon/name/splash, D-032), tiered cloud AI (Claude/Gemini/GPT teach-tier, D-031), owner's teaching philosophy wired (D-030), natural-Banglish AI register (D-029), and zero fabricated UI data (D-026). The full curriculum is authored (L0→N4, **854 items = 111%** of ladder), the 5-phase micro-loop is real (Intro→Recognition→Say/Write→Context→SRS), and the vision surfaces exist (journey-map Learn tab, roleplay, mock exams, online sensei). What remains is **not buildable in this sandbox**: a physical-device APK, the native offline-LLM/STT toolchain, human native-speaker review, and launch/payments. Overall ≈ **80%** toward a shippable beta; ~**100%** of what's buildable without a device/native-toolchain/human. Track exact state with `node tools/progress_scale.mjs`.
 
 ## Environment (verified 2026-07-17)
 - **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
 - `flutter analyze` → **No issues found**. Pure-Dart tests (scenario/gap_fill/mock_exam) **10/10**. Content validator → **PASS**. All 8 node proofs green.
 - ⚠️ **`flutter test` (full suite) TIMES OUT in this sandbox** — not a code failure; concurrent Claude sessions on the same box starve the test runner (verified via `ps aux`). Run the full suite from a normal machine as the authoritative gate. Isolated files pass fine.
 - **Web build works** with supabase_flutter (`flutter build web --pwa-strategy=none`) — served at `localhost:5601`.
-- **Android SDK NOT installed** → no APK here (D2 is owner's machine). iOS not targeted.
+- **Android SDK INSTALLED on this machine** (2026-07-18, `tools/build_apk.sh`: ~/jdk21 + ~/android-sdk) → APKs build HERE (~3 min warm). iOS not targeted.
 - **All work COMMITTED + PUSHED to GitHub** (deadlock06/bengali-to-japanese, through 2026-07-17).
 - **Offline LLM downloaded** (Qwen3-1.7B-Q4_K_M + llama.cpp server) at `../.claude/llm/`; `tools/run_local_llm.sh` starts it; web_server proxy fails over to it (D-021). Kept OFF during builds (CPU).
 
 ## Stack
 Flutter 3.44.5 · Riverpod ^2.5 · sqflite_sqlcipher (AES-256) · **supabase_flutter ^2.8 (cloud sync, D1)** · record ^7 · just_audio · flutter_tts · numbered migrations · gen-l10n **enabled** (l10n migration done) · backend: **SUPABASE (D-018, live w/ RLS)**.
+
+## ✅ Built 2026-07-18/19 — brand, AI, pedagogy, content (D-026…D-036)
+- **No fake data anywhere** (D-026): coin-flip AI-check → real MockExam; Progress/Home all live; dead screens removed.
+- **JLPT blueprint mocks** (D-027/028): official section times + pass marks; **N5→N1 ladder scaffolded** (23 units, `item_type` schema, level whitelists, level-parameterized builder — N3/N2/N1 honestly "content coming").
+- **AI voice & pedagogy**: Banglish register contract in every prompt (D-029); **docs/14 Teaching Philosophy** binding + taught-scope hint in every chat (D-030); **tiered AI routing** — quick→cheap chain, teach→Claude(native)/Gemini Pro/GPT-4o (D-031); 🏆 আয়ত্তে mastery (FSRS ≥7d) on Progress.
+- **Brand & sound** (D-032/033): real ば icon + "Bhasago" name + dark splashes (web/Android); ALL clips regenerated learner-paced (-12%/+5Hz); **/ai/tts neural Bengali** (Nabanita) with device-TTS fallback; privacy policy in-app (E1 ✓); applicationId → com.bhasago.app; **APK built+installed on owner's TECNO (D2 ✓)**.
+- **Vocabulary system** (D-034/035/036): 92 Bengali kana picture-mnemonics (writing + grid); **শব্দভাণ্ডার vocab bank** (search, real SRS status dots, per-word audio+chat); **free practice of ANY lesson** in the classroom (`practiceBatchProvider`); seedCard progress-wipe bug fixed; **+48 items** (colors/money/gomi/apartment/post/phone) → 854 total; 1023 audio clips.
 
 ## ✅ Built this session (2026-07-16/17) — the big additions
 - **Full curriculum content**: 806 items across 60+ lessons L0→N4 (was ~100). N4 grammar (te-form/plain/potential/give-receive/keigo) authored from the standard canon; `n4_whitelist.txt` (D-020); validator level-scoped. Every item audio'd (969 clips) + book-synced.

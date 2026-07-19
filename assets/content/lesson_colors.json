@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_colors",
+ "pack_id": "pak_a1_shop",
+ "depends_on": [],
+ "can_do": {
+  "en": "Pick items by colour",
+  "bn": "রং চিনে জিনিস বেছে নেওয়া",
+  "ja": "色で物を選ぶ"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "col_01",
+   "jp": "いろ",
+   "kana": "いろ",
+   "romaji": "iro",
+   "meaning": {
+    "en": "colour",
+    "bn": "রং",
+    "ja": "色"
+   },
+   "note": {
+    "en": "Ask about colour when shopping.",
+    "bn": "দোকানে いろ জিজ্ঞেস করে জিনিস বাছা যায়।",
+    "ja": "買い物で使う"
+   },
+   "srs_words": [
+    "いろ"
+   ]
+  },
+  {
+   "id": "col_02",
+   "jp": "あかい",
+   "kana": "あかい",
+   "romaji": "akai",
+   "meaning": {
+    "en": "red",
+    "bn": "লাল",
+    "ja": "赤い"
+   },
+   "note": {
+    "en": "i-adjective: akai kaban = red bag.",
+    "bn": "い-adjective — あかい かばん = লাল ব্যাগ।",
+    "ja": "い形容詞"
+   },
+   "srs_words": [
+    "あかい"
+   ]
+  },
+  {
+   "id": "col_03",
+   "jp": "あおい",
+   "kana": "あおい",
+   "romaji": "aoi",
+   "meaning": {
+    "en": "blue",
+    "bn": "নীল",
+    "ja": "青い"
+   },
+   "note": {
+    "en": "Green traffic lights are called ao!",
+    "bn": "জাপানে সবুজ ট্রাফিক লাইটকেও あお বলে!",
+    "ja": "信号も青"
+   },
+   "srs_words": [
+    "あおい"
+   ]
+  },
+  {
+   "id": "col_04",
+   "jp": "しろい",
+   "kana": "しろい",
+   "romaji": "shiroi",
+   "meaning": {
+    "en": "white",
+    "bn": "সাদা",
+    "ja": "白い"
+   },
+   "note": {
+    "en": "White helmet: shiroi herumetto.",
+    "bn": "কাজের সাদা হেলমেট: しろい ヘルメット।",
+    "ja": "い形容詞"
+   },
+   "srs_words": [
+    "しろい"
+   ]
+  },
+  {
+   "id": "col_05",
+   "jp": "くろい",
+   "kana": "くろい",
+   "romaji": "kuroi",
+   "meaning": {
+    "en": "black",
+    "bn": "কালো",
+    "ja": "黒い"
+   },
+   "note": {
+    "en": "Black shoes for formal wear.",
+    "bn": "くろい くつ (কালো জুতো) — ফর্মাল কাজে লাগে।",
+    "ja": "い形容詞"
+   },
+   "srs_words": [
+    "くろい"
+   ]
+  },
+  {
+   "id": "col_06",
+   "jp": "きいろい",
+   "kana": "きいろい",
+   "romaji": "kiiroi",
+   "meaning": {
+    "en": "yellow",
+    "bn": "হলুদ",
+    "ja": "黄色い"
+   },
+   "note": {
+    "en": "Warning signs are often yellow.",
+    "bn": "সাবধান-চিহ্ন প্রায়ই きいろい হয়।",
+    "ja": "注意の色"
+   },
+   "srs_words": [
+    "きいろい"
+   ]
+  },
+  {
+   "id": "col_07",
+   "jp": "みどり",
+   "kana": "みどり",
+   "romaji": "midori",
+   "meaning": {
+    "en": "green",
+    "bn": "সবুজ",
+    "ja": "緑"
+   },
+   "note": {
+    "en": "Midori is a noun: midori no happa.",
+    "bn": "みどり な-ধরনের — みどりの はっぱ (সবুজ পাতা)।",
+    "ja": "名詞"
+   },
+   "srs_words": [
+    "みどり"
+   ]
+  },
+  {
+   "id": "col_08",
+   "jp": "ちゃいろ",
+   "kana": "ちゃいろ",
+   "romaji": "chairo",
+   "meaning": {
+    "en": "brown",
+    "bn": "বাদামি",
+    "ja": "茶色"
+   },
+   "note": {
+    "en": "Cha (tea) + iro (colour) = brown.",
+    "bn": "ちゃ (চা) + いろ (রং) = চায়ের রং — মনে রাখা সোজা!",
+    "ja": "茶＋色"
+   },
+   "srs_words": [
+    "ちゃいろ"
+   ]
+  }
+ ]
+}

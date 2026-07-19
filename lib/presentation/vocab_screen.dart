@@ -14,6 +14,7 @@ import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/audio_service.dart';
 import '../domain/models.dart';
+import 'lesson_screen_v4.dart';
 import 'sensei_chat_sheet.dart';
 import 'state_pack.dart';
 
@@ -180,6 +181,21 @@ class _LessonBlock extends ConsumerWidget {
         subtitle: Text('${items.length}টি শব্দ',
             style: const TextStyle(fontSize: 11.5, color: BhasagoTheme.muted)),
         children: [
+          // Free practice (D-036): run THIS lesson in the classroom anytime —
+          // recommend-never-force means old lessons are always re-practicable.
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: OutlinedButton.icon(
+                icon: const Icon(Icons.school_outlined, size: 16),
+                label: const Text('ক্লাসরুমে অনুশীলন করো'),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) =>
+                        LessonScreenV4(practiceLessonId: lesson.id))),
+              ),
+            ),
+          ),
           for (final it in items)
             ListTile(
               dense: true,

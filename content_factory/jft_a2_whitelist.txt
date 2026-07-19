@@ -1126,3 +1126,30 @@ ICカード
 もってきてください
 いそいでください
 ゆっくりおねがいします
+# --- appended 2026-07-19 (D-036): standard N5 daily-life vocab for the new
+# --- colors/money/gomi/apartment/post/phone lessons (Irodori-aligned)
+あおい
+あかい
+おくります
+かん
+きいろい
+くろい
+けいたい
+ゴミ
+ゴミのひ
+ゴミぶくろ
+じゅうしょ
+じゅうでん
+だいどころ
+でんき
+とどきます
+にもつ
+はがき
+びん
+ペットボトル
+メール
+もえないゴミ
+もえるゴミ
+もしもし
+りょうきん
+るす

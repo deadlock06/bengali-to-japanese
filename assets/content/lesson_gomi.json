@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_gomi",
+ "pack_id": "pak_a2_life",
+ "depends_on": [],
+ "can_do": {
+  "en": "Sort garbage the Japanese way",
+  "bn": "ময়লা আলাদা করে ফেলা (গোমি নিয়ম)",
+  "ja": "ゴミの分別"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "gmi_01",
+   "jp": "ゴミ",
+   "kana": "ゴミ",
+   "romaji": "gomi",
+   "meaning": {
+    "en": "garbage",
+    "bn": "ময়লা/আবর্জনা",
+    "ja": "ゴミ"
+   },
+   "note": {
+    "en": "Garbage rules are strict in Japan.",
+    "bn": "জাপানে ゴミ ফেলার নিয়ম খুব কড়া — ভুল দিনে ফেললে ফেরত আসে!",
+    "ja": "分別が大事"
+   },
+   "srs_words": [
+    "ゴミ"
+   ]
+  },
+  {
+   "id": "gmi_02",
+   "jp": "もえるゴミ",
+   "kana": "もえるゴミ",
+   "romaji": "moeru gomi",
+   "meaning": {
+    "en": "burnable garbage",
+    "bn": "পোড়ানো-যায় এমন ময়লা",
+    "ja": "燃えるゴミ"
+   },
+   "note": {
+    "en": "Food waste, paper — usually 2 days/week.",
+    "bn": "খাবারের উচ্ছিষ্ট, কাগজ — সপ্তাহে ২ দিন সাধারণত।",
+    "ja": "生ゴミ・紙"
+   },
+   "srs_words": [
+    "もえるゴミ"
+   ]
+  },
+  {
+   "id": "gmi_03",
+   "jp": "もえないゴミ",
+   "kana": "もえないゴミ",
+   "romaji": "moenai gomi",
+   "meaning": {
+    "en": "non-burnable garbage",
+    "bn": "পোড়ানো-যায়-না এমন ময়লা",
+    "ja": "燃えないゴミ"
+   },
+   "note": {
+    "en": "Metal, glass, small electronics.",
+    "bn": "ধাতু, কাচ, ছোট ইলেকট্রনিক্স — মাসে ১-২ দিন।",
+    "ja": "金属・ガラス"
+   },
+   "srs_words": [
+    "もえないゴミ"
+   ]
+  },
+  {
+   "id": "gmi_04",
+   "jp": "ペットボトル",
+   "kana": "ペットボトル",
+   "romaji": "petto botoru",
+   "meaning": {
+    "en": "PET bottle",
+    "bn": "প্লাস্টিক বোতল",
+    "ja": "ペットボトル"
+   },
+   "note": {
+    "en": "Remove cap and label separately!",
+    "bn": "ছিপি আর লেবেল খুলে আলাদা ফেলতে হয়!",
+    "ja": "キャップは別"
+   },
+   "srs_words": [
+    "ペットボトル"
+   ]
+  },
+  {
+   "id": "gmi_05",
+   "jp": "かん",
+   "kana": "かん",
+   "romaji": "kan",
+   "meaning": {
+    "en": "can",
+    "bn": "ক্যান/কৌটা",
+    "ja": "缶"
+   },
+   "note": {
+    "en": "Rinse cans before recycling.",
+    "bn": "জুস-কফির かん ধুয়ে recycle-এ দাও।",
+    "ja": "洗って出す"
+   },
+   "srs_words": [
+    "かん"
+   ]
+  },
+  {
+   "id": "gmi_06",
+   "jp": "びん",
+   "kana": "びん",
+   "romaji": "bin",
+   "meaning": {
+    "en": "glass bottle",
+    "bn": "কাচের বোতল",
+    "ja": "瓶"
+   },
+   "note": {
+    "en": "Bottles and cans often same day.",
+    "bn": "びん আর かん প্রায়ই একই দিনে নেয়।",
+    "ja": "缶と同じ日"
+   },
+   "srs_words": [
+    "びん"
+   ]
+  },
+  {
+   "id": "gmi_07",
+   "jp": "ゴミぶくろ",
+   "kana": "ゴミぶくろ",
+   "romaji": "gomi bukuro",
+   "meaning": {
+    "en": "garbage bag",
+    "bn": "ময়লার ব্যাগ",
+    "ja": "ゴミ袋"
+   },
+   "note": {
+    "en": "Many cities require official bags.",
+    "bn": "শহর-নির্দিষ্ট ব্যাগ কিনতে হয় অনেক জায়গায় — কনবিনিতে পাবে।",
+    "ja": "指定袋"
+   },
+   "srs_words": [
+    "ゴミぶくろ"
+   ]
+  },
+  {
+   "id": "gmi_08",
+   "jp": "ゴミのひ",
+   "kana": "ゴミのひ",
+   "romaji": "gomi no hi",
+   "meaning": {
+    "en": "garbage day",
+    "bn": "ময়লা ফেলার দিন",
+    "ja": "ゴミの日"
+   },
+   "note": {
+    "en": "Check the building notice for days.",
+    "bn": "বিল্ডিংয়ের নোটিসে ゴミのひ লেখা থাকে — ছবি তুলে রাখো।",
+    "ja": "掲示板を見る"
+   },
+   "srs_words": [
+    "ゴミのひ"
+   ]
+  }
+ ]
+}

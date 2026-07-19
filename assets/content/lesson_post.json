@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_post",
+ "pack_id": "pak_a2_town",
+ "depends_on": [],
+ "can_do": {
+  "en": "Send mail & parcels",
+  "bn": "ডাকঘরে চিঠি-পার্সেল পাঠানো",
+  "ja": "郵便局で送る"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "pst_01",
+   "jp": "ゆうびんきょく",
+   "kana": "ゆうびんきょく",
+   "romaji": "yuubinkyoku",
+   "meaning": {
+    "en": "post office",
+    "bn": "ডাকঘর",
+    "ja": "郵便局"
+   },
+   "note": {
+    "en": "The 〒 mark = post office.",
+    "bn": "〒 চিহ্নটাই ডাকঘর — ATM-ও থাকে ভেতরে।",
+    "ja": "〒マーク"
+   },
+   "srs_words": [
+    "ゆうびんきょく"
+   ]
+  },
+  {
+   "id": "pst_02",
+   "jp": "きって",
+   "kana": "きって",
+   "romaji": "kitte",
+   "meaning": {
+    "en": "stamp",
+    "bn": "ডাকটিকিট",
+    "ja": "切手"
+   },
+   "note": {
+    "en": "Stamps sold at konbini too.",
+    "bn": "কনবিনিতেও きって কেনা যায়।",
+    "ja": "コンビニでも"
+   },
+   "srs_words": [
+    "きって"
+   ]
+  },
+  {
+   "id": "pst_03",
+   "jp": "てがみ",
+   "kana": "てがみ",
+   "romaji": "tegami",
+   "meaning": {
+    "en": "letter",
+    "bn": "চিঠি",
+    "ja": "手紙"
+   },
+   "note": {
+    "en": "Airmail = koukuubin.",
+    "bn": "দেশে てがみ পাঠাতে こうくうびん (এয়ার মেল) বলো।",
+    "ja": "航空便"
+   },
+   "srs_words": [
+    "てがみ"
+   ]
+  },
+  {
+   "id": "pst_04",
+   "jp": "にもつ",
+   "kana": "にもつ",
+   "romaji": "nimotsu",
+   "meaning": {
+    "en": "luggage / parcel",
+    "bn": "মালপত্র/পার্সেল",
+    "ja": "荷物"
+   },
+   "note": {
+    "en": "Pick up parcels at the post office.",
+    "bn": "দেশ থেকে আসা にもつ ডাকঘর থেকেও তোলা যায়।",
+    "ja": "受け取り"
+   },
+   "srs_words": [
+    "にもつ"
+   ]
+  },
+  {
+   "id": "pst_05",
+   "jp": "おくります",
+   "kana": "おくります",
+   "romaji": "okurimasu",
+   "meaning": {
+    "en": "to send",
+    "bn": "পাঠাই",
+    "ja": "送ります"
+   },
+   "note": {
+    "en": "Kore o Bangladesh ni okurimasu.",
+    "bn": "これを バングラデシュに おくります — এটুকুই যথেষ্ট!",
+    "ja": "送る"
+   },
+   "srs_words": [
+    "おくります"
+   ]
+  },
+  {
+   "id": "pst_06",
+   "jp": "とどきます",
+   "kana": "とどきます",
+   "romaji": "todokimasu",
+   "meaning": {
+    "en": "to arrive (things)",
+    "bn": "পৌঁছায়",
+    "ja": "届きます"
+   },
+   "note": {
+    "en": "Itsu todokimasu ka = when arrive?",
+    "bn": "いつ とどきますか = কবে পৌঁছাবে?",
+    "ja": "届く"
+   },
+   "srs_words": [
+    "とどきます"
+   ]
+  },
+  {
+   "id": "pst_07",
+   "jp": "じゅうしょ",
+   "kana": "じゅうしょ",
+   "romaji": "juusho",
+   "meaning": {
+    "en": "address",
+    "bn": "ঠিকানা",
+    "ja": "住所"
+   },
+   "note": {
+    "en": "Japanese addresses go big→small.",
+    "bn": "জাপানি じゅうしょ বড়→ছোট ক্রমে লেখে (জেলা আগে)।",
+    "ja": "逆順"
+   },
+   "srs_words": [
+    "じゅうしょ"
+   ]
+  },
+  {
+   "id": "pst_08",
+   "jp": "はがき",
+   "kana": "はがき",
+   "romaji": "hagaki",
+   "meaning": {
+    "en": "postcard",
+    "bn": "পোস্টকার্ড",
+    "ja": "はがき"
+   },
+   "note": {
+    "en": "New-year postcards = nengajou.",
+    "bn": "নববর্ষে ねんがじょう (নিউ-ইয়ার はがき) পাঠানোর রীতি।",
+    "ja": "年賀状"
+   },
+   "srs_words": [
+    "はがき"
+   ]
+  }
+ ]
+}

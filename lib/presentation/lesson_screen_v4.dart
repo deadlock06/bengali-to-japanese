@@ -75,7 +75,11 @@ String _bnNum(int n) =>
     n.toString().split('').map((d) => '০১২৩৪৫৬৭৮৯'[int.parse(d)]).join();
 
 class LessonScreenV4 extends ConsumerStatefulWidget {
-  const LessonScreenV4({super.key});
+  const LessonScreenV4({super.key, this.practiceLessonId});
+
+  /// Free practice (D-036): teach THIS lesson regardless of ladder position —
+  /// the vocab bank's অনুশীলন entry. null = normal current-unit classroom.
+  final String? practiceLessonId;
   @override
   ConsumerState<LessonScreenV4> createState() => _LessonScreenV4State();
 }
@@ -389,7 +393,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   Widget build(BuildContext context) {
     // T-112: adopt the real batch only before the first interaction, so an
     // in-flight lesson never swaps content under the learner (rev-4 §2).
-    final live = ref.watch(classroomBatchProvider).valueOrNull;
+    final live = widget.practiceLessonId != null
+        ? ref.watch(practiceBatchProvider(widget.practiceLessonId!)).valueOrNull
+        : ref.watch(classroomBatchProvider).valueOrNull;
     if (_batch == null && live != null && idx == 0 && picked == -1 &&
         correctCount == 0 && !done) {
       _batch = live;

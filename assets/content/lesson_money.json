@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_money",
+ "pack_id": "pak_a1_shop",
+ "depends_on": [],
+ "can_do": {
+  "en": "Handle money & payment",
+  "bn": "টাকা-পয়সা লেনদেন করা",
+  "ja": "お金のやり取り"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "mny_01",
+   "jp": "おかね",
+   "kana": "おかね",
+   "romaji": "okane",
+   "meaning": {
+    "en": "money",
+    "bn": "টাকা",
+    "ja": "お金"
+   },
+   "note": {
+    "en": "The o- is honorific; always okane.",
+    "bn": "お-টা সম্মানসূচক — সবসময় おかね বলো।",
+    "ja": "お＋金"
+   },
+   "srs_words": [
+    "おかね"
+   ]
+  },
+  {
+   "id": "mny_02",
+   "jp": "えん",
+   "kana": "えん",
+   "romaji": "en",
+   "meaning": {
+    "en": "yen",
+    "bn": "ইয়েন",
+    "ja": "円"
+   },
+   "note": {
+    "en": "Track the yen-taka rate.",
+    "bn": "১০০えん ≈ কত টাকা হয় হিসেব রাখো — দাম বোঝা সহজ হবে।",
+    "ja": "日本の通貨"
+   },
+   "srs_words": [
+    "えん"
+   ]
+  },
+  {
+   "id": "mny_03",
+   "jp": "ぎんこう",
+   "kana": "ぎんこう",
+   "romaji": "ginkou",
+   "meaning": {
+    "en": "bank",
+    "bn": "ব্যাংক",
+    "ja": "銀行"
+   },
+   "note": {
+    "en": "You'll open a salary account at the bank.",
+    "bn": "বেতনের অ্যাকাউন্ট ぎんこう-তে খুলতে হবে।",
+    "ja": "口座を作る"
+   },
+   "srs_words": [
+    "ぎんこう"
+   ]
+  },
+  {
+   "id": "mny_04",
+   "jp": "おつり",
+   "kana": "おつり",
+   "romaji": "otsuri",
+   "meaning": {
+    "en": "change (money)",
+    "bn": "ভাংতি/ফেরত টাকা",
+    "ja": "お釣り"
+   },
+   "note": {
+    "en": "Count your change.",
+    "bn": "দোকানি おつり দেওয়ার সময় গুনে নাও।",
+    "ja": "レジで"
+   },
+   "srs_words": [
+    "おつり"
+   ]
+  },
+  {
+   "id": "mny_05",
+   "jp": "レシート",
+   "kana": "レシート",
+   "romaji": "reshiito",
+   "meaning": {
+    "en": "receipt",
+    "bn": "রসিদ",
+    "ja": "レシート"
+   },
+   "note": {
+    "en": "Katakana loanword from receipt.",
+    "bn": "কাতাকানা শব্দ — receipt থেকে। ফেরত দিতে লাগে।",
+    "ja": "外来語"
+   },
+   "srs_words": [
+    "レシート"
+   ]
+  },
+  {
+   "id": "mny_06",
+   "jp": "カード",
+   "kana": "カード",
+   "romaji": "kaado",
+   "meaning": {
+    "en": "card",
+    "bn": "কার্ড",
+    "ja": "カード"
+   },
+   "note": {
+    "en": "Kaado de onegaishimasu = by card.",
+    "bn": "カードで おねがいします = কার্ডে দেব।",
+    "ja": "支払い"
+   },
+   "srs_words": [
+    "カード"
+   ]
+  },
+  {
+   "id": "mny_07",
+   "jp": "げんきん",
+   "kana": "げんきん",
+   "romaji": "genkin",
+   "meaning": {
+    "en": "cash",
+    "bn": "নগদ টাকা",
+    "ja": "現金"
+   },
+   "note": {
+    "en": "Small shops often need cash.",
+    "bn": "ছোট দোকানে এখনো げんきん লাগে প্রায়ই।",
+    "ja": "小さい店で"
+   },
+   "srs_words": [
+    "げんきん"
+   ]
+  },
+  {
+   "id": "mny_08",
+   "jp": "りょうきん",
+   "kana": "りょうきん",
+   "romaji": "ryoukin",
+   "meaning": {
+    "en": "fee / charge",
+    "bn": "ফি/চার্জ",
+    "ja": "料金"
+   },
+   "note": {
+    "en": "Bus fare, phone bill — all ryoukin.",
+    "bn": "বাস-ট্রেনের ভাড়া, ফোন বিল — সব りょうきん।",
+    "ja": "バス・電話"
+   },
+   "srs_words": [
+    "りょうきん"
+   ]
+  }
+ ]
+}

@@ -143,6 +143,28 @@ final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
   return buildClassroomBatch(curriculumOrdered: ordered, completed: completed);
 });
 
+/// Free-practice batch for ONE specific lesson (D-036, vocab-bank অনুশীলন).
+/// Same deterministic answer-key builder as the classroom; completion state is
+/// ignored so any lesson can be practiced anytime (no locks, D-001).
+final practiceBatchProvider =
+    FutureProvider.family<ClassroomBatch?, String>((ref, lessonId) async {
+  final content = await ref.watch(contentProvider.future);
+  final ordered = <Lesson>[];
+  try {
+    for (final u in await ref.watch(curriculumProvider.future)) {
+      for (final id in u.lessonIds) {
+        final l = content.lesson(id);
+        if (l != null && !ordered.contains(l)) ordered.add(l);
+      }
+    }
+  } catch (_) {/* ontology unavailable → repo order below */}
+  for (final l in content.lessons) {
+    if (!ordered.contains(l)) ordered.add(l);
+  }
+  return buildClassroomBatch(
+      curriculumOrdered: ordered, completed: const {}, forceLessonId: lessonId);
+});
+
 /// Bhasha Go book (assets/book/book.json) — T-121 slice.
 final bookProvider = FutureProvider<BookRepository>((_) => BookRepository.load());
 

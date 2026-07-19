@@ -75,6 +75,9 @@ class SrsLocal {
 
   /// Seeds a new content card (idempotent) so a just-learned item can be
   /// scheduled. Safe to call repeatedly; ConflictAlgorithm.replace upserts.
+  /// Seed a NEW card only — never clobbers an existing card's FSRS state.
+  /// (Replaying a lesson — journey-map redo or vocab-bank free practice —
+  /// must not reset stability/reps back to newCard; D-036 audit fix.)
   Future<void> seedCard({
     required String id,
     required String word,
@@ -82,13 +85,30 @@ class SrsLocal {
     required String meaningBn,
     required String meaningEn,
     String jlptLevel = 'N5',
-  }) =>
-      upsert(ScheduledCard(id: id, state: CardState.newCard),
-          word: word,
-          reading: reading,
-          meaningBn: meaningBn,
-          meaningEn: meaningEn,
-          jlptLevel: jlptLevel);
+  }) async {
+    final db = await _open();
+    final c = ScheduledCard(id: id, state: CardState.newCard);
+    await db.insert(
+      'srs_cards',
+      {
+        'id': c.id,
+        'word': word,
+        'reading': reading,
+        'meaning_bn': meaningBn,
+        'meaning_en': meaningEn,
+        'jlpt_level': jlptLevel,
+        'due': c.due.millisecondsSinceEpoch,
+        'stability': c.stability,
+        'difficulty': c.difficulty,
+        'reps': c.reps,
+        'lapses': c.lapses,
+        'state': c.state.name,
+        'last_review': c.lastReview?.millisecondsSinceEpoch,
+        'elapsed_days': c.elapsedDays,
+      },
+      conflictAlgorithm: ConflictAlgorithm.ignore, // existing progress wins
+    );
+  }
 
   Future<void> upsert(ScheduledCard c,
       {required String word,

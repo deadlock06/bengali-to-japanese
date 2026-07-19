@@ -100,12 +100,24 @@ ClassroomBatch? buildClassroomBatch({
   required List<Lesson> curriculumOrdered,
   required Set<String> completed,
   int maxItems = 8,
+  // Free practice (D-036): teach THIS lesson regardless of completion state —
+  // the vocab bank's "অনুশীলন" path. null = normal ladder behaviour.
+  String? forceLessonId,
 }) {
   Lesson? next;
-  for (final l in curriculumOrdered) {
-    if (!completed.contains(l.id) && l.items.isNotEmpty) {
-      next = l;
-      break;
+  if (forceLessonId != null) {
+    for (final l in curriculumOrdered) {
+      if (l.id == forceLessonId && l.items.isNotEmpty) {
+        next = l;
+        break;
+      }
+    }
+  } else {
+    for (final l in curriculumOrdered) {
+      if (!completed.contains(l.id) && l.items.isNotEmpty) {
+        next = l;
+        break;
+      }
     }
   }
   if (next == null) return null;

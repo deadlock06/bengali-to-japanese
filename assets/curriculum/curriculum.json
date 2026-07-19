@@ -1,538 +1,538 @@
 {
-  "version": 1,
-  "note": "SENSEI curriculum ontology. Single source of truth for sequencing, whitelist, prerequisites. Consumed by: RAG store, LLM whitelist/GBNF, deterministic grader, FSRS deck, Director agent, pack system.",
-  "frameworks": {
-    "cefr_via_jf_standard": "A1-A2 Can-dos aligned to Irodori (Japan Foundation)",
-    "exam_targets": [
-      "JFT-Basic (A2, SSW visa)",
-      "JLPT N4 (care/food/hospitality)"
-    ]
-  },
-  "levels": [
-    {
-      "id": "L0",
-      "name": "Foundations",
-      "cefr": "pre-A1",
-      "exam": null,
-      "order": 0
-    },
-    {
-      "id": "A1",
-      "name": "Survival",
-      "cefr": "A1",
-      "exam": "Irodori Starter",
-      "order": 1
-    },
-    {
-      "id": "A2",
-      "name": "Daily life & work",
-      "cefr": "A2",
-      "exam": "JFT-Basic",
-      "order": 2
-    },
-    {
-      "id": "N4",
-      "name": "Expanded grammar",
-      "cefr": "A2+/B1",
-      "exam": "JLPT N4",
-      "order": 3
-    },
-    {
-      "id": "N3",
-      "name": "Bridge to fluency",
-      "cefr": "B1",
-      "exam": "JLPT N3",
-      "order": 4
-    },
-    {
-      "id": "N2",
-      "name": "Pre-advanced",
-      "cefr": "B2",
-      "exam": "JLPT N2",
-      "order": 5
-    },
-    {
-      "id": "N1",
-      "name": "Advanced / near-native",
-      "cefr": "C1",
-      "exam": "JLPT N1",
-      "order": 6
-    }
-  ],
-  "whitelists": {
-    "jft_a2": "~1200-word JFT-Basic/A2 list (JMdict-filtered). LLM learner-facing JP must stay within this at A2.",
-    "n4": "JLPT N4 list superset.",
-    "n3": "JLPT N3 list superset (content program — authored + native-reviewed before verified).",
-    "n2": "JLPT N2 list superset (content program — authored + native-reviewed before verified).",
-    "n1": "JLPT N1 list superset (content program — authored + native-reviewed before verified)."
-  },
-  "units": [
-    {
-      "id": "L0.1",
-      "level": "L0",
-      "order": 1,
-      "title": {
-        "bn": "হিরাগানা",
-        "en": "Hiragana",
-        "ja": "ひらがな"
-      },
-      "can_do": {
-        "bn": "৪৬টি হিরাগানা পড়া ও লেখা",
-        "en": "Read and write the 46 hiragana"
-      },
-      "prerequisites": [],
-      "exam_tag": "foundation",
-      "lesson_id": "kana_hiragana",
-      "target_word_count": 46
-    },
-    {
-      "id": "L0.2",
-      "level": "L0",
-      "order": 2,
-      "title": {
-        "bn": "কাতাকানা",
-        "en": "Katakana",
-        "ja": "カタカナ"
-      },
-      "can_do": {
-        "bn": "৪৬টি কাতাকানা পড়া ও লেখা",
-        "en": "Read and write the 46 katakana"
-      },
-      "prerequisites": [
-        "L0.1"
-      ],
-      "exam_tag": "foundation",
-      "lesson_id": "kana_katakana",
-      "target_word_count": 46
-    },
-    {
-      "id": "L0.3",
-      "level": "L0",
-      "order": 3,
-      "title": {
-        "bn": "সংখ্যা ও সময়",
-        "en": "Numbers & time",
-        "ja": "数・時間"
-      },
-      "can_do": {
-        "bn": "সংখ্যা, দাম, সময় ও বার বলা",
-        "en": "Say numbers, prices, time, days"
-      },
-      "prerequisites": [
-        "L0.1"
-      ],
-      "exam_tag": "foundation",
-      "lesson_id": "lesson_numbers,lesson_numbers_big,lesson_time,lesson_week,lesson_counters",
-      "target_word_count": 40
-    },
-    {
-      "id": "A1.1",
-      "level": "A1",
-      "order": 1,
-      "title": {
-        "bn": "Greeting ও self-intro",
-        "en": "Greetings & self-introduction",
-        "ja": "あいさつ・自己紹介"
-      },
-      "can_do": {
-        "bn": "কর্মস্থলে নিজের পরিচয় দিতে পারা",
-        "en": "Introduce yourself at work"
-      },
-      "prerequisites": [
-        "L0.1"
-      ],
-      "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_greetings,work_intro_01,lesson_polite,lesson_responses",
-      "target_word_count": 30
-    },
-    {
-      "id": "A1.2",
-      "level": "A1",
-      "order": 2,
-      "title": {
-        "bn": "নাম, দেশ, কাজ",
-        "en": "Name, country, job",
-        "ja": "名前・国・仕事"
-      },
-      "can_do": {
-        "bn": "নাম, দেশ ও পেশা জিজ্ঞেস ও বলা",
-        "en": "Ask and give name, country, occupation"
-      },
-      "prerequisites": [
-        "A1.1"
-      ],
-      "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_intro_qa,lesson_family,lesson_about_me,lesson_hobbies,lesson_countries",
-      "target_word_count": 35
-    },
-    {
-      "id": "A1.3",
-      "level": "A1",
-      "order": 3,
-      "title": {
-        "bn": "Konbini (দোকান)",
-        "en": "Convenience store",
-        "ja": "コンビニ"
-      },
-      "can_do": {
-        "bn": "দোকানে কেনাকাটা করা",
-        "en": "Buy something at a store"
-      },
-      "prerequisites": [
-        "L0.3"
-      ],
-      "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_konbini,lesson_shopping,lesson_shopping_adj,lesson_clothes,lesson_shop_talk",
-      "target_word_count": 40
-    },
-    {
-      "id": "A1.4",
-      "level": "A1",
-      "order": 4,
-      "title": {
-        "bn": "Restaurant",
-        "en": "Ordering food",
-        "ja": "レストラン"
-      },
-      "can_do": {
-        "bn": "খাবার order করা, বিল চাওয়া",
-        "en": "Order food, ask for the bill"
-      },
-      "prerequisites": [
-        "A1.3"
-      ],
-      "exam_tag": "JFT-A1",
-      "lesson_id": "lesson_restaurant,lesson_food,lesson_taste,lesson_drinks,lesson_restaurant_talk",
-      "target_word_count": 40
-    },
-    {
-      "id": "A2.1",
-      "level": "A2",
-      "order": 1,
-      "title": {
-        "bn": "কাজের অভিবাদন ও ছুটি",
-        "en": "Workplace & day off",
-        "ja": "職場・休み"
-      },
-      "can_do": {
-        "bn": "সহকর্মীকে অভিবাদন, ছুটি/দেরি জানানো",
-        "en": "Greet coworkers, request leave, report lateness"
-      },
-      "prerequisites": [
-        "A1.1"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_workplace,lesson_work_day,lesson_work_verbs,lesson_work_phrases,lesson_work_things,lesson_work_team",
-      "target_word_count": 45
-    },
-    {
-      "id": "A2.2",
-      "level": "A2",
-      "order": 2,
-      "title": {
-        "bn": "ক্লিনিক ও স্বাস্থ্য",
-        "en": "Clinic & health",
-        "ja": "クリニック・健康"
-      },
-      "can_do": {
-        "bn": "অসুস্থতা বোঝানো, জরুরি সাহায্য চাওয়া",
-        "en": "Explain illness, get emergency help"
-      },
-      "prerequisites": [
-        "A1.2"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_clinic,lesson_emergency,lesson_body,lesson_symptoms,lesson_medicine,lesson_hygiene",
-      "target_word_count": 45
-    },
-    {
-      "id": "A2.3",
-      "level": "A2",
-      "order": 3,
-      "title": {
-        "bn": "রাস্তা ও যাতায়াত",
-        "en": "Directions & transport",
-        "ja": "道・交通"
-      },
-      "can_do": {
-        "bn": "রাস্তা জিজ্ঞেস করা, ট্রেন/স্টেশন ব্যবহার",
-        "en": "Ask directions, use trains/stations"
-      },
-      "prerequisites": [
-        "L0.3"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_directions,lesson_transport,lesson_places,lesson_vehicles,lesson_directions_words,lesson_stations,lesson_travel_manners",
-      "target_word_count": 50
-    },
-    {
-      "id": "A2.4",
-      "level": "A2",
-      "order": 4,
-      "title": {
-        "bn": "অনুমতি ও অনুরোধ",
-        "en": "Permission & requests",
-        "ja": "許可・依頼"
-      },
-      "can_do": {
-        "bn": "〜てもいいですか / 〜てください ব্যবহার",
-        "en": "Ask permission and make requests"
-      },
-      "prerequisites": [
-        "A2.1"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_requests,lesson_requests_2,lesson_permissions,lesson_learning_questions,lesson_asking_actions",
-      "target_word_count": 40
-    },
-    {
-      "id": "A2.5",
-      "level": "A2",
-      "order": 5,
-      "title": {
-        "bn": "অতীত ও পরিকল্পনা",
-        "en": "Past & plans",
-        "ja": "過去・予定"
-      },
-      "can_do": {
-        "bn": "যা করেছি / করব তা বলা (〜ました/〜ます)",
-        "en": "Talk about what you did / will do"
-      },
-      "prerequisites": [
-        "A2.4"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_smalltalk,lesson_past_plans,lesson_frequency,lesson_daily_verbs,lesson_weather,lesson_events",
-      "target_word_count": 45
-    },
-    {
-      "id": "A2.6",
-      "level": "A2",
-      "order": 6,
-      "title": {
-        "bn": "সমস্যা ও ক্ষমা",
-        "en": "Problems & apologies",
-        "ja": "問題・謝罪"
-      },
-      "can_do": {
-        "bn": "কাজের সমস্যা বোঝানো ও ক্ষমা চাওয়া",
-        "en": "Report a work problem and apologize"
-      },
-      "prerequisites": [
-        "A2.1"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "lesson_work_safety,lesson_apology,lesson_problems,lesson_trouble_talk,lesson_feelings",
-      "target_word_count": 40
-    },
-    {
-      "id": "A2.M",
-      "level": "A2",
-      "order": 9,
-      "title": {
-        "bn": "JFT-Basic Mock",
-        "en": "JFT-Basic mock test",
-        "ja": "JFT模擬試験"
-      },
-      "can_do": {
-        "bn": "আসল CBT format-এ mock দেওয়া",
-        "en": "Take a full mock in real CBT format"
-      },
-      "prerequisites": [
-        "A2.1",
-        "A2.2",
-        "A2.3",
-        "A2.4",
-        "A2.5",
-        "A2.6"
-      ],
-      "exam_tag": "JFT-A2",
-      "lesson_id": "mock_a2",
-      "target_word_count": 0
-    },
-    {
-      "id": "N4.1",
-      "level": "N4",
-      "order": 1,
-      "title": {
-        "bn": "て-form",
-        "en": "Te-form & connected actions",
-        "ja": "て形"
-      },
-      "can_do": {
-        "bn": "て-form দিয়ে ধারাবাহিক কাজ বলা",
-        "en": "Link actions with te-form"
-      },
-      "prerequisites": [
-        "A2.5"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "lesson_te_now,lesson_te_state,lesson_te_sequence,lesson_te_rules,lesson_te_requests,lesson_te_try,lesson_te_giving",
-      "target_word_count": 50
-    },
-    {
-      "id": "N4.2",
-      "level": "N4",
-      "order": 2,
-      "title": {
-        "bn": "Plain / casual form",
-        "en": "Plain form",
-        "ja": "普通形"
-      },
-      "can_do": {
-        "bn": "casual বন্ধুদের সাথে কথা বলা",
-        "en": "Speak casually with friends"
-      },
-      "prerequisites": [
-        "N4.1"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "lesson_plain_present,lesson_plain_negative,lesson_plain_past,lesson_casual_talk,lesson_casual_questions,lesson_plain_think,lesson_casual_register",
-      "target_word_count": 50
-    },
-    {
-      "id": "N4.3",
-      "level": "N4",
-      "order": 3,
-      "title": {
-        "bn": "সামর্থ্য (potential)",
-        "en": "Potential / ability",
-        "ja": "可能形"
-      },
-      "can_do": {
-        "bn": "কী করতে পারি তা বলা (〜られる)",
-        "en": "Say what you can do"
-      },
-      "prerequisites": [
-        "N4.1"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "lesson_can_do,lesson_cannot_do,lesson_can_ask,lesson_dekiru_skills,lesson_can_work,lesson_can_life",
-      "target_word_count": 45
-    },
-    {
-      "id": "N4.4",
-      "level": "N4",
-      "order": 4,
-      "title": {
-        "bn": "দেওয়া-নেওয়া",
-        "en": "Giving & receiving",
-        "ja": "あげる・もらう・くれる"
-      },
-      "can_do": {
-        "bn": "দেওয়া/নেওয়ার সম্পর্ক বলা",
-        "en": "Express giving and receiving"
-      },
-      "prerequisites": [
-        "N4.2"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "lesson_give_triangle,lesson_give_things,lesson_give_polite,lesson_give_favors,lesson_give_situations",
-      "target_word_count": 40
-    },
-    {
-      "id": "N4.5",
-      "level": "N4",
-      "order": 5,
-      "title": {
-        "bn": "Keigo পরিচিতি",
-        "en": "Keigo introduction",
-        "ja": "敬語入門"
-      },
-      "can_do": {
-        "bn": "গ্রাহকের সাথে ভদ্র service-ভাষা",
-        "en": "Use polite service language with customers"
-      },
-      "prerequisites": [
-        "N4.2"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "lesson_keigo_hear,lesson_keigo_humble,lesson_keigo_shop,lesson_keigo_work,lesson_keigo_phone,lesson_keigo_rules",
-      "target_word_count": 45
-    },
-    {
-      "id": "N4.M",
-      "level": "N4",
-      "order": 9,
-      "title": {
-        "bn": "JLPT N4 Mock",
-        "en": "JLPT N4 mock test",
-        "ja": "N4模擬試験"
-      },
-      "can_do": {
-        "bn": "N4 format-এ mock দেওয়া",
-        "en": "Take a full N4 mock"
-      },
-      "prerequisites": [
-        "N4.1",
-        "N4.2",
-        "N4.3",
-        "N4.4",
-        "N4.5"
-      ],
-      "exam_tag": "JLPT-N4",
-      "lesson_id": "mock_n4",
-      "target_word_count": 0
-    },
-    {
-      "id": "N3.M",
-      "level": "N3",
-      "order": 1,
-      "title": {
-        "bn": "JLPT N3 Mock",
-        "en": "JLPT N3 mock test",
-        "ja": "N3模擬試験"
-      },
-      "can_do": {
-        "bn": "N3 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
-        "en": "Take a full N3 mock (content pack coming)"
-      },
-      "prerequisites": [
-        "N4.M"
-      ],
-      "exam_tag": "JLPT-N3",
-      "lesson_id": "mock_n3",
-      "target_word_count": 0
-    },
-    {
-      "id": "N2.M",
-      "level": "N2",
-      "order": 1,
-      "title": {
-        "bn": "JLPT N2 Mock",
-        "en": "JLPT N2 mock test",
-        "ja": "N2模擬試験"
-      },
-      "can_do": {
-        "bn": "N2 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
-        "en": "Take a full N2 mock (content pack coming)"
-      },
-      "prerequisites": [
-        "N3.M"
-      ],
-      "exam_tag": "JLPT-N2",
-      "lesson_id": "mock_n2",
-      "target_word_count": 0
-    },
-    {
-      "id": "N1.M",
-      "level": "N1",
-      "order": 1,
-      "title": {
-        "bn": "JLPT N1 Mock",
-        "en": "JLPT N1 mock test",
-        "ja": "N1模擬試験"
-      },
-      "can_do": {
-        "bn": "N1 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
-        "en": "Take a full N1 mock (content pack coming)"
-      },
-      "prerequisites": [
-        "N2.M"
-      ],
-      "exam_tag": "JLPT-N1",
-      "lesson_id": "mock_n1",
-      "target_word_count": 0
-    }
+ "version": 1,
+ "note": "SENSEI curriculum ontology. Single source of truth for sequencing, whitelist, prerequisites. Consumed by: RAG store, LLM whitelist/GBNF, deterministic grader, FSRS deck, Director agent, pack system.",
+ "frameworks": {
+  "cefr_via_jf_standard": "A1-A2 Can-dos aligned to Irodori (Japan Foundation)",
+  "exam_targets": [
+   "JFT-Basic (A2, SSW visa)",
+   "JLPT N4 (care/food/hospitality)"
   ]
+ },
+ "levels": [
+  {
+   "id": "L0",
+   "name": "Foundations",
+   "cefr": "pre-A1",
+   "exam": null,
+   "order": 0
+  },
+  {
+   "id": "A1",
+   "name": "Survival",
+   "cefr": "A1",
+   "exam": "Irodori Starter",
+   "order": 1
+  },
+  {
+   "id": "A2",
+   "name": "Daily life & work",
+   "cefr": "A2",
+   "exam": "JFT-Basic",
+   "order": 2
+  },
+  {
+   "id": "N4",
+   "name": "Expanded grammar",
+   "cefr": "A2+/B1",
+   "exam": "JLPT N4",
+   "order": 3
+  },
+  {
+   "id": "N3",
+   "name": "Bridge to fluency",
+   "cefr": "B1",
+   "exam": "JLPT N3",
+   "order": 4
+  },
+  {
+   "id": "N2",
+   "name": "Pre-advanced",
+   "cefr": "B2",
+   "exam": "JLPT N2",
+   "order": 5
+  },
+  {
+   "id": "N1",
+   "name": "Advanced / near-native",
+   "cefr": "C1",
+   "exam": "JLPT N1",
+   "order": 6
+  }
+ ],
+ "whitelists": {
+  "jft_a2": "~1200-word JFT-Basic/A2 list (JMdict-filtered). LLM learner-facing JP must stay within this at A2.",
+  "n4": "JLPT N4 list superset.",
+  "n3": "JLPT N3 list superset (content program — authored + native-reviewed before verified).",
+  "n2": "JLPT N2 list superset (content program — authored + native-reviewed before verified).",
+  "n1": "JLPT N1 list superset (content program — authored + native-reviewed before verified)."
+ },
+ "units": [
+  {
+   "id": "L0.1",
+   "level": "L0",
+   "order": 1,
+   "title": {
+    "bn": "হিরাগানা",
+    "en": "Hiragana",
+    "ja": "ひらがな"
+   },
+   "can_do": {
+    "bn": "৪৬টি হিরাগানা পড়া ও লেখা",
+    "en": "Read and write the 46 hiragana"
+   },
+   "prerequisites": [],
+   "exam_tag": "foundation",
+   "lesson_id": "kana_hiragana",
+   "target_word_count": 46
+  },
+  {
+   "id": "L0.2",
+   "level": "L0",
+   "order": 2,
+   "title": {
+    "bn": "কাতাকানা",
+    "en": "Katakana",
+    "ja": "カタカナ"
+   },
+   "can_do": {
+    "bn": "৪৬টি কাতাকানা পড়া ও লেখা",
+    "en": "Read and write the 46 katakana"
+   },
+   "prerequisites": [
+    "L0.1"
+   ],
+   "exam_tag": "foundation",
+   "lesson_id": "kana_katakana",
+   "target_word_count": 46
+  },
+  {
+   "id": "L0.3",
+   "level": "L0",
+   "order": 3,
+   "title": {
+    "bn": "সংখ্যা ও সময়",
+    "en": "Numbers & time",
+    "ja": "数・時間"
+   },
+   "can_do": {
+    "bn": "সংখ্যা, দাম, সময় ও বার বলা",
+    "en": "Say numbers, prices, time, days"
+   },
+   "prerequisites": [
+    "L0.1"
+   ],
+   "exam_tag": "foundation",
+   "lesson_id": "lesson_numbers,lesson_numbers_big,lesson_time,lesson_week,lesson_counters",
+   "target_word_count": 40
+  },
+  {
+   "id": "A1.1",
+   "level": "A1",
+   "order": 1,
+   "title": {
+    "bn": "Greeting ও self-intro",
+    "en": "Greetings & self-introduction",
+    "ja": "あいさつ・自己紹介"
+   },
+   "can_do": {
+    "bn": "কর্মস্থলে নিজের পরিচয় দিতে পারা",
+    "en": "Introduce yourself at work"
+   },
+   "prerequisites": [
+    "L0.1"
+   ],
+   "exam_tag": "JFT-A1",
+   "lesson_id": "lesson_greetings,work_intro_01,lesson_polite,lesson_responses",
+   "target_word_count": 30
+  },
+  {
+   "id": "A1.2",
+   "level": "A1",
+   "order": 2,
+   "title": {
+    "bn": "নাম, দেশ, কাজ",
+    "en": "Name, country, job",
+    "ja": "名前・国・仕事"
+   },
+   "can_do": {
+    "bn": "নাম, দেশ ও পেশা জিজ্ঞেস ও বলা",
+    "en": "Ask and give name, country, occupation"
+   },
+   "prerequisites": [
+    "A1.1"
+   ],
+   "exam_tag": "JFT-A1",
+   "lesson_id": "lesson_intro_qa,lesson_family,lesson_about_me,lesson_hobbies,lesson_countries",
+   "target_word_count": 35
+  },
+  {
+   "id": "A1.3",
+   "level": "A1",
+   "order": 3,
+   "title": {
+    "bn": "Konbini (দোকান)",
+    "en": "Convenience store",
+    "ja": "コンビニ"
+   },
+   "can_do": {
+    "bn": "দোকানে কেনাকাটা করা",
+    "en": "Buy something at a store"
+   },
+   "prerequisites": [
+    "L0.3"
+   ],
+   "exam_tag": "JFT-A1",
+   "lesson_id": "lesson_konbini,lesson_shopping,lesson_shopping_adj,lesson_clothes,lesson_shop_talk,lesson_colors,lesson_money",
+   "target_word_count": 40
+  },
+  {
+   "id": "A1.4",
+   "level": "A1",
+   "order": 4,
+   "title": {
+    "bn": "Restaurant",
+    "en": "Ordering food",
+    "ja": "レストラン"
+   },
+   "can_do": {
+    "bn": "খাবার order করা, বিল চাওয়া",
+    "en": "Order food, ask for the bill"
+   },
+   "prerequisites": [
+    "A1.3"
+   ],
+   "exam_tag": "JFT-A1",
+   "lesson_id": "lesson_restaurant,lesson_food,lesson_taste,lesson_drinks,lesson_restaurant_talk",
+   "target_word_count": 40
+  },
+  {
+   "id": "A2.1",
+   "level": "A2",
+   "order": 1,
+   "title": {
+    "bn": "কাজের অভিবাদন ও ছুটি",
+    "en": "Workplace & day off",
+    "ja": "職場・休み"
+   },
+   "can_do": {
+    "bn": "সহকর্মীকে অভিবাদন, ছুটি/দেরি জানানো",
+    "en": "Greet coworkers, request leave, report lateness"
+   },
+   "prerequisites": [
+    "A1.1"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_workplace,lesson_work_day,lesson_work_verbs,lesson_work_phrases,lesson_work_things,lesson_work_team",
+   "target_word_count": 45
+  },
+  {
+   "id": "A2.2",
+   "level": "A2",
+   "order": 2,
+   "title": {
+    "bn": "ক্লিনিক ও স্বাস্থ্য",
+    "en": "Clinic & health",
+    "ja": "クリニック・健康"
+   },
+   "can_do": {
+    "bn": "অসুস্থতা বোঝানো, জরুরি সাহায্য চাওয়া",
+    "en": "Explain illness, get emergency help"
+   },
+   "prerequisites": [
+    "A1.2"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_clinic,lesson_emergency,lesson_body,lesson_symptoms,lesson_medicine,lesson_hygiene",
+   "target_word_count": 45
+  },
+  {
+   "id": "A2.3",
+   "level": "A2",
+   "order": 3,
+   "title": {
+    "bn": "রাস্তা ও যাতায়াত",
+    "en": "Directions & transport",
+    "ja": "道・交通"
+   },
+   "can_do": {
+    "bn": "রাস্তা জিজ্ঞেস করা, ট্রেন/স্টেশন ব্যবহার",
+    "en": "Ask directions, use trains/stations"
+   },
+   "prerequisites": [
+    "L0.3"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_directions,lesson_transport,lesson_places,lesson_vehicles,lesson_directions_words,lesson_stations,lesson_travel_manners,lesson_post",
+   "target_word_count": 50
+  },
+  {
+   "id": "A2.4",
+   "level": "A2",
+   "order": 4,
+   "title": {
+    "bn": "অনুমতি ও অনুরোধ",
+    "en": "Permission & requests",
+    "ja": "許可・依頼"
+   },
+   "can_do": {
+    "bn": "〜てもいいですか / 〜てください ব্যবহার",
+    "en": "Ask permission and make requests"
+   },
+   "prerequisites": [
+    "A2.1"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_work_requests,lesson_requests_2,lesson_permissions,lesson_learning_questions,lesson_asking_actions,lesson_phone_daily",
+   "target_word_count": 40
+  },
+  {
+   "id": "A2.5",
+   "level": "A2",
+   "order": 5,
+   "title": {
+    "bn": "অতীত ও পরিকল্পনা",
+    "en": "Past & plans",
+    "ja": "過去・予定"
+   },
+   "can_do": {
+    "bn": "যা করেছি / করব তা বলা (〜ました/〜ます)",
+    "en": "Talk about what you did / will do"
+   },
+   "prerequisites": [
+    "A2.4"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_smalltalk,lesson_past_plans,lesson_frequency,lesson_daily_verbs,lesson_weather,lesson_events,lesson_gomi,lesson_apartment",
+   "target_word_count": 45
+  },
+  {
+   "id": "A2.6",
+   "level": "A2",
+   "order": 6,
+   "title": {
+    "bn": "সমস্যা ও ক্ষমা",
+    "en": "Problems & apologies",
+    "ja": "問題・謝罪"
+   },
+   "can_do": {
+    "bn": "কাজের সমস্যা বোঝানো ও ক্ষমা চাওয়া",
+    "en": "Report a work problem and apologize"
+   },
+   "prerequisites": [
+    "A2.1"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "lesson_work_safety,lesson_apology,lesson_problems,lesson_trouble_talk,lesson_feelings",
+   "target_word_count": 40
+  },
+  {
+   "id": "A2.M",
+   "level": "A2",
+   "order": 9,
+   "title": {
+    "bn": "JFT-Basic Mock",
+    "en": "JFT-Basic mock test",
+    "ja": "JFT模擬試験"
+   },
+   "can_do": {
+    "bn": "আসল CBT format-এ mock দেওয়া",
+    "en": "Take a full mock in real CBT format"
+   },
+   "prerequisites": [
+    "A2.1",
+    "A2.2",
+    "A2.3",
+    "A2.4",
+    "A2.5",
+    "A2.6"
+   ],
+   "exam_tag": "JFT-A2",
+   "lesson_id": "mock_a2",
+   "target_word_count": 0
+  },
+  {
+   "id": "N4.1",
+   "level": "N4",
+   "order": 1,
+   "title": {
+    "bn": "て-form",
+    "en": "Te-form & connected actions",
+    "ja": "て形"
+   },
+   "can_do": {
+    "bn": "て-form দিয়ে ধারাবাহিক কাজ বলা",
+    "en": "Link actions with te-form"
+   },
+   "prerequisites": [
+    "A2.5"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "lesson_te_now,lesson_te_state,lesson_te_sequence,lesson_te_rules,lesson_te_requests,lesson_te_try,lesson_te_giving",
+   "target_word_count": 50
+  },
+  {
+   "id": "N4.2",
+   "level": "N4",
+   "order": 2,
+   "title": {
+    "bn": "Plain / casual form",
+    "en": "Plain form",
+    "ja": "普通形"
+   },
+   "can_do": {
+    "bn": "casual বন্ধুদের সাথে কথা বলা",
+    "en": "Speak casually with friends"
+   },
+   "prerequisites": [
+    "N4.1"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "lesson_plain_present,lesson_plain_negative,lesson_plain_past,lesson_casual_talk,lesson_casual_questions,lesson_plain_think,lesson_casual_register",
+   "target_word_count": 50
+  },
+  {
+   "id": "N4.3",
+   "level": "N4",
+   "order": 3,
+   "title": {
+    "bn": "সামর্থ্য (potential)",
+    "en": "Potential / ability",
+    "ja": "可能形"
+   },
+   "can_do": {
+    "bn": "কী করতে পারি তা বলা (〜られる)",
+    "en": "Say what you can do"
+   },
+   "prerequisites": [
+    "N4.1"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "lesson_can_do,lesson_cannot_do,lesson_can_ask,lesson_dekiru_skills,lesson_can_work,lesson_can_life",
+   "target_word_count": 45
+  },
+  {
+   "id": "N4.4",
+   "level": "N4",
+   "order": 4,
+   "title": {
+    "bn": "দেওয়া-নেওয়া",
+    "en": "Giving & receiving",
+    "ja": "あげる・もらう・くれる"
+   },
+   "can_do": {
+    "bn": "দেওয়া/নেওয়ার সম্পর্ক বলা",
+    "en": "Express giving and receiving"
+   },
+   "prerequisites": [
+    "N4.2"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "lesson_give_triangle,lesson_give_things,lesson_give_polite,lesson_give_favors,lesson_give_situations",
+   "target_word_count": 40
+  },
+  {
+   "id": "N4.5",
+   "level": "N4",
+   "order": 5,
+   "title": {
+    "bn": "Keigo পরিচিতি",
+    "en": "Keigo introduction",
+    "ja": "敬語入門"
+   },
+   "can_do": {
+    "bn": "গ্রাহকের সাথে ভদ্র service-ভাষা",
+    "en": "Use polite service language with customers"
+   },
+   "prerequisites": [
+    "N4.2"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "lesson_keigo_hear,lesson_keigo_humble,lesson_keigo_shop,lesson_keigo_work,lesson_keigo_phone,lesson_keigo_rules",
+   "target_word_count": 45
+  },
+  {
+   "id": "N4.M",
+   "level": "N4",
+   "order": 9,
+   "title": {
+    "bn": "JLPT N4 Mock",
+    "en": "JLPT N4 mock test",
+    "ja": "N4模擬試験"
+   },
+   "can_do": {
+    "bn": "N4 format-এ mock দেওয়া",
+    "en": "Take a full N4 mock"
+   },
+   "prerequisites": [
+    "N4.1",
+    "N4.2",
+    "N4.3",
+    "N4.4",
+    "N4.5"
+   ],
+   "exam_tag": "JLPT-N4",
+   "lesson_id": "mock_n4",
+   "target_word_count": 0
+  },
+  {
+   "id": "N3.M",
+   "level": "N3",
+   "order": 1,
+   "title": {
+    "bn": "JLPT N3 Mock",
+    "en": "JLPT N3 mock test",
+    "ja": "N3模擬試験"
+   },
+   "can_do": {
+    "bn": "N3 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+    "en": "Take a full N3 mock (content pack coming)"
+   },
+   "prerequisites": [
+    "N4.M"
+   ],
+   "exam_tag": "JLPT-N3",
+   "lesson_id": "mock_n3",
+   "target_word_count": 0
+  },
+  {
+   "id": "N2.M",
+   "level": "N2",
+   "order": 1,
+   "title": {
+    "bn": "JLPT N2 Mock",
+    "en": "JLPT N2 mock test",
+    "ja": "N2模擬試験"
+   },
+   "can_do": {
+    "bn": "N2 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+    "en": "Take a full N2 mock (content pack coming)"
+   },
+   "prerequisites": [
+    "N3.M"
+   ],
+   "exam_tag": "JLPT-N2",
+   "lesson_id": "mock_n2",
+   "target_word_count": 0
+  },
+  {
+   "id": "N1.M",
+   "level": "N1",
+   "order": 1,
+   "title": {
+    "bn": "JLPT N1 Mock",
+    "en": "JLPT N1 mock test",
+    "ja": "N1模擬試験"
+   },
+   "can_do": {
+    "bn": "N1 format-এ mock দেওয়া (কনটেন্ট প্যাক আসছে)",
+    "en": "Take a full N1 mock (content pack coming)"
+   },
+   "prerequisites": [
+    "N2.M"
+   ],
+   "exam_tag": "JLPT-N1",
+   "lesson_id": "mock_n1",
+   "target_word_count": 0
+  }
+ ]
 }

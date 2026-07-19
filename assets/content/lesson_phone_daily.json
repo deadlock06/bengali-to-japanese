@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_phone_daily",
+ "pack_id": "pak_a2_req",
+ "depends_on": [],
+ "can_do": {
+  "en": "Everyday phone & messages",
+  "bn": "ফোন ও মেসেজে যোগাযোগ",
+  "ja": "電話とメッセージ"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "phd_01",
+   "jp": "でんわ",
+   "kana": "でんわ",
+   "romaji": "denwa",
+   "meaning": {
+    "en": "phone / call",
+    "bn": "ফোন/কল",
+    "ja": "電話"
+   },
+   "note": {
+    "en": "Denwa o shimasu = make a call.",
+    "bn": "でんわを します = ফোন করি।",
+    "ja": "電話する"
+   },
+   "srs_words": [
+    "でんわ"
+   ]
+  },
+  {
+   "id": "phd_02",
+   "jp": "でんわばんごう",
+   "kana": "でんわばんごう",
+   "romaji": "denwa bangou",
+   "meaning": {
+    "en": "phone number",
+    "bn": "ফোন নম্বর",
+    "ja": "電話番号"
+   },
+   "note": {
+    "en": "Know this field on forms.",
+    "bn": "ফর্মে でんわばんごう ঘরটা চিনে রাখো।",
+    "ja": "書類で"
+   },
+   "srs_words": [
+    "でんわばんごう"
+   ]
+  },
+  {
+   "id": "phd_03",
+   "jp": "もしもし",
+   "kana": "もしもし",
+   "romaji": "moshimoshi",
+   "meaning": {
+    "en": "hello (on phone)",
+    "bn": "হ্যালো (ফোনে)",
+    "ja": "もしもし"
+   },
+   "note": {
+    "en": "Only on the phone, never in person!",
+    "bn": "শুধু ফোনেই もしもし — সামনাসামনি না!",
+    "ja": "電話だけ"
+   },
+   "srs_words": [
+    "もしもし"
+   ]
+  },
+  {
+   "id": "phd_04",
+   "jp": "けいたい",
+   "kana": "けいたい",
+   "romaji": "keitai",
+   "meaning": {
+    "en": "mobile phone",
+    "bn": "মোবাইল ফোন",
+    "ja": "携帯"
+   },
+   "note": {
+    "en": "Also sumaho (smartphone).",
+    "bn": "スマホ-ও বলে (smartphone)। দুটোই চলে।",
+    "ja": "スマホ"
+   },
+   "srs_words": [
+    "けいたい"
+   ]
+  },
+  {
+   "id": "phd_05",
+   "jp": "メール",
+   "kana": "メール",
+   "romaji": "meeru",
+   "meaning": {
+    "en": "mail / message",
+    "bn": "মেইল/মেসেজ",
+    "ja": "メール"
+   },
+   "note": {
+    "en": "Both SMS and email = meeru.",
+    "bn": "জাপানে SMS/ইমেইল দুটোকেই メール বলে।",
+    "ja": "SMSも"
+   },
+   "srs_words": [
+    "メール"
+   ]
+  },
+  {
+   "id": "phd_06",
+   "jp": "じゅうでん",
+   "kana": "じゅうでん",
+   "romaji": "juuden",
+   "meaning": {
+    "en": "charging",
+    "bn": "চার্জ (ব্যাটারি)",
+    "ja": "充電"
+   },
+   "note": {
+    "en": "Juudenki = charger.",
+    "bn": "じゅうでんき = চার্জার। কনবিনিতে কেনা যায়।",
+    "ja": "充電器"
+   },
+   "srs_words": [
+    "じゅうでん"
+   ]
+  },
+  {
+   "id": "phd_07",
+   "jp": "でんげん",
+   "kana": "でんげん",
+   "romaji": "dengen",
+   "meaning": {
+    "en": "power (on/off)",
+    "bn": "পাওয়ার/সুইচ",
+    "ja": "電源"
+   },
+   "note": {
+    "en": "You'll hear: turn off your phone.",
+    "bn": "মিটিংয়ে でんげんを きって ください শুনবে।",
+    "ja": "会議で"
+   },
+   "srs_words": [
+    "でんげん"
+   ]
+  },
+  {
+   "id": "phd_08",
+   "jp": "るす",
+   "kana": "るす",
+   "romaji": "rusu",
+   "meaning": {
+    "en": "not at home",
+    "bn": "বাসায় নেই",
+    "ja": "留守"
+   },
+   "note": {
+    "en": "Rusuban denwa = voicemail.",
+    "bn": "るすばんでんわ = আনসারিং মেশিন/ভয়েসমেল।",
+    "ja": "留守番電話"
+   },
+   "srs_words": [
+    "るす"
+   ]
+  }
+ ]
+}

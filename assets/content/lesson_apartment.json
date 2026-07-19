@@ -1,0 +1,169 @@
+{
+ "type": "lesson",
+ "id": "lesson_apartment",
+ "pack_id": "pak_a2_life",
+ "depends_on": [],
+ "can_do": {
+  "en": "Talk about your apartment",
+  "bn": "বাসা/রুম নিয়ে কথা বলা",
+  "ja": "部屋について話す"
+ },
+ "jlpt_or_jft": "JFT-Basic A2",
+ "source": "standard JLPT-N5 canon (Irodori-aligned)",
+ "verified": true,
+ "prerequisites": [],
+ "items": [
+  {
+   "id": "apt_01",
+   "jp": "アパート",
+   "kana": "アパート",
+   "romaji": "apaato",
+   "meaning": {
+    "en": "apartment",
+    "bn": "অ্যাপার্টমেন্ট/বাসা",
+    "ja": "アパート"
+   },
+   "note": {
+    "en": "Company dorm is called ryou.",
+    "bn": "কোম্পানির dormitory-কে りょう-ও বলে।",
+    "ja": "寮もある"
+   },
+   "srs_words": [
+    "アパート"
+   ]
+  },
+  {
+   "id": "apt_02",
+   "jp": "へや",
+   "kana": "へや",
+   "romaji": "heya",
+   "meaning": {
+    "en": "room",
+    "bn": "ঘর/রুম",
+    "ja": "部屋"
+   },
+   "note": {
+    "en": "Room number needed on forms.",
+    "bn": "へやばんごう (রুম নম্বর) ফর্মে লাগবে।",
+    "ja": "部屋番号"
+   },
+   "srs_words": [
+    "へや"
+   ]
+  },
+  {
+   "id": "apt_03",
+   "jp": "だいどころ",
+   "kana": "だいどころ",
+   "romaji": "daidokoro",
+   "meaning": {
+    "en": "kitchen",
+    "bn": "রান্নাঘর",
+    "ja": "台所"
+   },
+   "note": {
+    "en": "Also called kitchen (katakana).",
+    "bn": "キッチン-ও বলে (কাতাকানা)।",
+    "ja": "キッチン"
+   },
+   "srs_words": [
+    "だいどころ"
+   ]
+  },
+  {
+   "id": "apt_04",
+   "jp": "おふろ",
+   "kana": "おふろ",
+   "romaji": "ofuro",
+   "meaning": {
+    "en": "bath",
+    "bn": "গোসলখানা/বাথটাব",
+    "ja": "お風呂"
+   },
+   "note": {
+    "en": "Wash before entering the tub.",
+    "bn": "জাপানে টাব-গোসলের আগে গা ধুয়ে নেওয়া নিয়ম।",
+    "ja": "先に洗う"
+   },
+   "srs_words": [
+    "おふろ"
+   ]
+  },
+  {
+   "id": "apt_05",
+   "jp": "トイレ",
+   "kana": "トイレ",
+   "romaji": "toire",
+   "meaning": {
+    "en": "toilet",
+    "bn": "টয়লেট",
+    "ja": "トイレ"
+   },
+   "note": {
+    "en": "Toilet often separate from bath.",
+    "bn": "トイレ প্রায়ই おふろ থেকে আলাদা ঘরে।",
+    "ja": "別の部屋"
+   },
+   "srs_words": [
+    "トイレ"
+   ]
+  },
+  {
+   "id": "apt_06",
+   "jp": "げんかん",
+   "kana": "げんかん",
+   "romaji": "genkan",
+   "meaning": {
+    "en": "entryway",
+    "bn": "দরজার মুখ (জুতো খোলার জায়গা)",
+    "ja": "玄関"
+   },
+   "note": {
+    "en": "Always remove shoes at the genkan!",
+    "bn": "げんかん-এ জুতো খুলে ঢোকা — বাধ্যতামূলক ভদ্রতা!",
+    "ja": "くつを脱ぐ"
+   },
+   "srs_words": [
+    "げんかん"
+   ]
+  },
+  {
+   "id": "apt_07",
+   "jp": "かぎ",
+   "kana": "かぎ",
+   "romaji": "kagi",
+   "meaning": {
+    "en": "key / lock",
+    "bn": "চাবি/তালা",
+    "ja": "鍵"
+   },
+   "note": {
+    "en": "Kagi o kakemasu = lock up.",
+    "bn": "かぎを かけます = তালা দিই। বের হলে অবশ্যই!",
+    "ja": "戸締まり"
+   },
+   "srs_words": [
+    "かぎ"
+   ]
+  },
+  {
+   "id": "apt_08",
+   "jp": "でんき",
+   "kana": "でんき",
+   "romaji": "denki",
+   "meaning": {
+    "en": "electricity / light",
+    "bn": "বিদ্যুৎ/লাইট",
+    "ja": "電気"
+   },
+   "note": {
+    "en": "Denki o tsukemasu/keshimasu.",
+    "bn": "でんきを つけます/けします = লাইট জ্বালাই/নেভাই।",
+    "ja": "つける・消す"
+   },
+   "srs_words": [
+    "でんき"
+   ]
+  }
+ ]
+}

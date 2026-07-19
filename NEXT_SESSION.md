@@ -1,5 +1,11 @@
 # ▶ NEXT SESSION — READ THIS FIRST (then CODEBASE_MAP.md, then only what your task needs)
 
+## ⚡ 2026-07-20 (Opus 4.8) — audit clean, design pass done, APK current (D-038/D-039, pushed through f95f9f5)
+- **State:** 13/20 tracker steps · content 854/772 (111%) · all 13 proofs + analyze + 71 tests green · zero fake data / secrets / orphans (D-038 six-pass audit) · version 0.9.0+2.
+- **Shipped since last entry:** D-038 re-audit hygiene (orphan removed, tts-cache untracked, version bump) · **D-039 design pass** (icon 2.0 w/ red-sun motif, rounded iconography + nav selectedIcons, unified control theming, yellow focus rings) · build_apk.sh adb lock-leak fixed (proven released).
+- **APK ~/Downloads/bhasago.apk (2026-07-19 23:53) = full current state** — owner installs it (new id com.bhasago.app; uninstall old app).
+- **Everything buildable here is DONE.** Remaining = A5 native review (publish gate) · D4/D5 device-native AI · E2/E3/E4 launch items (owner/humans) · N3 lesson authoring (whitelist backbone ready) · owner security items (AI keys, Supabase pw, old OpenAI key, chat-pasted GitHub token).
+
 ## ⚡ 2026-07-19 (Opus 4.8) — vocab system complete, classroom integration audited, content 111% (D-034…D-036, all pushed)
 - **Shipped:** 92 Bengali kana picture-mnemonics (D-034, YouTube-method; writing screen + kana grid) · **শব্দভাণ্ডার vocab bank** (D-035: search, REAL SRS status dots, per-word audio + sensei chat; Home AppBar entry) · **free practice of ANY lesson** in the full classroom (D-036: practiceBatchProvider + অনুশীলন button per lesson block) · **seedCard progress-wipe bug FIXED** (replay no longer resets FSRS stability) · **+48 items / 6 SSW-daily-life lessons** (colors・money・ゴミ分別・apartment・post・phone) → **854 items = 111% of ladder**, 1023 audio clips, book 762 rows · docs refreshed.
 - **APK rebuilt 2026-07-19** with EVERYTHING (brand/audio/AI/vocab/practice) → ~/Downloads/bhasago.apk + served at /bhasago.apk. Owner must install (new app id com.bhasago.app — uninstall old one).

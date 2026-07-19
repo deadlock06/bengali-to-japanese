@@ -82,15 +82,17 @@ say "Installing platform-tools + platforms + build-tools (~1 GB, one-time)…"
 
 # ── 4. Point Flutter at this SDK + JDK ───────────────────────────────────────
 say "Configuring Flutter toolchain…"
-flutter config --android-sdk "$SDK" >/dev/null
-flutter config --jdk-dir "$JDK"     >/dev/null
-yes | flutter doctor --android-licenses >/dev/null 2>&1 || true
-flutter doctor -v 2>&1 | sed -n '/Android toolchain/,/^\[/p' | head -12
+flutter config --android-sdk "$SDK" >/dev/null 9>&-
+flutter config --jdk-dir "$JDK"     >/dev/null 9>&-
+yes | flutter doctor --android-licenses >/dev/null 2>&1 9>&- || true
+flutter doctor -v 9>&- 2>&1 | sed -n '/Android toolchain/,/^\[/p' | head -12
 
 # ── 5. Build the APK ─────────────────────────────────────────────────────────
 say "Building release APK (first build downloads Gradle 9.1 — be patient)…"
 cd "$(dirname "$0")/.."
-flutter build apk --release --no-tree-shake-icons
+# 9>&- : don't leak the lock fd into flutter's long-lived children (adb daemon
+# inherited it once and held the lock after the build finished).
+flutter build apk --release --no-tree-shake-icons 9>&-
 
 APK="build/app/outputs/flutter-apk/app-release.apk"
 say "DONE ✅  →  $(pwd)/$APK"

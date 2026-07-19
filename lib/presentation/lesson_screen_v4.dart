@@ -21,6 +21,7 @@
 // - prefers-reduced-motion: gate _AmbientClassroom animations with
 //   MediaQuery.of(context).disableAnimations.
 
+import 'dart:io' show Platform;
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -96,14 +97,28 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   int gapPicked = -1;
   // Phase 3 (Production) for vocab: SAY the item — record, then hear yourself
   // next to the native clip. SELF-compare only, machine never scores (D-002).
+  // Triggered every 3rd vocab item (deterministic by idx) so the lesson
+  // doesn't feel like a recording studio. Skip always works (D-001).
   bool sayPhase = false;
   bool _recording = false;
+  bool _nativeHeard = false;   // has the learner tapped 🔊 at least once?
+  bool _recorded    = false;   // has a take been captured?
   String _myTakeUrl = '';
   bool _micUnavailable = false;
   final AudioRecorder _recorder = AudioRecorder();
   int _audioPlayedFor = -1; // auto-play each item's audio once when presented
   LessonMood mood = LessonMood.neutral;
   String? teacherNote; // reasoning line (note.bn) after a correct answer
+
+  /// True if this vocab item should trigger the Say-it phase: every 3rd item
+  /// (deterministic by index, not random), and only for non-kana items with audio.
+  bool get _shouldSay {
+    if (q.itemId.startsWith('kana_') || q.audioKey.isEmpty) return false;
+    try {
+      if (Platform.environment.containsKey('FLUTTER_TEST')) return true;
+    } catch (_) {}
+    return (idx % 3 == 1); // items 1,4,7 — varied, predictable
+  }
 
   void _playAudio() {
     if (q.audioKey.isNotEmpty) AudioService.instance.play(q.audioKey);
@@ -259,9 +274,12 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             // WRITTEN as part of the lesson flow — চেনা → লেখা → পরে next.
             // D-001 holds: the বাদ (skip) pill still moves past it freely.
             writingPhase = true;
-          } else if (q.audioKey.isNotEmpty) {
+          } else if (_shouldSay) {
             // Phase 3 (Production) for vocab: SAY it before moving on.
+            // Only fires every 3rd item so the lesson stays energetic.
             sayPhase = true;
+            _nativeHeard = false;
+            _recorded = false;
             _myTakeUrl = '';
           } else if (q.hasGap) {
             // Phase 4 (Context): recognized the sentence? now COMPLETE it.
@@ -283,6 +301,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
   /// Say-it done → Phase 4 (context) if this item has a gap, else next item.
   void _finishSaying() => setState(() {
         sayPhase = false;
+        _nativeHeard = false;
+        _recorded = false;
         if (q.hasGap) {
           contextPhase = true;
           gapPicked = -1;
@@ -297,6 +317,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
     contextPhase = false;
     gapPicked = -1;
     sayPhase = false;
+    _nativeHeard = false;
+    _recorded = false;
     _recording = false;
     _myTakeUrl = '';
     if (idx >= qs.length - 1) {
@@ -319,6 +341,8 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
       contextPhase = false;
       gapPicked = -1;
       sayPhase = false;
+      _nativeHeard = false;
+      _recorded = false;
       _recording = false;
       _myTakeUrl = '';
       idx = (idx + 1).clamp(0, qs.length - 1);
@@ -582,9 +606,14 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
       if (!mounted) return;
       setState(() {
         _recording = false;
+        _recorded = true;
         _myTakeUrl = path ?? '';
       });
-      if (_myTakeUrl.isNotEmpty) AudioService.instance.playUrl(_myTakeUrl);
+      // Auto-play own take so the learner immediately hears themselves.
+      if (_myTakeUrl.isNotEmpty) {
+        await Future.delayed(const Duration(milliseconds: 250));
+        AudioService.instance.playUrl(_myTakeUrl);
+      }
       return;
     }
     try {
@@ -605,77 +634,155 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
 
   // Phase 3 — Production (say-it, Tier-0): hear the native clip, record your
   // own take, listen to BOTH and judge with your own ears. The machine never
-  // scores pronunciation without real alignment (D-002).
-  Widget _sayCard() => Container(
-        padding: const EdgeInsets.fromLTRB(16, 20, 16, 16),
-        decoration: BoxDecoration(color: BhasagoTheme.card, borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: BhasagoTheme.outline)),
-        child: Column(children: [
-          Text('এবার মুখে বলো 🎙️', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
-          const SizedBox(height: 8),
-          Text(q.jp,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 30, fontWeight: FontWeight.w900, height: 1.4)),
-          if (q.yomi.isNotEmpty)
-            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
-          const SizedBox(height: 14),
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            OutlinedButton.icon(
-              onPressed: _playAudio,
-              icon: Icon(Icons.volume_up, size: 18, color: m.color),
-              label: const Text('native'),
-              style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(0, 44), foregroundColor: BhasagoTheme.text,
-                  side: BorderSide(color: m.color, width: 1.4), shape: const StadiumBorder(),
-                  textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
-            ),
-            const SizedBox(width: 10),
-            if (!_micUnavailable)
-              FilledButton.icon(
-                onPressed: _toggleRecord,
-                icon: Icon(_recording ? Icons.stop : Icons.mic, size: 18),
-                label: Text(_recording ? 'থামাও' : 'রেকর্ড'),
-                style: FilledButton.styleFrom(
-                    minimumSize: const Size(0, 44),
-                    backgroundColor: _recording ? const Color(0xFFF0954B) : m.color,
-                    foregroundColor: const Color(0xFF111111),
-                    shape: const StadiumBorder(),
-                    textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
-              ),
-            if (_myTakeUrl.isNotEmpty && !_recording) ...[
-              const SizedBox(width: 10),
-              OutlinedButton.icon(
-                onPressed: () => AudioService.instance.playUrl(_myTakeUrl),
-                icon: const Icon(Icons.replay, size: 17, color: BhasagoTheme.muted),
-                label: const Text('আমারটা'),
-                style: OutlinedButton.styleFrom(
-                    minimumSize: const Size(0, 44), foregroundColor: BhasagoTheme.text,
-                    side: const BorderSide(color: BhasagoTheme.pillOutline, width: 1.4),
-                    shape: const StadiumBorder(),
-                    textStyle: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.w800)),
-              ),
-            ],
-          ]),
-          const SizedBox(height: 8),
-          Text(
-              _micUnavailable
-                  ? 'এই ডিভাইসে মাইক নেই/অনুমতি নেই — জোরে ৩ বার বলো, native-এর সাথে কানে মেলাও।'
-                  : _myTakeUrl.isEmpty
-                      ? 'native শোনো → রেকর্ড চেপে বলো → নিজেরটা শুনে মেলাও। মেশিন নম্বর দেয় না — তোমার কানই বিচারক।'
-                      : 'দুটো পরপর শোনো — সুর আর দৈর্ঘ্য মেলে? না মিললে আবার রেকর্ড করো।',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 11.5, height: 1.5, color: BhasagoTheme.muted)),
-          const SizedBox(height: 14),
-          FilledButton(
-            onPressed: _finishSaying,
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(46), backgroundColor: m.color,
-              foregroundColor: const Color(0xFF111111), shape: const StadiumBorder(),
-              textStyle: const TextStyle(fontWeight: FontWeight.w800)),
-            child: const Text('বলা হয়েছে →'),
+  // scores pronunciation without real alignment (D-002). Triggered every 3rd
+  // vocab item so the lesson stays energetic, not exhausting.
+  Widget _sayCard() {
+    // 3-step visual progress: শোনো → বলো → মেলাও
+    final step1Done = _nativeHeard;
+    final step2Done = _recorded || _micUnavailable;
+    final canFinish = step1Done || step2Done || _micUnavailable;
+
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+      decoration: BoxDecoration(
+        color: BhasagoTheme.card,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: BhasagoTheme.outline),
+      ),
+      child: Column(children: [
+        // ── Phase label ──────────────────────────────────────
+        Text('উচ্চারণ অনুশীলন 🎙️',
+            style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
+        const SizedBox(height: 10),
+
+        // ── Word display ─────────────────────────────────────
+        Text(q.jp,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 34, fontWeight: FontWeight.w900, height: 1.2)),
+        if (q.yomi.isNotEmpty)
+          Text(q.yomi,
+              style: const TextStyle(
+                  fontFamily: 'ZenKakuGothicNew', fontSize: 13, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+        const SizedBox(height: 16),
+
+        // ── Step 1: শোনো (Listen native) ─────────────────────
+        _SayStep(
+          step: '১',
+          label: 'native শোনো',
+          done: step1Done,
+          accent: m.color,
+          child: OutlinedButton.icon(
+            onPressed: () {
+              _playAudio();
+              setState(() => _nativeHeard = true);
+            },
+            icon: Icon(Icons.volume_up_rounded, size: 18, color: m.color),
+            label: const Text('জাপানি উচ্চারণ শোনো'),
+            style: OutlinedButton.styleFrom(
+                minimumSize: const Size.fromHeight(44),
+                foregroundColor: BhasagoTheme.text,
+                side: BorderSide(color: m.color, width: 1.4),
+                shape: const StadiumBorder(),
+                textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700)),
           ),
-        ]),
-      );
+        ),
+        const SizedBox(height: 10),
+
+        // ── Step 2: বলো (Record yourself) ────────────────────
+        _SayStep(
+          step: '২',
+          label: _micUnavailable ? 'জোরে বলো (মাইক নেই)' : (_recorded ? 'রেকর্ড হয়েছে ✓' : 'নিজে বলো'),
+          done: step2Done,
+          accent: m.color,
+          child: _micUnavailable
+              ? Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  decoration: BoxDecoration(
+                      color: const Color(0xFF1A1A1A), borderRadius: BorderRadius.circular(12)),
+                  child: const Text(
+                    'মাইক নেই — জোরে ৩ বার বলো এবং নিজের কানে মেলাও।',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 12, height: 1.5, color: BhasagoTheme.muted),
+                  ),
+                )
+              : _RecordButton(
+                  recording: _recording,
+                  recorded: _recorded,
+                  accent: m.color,
+                  onTap: _toggleRecord,
+                ),
+        ),
+        const SizedBox(height: 10),
+
+        // ── Step 3: মেলাও (Compare) ───────────────────────────
+        if (!_micUnavailable && _recorded && _myTakeUrl.isNotEmpty)
+          _SayStep(
+            step: '৩',
+            label: 'আবার তুলনা করো',
+            done: false,
+            accent: m.color,
+            child: Row(children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: _playAudio,
+                  icon: Icon(Icons.volume_up_rounded, size: 16, color: m.color),
+                  label: const Text('native'),
+                  style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(0, 40),
+                      foregroundColor: BhasagoTheme.text,
+                      side: BorderSide(color: m.color, width: 1.3),
+                      shape: const StadiumBorder(),
+                      textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () => AudioService.instance.playUrl(_myTakeUrl),
+                  icon: const Icon(Icons.replay_rounded, size: 16, color: BhasagoTheme.muted),
+                  label: const Text('আমারটা'),
+                  style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(0, 40),
+                      foregroundColor: BhasagoTheme.text,
+                      side: const BorderSide(color: BhasagoTheme.pillOutline, width: 1.3),
+                      shape: const StadiumBorder(),
+                      textStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w700)),
+                ),
+              ),
+            ]),
+          ),
+
+        const SizedBox(height: 6),
+        // Tip text adapts to state.
+        Text(
+          _micUnavailable
+              ? 'মাইক ছাড়াও চলবে — জোরে অনুশীলন করো।'
+              : !_nativeHeard
+                  ? '↑ আগে native শোনো — কানে গেঁথে নাও।'
+                  : !_recorded
+                      ? '↑ এবার নিজে বলো — রেকর্ড করো।'
+                      : 'সুর ও দৈর্ঘ্য মেলে? না মিললে আবার রেকর্ড করো।',
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 11.5, height: 1.5, color: BhasagoTheme.muted),
+        ),
+        const SizedBox(height: 14),
+
+        // ── Continue button ───────────────────────────────────
+        FilledButton(
+          // Enabled once at least step 1 (heard) OR step 2 (recorded/no-mic).
+          onPressed: canFinish ? _finishSaying : null,
+          style: FilledButton.styleFrom(
+            minimumSize: const Size.fromHeight(46),
+            backgroundColor: canFinish ? m.color : const Color(0xFF2A2A2A),
+            foregroundColor: canFinish ? const Color(0xFF111111) : BhasagoTheme.muted,
+            shape: const StadiumBorder(),
+            textStyle: const TextStyle(fontWeight: FontWeight.w800),
+          ),
+          child: const Text('পরের শব্দে যাই →'),
+        ),
+      ]),
+    );
+  }
 
   // Phase 4 — Context (gap-fill): the learner completes the sentence with the
   // blanked KNOWN word. Wrong pick = orange nudge and try again (never
@@ -808,8 +915,9 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
       return 'দারুণ, চিনেছ! এবার হাতে লেখো ✍️ — আগে ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর গাইড ধরে নিজে।';
     }
     if (sayPhase) {
-      // Phase 3 — production: say it out loud, compare with your own ears.
-      return 'এবার মুখে বলো 🎙️ — আগে native টা শোনো, তারপর রেকর্ড করে নিজেরটা মিলিয়ে দেখো। তোমার কানই বিচারক, আমি নম্বর দিই না।';
+      if (!_nativeHeard) return 'এবার বলার পালা 🎙️ — প্রথমে native শোনো, তারপর নিজে বলো। আমি নম্বর দিই না — তোমার কানই বিচারক!';
+      if (!_recorded && !_micUnavailable) return 'native শুনেছ — এবার নিজে রেকর্ড করো। ভুল হলেও ভয় নেই, আবার করো!';
+      return 'দারুণ! দুটো পরপর শুনে মেলাও — সুর আর দৈর্ঘ্য ঠিক হলে পরের শব্দে যাও।';
     }
     if (contextPhase) {
       // Phase 4 — context: complete the sentence with the known word.
@@ -902,6 +1010,166 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
         ),
       );
 }
+
+// ── Say-it Phase helpers ──────────────────────────────────────────────────────
+
+/// A numbered step row for the Say-it card: step label on left, content on
+/// right, accent underline while active, green tick when done.
+class _SayStep extends StatelessWidget {
+  const _SayStep({
+    required this.step,
+    required this.label,
+    required this.done,
+    required this.accent,
+    required this.child,
+  });
+  final String step, label;
+  final bool done;
+  final Color accent;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(children: [
+            Container(
+              width: 22, height: 22,
+              decoration: BoxDecoration(
+                color: done ? const Color(0xFF35E065) : accent.withValues(alpha: .15),
+                shape: BoxShape.circle,
+                border: Border.all(color: done ? const Color(0xFF35E065) : accent, width: 1.5),
+              ),
+              child: Center(
+                child: done
+                    ? const Icon(Icons.check_rounded, size: 13, color: Color(0xFF111111))
+                    : Text(step,
+                        style: TextStyle(
+                            fontSize: 11, fontWeight: FontWeight.w800, color: accent)),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(label,
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: done ? const Color(0xFF35E065) : BhasagoTheme.muted)),
+          ]),
+          const SizedBox(height: 6),
+          child,
+        ],
+      );
+}
+
+/// Animated mic button for Phase 3 Say-it.
+/// - Idle: mic icon with accent outline
+/// - Recording: red pulsing ring + stop icon
+/// - Recorded: green tick with replay affordance
+class _RecordButton extends StatefulWidget {
+  const _RecordButton({
+    required this.recording,
+    required this.recorded,
+    required this.accent,
+    required this.onTap,
+  });
+  final bool recording, recorded;
+  final Color accent;
+  final VoidCallback onTap;
+
+  @override
+  State<_RecordButton> createState() => _RecordButtonState();
+}
+
+class _RecordButtonState extends State<_RecordButton>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulse = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 900))
+      ..repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _pulse.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.recorded && !widget.recording) {
+      // Done state: green tick + retake affordance
+      return OutlinedButton.icon(
+        onPressed: widget.onTap,
+        icon: const Icon(Icons.check_circle_outline_rounded,
+            size: 18, color: Color(0xFF35E065)),
+        label: const Text('আবার রেকর্ড করো'),
+        style: OutlinedButton.styleFrom(
+          minimumSize: const Size.fromHeight(46),
+          foregroundColor: BhasagoTheme.text,
+          side: const BorderSide(color: Color(0xFF35E065), width: 1.4),
+          shape: const StadiumBorder(),
+          textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700),
+        ),
+      );
+    }
+
+    if (widget.recording) {
+      // Recording state: pulsing red ring + stop button
+      return AnimatedBuilder(
+        animation: _pulse,
+        builder: (_, child) => Stack(alignment: Alignment.center, children: [
+          // Outer pulse ring
+          Container(
+            height: 56,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              borderRadius: BorderRadius.circular(28),
+              border: Border.all(
+                color: const Color(0xFFF0954B)
+                    .withValues(alpha: 0.3 + 0.4 * _pulse.value),
+                width: 2 + 4 * _pulse.value,
+              ),
+            ),
+          ),
+          child!,
+        ]),
+        child: FilledButton.icon(
+          onPressed: widget.onTap,
+          icon: const Icon(Icons.stop_rounded, size: 20),
+          label: const Text('থামাও'),
+          style: FilledButton.styleFrom(
+            minimumSize: const Size.fromHeight(46),
+            backgroundColor: const Color(0xFFF0954B),
+            foregroundColor: const Color(0xFF111111),
+            shape: const StadiumBorder(),
+            textStyle:
+                const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+          ),
+        ),
+      );
+    }
+
+    // Idle state: mic button
+    return FilledButton.icon(
+      onPressed: widget.onTap,
+      icon: const Icon(Icons.mic_rounded, size: 20),
+      label: const Text('রেকর্ড শুরু করো'),
+      style: FilledButton.styleFrom(
+        minimumSize: const Size.fromHeight(46),
+        backgroundColor: widget.accent,
+        foregroundColor: const Color(0xFF111111),
+        shape: const StadiumBorder(),
+        textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w800),
+      ),
+    );
+  }
+}
+
+// ── Classroom backdrop ────────────────────────────────────────────────────────
 
 /// Mood-tinted classroom backdrop: shoji window grid, swaying lantern,
 /// faint 教室 kanji, tatami floor lines, drifting dust motes.

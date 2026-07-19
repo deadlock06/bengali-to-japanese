@@ -34,6 +34,7 @@ import 'presentation/onboarding_screen.dart';
 import 'presentation/progress_screen_v4.dart';
 import 'presentation/settings_screen.dart';
 import 'presentation/dictionary_screen.dart';
+import 'presentation/vocab_screen.dart';
 import 'presentation/selection_explain.dart';
 import 'presentation/writing_screen.dart';
 import 'data/sync_service.dart';
@@ -192,6 +193,13 @@ class _HomeShellState extends ConsumerState<HomeShell> {
           ? AppBar(
               title: const Text('Bhasago'),
               actions: [
+                // Vocabulary bank — browse/search every word + learning status.
+                IconButton(
+                  icon: const Icon(Icons.style_outlined),
+                  tooltip: 'শব্দভাণ্ডার · Vocabulary',
+                  onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const VocabScreen())),
+                ),
                 // AI dictionary — explain any copied/typed Japanese text.
                 IconButton(
                   icon: const Icon(Icons.translate),

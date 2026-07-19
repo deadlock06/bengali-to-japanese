@@ -41,11 +41,15 @@ void main() {
     await tester.pump(const Duration(milliseconds: 700));
 
     // Phase 3 — say-it card, skip still visible (D-001)
-    expect(find.text('এবার মুখে বলো 🎙️'), findsOneWidget);
+    expect(find.text('উচ্চারণ অনুশীলন 🎙️'), findsOneWidget);
     expect(find.text('বাদ'), findsOneWidget);
 
+    // Step 1: Tap to hear native pronunciation (enables continue button)
+    await tester.tap(find.text('জাপানি উচ্চারণ শোনো'));
+    await tester.pump();
+
     // Done saying → next item's intro
-    await tester.tap(find.text('বলা হয়েছে →'));
+    await tester.tap(find.text('পরের শব্দে যাই →'));
     await tester.pump();
     expect(find.text('চিনে নাও'), findsOneWidget);
     expect(find.text('おちゃ'), findsWidgets);

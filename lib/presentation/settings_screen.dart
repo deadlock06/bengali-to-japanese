@@ -149,7 +149,7 @@ class SettingsScreen extends ConsumerWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: 1.2),
                 ),
                 Text(
-                  'Version 0.1.0 (Internal SENSEI)',
+                  'Version 0.9.0 (beta)',
                   style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
                 ),
                 const SizedBox(height: 8),

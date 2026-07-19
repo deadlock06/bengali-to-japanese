@@ -25,6 +25,13 @@ class AiTutorService {
   static const _proxyUrl =
       String.fromEnvironment('AI_PROXY_URL', defaultValue: '/ai/chat');
 
+  /// Neural sensei speech URL (D-033): same proxy host, /ai/tts endpoint.
+  /// [voice] 'bn' (Nabanita) or 'ja' (Nanami). The caller plays it and falls
+  /// back to device TTS when the proxy is unreachable (offline / no server).
+  static String ttsUrl(String text, {String voice = 'bn'}) =>
+      '${_proxyUrl.replaceFirst('/ai/chat', '/ai/tts')}'
+      '?voice=$voice&text=${Uri.encodeComponent(text)}';
+
   final Dio _dio = Dio(BaseOptions(
     connectTimeout: const Duration(seconds: 12),
     receiveTimeout: const Duration(seconds: 25),

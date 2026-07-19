@@ -93,8 +93,10 @@ script — checkboxes below are for the steps the machine can't measure.
       failure. ✅ ACTIVE 2026-07-17: owner enabled Anonymous sign-ins; full round-trip verified
       (sign-in → profile+srs_cards upsert → read-back → RLS isolation confirmed). Per-card srs_cards
       delta sync = next increment. _needs: OWNER: anon key ✓_ · size M
-- [ ] **D2 · APK on real device** — Android SDK on owner's machine, release build,
-      TECNO smoke test, perf/battery/thermal benchmarks (02 targets). _needs: OWNER: machine_ · size M
+- [x] **D2 · APK on real device** — DONE 2026-07-18: `tools/build_apk.sh` installed the
+      full toolchain (local JDK21 + Android SDK, flock/resume-safe); app-release.apk built,
+      installed + smoke-tested on the owner's TECNO. Perf/battery/thermal benchmarks (02
+      targets) remain an open follow-up. _needs: OWNER: machine ✓_ · size M
 - [ ] **D3 · Content packs / tiered download** — split bundle per 03 (base APK ≤ target,
       packs downloadable; manifest endpoint). _needs: A1_ · size L
 - [ ] **D4 · Offline LLM spike → integrate** — llama.cpp + Qwen3 1.7B Q4 via
@@ -104,8 +106,9 @@ script — checkboxes below are for the steps the machine can't measure.
       pronunciation scoring in Phase-3. _needs: D4 (native toolchain)_ · size L
 
 ## PHASE E — LAUNCH
-- [ ] **E1 · Privacy policy in-app** (Bengali-first, plain language) + consent flows.
-      _needs: D1_ · size S
+- [x] **E1 · Privacy policy in-app** — DONE 2026-07-18: `privacy_screen.dart` (Bengali-first,
+      plain-language, honest to actual practices) wired into Settings; consent = sync stays
+      opt-in-off + AI use disclosed. Store data-safety form still due at E4. _needs: D1 ✓_ · size S
 - [ ] **E2 · Payments/tiers** (12_BUSINESS: free core + Pro; no dark patterns).
       _needs: D2_ · size L
 - [ ] **E3 · UAT with real SSW-track learners** + fixes. _needs: A1,B1,D2_ · size M-human

@@ -4,6 +4,7 @@ import '../agents/agent_state.dart';
 import '../agents/persona.dart';
 import '../app/providers.dart';
 import '../data/export_service.dart';
+import 'privacy_screen.dart';
 import '../data/sync_service.dart';
 import '../app/theme.dart';
 import 'widgets.dart';
@@ -106,6 +107,20 @@ class SettingsScreen extends ConsumerWidget {
             title: 'তোমার ডেটা · Your data',
             icon: Icons.lock_person_outlined,
             child: _DataAutonomy(),
+          ),
+          const SizedBox(height: 24),
+          // E1: privacy policy — one tap away, Bengali-first, honest.
+          _Section(
+            title: 'গোপনীয়তা · Privacy',
+            icon: Icons.shield_outlined,
+            child: ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('গোপনীয়তা নীতি পড়ো'),
+              subtitle: const Text('তোমার ডেটা কোথায় থাকে, কী যায়, কী যায় না'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const PrivacyScreen())),
+            ),
           ),
           const SizedBox(height: 40),
           Center(

@@ -9,6 +9,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import 'package:just_audio/just_audio.dart' as ja;
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -54,6 +55,9 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     with SingleTickerProviderStateMixin {
   final _input = TextEditingController();
   final FlutterTts _tts = FlutterTts();
+  // Neural sensei speech (D-033): plays /ai/tts (bn-BD-Nabanita) when the
+  // proxy is reachable; device TTS remains the offline fallback.
+  final ja.AudioPlayer _neural = ja.AudioPlayer();
   final List<_ChatMsg> _msgs = [];
   bool _typing = false, _listening = false;
   int _speakingIdx = -1;
@@ -190,6 +194,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
 
   @override
   void dispose() {
+    _neural.dispose();
     _tts.stop();
     _anim.dispose();
     _input.dispose();
@@ -254,13 +259,39 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     }
   }
 
+  Future<bool> _speakNeural(int msgIdx, String text) async {
+    try {
+      await _neural
+          .setUrl(AiTutorService.ttsUrl(text))
+          .timeout(const Duration(seconds: 8));
+      if (!mounted) return true;
+      setState(() => _speakingIdx = msgIdx);
+      _neural.play();
+      _neural.playerStateStream
+          .firstWhere((st) => st.processingState == ja.ProcessingState.completed)
+          .then((_) {
+        if (mounted && _speakingIdx == msgIdx) {
+          setState(() => _speakingIdx = -1);
+        }
+      });
+      return true;
+    } catch (_) {
+      return false; // proxy unreachable → device-TTS fallback
+    }
+  }
+
   Future<void> _speak(int msgIdx, String text) async {
     if (_speakingIdx == msgIdx) {
       await _tts.stop();
+      await _neural.stop();
       if (mounted) setState(() => _speakingIdx = -1);
       return;
     }
     await _tts.stop();
+    await _neural.stop();
+    // 1) Neural voice via the proxy (D-033) — same Nabanita/Nanami quality as
+    // the bundled clips. Unreachable (offline/APK without proxy) → device TTS.
+    if (await _speakNeural(msgIdx, text)) return;
     final voice = await _bengaliVoice();
     if (!mounted) return;
     if (voice == null) {

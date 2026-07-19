@@ -6,8 +6,42 @@ import http from 'http';
 import https from 'https';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
+import { execFile } from 'child_process';
 import { fileURLToPath } from 'url';
-const root = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'build', 'web');
+const here = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(here, '..', 'build', 'web');
+
+// ── /ai/tts — neural Bengali/Japanese speech for the sensei (D-033) ─────────
+// The device/browser TTS for dynamic Bengali replies is robotic ("sounds
+// worst"); this synthesizes with the same neural voices the bundled clips use.
+// GET /ai/tts?text=...&voice=bn|ja → audio/mpeg. Injection-safe: execFile
+// passes argv directly (no shell); text capped; results cached by hash.
+const EDGE_TTS = path.join(here, '..', '.venv-tts', 'bin', 'edge-tts');
+const TTS_CACHE = path.join(here, '..', '.tts-cache');
+const TTS_VOICES = { bn: 'bn-BD-NabanitaNeural', ja: 'ja-JP-NanamiNeural' };
+function aiTts(req, res, urlObj) {
+  const text = (urlObj.searchParams.get('text') || '').slice(0, 600).trim();
+  const voice = TTS_VOICES[urlObj.searchParams.get('voice') || 'bn'] || TTS_VOICES.bn;
+  if (!text || !fs.existsSync(EDGE_TTS)) { res.writeHead(404); return res.end(); }
+  fs.mkdirSync(TTS_CACHE, { recursive: true });
+  const f = path.join(TTS_CACHE,
+    crypto.createHash('sha1').update(`${voice}|${text}`).digest('hex') + '.mp3');
+  const serve = () => {
+    res.writeHead(200, { 'Content-Type': 'audio/mpeg', 'Cache-Control': 'max-age=86400' });
+    fs.createReadStream(f).pipe(res);
+  };
+  if (fs.existsSync(f) && fs.statSync(f).size > 0) return serve();
+  execFile(EDGE_TTS, ['--voice', voice, '--rate=-8%', '--text', text,
+    '--write-media', f], { timeout: 20000 }, (err) => {
+    if (err || !fs.existsSync(f) || !fs.statSync(f).size) {
+      try { fs.unlinkSync(f); } catch {}
+      res.writeHead(502); return res.end();
+    }
+    console.log(`tts: ${voice} ${text.length} chars`);
+    serve();
+  });
+}
 
 // ── TIERED PROVIDER ROUTING (D-031: minimize API cost, maximize teaching) ──
 // The client tags each request with `tier`:
@@ -158,6 +192,9 @@ const MIME = { '.html':'text/html', '.js':'text/javascript', '.mjs':'text/javasc
   '.bin':'application/octet-stream', '.map':'application/json' };
 http.createServer((req, res) => {
   if (req.method === 'POST' && req.url === '/ai/chat') return aiProxy(req, res);
+  if (req.url.startsWith('/ai/tts')) {
+    return aiTts(req, res, new URL(req.url, 'http://x'));
+  }
   let f = decodeURIComponent(req.url.split('?')[0]);
   if (f === '/') f = '/index.html';
   // Browsers that registered the OLD Flutter PWA worker cached the app so hard

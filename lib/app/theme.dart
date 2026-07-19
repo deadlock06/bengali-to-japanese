@@ -165,6 +165,32 @@ abstract final class BhasagoTheme {
         ),
       ),
       dividerColor: BhasagoColors.outline,
+      // ── D-039 design pass: unified control styling ─────────────────────
+      listTileTheme: const ListTileThemeData(
+        iconColor: BhasagoColors.inkDim,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(14))),
+      ),
+      expansionTileTheme: const ExpansionTileThemeData(
+        iconColor: BhasagoColors.inkDim,
+        collapsedIconColor: BhasagoColors.inkDim,
+        shape: Border(), // no divider lines above/below when expanded
+        collapsedShape: Border(),
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(
+        color: BhasagoColors.yellow,
+        linearTrackColor: BhasagoColors.surfaceHigh,
+        circularTrackColor: BhasagoColors.surfaceHigh,
+      ),
+      iconTheme: const IconThemeData(color: BhasagoColors.ink),
+      tooltipTheme: TooltipThemeData(
+        decoration: BoxDecoration(
+          color: BhasagoColors.surfaceHigh,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: BhasagoColors.outline),
+        ),
+        textStyle: const TextStyle(color: BhasagoColors.ink, fontSize: 12),
+      ),
       textTheme: _textTheme(base.textTheme),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: BhasagoColors.surfaceHigh,
@@ -198,7 +224,8 @@ abstract final class BhasagoTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(_radiusField),
-          borderSide: const BorderSide(color: BhasagoColors.ink, width: 1.5),
+          // D-039: brand-yellow focus ring (was ink white)
+          borderSide: const BorderSide(color: BhasagoColors.yellow, width: 1.6),
         ),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),

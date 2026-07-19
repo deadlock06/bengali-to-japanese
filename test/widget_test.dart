@@ -67,7 +67,7 @@ void main() {
     await tester.pump();
 
     // Write moved off the tab bar in v4 — it's an AppBar action on Home.
-    await tester.tap(find.byIcon(Icons.draw));
+    await tester.tap(find.byIcon(Icons.draw_rounded));
     await tester.pump();
     expect(tester.takeException(), isNull);
   });

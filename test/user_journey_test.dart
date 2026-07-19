@@ -47,6 +47,15 @@ Future<void> back(WidgetTester t) async {
   }
 }
 
+/// Tap the Home tab. With selectedIcon (D-039) the active tab renders the
+/// rounded glyph, so match whichever variant is on screen.
+Future<void> tapHome(WidgetTester t) async {
+  final rounded = find.byIcon(Icons.home_rounded);
+  await t.tap(rounded.evaluate().isNotEmpty
+      ? rounded
+      : find.byIcon(Icons.home_outlined));
+}
+
 void main() {
   testWidgets('new learner: onboarding → every screen, no crashes',
       (tester) async {
@@ -99,7 +108,7 @@ void main() {
     // item); the recognition MC appears after "চিনেছি". Skip/Hint/Quit are the
     // 00 invariant and present throughout. Target the toolbar pills via
     // widgetWithText ('ইঙ্গিত' also labels the hint card once open).
-    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tapHome(tester);
     await tester.pump();
     await tester.tap(find.text('AI ক্লাসরুম'));
     await tester.pump();
@@ -129,7 +138,7 @@ void main() {
     ok(tester, 'classroom quit');
 
     // ── 5. Review (fresh user, empty deck, DB off-device) ───────────────
-    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tapHome(tester);
     await tester.pump();
     await tester.tap(find.text('আজকের রিভিউ'));
     await tester.pump();
@@ -138,7 +147,7 @@ void main() {
     await back(tester);
 
     // ── 6. Speak tab ─────────────────────────────────────────────────────
-    await tester.tap(find.byIcon(Icons.mic_none));
+    await tester.tap(find.byIcon(Icons.mic_none_rounded));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
     ok(tester, 'speak/shadowing tab');
@@ -161,12 +170,12 @@ void main() {
     // (A loop of push→pop→push is flaky under fake-async — the 2nd push after a
     // pop is dropped mid-transition — so assert the affordances then exercise a
     // single real push+pop. Kana + Writing also have their own widget tests.)
-    await tester.tap(find.byIcon(Icons.home_outlined));
+    await tapHome(tester);
     await tester.pump();
-    for (final icon in [Icons.grid_view, Icons.draw, Icons.settings_outlined]) {
+    for (final icon in [Icons.grid_view_rounded, Icons.draw_rounded, Icons.settings_rounded]) {
       expect(find.byIcon(icon), findsOneWidget, reason: 'AppBar icon $icon');
     }
-    await tester.tap(find.byIcon(Icons.settings_outlined));
+    await tester.tap(find.byIcon(Icons.settings_rounded));
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 400));
     expect(find.textContaining('ভাষা'), findsWidgets,

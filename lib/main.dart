@@ -195,33 +195,33 @@ class _HomeShellState extends ConsumerState<HomeShell> {
               actions: [
                 // Vocabulary bank — browse/search every word + learning status.
                 IconButton(
-                  icon: const Icon(Icons.style_outlined),
+                  icon: const Icon(Icons.style_rounded),
                   tooltip: 'শব্দভাণ্ডার · Vocabulary',
                   onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const VocabScreen())),
                 ),
                 // AI dictionary — explain any copied/typed Japanese text.
                 IconButton(
-                  icon: const Icon(Icons.translate),
+                  icon: const Icon(Icons.translate_rounded),
                   tooltip: 'AI অভিধান · Dictionary',
                   onPressed: () => Navigator.of(context).push(
                       MaterialPageRoute(builder: (_) => const DictionaryScreen())),
                 ),
                 // Kana grid + writing practice moved off the tab bar (v4):
                 IconButton(
-                  icon: const Icon(Icons.grid_view),
+                  icon: const Icon(Icons.grid_view_rounded),
                   tooltip: s.kanaTitle,
                   onPressed: () =>
                       _push(context, s.kanaTitle, const KanaScreen()),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.draw),
+                  icon: const Icon(Icons.draw_rounded),
                   tooltip: 'লিখো · Write',
                   onPressed: () =>
                       _push(context, 'লিখো · Write', const WritingScreen()),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.settings_outlined),
+                  icon: const Icon(Icons.settings_rounded),
                   tooltip: 'সেটিংস · Settings',
                   onPressed: () => _push(
                       context, 'সেটিংস · Settings', const SettingsScreen()),
@@ -240,11 +240,11 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         selectedIndex: tab,
         onDestinationSelected: (i) => setState(() => tab = i),
         destinations: [
-          const NavigationDestination(icon: Icon(Icons.home_outlined), label: 'হোম'),
-          NavigationDestination(icon: const Icon(Icons.school_outlined), label: s.navLearn),
-          NavigationDestination(icon: const Icon(Icons.mic_none), label: s.navSpeak),
+          const NavigationDestination(icon: Icon(Icons.home_outlined), selectedIcon: Icon(Icons.home_rounded), label: 'হোম'),
+          NavigationDestination(icon: const Icon(Icons.school_outlined), selectedIcon: const Icon(Icons.school_rounded), label: s.navLearn),
+          NavigationDestination(icon: const Icon(Icons.mic_none_rounded), selectedIcon: const Icon(Icons.mic_rounded), label: s.navSpeak),
           const NavigationDestination(
-              icon: Icon(Icons.monitor_heart_outlined), label: 'অগ্রগতি'),
+              icon: Icon(Icons.monitor_heart_outlined), selectedIcon: Icon(Icons.monitor_heart_rounded), label: 'অগ্রগতি'),
         ],
       ),
     );

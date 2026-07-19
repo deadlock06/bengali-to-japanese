@@ -519,7 +519,11 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           Text('চিনে নাও', style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
           Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 54, fontWeight: FontWeight.w900, height: 1.15)),
           if (q.yomi.isNotEmpty)
-            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+            Text(
+                (ref.watch(romajiShownProvider).valueOrNull ?? true)
+                    ? q.yomi
+                    : q.yomi.split(' · ').first,
+                style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
           const SizedBox(height: 6),
           // The answer, revealed (this is teaching, not testing).
           Text('= ${q.options[q.answerIndex]}',
@@ -551,7 +555,13 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
           Text(q.prompt, style: TextStyle(color: m.color, fontSize: 11.5, fontWeight: FontWeight.w700, letterSpacing: .5)),
           Text(q.jp, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 54, fontWeight: FontWeight.w900, height: 1.15)),
           if (q.yomi.isNotEmpty)
-            Text(q.yomi, style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
+            // Romaji weaning (D-037): reading line is 'kana · romaji' — when the
+            // learner turns romaji off, show the kana part only.
+            Text(
+                (ref.watch(romajiShownProvider).valueOrNull ?? true)
+                    ? q.yomi
+                    : q.yomi.split(' · ').first,
+                style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 13.5, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
           _speakerBtn(),
           if (_canWrite) _writeBtn(),
           const SizedBox(height: 14),
@@ -666,7 +676,10 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             textAlign: TextAlign.center,
             style: const TextStyle(fontFamily: 'ZenKakuGothicNew', fontSize: 34, fontWeight: FontWeight.w900, height: 1.2)),
         if (q.yomi.isNotEmpty)
-          Text(q.yomi,
+          Text(
+              (ref.watch(romajiShownProvider).valueOrNull ?? true)
+                  ? q.yomi
+                  : q.yomi.split(' · ').first,
               style: const TextStyle(
                   fontFamily: 'ZenKakuGothicNew', fontSize: 13, fontWeight: FontWeight.w700, color: BhasagoTheme.muted)),
         const SizedBox(height: 16),

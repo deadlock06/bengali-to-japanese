@@ -57,6 +57,24 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 24),
+          // Romaji weaning (D-037): the learner decides when to drop the crutch —
+          // recommended after kana feels comfortable, never automatic (D-001).
+          _Section(
+            title: 'শেখার ধরন · Learning',
+            icon: Icons.school_outlined,
+            child: SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('রোমাজি দেখাও'),
+              subtitle: const Text(
+                  'কানা সহজ হয়ে গেলে বন্ধ করে দাও — জাপানি পড়া অনেক দ্রুত শিখবে'),
+              value: ref.watch(romajiShownProvider).valueOrNull ?? true,
+              onChanged: (v) async {
+                await setRomajiShown(v);
+                ref.invalidate(romajiShownProvider);
+              },
+            ),
+          ),
+          const SizedBox(height: 24),
           _Section(
             title: 'প্রাকদর্শন · Preview',
             icon: Icons.visibility_outlined,

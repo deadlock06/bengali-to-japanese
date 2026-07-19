@@ -200,7 +200,10 @@ class _LessonBlock extends ConsumerWidget {
             ListTile(
               dense: true,
               leading: _statusDot(it.id),
-              title: Text('${it.jp}  ·  ${it.romaji}',
+              title: Text(
+                  (ref.watch(romajiShownProvider).valueOrNull ?? true)
+                      ? '${it.jp}  ·  ${it.romaji}'
+                      : it.jp,
                   style: const TextStyle(
                       fontFamily: 'ZenKakuGothicNew',
                       fontSize: 15,

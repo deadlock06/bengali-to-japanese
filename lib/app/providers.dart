@@ -81,6 +81,19 @@ final goalProvider = FutureProvider<String>((_) async {
   return p.getString('goal') ?? '';
 });
 
+/// Romaji visibility (D-037, YouTube-research: the #1 app critique is keeping
+/// learners on the romaji crutch too long). Default ON; the learner turns it
+/// off when kana feels comfortable — their choice, never automatic/forced.
+final romajiShownProvider = FutureProvider<bool>((_) async {
+  final p = await SharedPreferences.getInstance();
+  return p.getBool('romaji_shown') ?? true;
+});
+
+Future<void> setRomajiShown(bool v) async {
+  final p = await SharedPreferences.getInstance();
+  await p.setBool('romaji_shown', v);
+}
+
 Future<void> setGoal(String g) async {
   final p = await SharedPreferences.getInstance();
   await p.setString('goal', g);

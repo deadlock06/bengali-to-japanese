@@ -24,16 +24,22 @@ class Tri {
 /// A single kana character.
 class KanaEntry {
   final String id, char, romaji, row;
+
+  /// Bengali picture-story mnemonic (D-034, YouTube kana-method): a shape
+  /// association that hooks the glyph to its sound. Empty on older data.
+  final String mnemonicBn;
   const KanaEntry(
       {required this.id,
       required this.char,
       required this.romaji,
-      required this.row});
+      required this.row,
+      this.mnemonicBn = ''});
 
   factory KanaEntry.fromJson(Map<String, dynamic> j) => KanaEntry(
         id: j['id'],
         char: j['char'],
         romaji: j['romaji'],
+        mnemonicBn: j['mnemonic_bn'] ?? '',
         row: j['row'] ?? '',
       );
 }

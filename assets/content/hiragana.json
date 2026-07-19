@@ -1,283 +1,329 @@
 {
-  "type": "kana",
-  "items": [
-    {
-      "id": "h_a",
-      "char": "あ",
-      "romaji": "a",
-      "row": "a"
-    },
-    {
-      "id": "h_i",
-      "char": "い",
-      "romaji": "i",
-      "row": "a"
-    },
-    {
-      "id": "h_u",
-      "char": "う",
-      "romaji": "u",
-      "row": "a"
-    },
-    {
-      "id": "h_e",
-      "char": "え",
-      "romaji": "e",
-      "row": "a"
-    },
-    {
-      "id": "h_o",
-      "char": "お",
-      "romaji": "o",
-      "row": "a"
-    },
-    {
-      "id": "h_ka",
-      "char": "か",
-      "romaji": "ka",
-      "row": "k"
-    },
-    {
-      "id": "h_ki",
-      "char": "き",
-      "romaji": "ki",
-      "row": "k"
-    },
-    {
-      "id": "h_ku",
-      "char": "く",
-      "romaji": "ku",
-      "row": "k"
-    },
-    {
-      "id": "h_ke",
-      "char": "け",
-      "romaji": "ke",
-      "row": "k"
-    },
-    {
-      "id": "h_ko",
-      "char": "こ",
-      "romaji": "ko",
-      "row": "k"
-    },
-    {
-      "id": "h_sa",
-      "char": "さ",
-      "romaji": "sa",
-      "row": "s"
-    },
-    {
-      "id": "h_shi",
-      "char": "し",
-      "romaji": "shi",
-      "row": "s"
-    },
-    {
-      "id": "h_su",
-      "char": "す",
-      "romaji": "su",
-      "row": "s"
-    },
-    {
-      "id": "h_se",
-      "char": "せ",
-      "romaji": "se",
-      "row": "s"
-    },
-    {
-      "id": "h_so",
-      "char": "そ",
-      "romaji": "so",
-      "row": "s"
-    },
-    {
-      "id": "h_ta",
-      "char": "た",
-      "romaji": "ta",
-      "row": "t"
-    },
-    {
-      "id": "h_chi",
-      "char": "ち",
-      "romaji": "chi",
-      "row": "t"
-    },
-    {
-      "id": "h_tsu",
-      "char": "つ",
-      "romaji": "tsu",
-      "row": "t"
-    },
-    {
-      "id": "h_te",
-      "char": "て",
-      "romaji": "te",
-      "row": "t"
-    },
-    {
-      "id": "h_to",
-      "char": "と",
-      "romaji": "to",
-      "row": "t"
-    },
-    {
-      "id": "h_na",
-      "char": "な",
-      "romaji": "na",
-      "row": "n"
-    },
-    {
-      "id": "h_ni",
-      "char": "に",
-      "romaji": "ni",
-      "row": "n"
-    },
-    {
-      "id": "h_nu",
-      "char": "ぬ",
-      "romaji": "nu",
-      "row": "n"
-    },
-    {
-      "id": "h_ne",
-      "char": "ね",
-      "romaji": "ne",
-      "row": "n"
-    },
-    {
-      "id": "h_no",
-      "char": "の",
-      "romaji": "no",
-      "row": "n"
-    },
-    {
-      "id": "h_ha",
-      "char": "は",
-      "romaji": "ha",
-      "row": "h"
-    },
-    {
-      "id": "h_hi",
-      "char": "ひ",
-      "romaji": "hi",
-      "row": "h"
-    },
-    {
-      "id": "h_fu",
-      "char": "ふ",
-      "romaji": "fu",
-      "row": "h"
-    },
-    {
-      "id": "h_he",
-      "char": "へ",
-      "romaji": "he",
-      "row": "h"
-    },
-    {
-      "id": "h_ho",
-      "char": "ほ",
-      "romaji": "ho",
-      "row": "h"
-    },
-    {
-      "id": "h_ma",
-      "char": "ま",
-      "romaji": "ma",
-      "row": "m"
-    },
-    {
-      "id": "h_mi",
-      "char": "み",
-      "romaji": "mi",
-      "row": "m"
-    },
-    {
-      "id": "h_mu",
-      "char": "む",
-      "romaji": "mu",
-      "row": "m"
-    },
-    {
-      "id": "h_me",
-      "char": "め",
-      "romaji": "me",
-      "row": "m"
-    },
-    {
-      "id": "h_mo",
-      "char": "も",
-      "romaji": "mo",
-      "row": "m"
-    },
-    {
-      "id": "h_ya",
-      "char": "や",
-      "romaji": "ya",
-      "row": "y"
-    },
-    {
-      "id": "h_yu",
-      "char": "ゆ",
-      "romaji": "yu",
-      "row": "y"
-    },
-    {
-      "id": "h_yo",
-      "char": "よ",
-      "romaji": "yo",
-      "row": "y"
-    },
-    {
-      "id": "h_ra",
-      "char": "ら",
-      "romaji": "ra",
-      "row": "r"
-    },
-    {
-      "id": "h_ri",
-      "char": "り",
-      "romaji": "ri",
-      "row": "r"
-    },
-    {
-      "id": "h_ru",
-      "char": "る",
-      "romaji": "ru",
-      "row": "r"
-    },
-    {
-      "id": "h_re",
-      "char": "れ",
-      "romaji": "re",
-      "row": "r"
-    },
-    {
-      "id": "h_ro",
-      "char": "ろ",
-      "romaji": "ro",
-      "row": "r"
-    },
-    {
-      "id": "h_wa",
-      "char": "わ",
-      "romaji": "wa",
-      "row": "w"
-    },
-    {
-      "id": "h_wo",
-      "char": "を",
-      "romaji": "wo",
-      "row": "w"
-    },
-    {
-      "id": "h_n",
-      "char": "ん",
-      "romaji": "n",
-      "row": "special"
-    }
-  ],
-  "verified": true,
-  "source": "Standard gojūon chart (kana are fixed public knowledge)"
+ "type": "kana",
+ "items": [
+  {
+   "id": "h_a",
+   "char": "あ",
+   "romaji": "a",
+   "row": "a",
+   "mnemonic_bn": "あ — 'আ'ন্টেনার সাথে প্যাঁচানো সুতো। প্যাঁচটা দেখলেই 'আ'!"
+  },
+  {
+   "id": "h_i",
+   "char": "い",
+   "romaji": "i",
+   "row": "a",
+   "mnemonic_bn": "い — পাশাপাশি দুটো 'ই'লিশ মাছ সাঁতার কাটছে।"
+  },
+  {
+   "id": "h_u",
+   "char": "う",
+   "romaji": "u",
+   "row": "a",
+   "mnemonic_bn": "う — 'উ'পরে ঢাকনা খোলা হাঁড়ি — ভাপ উঠছে 'উ~'।"
+  },
+  {
+   "id": "h_e",
+   "char": "え",
+   "romaji": "e",
+   "row": "a",
+   "mnemonic_bn": "え — 'এ'কজন দৌড়বিদ পা ছুঁড়ে দৌড়াচ্ছে।"
+  },
+  {
+   "id": "h_o",
+   "char": "お",
+   "romaji": "o",
+   "row": "a",
+   "mnemonic_bn": "お — 'ও'জনদার লোক পেট নিয়ে বসে — পাশে ছোট্ট টুপি।"
+  },
+  {
+   "id": "h_ka",
+   "char": "か",
+   "romaji": "ka",
+   "row": "k",
+   "mnemonic_bn": "か — 'কা'স্তে হাতে কৃষক — পাশে ছোট ছুরি।"
+  },
+  {
+   "id": "h_ki",
+   "char": "き",
+   "romaji": "ki",
+   "row": "k",
+   "mnemonic_bn": "き — 'কি'-হোলে (চাবির) ঢোকানো চাবি।"
+  },
+  {
+   "id": "h_ku",
+   "char": "く",
+   "romaji": "ku",
+   "row": "k",
+   "mnemonic_bn": "く — 'কু'হু-পাখির খোলা ঠোঁট।"
+  },
+  {
+   "id": "h_ke",
+   "char": "け",
+   "romaji": "ke",
+   "row": "k",
+   "mnemonic_bn": "け — 'কে'রোসিন ল্যাম্পের পাশে সলতে।"
+  },
+  {
+   "id": "h_ko",
+   "char": "こ",
+   "romaji": "ko",
+   "row": "k",
+   "mnemonic_bn": "こ — 'কো'লবালিশ দুটো — একটার উপর একটা।"
+  },
+  {
+   "id": "h_sa",
+   "char": "さ",
+   "romaji": "sa",
+   "row": "s",
+   "mnemonic_bn": "さ — 'সা'ইকেলের হ্যান্ডেল বাঁকা হয়ে আছে।"
+  },
+  {
+   "id": "h_shi",
+   "char": "し",
+   "romaji": "shi",
+   "row": "s",
+   "mnemonic_bn": "し — 'শি'কারির বড়শি — পানিতে ঝুলছে।"
+  },
+  {
+   "id": "h_su",
+   "char": "す",
+   "romaji": "su",
+   "row": "s",
+   "mnemonic_bn": "す — 'সু'তো প্যাঁচানো লাটাই।"
+  },
+  {
+   "id": "h_se",
+   "char": "せ",
+   "romaji": "se",
+   "row": "s",
+   "mnemonic_bn": "せ — 'সে'লাই মেশিনের সুচ কাপড় ফুঁড়ছে।"
+  },
+  {
+   "id": "h_so",
+   "char": "そ",
+   "romaji": "so",
+   "row": "s",
+   "mnemonic_bn": "そ — 'সো'জা নয় — আঁকাবাঁকা জিলাপির প্যাঁচ!"
+  },
+  {
+   "id": "h_ta",
+   "char": "た",
+   "romaji": "ta",
+   "row": "t",
+   "mnemonic_bn": "た — 'তা'লগাছের পাশে ছোট্ট 'ta' লেখা।"
+  },
+  {
+   "id": "h_chi",
+   "char": "ち",
+   "romaji": "chi",
+   "row": "t",
+   "mnemonic_bn": "ち — 'চি'ল উড়ে যাচ্ছে — ডানা বাঁকানো।"
+  },
+  {
+   "id": "h_tsu",
+   "char": "つ",
+   "romaji": "tsu",
+   "row": "t",
+   "mnemonic_bn": "つ — 'ৎসু'নামির ঢেউ — একটাই বড় ঢেউ।"
+  },
+  {
+   "id": "h_te",
+   "char": "て",
+   "romaji": "te",
+   "row": "t",
+   "mnemonic_bn": "て — 'তে'র্ছা হাত বাড়ানো — হ্যান্ডশেক করবে।"
+  },
+  {
+   "id": "h_to",
+   "char": "と",
+   "romaji": "to",
+   "row": "t",
+   "mnemonic_bn": "と — 'তো'মার পায়ে কাঁটা ফুটেছে!"
+  },
+  {
+   "id": "h_na",
+   "char": "な",
+   "romaji": "na",
+   "row": "n",
+   "mnemonic_bn": "な — 'না'মাজের মোনাজাতে দুই হাত + গিঁট।"
+  },
+  {
+   "id": "h_ni",
+   "char": "に",
+   "romaji": "ni",
+   "row": "n",
+   "mnemonic_bn": "に — 'নি'শানার পাশে দুটো দাগ।"
+  },
+  {
+   "id": "h_nu",
+   "char": "ぬ",
+   "romaji": "nu",
+   "row": "n",
+   "mnemonic_bn": "ぬ — 'নু'ডলস কাঁটাচামচে প্যাঁচানো!"
+  },
+  {
+   "id": "h_ne",
+   "char": "ね",
+   "romaji": "ne",
+   "row": "n",
+   "mnemonic_bn": "ね — 'নে'ংটি ইঁদুরের প্যাঁচানো লেজ।"
+  },
+  {
+   "id": "h_no",
+   "char": "の",
+   "romaji": "no",
+   "row": "n",
+   "mnemonic_bn": "の — 'নো' সাইন — একটানে আঁকা নিষেধ-চিহ্ন।"
+  },
+  {
+   "id": "h_ha",
+   "char": "は",
+   "romaji": "ha",
+   "row": "h",
+   "mnemonic_bn": "は — 'হা'সিমুখে দাঁড়ানো মানুষ — H এর মতো।"
+  },
+  {
+   "id": "h_hi",
+   "char": "ひ",
+   "romaji": "hi",
+   "row": "h",
+   "mnemonic_bn": "ひ — 'হি'হি হাসিতে বাঁকা মুখ।"
+  },
+  {
+   "id": "h_fu",
+   "char": "ふ",
+   "romaji": "fu",
+   "row": "h",
+   "mnemonic_bn": "ふ — 'ফুঁ' দিয়ে উড়িয়ে দেওয়া ফুঁ-এর বাতাস।"
+  },
+  {
+   "id": "h_he",
+   "char": "へ",
+   "romaji": "he",
+   "row": "h",
+   "mnemonic_bn": "へ — 'হে'লানো পাহাড়ের চূড়া।"
+  },
+  {
+   "id": "h_ho",
+   "char": "ほ",
+   "romaji": "ho",
+   "row": "h",
+   "mnemonic_bn": "ほ — 'হো'মিওপ্যাথির দোকানের সাইনবোর্ড + খুঁটি।"
+  },
+  {
+   "id": "h_ma",
+   "char": "ま",
+   "romaji": "ma",
+   "row": "m",
+   "mnemonic_bn": "ま — 'মা'ছ ধরার বড়শিতে প্যাঁচ — দুই কাঁটা।"
+  },
+  {
+   "id": "h_mi",
+   "char": "み",
+   "romaji": "mi",
+   "row": "m",
+   "mnemonic_bn": "み — 'মি'উজিকের ২১ নম্বর সুর — ২১ লেখার মতো।"
+  },
+  {
+   "id": "h_mu",
+   "char": "む",
+   "romaji": "mu",
+   "row": "m",
+   "mnemonic_bn": "む — 'মু'রগির মাথা আর ঝুঁটি।"
+  },
+  {
+   "id": "h_me",
+   "char": "め",
+   "romaji": "me",
+   "row": "m",
+   "mnemonic_bn": "め — 'মে'য়েটার টানা টানা চোখ।"
+  },
+  {
+   "id": "h_mo",
+   "char": "も",
+   "romaji": "mo",
+   "row": "m",
+   "mnemonic_bn": "も — 'মো'রগের লেজে দুটো পালক।"
+  },
+  {
+   "id": "h_ya",
+   "char": "や",
+   "romaji": "ya",
+   "row": "y",
+   "mnemonic_bn": "や — 'ইয়া'র্কির গুলতি — Y এর মতো।"
+  },
+  {
+   "id": "h_yu",
+   "char": "ゆ",
+   "romaji": "yu",
+   "row": "y",
+   "mnemonic_bn": "ゆ — 'ইউ'-টার্ন নেওয়া মাছ।"
+  },
+  {
+   "id": "h_yo",
+   "char": "よ",
+   "romaji": "yo",
+   "row": "y",
+   "mnemonic_bn": "よ — 'ইয়ো'গা করা লোক — এক হাত বাড়ানো।"
+  },
+  {
+   "id": "h_ra",
+   "char": "ら",
+   "romaji": "ra",
+   "row": "r",
+   "mnemonic_bn": "ら — 'রা'গ করে মুখ ঘুরিয়ে থাকা।"
+  },
+  {
+   "id": "h_ri",
+   "char": "り",
+   "romaji": "ri",
+   "row": "r",
+   "mnemonic_bn": "り — 'রি'কশার দুই হুড — ছোট আর লম্বা।"
+  },
+  {
+   "id": "h_ru",
+   "char": "る",
+   "romaji": "ru",
+   "row": "r",
+   "mnemonic_bn": "る — 'রু'টির শেষে প্যাঁচ — লুপঅলা পথ।"
+  },
+  {
+   "id": "h_re",
+   "char": "れ",
+   "romaji": "re",
+   "row": "r",
+   "mnemonic_bn": "れ — 'রে'লগাড়ি বাঁক নিচ্ছে।"
+  },
+  {
+   "id": "h_ro",
+   "char": "ろ",
+   "romaji": "ro",
+   "row": "r",
+   "mnemonic_bn": "ろ — 'রো'দে শুকানো জিলাপি — প্যাঁচ ছাড়া る!"
+  },
+  {
+   "id": "h_wa",
+   "char": "わ",
+   "romaji": "wa",
+   "row": "w",
+   "mnemonic_bn": "わ — 'ওয়া'ও! মুখ গোল করে অবাক।"
+  },
+  {
+   "id": "h_wo",
+   "char": "を",
+   "romaji": "wo",
+   "row": "w",
+   "mnemonic_bn": "を — 'ও'রে বাবা — জটিল প্যাঁচ, নাচের ভঙ্গি।"
+  },
+  {
+   "id": "h_n",
+   "char": "ん",
+   "romaji": "n",
+   "row": "special",
+   "mnemonic_bn": "ん — 'ন' এর মতো একটানে — ইংরেজি n উল্টে!"
+  }
+ ],
+ "verified": true,
+ "source": "Standard gojūon chart (kana are fixed public knowledge)"
 }

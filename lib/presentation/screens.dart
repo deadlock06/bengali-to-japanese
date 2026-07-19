@@ -31,10 +31,20 @@ class KanaScreen extends ConsumerWidget {
       itemBuilder: (_, i) {
         final k = kana[i];
         return InkWell(
-          // Play the bundled clip for this glyph (kana_hira_a / kana_kata_a …).
-          // Missing clips are a silent no-op in AudioService — never crashes.
-          onTap: () => AudioService.instance
-              .play('kana_${katakana ? "kata" : "hira"}_${k.romaji}'),
+          // Play the bundled clip (kana_hira_a …) AND show the picture-story
+          // mnemonic (D-034) — shape → sound, the YouTube kana-method hook.
+          onTap: () {
+            AudioService.instance
+                .play('kana_${katakana ? "kata" : "hira"}_${k.romaji}');
+            if (k.mnemonicBn.isNotEmpty) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(SnackBar(
+                  content: Text('💡 ${k.mnemonicBn}'),
+                  duration: const Duration(seconds: 3),
+                ));
+            }
+          },
           child: Card(
             child: Center(
               // scaleDown: the glyph+romaji stack is a hair taller than a

@@ -64,6 +64,8 @@ class WritingScreen extends StatefulWidget {
 class _WritingScreenState extends State<WritingScreen>
     with SingleTickerProviderStateMixin {
   Map<String, dynamic> _data = const {};
+  // romaji → Bengali picture-story mnemonic (D-034), per script.
+  Map<String, String> _mnHira = const {}, _mnKata = const {};
   late bool _kata = widget.startKatakana;
   int _idx = 0;
   bool _guide = true;
@@ -99,6 +101,20 @@ class _WritingScreenState extends State<WritingScreen>
     rootBundle.loadString('assets/stroke/kana_strokes.json').then((s) {
       setState(() => _data = json.decode(s) as Map<String, dynamic>);
     });
+    // Kana mnemonics (D-034) — same bundled content the kana screens use.
+    for (final f in ['hiragana', 'katakana']) {
+      rootBundle.loadString('assets/content/$f.json').then((s) {
+        final items = (json.decode(s)['items'] as List).cast<Map>();
+        final m = {
+          for (final it in items)
+            if ((it['mnemonic_bn'] ?? '') != '')
+              it['romaji'] as String: it['mnemonic_bn'] as String
+        };
+        if (mounted) {
+          setState(() => f == 'hiragana' ? _mnHira = m : _mnKata = m);
+        }
+      });
+    }
     SharedPreferences.getInstance().then((p) {
       if (mounted && p.getBool('kana_intro_seen') != true) {
         setState(() => _showIntro = true);
@@ -138,10 +154,13 @@ class _WritingScreenState extends State<WritingScreen>
   String _senseiLine() {
     final r = _romaji[_idx], bn = _bnSound[_idx];
     final head = 'এই যে — 「$_cur」। উচ্চারণ "$bn" (romaji: $r)। ';
+    // Picture-story hook first (D-034, YouTube kana-method): shape → sound.
+    final mn = (_kata ? _mnKata : _mnHira)[r] ?? '';
+    final hook = mn.isEmpty ? '' : '\n💡 $mn';
     if (_idx < 5) {
-      return '$head এটা জাপানির ৫টা মূল স্বরের একটা — বাকি সব অক্ষর এই স্বরগুলোর উপরেই দাঁড়িয়ে। ভালো করে চিনে নাও।';
+      return '$head এটা জাপানির ৫টা মূল স্বরের একটা — বাকি সব অক্ষর এই স্বরগুলোর উপরেই দাঁড়িয়ে। ভালো করে চিনে নাও।$hook';
     }
-    return '$head ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর আঙুল দিয়ে নিজে লিখে ফেলো।';
+    return '$head ▶ চেপে স্ট্রোক-অর্ডার দেখো, তারপর আঙুল দিয়ে নিজে লিখে ফেলো।$hook';
   }
 
   @override

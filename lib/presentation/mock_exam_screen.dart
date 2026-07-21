@@ -68,7 +68,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     if (completionSaved) return;
     completionSaved = true;
     try {
-      final r = scoreMockExam(exam!, answers);
+      final r = scoreMockExam(exam!, answers, lang: ref.read(langProvider));
       await ref.read(srsProvider).recordLessonCompletion(
             lessonId: 'mock_${widget.kind == 'jft' ? 'a2' : widget.kind}',
             items: r.total,
@@ -106,6 +106,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
     exam ??= buildMockExam(
       lessons: ref.watch(contentProvider).valueOrNull?.lessons ?? const [],
       kind: widget.kind,
+      lang: ref.read(langProvider), // exam language fixed at open time
       // Varies per attempt but stays reproducible within one: day-of-year seed.
       seed: DateTime.now().difference(DateTime(DateTime.now().year)).inDays,
     );
@@ -298,7 +299,7 @@ class _MockExamScreenState extends ConsumerState<MockExamScreen> {
   }
 
   Widget _results() {
-    final r = scoreMockExam(exam!, answers);
+    final r = scoreMockExam(exam!, answers, lang: ref.read(langProvider));
     final names = {for (final s in exam!.sections) s.id: s.titleBn};
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 16),

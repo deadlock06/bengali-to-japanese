@@ -12,8 +12,23 @@ import '../data/curriculum_service.dart';
 import '../domain/fsrs.dart';
 import '../domain/models.dart';
 
-/// Selected UI locale (persist via shared_preferences in the full app).
+/// Selected UI locale. Initial value is overridden at startup from
+/// shared_preferences (see main.dart) so the choice survives restarts.
 final localeProvider = StateProvider<Locale>((_) => const Locale('bn'));
+
+/// Current UI language code ('en'|'bn'|'ja'). Convenience over [localeProvider]
+/// for content getters (`Tri.of(lang)`); reactive — dependents rebuild on
+/// switch, so lessons/curriculum/vocab re-render in the new language instantly.
+final langProvider =
+    Provider<String>((ref) => ref.watch(localeProvider).languageCode);
+
+/// Set the UI language AND persist it (survives restart). Call this everywhere
+/// the learner changes language so onboarding / settings / home stay in sync.
+Future<void> setAppLocale(WidgetRef ref, String code) async {
+  ref.read(localeProvider.notifier).state = Locale(code);
+  final p = await SharedPreferences.getInstance();
+  await p.setString('locale_chosen', code);
+}
 
 /// Whether the first-run language screen was completed (v4 onboarding).
 /// shared_preferences on purpose — locale is not a secret; Keystore stays
@@ -121,6 +136,7 @@ final learnerLevelProvider = FutureProvider<String>((ref) async {
 /// (no DB) completed = empty → first lesson, matching curriculumProvider.
 final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
   final content = await ref.watch(contentProvider.future);
+  final lang = ref.watch(langProvider); // rebuild the batch on language switch
   Set<String> completed = const {};
   try {
     completed = await ref.read(srsProvider).completedLessonIds();
@@ -153,7 +169,8 @@ final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
   for (final l in content.lessons) {
     if (!ordered.contains(l)) ordered.add(l);
   }
-  return buildClassroomBatch(curriculumOrdered: ordered, completed: completed);
+  return buildClassroomBatch(
+      curriculumOrdered: ordered, completed: completed, lang: lang);
 });
 
 /// Free-practice batch for ONE specific lesson (D-036, vocab-bank অনুশীলন).
@@ -162,6 +179,7 @@ final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
 final practiceBatchProvider =
     FutureProvider.family<ClassroomBatch?, String>((ref, lessonId) async {
   final content = await ref.watch(contentProvider.future);
+  final lang = ref.watch(langProvider); // rebuild on language switch
   final ordered = <Lesson>[];
   try {
     for (final u in await ref.watch(curriculumProvider.future)) {
@@ -175,7 +193,10 @@ final practiceBatchProvider =
     if (!ordered.contains(l)) ordered.add(l);
   }
   return buildClassroomBatch(
-      curriculumOrdered: ordered, completed: const {}, forceLessonId: lessonId);
+      curriculumOrdered: ordered,
+      completed: const {},
+      forceLessonId: lessonId,
+      lang: lang);
 });
 
 /// Bhasha Go book (assets/book/book.json) — T-121 slice.

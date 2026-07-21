@@ -79,8 +79,8 @@ bool _isSentence(LessonItem it) =>
     it.jp.length > 7 || it.jp.contains('です') || it.jp.contains('ます') || it.jp.contains('か');
 
 MockQuestion _mc(LessonItem it, List<String> pool, int seed,
-    {bool listening = false}) {
-  final correct = it.meaning.bn;
+    {bool listening = false, String lang = 'bn'}) {
+  final correct = it.meaning.of(lang);
   final distractors = <String>[];
   final cands = [...pool]..remove(correct);
   cands.sort((a, b) =>
@@ -116,6 +116,10 @@ MockExam? buildMockExam({
   required Iterable<Lesson> lessons,
   required String kind, // 'jft' | 'n5' | 'n4' | 'n3' | 'n2' | 'n1'
   int seed = 0,
+  // UI language (D-041). 'bn' default keeps the deterministic exam identical to
+  // tests; the app passes the learner's language so options + labels render in
+  // it. Answer-key (correct + distractors = meaning.of(lang)) stays exact-match.
+  String lang = 'bn',
 }) {
   final all = lessons
       .expand((l) => l.items.map((i) => (lesson: l, item: i)))
@@ -131,7 +135,7 @@ MockExam? buildMockExam({
       if (upper != null ? at(x, upper) : isBasic(x)) x.item
   ];
   if (base.length < 40) return null;
-  final pool = base.map((i) => i.meaning.bn).toSet().toList()..sort();
+  final pool = base.map((i) => i.meaning.of(lang)).toSet().toList()..sort();
   if (pool.length < 8) return null;
 
   final words = base.where((i) => !_isSentence(i));
@@ -140,48 +144,76 @@ MockExam? buildMockExam({
   List<MockQuestion> qs(Iterable<LessonItem> src, int n, String salt,
           {bool listening = false}) =>
       _pick(src, n, _hash('$salt$seed'), (i) => i.id)
-          .map((i) => _mc(i, pool, seed, listening: listening))
+          .map((i) => _mc(i, pool, seed, listening: listening, lang: lang))
           .toList();
 
   MockSection vocab(int min, int n) => MockSection(
-      id: 'moji', titleBn: 'শব্দ ও লিপি (文字・語彙)', minutes: min, questions: qs(words, n, 'moji'));
+      id: 'moji', titleBn: _sec('moji', lang), minutes: min, questions: qs(words, n, 'moji'));
   MockSection grammarReading(int min, int n) => MockSection(
-      id: 'bunpou', titleBn: 'ব্যাকরণ ও পড়া (文法・読解)', minutes: min, questions: qs(sents, n, 'bunpou'));
+      id: 'bunpou', titleBn: _sec('bunpou', lang), minutes: min, questions: qs(sents, n, 'bunpou'));
   MockSection listening(int min, int n) => MockSection(
-      id: 'choukai', titleBn: 'শোনা (聴解)', minutes: min, questions: qs(base, n, 'choukai', listening: true));
+      id: 'choukai', titleBn: _sec('choukai', lang), minutes: min, questions: qs(base, n, 'choukai', listening: true));
   // N2/N1: Language Knowledge (vocab+grammar) + Reading, one combined section.
   MockSection langKnowledge(int min, int nv, int ng) => MockSection(
-      id: 'gengo', titleBn: 'ভাষাজ্ঞান ও পড়া (言語知識・読解)', minutes: min,
+      id: 'gengo', titleBn: _sec('gengo', lang), minutes: min,
       questions: [...qs(words, nv, 'gengo_v'), ...qs(sents, ng, 'gengo_g')]);
 
+  String examTitle(String n) => lang == 'en'
+      ? 'JLPT $n Mock Exam'
+      : lang == 'ja' ? 'JLPT $n 模擬試験' : 'JLPT $n মক পরীক্ষা';
   switch (kind) {
     case 'n5':
-      return MockExam(kind: 'n5', titleBn: 'JLPT N5 মক পরীক্ষা', minutes: 90,
+      return MockExam(kind: 'n5', titleBn: examTitle('N5'), minutes: 90,
           sections: [vocab(20, 12), grammarReading(40, 14), listening(30, 10)]);
     case 'n4':
-      return MockExam(kind: 'n4', titleBn: 'JLPT N4 মক পরীক্ষা', minutes: 115,
+      return MockExam(kind: 'n4', titleBn: examTitle('N4'), minutes: 115,
           sections: [vocab(25, 14), grammarReading(55, 16), listening(35, 12)]);
     case 'n3':
-      return MockExam(kind: 'n3', titleBn: 'JLPT N3 মক পরীক্ষা', minutes: 140,
+      return MockExam(kind: 'n3', titleBn: examTitle('N3'), minutes: 140,
           sections: [vocab(30, 14), grammarReading(70, 18), listening(40, 12)]);
     case 'n2':
-      return MockExam(kind: 'n2', titleBn: 'JLPT N2 মক পরীক্ষা', minutes: 155,
+      return MockExam(kind: 'n2', titleBn: examTitle('N2'), minutes: 155,
           sections: [langKnowledge(105, 12, 12), listening(50, 12)]);
     case 'n1':
-      return MockExam(kind: 'n1', titleBn: 'JLPT N1 মক পরীক্ষা', minutes: 165,
+      return MockExam(kind: 'n1', titleBn: examTitle('N1'), minutes: 165,
           sections: [langKnowledge(110, 13, 13), listening(55, 12)]);
     default: // 'jft' — JFT-Basic CBT 60min, 4 sections (docs/CURRICULUM.md §2)
-      return MockExam(kind: 'jft', titleBn: 'JFT-Basic মক পরীক্ষা', minutes: 60, sections: [
-        MockSection(id: 'script', titleBn: 'লিপি ও শব্দ (文字と語彙)', questions: qs(words, 14, 'script')),
-        MockSection(id: 'kaiwa', titleBn: 'কথোপকথন ও প্রকাশ (会話と表現)', questions: qs(sents, 12, 'kaiwa')),
-        MockSection(id: 'choukai', titleBn: 'শোনা (聴解)', questions: qs(base, 12, 'choukai', listening: true)),
-        MockSection(id: 'dokkai', titleBn: 'পড়া (読解)', questions: qs(sents, 12, 'dokkai2')),
+      final jft = lang == 'en' ? 'JFT-Basic Mock Exam'
+          : lang == 'ja' ? 'JFT-Basic 模擬試験' : 'JFT-Basic মক পরীক্ষা';
+      return MockExam(kind: 'jft', titleBn: jft, minutes: 60, sections: [
+        MockSection(id: 'script', titleBn: _sec('script', lang), questions: qs(words, 14, 'script')),
+        MockSection(id: 'kaiwa', titleBn: _sec('kaiwa', lang), questions: qs(sents, 12, 'kaiwa')),
+        MockSection(id: 'choukai', titleBn: _sec('choukai', lang), questions: qs(base, 12, 'choukai', listening: true)),
+        MockSection(id: 'dokkai', titleBn: _sec('dokkai', lang), questions: qs(sents, 12, 'dokkai2')),
       ]);
   }
 }
 
+/// Section title in the UI language (D-041). The Japanese 問題 name in parens is
+/// kept in every language — it's the universal exam label learners will see.
+String _sec(String id, String lang) {
+  final t = <String, List<String>>{
+    // id: [en, bn]  (ja falls back to the bare Japanese label)
+    'moji': ['Vocabulary & Script', 'শব্দ ও লিপি'],
+    'bunpou': ['Grammar & Reading', 'ব্যাকরণ ও পড়া'],
+    'choukai': ['Listening', 'শোনা'],
+    'gengo': ['Language Knowledge & Reading', 'ভাষাজ্ঞান ও পড়া'],
+    'script': ['Script & Vocabulary', 'লিপি ও শব্দ'],
+    'kaiwa': ['Conversation & Expression', 'কথোপকথন ও প্রকাশ'],
+    'dokkai': ['Reading', 'পড়া'],
+  }[id]!;
+  final jp = const {
+    'moji': '文字・語彙', 'bunpou': '文法・読解', 'choukai': '聴解',
+    'gengo': '言語知識・読解', 'script': '文字と語彙', 'kaiwa': '会話と表現',
+    'dokkai': '読解',
+  }[id]!;
+  if (lang == 'ja') return jp;
+  return '${lang == 'en' ? t[0] : t[1]} ($jp)';
+}
+
 /// Deterministic scoring → honest estimate (recommendation language, D-001).
-MockResult scoreMockExam(MockExam exam, Map<String, int?> answers) {
+MockResult scoreMockExam(MockExam exam, Map<String, int?> answers,
+    {String lang = 'bn'}) {
   final sc = <String, int>{}, st = <String, int>{};
   for (final s in exam.sections) {
     var c = 0;
@@ -209,14 +241,22 @@ MockResult scoreMockExam(MockExam exam, Map<String, int?> answers) {
         (s) => st[s.id] == 0 || sc[s.id]! / st[s.id]! >= 0.32);
     return MockResult(
       kind: exam.kind, sectionCorrect: sc, sectionTotal: st,
-      estimateLabel: 'আনুমানিক ~$est/180 (পাস ≥$passMark + প্রতি সেকশনে ন্যূনতম)',
+      estimateLabel: lang == 'en'
+          ? 'Estimated ~$est/180 (pass ≥$passMark + per-section minimum)'
+          : lang == 'ja'
+              ? '推定 ~$est/180（合格 ≥$passMark ＋各セクション最低点）'
+              : 'আনুমানিক ~$est/180 (পাস ≥$passMark + প্রতি সেকশনে ন্যূনতম)',
       passed: est >= passMark && sectionsOk, weakestSection: weakest,
     );
   }
   final est = (10 + pct * 240).round();
   return MockResult(
     kind: 'jft', sectionCorrect: sc, sectionTotal: st,
-    estimateLabel: 'আনুমানিক ~$est/250 (SSW পাস ≥200)',
+    estimateLabel: lang == 'en'
+        ? 'Estimated ~$est/250 (SSW pass ≥200)'
+        : lang == 'ja'
+            ? '推定 ~$est/250（SSW合格 ≥200）'
+            : 'আনুমানিক ~$est/250 (SSW পাস ≥200)',
     passed: est >= 200, weakestSection: weakest,
   );
 }

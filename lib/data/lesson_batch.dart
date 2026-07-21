@@ -103,6 +103,12 @@ ClassroomBatch? buildClassroomBatch({
   // Free practice (D-036): teach THIS lesson regardless of completion state —
   // the vocab bank's "অনুশীলন" path. null = normal ladder behaviour.
   String? forceLessonId,
+  // UI language (D-041). 'bn' default keeps the deterministic batch identical
+  // to tools/batch_reference.mjs (gate proof) and existing tests; the app
+  // passes the learner's chosen language so options/notes render in it. The
+  // answer-key stays deterministic — correct + distractors are all
+  // `meaning.of(lang)`, so grading is language-agnostic.
+  String lang = 'bn',
 }) {
   Lesson? next;
   if (forceLessonId != null) {
@@ -127,12 +133,14 @@ ClassroomBatch? buildClassroomBatch({
   final poolLocal = <String>[];
   final poolGlobal = <String>[];
   for (final it in next.items) {
-    if (!poolLocal.contains(it.meaning.bn)) poolLocal.add(it.meaning.bn);
+    if (!poolLocal.contains(it.meaning.of(lang))) {
+      poolLocal.add(it.meaning.of(lang));
+    }
   }
   for (final l in curriculumOrdered) {
     if (identical(l, next)) continue;
     for (final it in l.items) {
-      final m = it.meaning.bn;
+      final m = it.meaning.of(lang);
       if (!poolLocal.contains(m) && !poolGlobal.contains(m)) poolGlobal.add(m);
     }
   }
@@ -150,7 +158,7 @@ ClassroomBatch? buildClassroomBatch({
   final items = next.items.take(maxItems).toList(growable: false);
   for (var i = 0; i < items.length; i++) {
     final it = items[i];
-    final correct = it.meaning.bn;
+    final correct = it.meaning.of(lang);
     final distractors = <String>[];
     // Rotate the local pool by the item index so consecutive questions don't
     // repeat the same wrong options; top up from the global pool.
@@ -196,8 +204,9 @@ ClassroomBatch? buildClassroomBatch({
       yomi: '${it.kana} · ${it.romaji}',
       options: options,
       answerIndex: answerIndex,
-      hint: '「$kanaHead」 দিয়ে শুরু — ${it.note.bn}',
-      noteBn: it.note.bn,
+      hint: '${_startsWith(lang, kanaHead)}${it.note.of(lang)}',
+      noteBn: it.note.of(lang),
+      prompt: _meaningPrompt(lang),
       audioKey: it.id, // lesson audio is keyed by item id
       gapText: gapText,
       gapOptions: gapOptions,
@@ -208,10 +217,24 @@ ClassroomBatch? buildClassroomBatch({
 
   return ClassroomBatch(
     lessonId: next.id,
-    titleBn: next.canDo.bn,
+    titleBn: next.canDo.of(lang),
     questions: questions,
   );
 }
+
+/// "What does it mean?" prompt in the UI language (D-041).
+String _meaningPrompt(String lang) => lang == 'en'
+    ? 'What does it mean?'
+    : lang == 'ja'
+        ? 'どういう意味？'
+        : 'এর মানে কী?';
+
+/// "starts with 「x」 — " hint prefix in the UI language.
+String _startsWith(String lang, String head) => lang == 'en'
+    ? 'Starts with 「$head」 — '
+    : lang == 'ja'
+        ? '「$head」ではじまる — '
+        : '「$head」 দিয়ে শুরু — ';
 
 // ── KANA teaching (recognition) — taught IN the sensei classroom ─────────────
 // gojūon order (46 base) + the 25 voiced/semi-voiced (dakuten ゛ / handakuten ゜)

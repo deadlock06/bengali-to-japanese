@@ -41,6 +41,7 @@ import 'book_reader_screen.dart';
 import 'book_screen_v4.dart';
 import 'curriculum_screen_v4.dart';
 import 'kana_trace_pad.dart';
+import 'voice_tutor_screen.dart';
 import 'writing_screen.dart';
 
 /// Adaptive mood of the classroom. One accent dominates per state.
@@ -950,6 +951,17 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
             : m.teacherMsg);
   }
 
+  /// Opens the immersive Voice Tutor screen with this lesson's item as context.
+  void _openVoiceTutor(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (_) => VoiceTutorScreen(
+        contextJp: q.jp,
+        accent: m.color,
+      ),
+    ));
+  }
+
   Widget _toolbar(BuildContext context) => Row(children: [
         Expanded(child: _pill(icon: Icons.lightbulb_outline, iconColor: m.color, label: 'ইঙ্গিত',
             onTap: () {
@@ -959,12 +971,31 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               }
               setState(() => hintOpen = !hintOpen);
             })),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(child: _pill(icon: Icons.skip_next, iconColor: BhasagoTheme.muted, label: 'বাদ', onTap: skip)),
-        const SizedBox(width: 10),
-        SizedBox(width: 78, child: _pill(icon: Icons.close, iconColor: BhasagoTheme.muted, label: 'বন্ধ',
+        const SizedBox(width: 8),
+        // 🎙️ Live Voice Tutor — opens the immersive Gemini-Live-style screen
+        // with the current item as context so Sensei knows what's being taught.
+        _voicePill(context),
+        const SizedBox(width: 8),
+        SizedBox(width: 68, child: _pill(icon: Icons.close, iconColor: BhasagoTheme.muted, label: 'বন্ধ',
             onTap: () => Navigator.pop(context))),
       ]);
+
+  Widget _voicePill(BuildContext context) => SizedBox(
+        width: 54,
+        child: OutlinedButton(
+          onPressed: () => _openVoiceTutor(context),
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(0, 46),
+            foregroundColor: m.color,
+            side: BorderSide(color: m.color, width: 1.5),
+            shape: const StadiumBorder(),
+            padding: EdgeInsets.zero,
+          ),
+          child: const Icon(Icons.mic_rounded, size: 20),
+        ),
+      );
 
   Widget _pill({required IconData icon, required Color iconColor, required String label, required VoidCallback onTap}) =>
       OutlinedButton.icon(

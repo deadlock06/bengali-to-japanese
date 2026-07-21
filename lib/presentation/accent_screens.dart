@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/providers.dart';
 import '../data/audio_service.dart';
+import '../data/pcm_record_service.dart';
 import '../data/voice_input_service.dart';
+import '../domain/models.dart' show PitchItem;
+import '../domain/pitch.dart';
 import 'state_pack.dart';
 import 'widgets.dart';
 
@@ -60,43 +63,95 @@ class PitchScreen extends ConsumerWidget {
             style: TextStyle(color: Colors.grey.shade500)),
         const SizedBox(height: 8),
         for (final it in set.items)
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(14),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text('${it.kanji}  (${it.word})',
-                          style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold)),
-                      const Spacer(),
-                      IconButton(
-                        icon: const Icon(Icons.volume_up),
-                        // Bundled offline clip per pitch item (pa_01…). edge-tts
-                        // can't render minimal-pair pitch, but the learner hears
-                        // the word — no longer a dead button.
-                        onPressed: () => AudioService.instance.play(it.id),
-                      ),
-                    ],
-                  ),
-                  BilingualText(it.meaning, lang: lang),
-                  BilingualText(it.accentType,
-                      lang: lang,
-                      primaryStyle: const TextStyle(color: Color(0xFF38BDF8))),
-                  const SizedBox(height: 8),
-                  SizedBox(
-                    height: 54,
-                    child: CustomPaint(
-                        painter: PitchLinePainter(it.pattern),
-                        size: const Size(double.infinity, 54)),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          _PitchItemCard(it: it, lang: lang),
       ],
+    );
+  }
+}
+
+class _PitchItemCard extends StatefulWidget {
+  final PitchItem it;
+  final String lang;
+  const _PitchItemCard({required this.it, required this.lang});
+
+  @override
+  State<_PitchItemCard> createState() => _PitchItemCardState();
+}
+
+class _PitchItemCardState extends State<_PitchItemCard> {
+  bool _recording = false;
+  int? _accentScore;
+
+  Future<void> _toggleRecord() async {
+    if (_recording) {
+      final pcm = await PcmRecordService.instance.stop();
+      if (pcm.isNotEmpty) {
+        final learnerContour = f0Contour(pcm, 16000);
+        final refContour = patternToSyntheticF0(widget.it.pattern);
+        setState(() => _accentScore = accentScore(refContour, learnerContour).round());
+      }
+      setState(() => _recording = false);
+      return;
+    }
+    setState(() {
+      _accentScore = null;
+      _recording = true;
+    });
+    await PcmRecordService.instance.start();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.all(14),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text('${widget.it.kanji}  (${widget.it.word})',
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold)),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.volume_up),
+                  onPressed: () => AudioService.instance.play(widget.it.id),
+                ),
+                IconButton(
+                  icon: Icon(_recording ? Icons.stop : Icons.mic,
+                      color: _recording ? Colors.red : null),
+                  onPressed: _toggleRecord,
+                ),
+              ],
+            ),
+            BilingualText(widget.it.meaning, lang: widget.lang),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BilingualText(widget.it.accentType,
+                    lang: widget.lang,
+                    primaryStyle: const TextStyle(color: Color(0xFF38BDF8))),
+                if (_accentScore != null)
+                  Text(
+                    'Score: $_accentScore / 100',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: _accentScore! > 80 ? Colors.green : Colors.orange,
+                    ),
+                  ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 54,
+              child: CustomPaint(
+                  painter: PitchLinePainter(widget.it.pattern),
+                  size: const Size(double.infinity, 54)),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -115,12 +170,15 @@ class ShadowingScreen extends ConsumerStatefulWidget {
 // may drop the trailing ます or mis-segment, so hearing either key chunk counts.
 const _shadowTarget = 'よろしくおねがいします';
 const _shadowKeys = ['よろしく', 'おねがい'];
+// Synthetic pattern for "yoroshiku onegaishimasu" (LHLLL LLLLL)
+const _shadowPattern = [0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
 
 class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   bool _recording = false;
   bool _unavailable = false; // device has no usable speech recognizer
   String? _heard; // live/final transcript
   bool? _matched; // set only on a final result
+  int? _accentScore; // 0-100 pitch similarity
 
   bool _isMatch(String text) {
     final t = text.replaceAll(RegExp(r'\s+'), '');
@@ -130,14 +188,23 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
   Future<void> _toggleRecord() async {
     if (_recording) {
       await VoiceInputService.instance.stop();
+      final pcm = await PcmRecordService.instance.stop();
+      if (pcm.isNotEmpty) {
+        final learnerContour = f0Contour(pcm, 16000);
+        final refContour = patternToSyntheticF0(_shadowPattern);
+        setState(() => _accentScore = accentScore(refContour, learnerContour).round());
+      }
       setState(() => _recording = false);
       return;
     }
     setState(() {
       _heard = null;
       _matched = null;
+      _accentScore = null;
       _unavailable = false;
     });
+    // Start PCM recording alongside STT
+    await PcmRecordService.instance.start();
     final ok = await VoiceInputService.instance.start(
       japanese: true,
       onResult: (text, isFinal) {
@@ -146,7 +213,7 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
           _heard = text;
           if (isFinal) {
             _matched = _isMatch(text);
-            _recording = false;
+            if (_recording) _toggleRecord(); // auto-stop on final result
           }
         });
       },
@@ -219,6 +286,24 @@ class _ShadowingScreenState extends ConsumerState<ShadowingScreen> {
                         ? const Color(0xFF34D399)
                         : const Color(0xFFFBBF24)),
               ),
+            if (_accentScore != null && _matched == true) ...[
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF38BDF8).withValues(alpha: .15),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: const Color(0xFF38BDF8).withValues(alpha: .3)),
+                ),
+                child: Text(
+                  'পিচ স্কোর (Pitch Score): $_accentScore / 100',
+                  style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF38BDF8)),
+                ),
+              ),
+            ],
           ]),
       ]),
     );

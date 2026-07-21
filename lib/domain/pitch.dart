@@ -100,3 +100,19 @@ double accentScore(List<double> reference, List<double> learner) {
   final score = (100 * (1 - meanErr / 6)).clamp(0, 100);
   return score.toDouble();
 }
+
+/// Converts a binary pattern array (e.g. [0, 1] for Low-High) from the JSON
+/// into a synthetic F0 contour (Hz) so it can be compared to the learner's voice.
+/// 0 (low) maps to ~200Hz, 1 (high) maps to ~250Hz.
+List<double> patternToSyntheticF0(List<int> pattern) {
+  final out = <double>[];
+  for (final p in pattern) {
+    // 200 Hz for low, 250 Hz for high. 
+    // We duplicate the values to simulate a 0.2s duration per mora at 16kHz
+    // (with a hop size of 512, this is roughly 6 frames per mora).
+    final hz = p == 1 ? 250.0 : 200.0;
+    out.addAll(List.filled(6, hz)); 
+  }
+  return out;
+}
+

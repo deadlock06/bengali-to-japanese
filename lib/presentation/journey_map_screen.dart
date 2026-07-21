@@ -140,7 +140,7 @@ class JourneyMapScreen extends ConsumerWidget {
           const SizedBox(height: 4),
           SizedBox(
             width: 92,
-            child: Text(u.titleBn,
+            child: Text(u.title.of(Localizations.localeOf(context).languageCode),
                 maxLines: 1, overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -159,7 +159,14 @@ class JourneyMapScreen extends ConsumerWidget {
 
   /// Tap → unit card (can-do, progress) with the honest CTA: current unit →
   /// classroom, mock → mock exam; others informational (recommended path only).
+  static String _afterStation(String lang) => lang == 'en'
+      ? 'After this station: '
+      : lang == 'ja'
+          ? 'この駅のあとで: '
+          : 'এই স্টেশন শেষে: ';
+
   void _openUnit(BuildContext context, WidgetRef ref, CurriculumUnit u) {
+    final lang = Localizations.localeOf(context).languageCode;
     final current = u.state == UnitProgress.current;
     final isMock = u.id.endsWith('.M');
     showModalBottomSheet<void>(
@@ -175,11 +182,11 @@ class JourneyMapScreen extends ConsumerWidget {
             Text(u.id, style: const TextStyle(
                 color: _red, fontSize: 12, fontWeight: FontWeight.w800)),
             const SizedBox(width: 8),
-            Expanded(child: Text(u.titleBn,
+            Expanded(child: Text(u.title.of(lang),
                 style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16))),
           ]),
           const SizedBox(height: 6),
-          Text('এই স্টেশন শেষে: ${u.canDoBn}',
+          Text('${_afterStation(lang)}${u.canDo.of(lang)}',
               style: const TextStyle(
                   fontSize: 12.5, height: 1.5, color: BhasagoTheme.muted)),
           if (u.pct > 0 && u.state != UnitProgress.done) ...[

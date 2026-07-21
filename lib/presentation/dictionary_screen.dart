@@ -58,7 +58,8 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
       _result = null;
       _offline = false;
     });
-    final r = await AiTutorService.instance.explain(text);
+    final r = await AiTutorService.instance
+        .explain(text, uiLang: ref.read(langProvider));
     if (!mounted) return;
 
     final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(text);

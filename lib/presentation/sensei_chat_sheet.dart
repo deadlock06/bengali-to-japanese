@@ -20,6 +20,27 @@ import '../data/curriculum_service.dart';
 import '../data/voice_input_service.dart';
 import '../data/chat_history_store.dart';
 
+/// "Talk with Sensei" (D-042): opens the ONE sensei chat box in free
+/// conversation mode — a live, online-AI-led spoken-practice session that
+/// guides the learner to build Japanese sentences from words they know,
+/// sequenced by the teaching contract. Anyone can open it; no lesson required.
+/// Offline it falls back to a gentle canned invite (never blocks, D-001).
+Future<void> showTalkSheet(BuildContext context, {String curriculumHint = ''}) {
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+    builder: (_) => SenseiChatSheet(
+      accent: const Color(0xFF35E065),
+      moodLabel: 'কথা বলি · Talk',
+      curriculumHint: curriculumHint,
+      openConversation: true,
+      // Persist the free-talk thread so a conversation resumes where it left off.
+      chatKey: 'talk:sensei',
+    ),
+  );
+}
+
 class SenseiChatSheet extends ConsumerStatefulWidget {
   const SenseiChatSheet({
     super.key,
@@ -29,12 +50,21 @@ class SenseiChatSheet extends ConsumerStatefulWidget {
     this.seedText = '',
     this.curriculumHint = '',
     this.chatKey,
+    this.openConversation = false,
   });
   final Color accent;
   final String moodLabel;
   final String contextJp; // the classroom item under discussion (AI context)
   final String seedText; // copy-anywhere: text to explain on open
   final String curriculumHint; // "শিক্ষার্থী এখন <unit> শিখছে" — ties to lessons
+
+  /// Free spoken-practice mode (D-042, "Talk with Sensei"): on first open (no
+  /// saved history), the sensei kicks off a REAL online-AI turn that invites
+  /// the learner to build a sentence from what they already know — not a
+  /// canned line. Sequenced by the existing teaching contract (teach one →
+  /// check understanding → connect to prior). Falls back to the offline
+  /// canned invite if no AI proxy is reachable (never blocks, D-001).
+  final bool openConversation;
 
   /// Stable per-surface key (e.g. 'lesson:<id>', 'kana:か', 'explain:<text>').
   /// When set, this surface's conversation is saved and restored — a chat done
@@ -73,33 +103,56 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   /// (13_MASTER_VISION). Empty while the ladder is still loading.
   String get _level => ref.read(learnerLevelProvider).valueOrNull ?? '';
 
+  /// The learner's chosen UI language ('bn'|'en'|'ja') — the teaching medium
+  /// the sensei explains in (D-041).
+  String get _uiLang => ref.read(langProvider);
+
   /// Taught-scope hint (docs/14 teaching philosophy, D-030): tells the tutor
   /// what the learner has ALREADY completed and what unit is current, so it
   /// never assumes untaught knowledge and can connect new material to old.
   /// Built here (not per-caller) so every chat entry point gets it for free.
   String get _hint {
+    final lang = _uiLang;
     final parts = <String>[];
     final units = ref.read(curriculumProvider).valueOrNull;
     if (units != null) {
       final done = [
         for (final u in units)
-          if (u.state == UnitProgress.done && u.titleBn.trim().isNotEmpty)
-            u.titleBn.trim()
+          if (u.state == UnitProgress.done && u.title.of(lang).trim().isNotEmpty)
+            u.title.of(lang).trim()
       ];
       CurriculumUnit? cur;
       for (final u in units) {
         if (u.state == UnitProgress.current) { cur = u; break; }
       }
       if (done.isNotEmpty) {
-        parts.add('শেখা শেষ: ${done.join(', ')}।');
+        parts.add(lang == 'en'
+            ? 'Already learned: ${done.join(', ')}.'
+            : lang == 'ja'
+                ? '学習済み: ${done.join('、')}。'
+                : 'শেখা শেষ: ${done.join(', ')}।');
       } else {
-        parts.add('শিক্ষার্থী একদম নতুন — এখনো কিছু শেখেনি।');
+        parts.add(lang == 'en'
+            ? 'The learner is brand new — has learned nothing yet.'
+            : lang == 'ja'
+                ? '学習者は初めて — まだ何も学んでいない。'
+                : 'শিক্ষার্থী একদম নতুন — এখনো কিছু শেখেনি।');
       }
-      if (cur != null && cur.titleBn.trim().isNotEmpty) {
-        parts.add('এখন শিখছে: "${cur.titleBn.trim()}" (${cur.level})।');
+      final curTitle = cur?.title.of(lang).trim() ?? '';
+      if (cur != null && curTitle.isNotEmpty) {
+        parts.add(lang == 'en'
+            ? 'Now studying: "$curTitle" (${cur.level}).'
+            : lang == 'ja'
+                ? '学習中: 「$curTitle」(${cur.level})。'
+                : 'এখন শিখছে: "$curTitle" (${cur.level})।');
       }
-      parts.add('এই স্কোপের বাইরের grammar/শব্দ দিয়ে প্রশ্ন-উদাহরণ দেবে না; '
-          'নতুন কিছু লাগলে আগে শিখিয়ে নেবে।');
+      parts.add(lang == 'en'
+          ? "Don't use grammar/words beyond this scope in questions/examples; "
+              'if something new is needed, teach it first.'
+          : lang == 'ja'
+              ? 'この範囲外の文法・語を問題や例に使わない。新しいものが必要なら先に教える。'
+              : 'এই স্কোপের বাইরের grammar/শব্দ দিয়ে প্রশ্ন-উদাহরণ দেবে না; '
+                  'নতুন কিছু লাগলে আগে শিখিয়ে নেবে।');
     }
     if (widget.curriculumHint.isNotEmpty) parts.add(widget.curriculumHint);
     return parts.join(' ');
@@ -109,10 +162,34 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   // verified match, we do NOT fabricate an answer — a wrong reply is worse than
   // none. We say so and point to what DOES work offline (select any verified
   // word → real explanation).
-  static const _offlineHonest =
-      'এখন অফলাইন — এই প্রশ্নের উত্তর বানিয়ে বললে ভুল হতে পারে, তাই বলছি না। '
-      'নেট এলে বিস্তারিত বুঝিয়ে দেব। এখন যা পারি: অ্যাপের যেকোনো জাপানি শব্দ বা '
-      'বাক্য select করো — verified ব্যাখ্যা সাথে সাথেই দিতে পারব।';
+  String get _offlineHonest => switch (_uiLang) {
+        'en' =>
+          "Offline right now — I won't make up an answer to this (that could be "
+              'wrong). I\'ll explain in full once you\'re back online. For now: '
+              'select any Japanese word or sentence in the app — I can give a '
+              'verified explanation instantly.',
+        'ja' =>
+          'いまオフライン — 作り話はしたくないので、この質問には答えないでおくね。'
+              'ネットがつながれば くわしく説明するよ。今できること: アプリの日本語を'
+              '選んでみて — 確かな説明ならすぐ出せる。',
+        _ =>
+          'এখন অফলাইন — এই প্রশ্নের উত্তর বানিয়ে বললে ভুল হতে পারে, তাই বলছি না। '
+              'নেট এলে বিস্তারিত বুঝিয়ে দেব। এখন যা পারি: অ্যাপের যেকোনো জাপানি শব্দ বা '
+              'বাক্য select করো — verified ব্যাখ্যা সাথে সাথেই দিতে পারব।',
+      };
+
+  /// The "can't reach the AI now" line, in the learner's UI language.
+  static String _offlineMsg(String lang) => switch (lang) {
+        'en' =>
+          "I can't fetch an online explanation right now — needs internet or an "
+              'AI key. But ask away and I\'ll help as much as I can.',
+        'ja' =>
+          'いまオンライン説明が出せない — ネットか AI key が必要。でも聞いてくれ'
+              'たら できるだけ手伝うよ。',
+        _ =>
+          'এখন অনলাইন ব্যাখ্যা দিতে পারছি না — ইন্টারনেট বা AI key দরকার। '
+              'তবে জিজ্ঞেস করলে যতটা পারি সাহায্য করব।',
+      };
 
   @override
   void initState() {
@@ -131,11 +208,59 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   void _openingMessage() {
     if (widget.seedText.isNotEmpty) {
       _bootstrapExplain(); // open by explaining the selected text
+    } else if (widget.openConversation) {
+      _bootstrapConversation(); // live AI-led sentence-practice kickoff
     } else {
-      setState(() => _msgs.add(const _ChatMsg(false,
-          'কিছু জিজ্ঞেস করতে চাও? আমি আছি — যেকোনো শব্দ বা বাক্য নিয়ে প্রশ্ন করো।')));
+      setState(() => _msgs.add(_ChatMsg(false, _askMeAnything(_uiLang))));
     }
   }
+
+  static String _askMeAnything(String lang) => switch (lang) {
+        'en' => "Want to ask something? I'm here — ask about any word or sentence.",
+        'ja' => '何か聞きたい？ここにいるよ — どんな単語や文でも聞いて。',
+        _ => 'কিছু জিজ্ঞেস করতে চাও? আমি আছি — যেকোনো শব্দ বা বাক্য নিয়ে প্রশ্ন করো।',
+      };
+
+  /// "Talk with Sensei" kickoff (D-042): a REAL online-AI turn (not canned)
+  /// that opens guided, level-aware sentence-building practice. The hidden
+  /// instruction never appears as a user bubble — mirrors _bootstrapExplain.
+  Future<void> _bootstrapConversation() async {
+    setState(() => _typing = true);
+    final kickoff = switch (_uiLang) {
+      'en' =>
+        'Start a short spoken-practice turn: greet me warmly and invite me to '
+            'build ONE simple Japanese sentence using words I already know at my '
+            'level. Give me a tiny example to riff on, then wait for my try.',
+      'ja' =>
+        '短い会話練習を始めて: あたたかく挨拶して、私が知っている単語で簡単な文を'
+            '1つ作るよう誘って。小さな例を1つ見せて、それから私の答えを待って。',
+      _ =>
+        'একটা ছোট্ট কথা-বলার অনুশীলন শুরু করো: উষ্ণভাবে সালাম দাও, আর আমাকে '
+            'বলো আমি যা যা শিখেছি সেই শব্দ দিয়ে একটা সহজ জাপানি বাক্য বানাতে। '
+            'ছোট্ট একটা উদাহরণ দাও, তারপর আমার চেষ্টার অপেক্ষা করো।',
+    };
+    final ai = await AiTutorService.instance.reply(kickoff,
+        curriculumHint: _hint, level: _level, uiLang: _uiLang);
+    if (!mounted) return;
+    setState(() {
+      _msgs.insert(0, _ChatMsg(false, ai ?? _talkOfflineFallback(_uiLang)));
+      _typing = false;
+    });
+    _persist();
+  }
+
+  static String _talkOfflineFallback(String lang) => switch (lang) {
+        'en' =>
+          "I'm offline right now, so I can't lead live practice — but type any "
+              'Japanese word or sentence and I\'ll explain what I can from '
+              'verified content.',
+        'ja' =>
+          'いまオフラインだから、生の会話練習はできない — でも日本語の単語や文を'
+              '入力してくれれば、確かな内容でできるだけ説明するよ。',
+        _ =>
+          'এখন অফলাইন, তাই লাইভ practice করাতে পারছি না — তবে যেকোনো জাপানি শব্দ '
+              'বা বাক্য লিখলে verified কনটেন্ট থেকে যতটা পারি বুঝিয়ে দেব।',
+      };
 
   Future<void> _restoreHistory() async {
     final hist = await ChatHistoryStore.instance.load(widget.chatKey!);
@@ -174,7 +299,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
   Future<void> _bootstrapExplain() async {
     setState(() => _typing = true);
     final ai = await AiTutorService.instance.explain(widget.seedText,
-        curriculumHint: _hint, level: _level);
+        curriculumHint: _hint, level: _level, uiLang: _uiLang);
     if (!mounted) return;
     
     final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText);
@@ -184,9 +309,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
           0,
           _ChatMsg(
               false,
-              ai ?? offlineMatch ??
-                  'এখন অনলাইন ব্যাখ্যা দিতে পারছি না — ইন্টারনেট বা AI key দরকার। '
-                      'তবে জিজ্ঞেস করলে যতটা পারি সাহায্য করব।'));
+              ai ?? offlineMatch ?? _offlineMsg(_uiLang)));
       _typing = false;
     });
     _persist();
@@ -211,7 +334,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
     });
     // Online AI (Smart Banglish) if a key is configured; else canned/offline.
     final ai = await AiTutorService.instance.reply(t,
-        contextJp: _ctx, curriculumHint: _hint, level: _level);
+        contextJp: _ctx, curriculumHint: _hint, level: _level, uiLang: _uiLang);
     if (!mounted) return;
     if (ai != null) {
       setState(() {

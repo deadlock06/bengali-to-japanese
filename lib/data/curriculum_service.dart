@@ -8,14 +8,16 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../domain/models.dart' show Tri;
+
 enum UnitProgress { done, current, upcoming }
 
 class CurriculumUnit {
   const CurriculumUnit({
     required this.id,
     required this.level,
-    required this.titleBn,
-    required this.canDoBn,
+    required this.title,
+    required this.canDo,
     required this.prerequisites,
     required this.lessonIds,
     required this.state,
@@ -24,8 +26,16 @@ class CurriculumUnit {
 
   final String id;
   final String level;
-  final String titleBn;
-  final String canDoBn;
+
+  /// Unit title / can-do goal, trilingual (D-041). Screens render
+  /// `title.of(lang)` so they follow the chosen UI language.
+  final Tri title;
+  final Tri canDo;
+
+  /// Back-compat convenience for Bengali-only call sites.
+  String get titleBn => title.bn;
+  String get canDoBn => canDo.bn;
+
   final List<String> prerequisites;
   final List<String> lessonIds;
   final UnitProgress state;
@@ -104,8 +114,8 @@ class CurriculumService {
       out.add(CurriculumUnit(
         id: id,
         level: u['level'] as String,
-        titleBn: ((u['title'] as Map?)?['bn'] ?? '') as String,
-        canDoBn: ((u['can_do'] as Map?)?['bn'] ?? '') as String,
+        title: _tri(u['title']),
+        canDo: _tri(u['can_do']),
         prerequisites: prereqs,
         lessonIds: ls,
         state: state,
@@ -113,6 +123,18 @@ class CurriculumService {
       ));
     }
     return out;
+  }
+
+  /// Tolerant trilingual parse — falls back to Bengali when en/ja are missing
+  /// so partially-authored units still render (never throws).
+  static Tri _tri(Object? m) {
+    final map = m is Map ? m : const {};
+    final bn = (map['bn'] ?? '') as String;
+    return Tri(
+      en: (map['en'] ?? bn) as String,
+      bn: bn,
+      ja: (map['ja'] ?? bn) as String,
+    );
   }
 
   static Future<List<CurriculumUnit>> load(Set<String> completed) async {

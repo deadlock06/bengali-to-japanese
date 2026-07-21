@@ -208,7 +208,7 @@ class _LessonBlock extends ConsumerWidget {
                       fontFamily: 'ZenKakuGothicNew',
                       fontSize: 15,
                       fontWeight: FontWeight.w700)),
-              subtitle: Text(it.meaning.bn,
+              subtitle: Text(it.meaning.of(lang),
                   style: const TextStyle(fontSize: 12.5)),
               trailing: IconButton(
                 icon: const Icon(Icons.volume_up, size: 20),

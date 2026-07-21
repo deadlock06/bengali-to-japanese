@@ -49,11 +49,13 @@ class CurriculumScreenV4 extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final lang = ref.watch(langProvider);
     final async = ref.watch(curriculumProvider);
     final units = async.maybeWhen(
       data: (list) => [
         for (final u in list)
-          _Unit(u.titleBn, u.canDoBn, _viewState(u.state), u.pct, u.id),
+          _Unit(u.title.of(lang), u.canDo.of(lang), _viewState(u.state), u.pct,
+              u.id),
       ],
       orElse: () => _demoUnits,
     );

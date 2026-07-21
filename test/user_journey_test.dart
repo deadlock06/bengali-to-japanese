@@ -90,6 +90,10 @@ void main() {
     expect(find.text('AI ক্লাসরুম'), findsOneWidget); // red flagship card (rev-2)
     expect(find.text('আজকের রিভিউ'), findsOneWidget); // pink card
     expect(find.text('AI চেক'), findsOneWidget); // blue card
+    // Topics row lives further down the lazy Home ListView (below the new
+    // "Talk with Sensei" card) — scroll it into the build range before asserting.
+    await tester.scrollUntilVisible(find.text('এই সপ্তাহের টপিক'), 220,
+        scrollable: find.byType(Scrollable).first);
     expect(find.text('এই সপ্তাহের টপিক'), findsOneWidget);
     expect(find.byType(NavigationBar), findsOneWidget);
     ok(tester, 'home');

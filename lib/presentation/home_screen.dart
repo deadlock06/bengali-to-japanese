@@ -20,7 +20,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../app/providers.dart';
 import '../app/theme.dart';
 import '../data/curriculum_service.dart';
+import '../data/lesson_batch.dart' show ClassroomBatch;
 import 'progress_screen_v4.dart' show retentionSeriesProvider;
+import 'sensei_chat_sheet.dart';
+import 'voice_tutor_screen.dart';
 
 /// Blood-red section ink — EXCLUSIVE to the AI Classroom surface (do not reuse).
 const _aiClassroomRed = Color(0xFFB3121B);
@@ -36,6 +39,7 @@ class HomeScreen extends ConsumerWidget {
   final VoidCallback onOpenProgress;
   final VoidCallback onOpenBook;
   final VoidCallback onOpenLearn;
+  final VoidCallback? onOpenVoiceTutor;
   const HomeScreen({
     super.key,
     required this.onOpenLesson,
@@ -44,6 +48,7 @@ class HomeScreen extends ConsumerWidget {
     required this.onOpenProgress,
     required this.onOpenBook,
     required this.onOpenLearn,
+    this.onOpenVoiceTutor,
   });
 
   @override
@@ -53,6 +58,7 @@ class HomeScreen extends ConsumerWidget {
     final text = Theme.of(context).textTheme;
     // Course % = mean unit progress from the live curriculum ladder (T-120).
     // 0 for a fresh learner; demo-free.
+    final lang = ref.watch(langProvider);
     final units = ref.watch(curriculumProvider).valueOrNull;
     final coursePct = (units == null || units.isEmpty)
         ? 0.0
@@ -132,7 +138,7 @@ class HomeScreen extends ConsumerWidget {
                         fontWeight: FontWeight.w800)),
                 Padding(
                   padding: const EdgeInsets.only(right: 38),
-                  child: Text(current?.titleBn ?? 'কনবিনিতে কেনাকাটা — Can-do',
+                  child: Text(current?.title.of(lang) ?? 'কনবিনিতে কেনাকাটা — Can-do',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: text.bodySmall
@@ -143,6 +149,15 @@ class HomeScreen extends ConsumerWidget {
               ],
             ),
           ]),
+        ),
+        const SizedBox(height: 10),
+
+        // ── Voice Tutor card ("Gemini Live" style) ─────────────────────────
+        _VoiceTutorCard(
+          onTap: onOpenVoiceTutor ??
+              () => Navigator.of(context).push(MaterialPageRoute(
+                  fullscreenDialog: true,
+                  builder: (_) => const VoiceTutorScreen())),
         ),
         const SizedBox(height: 10),
 
@@ -242,7 +257,7 @@ class HomeScreen extends ConsumerWidget {
                     for (final (i, u) in units.indexed)
                       _TopicCard(
                         jp: u.level,
-                        label: u.titleBn.isEmpty ? u.id : u.titleBn,
+                        label: u.title.of(lang).isEmpty ? u.id : u.title.of(lang),
                         pct: u.pct,
                         color: const [
                           BhasagoColors.yellow,
@@ -626,6 +641,116 @@ class _MiniRetention extends ConsumerWidget {
   }
 }
 
+/// Voice Tutor entry card — "সেনসেইয়ের সাথে কথা বলো" (Gemini Live style).
+/// Deep purple/blue gradient, pulsing mic ring — visually distinct from the
+/// blood-red Classroom card.
+class _VoiceTutorCard extends StatefulWidget {
+  const _VoiceTutorCard({required this.onTap});
+  final VoidCallback onTap;
+  @override
+  State<_VoiceTutorCard> createState() => _VoiceTutorCardState();
+}
+
+class _VoiceTutorCardState extends State<_VoiceTutorCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _pulse = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1600))..repeat();
+
+  @override
+  void dispose() { _pulse.dispose(); super.dispose(); }
+
+  @override
+  Widget build(BuildContext context) {
+    final text = Theme.of(context).textTheme;
+    final lang = Localizations.localeOf(context).languageCode;
+    const accent = Color(0xFF8B5CF6); // vivid purple
+    const bg = Color(0xFF1A1130);
+    return Material(
+      color: bg,
+      borderRadius: BorderRadius.circular(20),
+      child: InkWell(
+        onTap: widget.onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: accent.withValues(alpha: .45), width: 1.5),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft, end: Alignment.bottomRight,
+              colors: [Color(0xFF1A1130), Color(0xFF0F0A20)],
+            ),
+          ),
+          child: Row(children: [
+            // Pulsing mic avatar
+            AnimatedBuilder(
+              animation: _pulse,
+              builder: (_, __) {
+                final reduce = MediaQuery.of(context).disableAnimations;
+                final t = _pulse.value;
+                final ring = reduce ? 1.0 : 1.0 + 0.12 * math.sin(t * 2 * math.pi).abs();
+                return Stack(alignment: Alignment.center, children: [
+                  Transform.scale(
+                    scale: ring,
+                    child: Container(
+                      width: 52, height: 52,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: accent.withValues(
+                              alpha: reduce ? .3 : .2 + .3 * math.sin(t * 2 * math.pi).abs()),
+                          width: 1.5,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 42, height: 42,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: accent.withValues(alpha: .18),
+                      border: Border.all(color: accent, width: 1.8),
+                      boxShadow: reduce ? [] : [
+                        BoxShadow(
+                          color: accent.withValues(alpha: .35),
+                          blurRadius: 10, spreadRadius: 1,
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.mic_rounded, size: 20, color: accent),
+                  ),
+                ]);
+              },
+            ),
+            const SizedBox(width: 14),
+            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                  lang == 'en'
+                      ? 'Talk with Sensei'
+                      : lang == 'ja'
+                          ? '先生と話す'
+                          : 'সেনসেইয়ের সাথে কথা বলো',
+                  maxLines: 1, overflow: TextOverflow.ellipsis,
+                  style: text.titleSmall?.copyWith(
+                      color: const Color(0xFFF5F5F0), fontWeight: FontWeight.w800)),
+              const SizedBox(height: 2),
+              Text(
+                  lang == 'en'
+                      ? 'Live AI conversation — learn to speak, step by step'
+                      : lang == 'ja'
+                          ? 'ライブAI会話 — 少しずつ話す練習'
+                          : 'Live AI কথোপকথন — ধাপে ধাপে কথা বলা শেখো',
+                  style: text.bodySmall?.copyWith(
+                      fontSize: 11, color: accent.withValues(alpha: .8))),
+            ])),
+            Icon(Icons.chevron_right, size: 20, color: accent.withValues(alpha: .6)),
+          ]),
+        ),
+      ),
+    );
+  }
+}
+
 /// Design "AI sensei" outline pill: pulsing green dot + greeting typed out
 /// (30ms/2-char cadence). Tap re-types. Reduced-motion shows full text/no pulse.
 class _SenseiPill extends ConsumerStatefulWidget {
@@ -648,10 +773,28 @@ class _SenseiPillState extends ConsumerState<_SenseiPill>
     super.dispose();
   }
 
-  String _greeting() {
-    final batch = ref.read(classroomBatchProvider).valueOrNull;
-    if (batch == null) return 'আজ কনবিনি লেসনে ৩টা নতুন শব্দ — প্রস্তুত?';
-    return 'আজ "${batch.titleBn}" — ${_bnDigits(batch.questions.length)}টা নতুন শব্দ, প্রস্তুত?';
+  String _greeting() =>
+      _greetingText(ref.read(classroomBatchProvider).valueOrNull, ref.read(langProvider));
+
+  /// The pill's typed line, localized (D-041). Falls back to a generic invite
+  /// while the batch is still resolving.
+  static String _greetingText(ClassroomBatch? batch, String lang) {
+    final n = batch?.questions.length ?? 3;
+    final title = batch?.titleBn ?? '';
+    switch (lang) {
+      case 'en':
+        return batch == null
+            ? "A few new words in today's lesson — talk with me?"
+            : 'Today: "$title" — $n new words. Let\'s talk?';
+      case 'ja':
+        return batch == null
+            ? '今日のレッスンに新しい言葉がいくつか — 話そう？'
+            : '今日は「$title」— $n個の新しい言葉。話してみる？';
+      default:
+        return batch == null
+            ? 'আজ লেসনে কয়েকটা নতুন শব্দ — একটু কথা বলি?'
+            : 'আজ "$title" — ${_bnDigits(n)}টা নতুন শব্দ। কথা বলি?';
+    }
   }
 
   void _type(bool reduce) {
@@ -676,11 +819,9 @@ class _SenseiPillState extends ConsumerState<_SenseiPill>
     final reduce = MediaQuery.of(context).disableAnimations;
     if (!reduce && !_pulse.isAnimating) _pulse.repeat();
     if (reduce && _pulse.isAnimating) _pulse.stop();
-    // First fill (and refresh when the batch resolves with a new greeting).
+    // First fill (and refresh when the batch resolves or the language changes).
     final live = ref.watch(classroomBatchProvider).valueOrNull;
-    final want = live == null
-        ? 'আজ কনবিনি লেসনে ৩টা নতুন শব্দ — প্রস্তুত?'
-        : 'আজ "${live.titleBn}" — ${_bnDigits(live.questions.length)}টা নতুন শব্দ, প্রস্তুত?';
+    final want = _greetingText(live, ref.watch(langProvider));
     if (_full != want && (_timer == null || !_timer!.isActive)) {
       // Never setState during build — type on the next frame.
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -694,7 +835,9 @@ class _SenseiPillState extends ConsumerState<_SenseiPill>
           side: BorderSide(color: Color(0xFFF5F5F0), width: 1.5)),
       child: InkWell(
         customBorder: const StadiumBorder(),
-        onTap: () => _type(reduce),
+        // D-042: open live "Talk with Sensei" — free, online-AI-led spoken
+        // sentence practice, sequenced by the teaching contract.
+        onTap: () => showTalkSheet(context),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 11),
           child: Row(children: [

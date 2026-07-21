@@ -18,6 +18,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'l10n/app_localizations.dart';
 import 'agents/agent_state.dart';
 import 'app/providers.dart';
@@ -36,7 +37,9 @@ import 'presentation/settings_screen.dart';
 import 'presentation/dictionary_screen.dart';
 import 'presentation/vocab_screen.dart';
 import 'presentation/selection_explain.dart';
+import 'presentation/voice_tutor_screen.dart';
 import 'presentation/writing_screen.dart';
+
 import 'data/sync_service.dart';
 
 void main() async {
@@ -44,7 +47,17 @@ void main() async {
   // Prepare OPTIONAL cloud sync (D1) — no-op until the user opts in. Never
   // blocks startup; offline-first is untouched.
   await SyncService.instance.init();
-  runApp(const ProviderScope(child: SenseiApp()));
+  // Restore the learner's chosen UI language so it survives restarts (was
+  // always defaulting to Bengali — the picker "didn't stick"). 'locale_chosen'
+  // stores the code the onboarding/settings wrote ('bn'|'en'|'ja').
+  final saved = (await SharedPreferences.getInstance()).getString('locale_chosen');
+  runApp(ProviderScope(
+    overrides: [
+      if (saved != null && saved.isNotEmpty)
+        localeProvider.overrideWith((ref) => Locale(saved)),
+    ],
+    child: const SenseiApp(),
+  ));
 }
 
 class SenseiApp extends ConsumerWidget {
@@ -146,6 +159,11 @@ class _HomeShellState extends ConsumerState<HomeShell> {
         onOpenBook: () => Navigator.of(context)
             .push(MaterialPageRoute(builder: (_) => const BookScreenV4())),
         onOpenLearn: () => setState(() => tab = 1), // design: goLearn
+        // Voice Tutor — Gemini-Live-style full-screen AI conversation.
+        onOpenVoiceTutor: () => Navigator.of(context).push(MaterialPageRoute(
+          fullscreenDialog: true,
+          builder: (_) => const VoiceTutorScreen(),
+        )),
       ),
       const JourneyMapScreen(),
       // Speak tab: roleplay (C2 — the conversation corner) + shadowing + pitch.

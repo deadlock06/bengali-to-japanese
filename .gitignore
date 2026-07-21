@@ -53,6 +53,7 @@ llm_export/
 # secrets (backend creds live in ../.claude/sensei_db.env)
 .env
 .env.*
+!.env.example
 
 # build outputs (a 55MB test-cache dill snuck into history 2026-07-17 — never again)
 build/

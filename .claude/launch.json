@@ -2,6 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     { "name": "sensei-preview", "runtimeExecutable": "node", "runtimeArgs": ["tools/preview_server.mjs"], "port": 5599 },
-    { "name": "sensei-web", "runtimeExecutable": "flutter", "runtimeArgs": ["run", "-d", "web-server", "--web-port", "5600"], "port": 5600 }
+    { "name": "sensei-web", "runtimeExecutable": "flutter", "runtimeArgs": ["run", "-d", "web-server", "--web-port", "5600"], "port": 5600 },
+    { "name": "sensei-app", "runtimeExecutable": "node", "runtimeArgs": ["tools/web_server.mjs"], "port": 5601 }
   ]
 }

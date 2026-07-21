@@ -12,6 +12,28 @@ import { fileURLToPath } from 'url';
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(here, '..', 'build', 'web');
 
+// ── .env loader (zero-dependency) ───────────────────────────────────────────
+// Loads KEY=VALUE lines from the repo-root `.env` (gitignored) so AI provider
+// keys live in ONE place instead of the command line. Real env vars always win
+// (never overridden), so `KEY=... node ...` still works. Missing file = no-op.
+(() => {
+  try {
+    const envPath = path.join(here, '..', '.env');
+    for (const raw of fs.readFileSync(envPath, 'utf8').split('\n')) {
+      const line = raw.trim();
+      if (!line || line.startsWith('#')) continue;
+      const eq = line.indexOf('=');
+      if (eq < 1) continue;
+      const key = line.slice(0, eq).trim();
+      let val = line.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) ||
+          (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
+      if (process.env[key] === undefined) process.env[key] = val;
+    }
+    console.log('loaded .env');
+  } catch { /* no .env — fine, use process env only */ }
+})();
+
 // ── /ai/tts — neural Bengali/Japanese speech for the sensei (D-033) ─────────
 // The device/browser TTS for dynamic Bengali replies is robotic ("sounds
 // worst"); this synthesizes with the same neural voices the bundled clips use.

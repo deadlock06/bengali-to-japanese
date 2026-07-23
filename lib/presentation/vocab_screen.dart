@@ -113,11 +113,10 @@ class _VocabScreenState extends ConsumerState<VocabScreen> {
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 10, 16, 4),
-          child: Row(children: [
+          // Wrap, not Row — three legends overflow a 320px-wide viewport (D-044).
+          child: Wrap(spacing: 12, runSpacing: 4, children: [
             _Legend(color: BhasagoColors.green, label: 'আয়ত্তে $mastered'),
-            const SizedBox(width: 12),
             _Legend(color: BhasagoColors.yellow, label: 'শিখছি ${learned - mastered}'),
-            const SizedBox(width: 12),
             _Legend(
                 color: BhasagoTheme.muted, label: 'মোট $total শব্দ'),
           ]),

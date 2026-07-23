@@ -83,6 +83,12 @@ class JourneyMapScreen extends ConsumerWidget {
                             fontSize: 11, fontWeight: FontWeight.w800, color: _red)),
                   ]),
                 ),
+                // Level-section banners (D-044): a visible milestone where the
+                // road enters a new level — the map reads as SECTIONS of a
+                // course (ভিত্তি → A1 → A2/JFT → N4 → …), not one long strip.
+                for (var i = 0; i < units.length; i++)
+                  if (i == 0 || units[i].level != units[i - 1].level)
+                    _levelBanner(units[i].level, i, units.length),
                 for (var i = 0; i < units.length; i++)
                   _node(context, ref, units[i], i, units.length, box.maxWidth,
                       emphasized: meta?.levels.contains(units[i].level) ?? false),
@@ -92,6 +98,48 @@ class JourneyMapScreen extends ConsumerWidget {
         ),
       ),
     ]);
+  }
+
+  /// Level milestone banner drawn where section [i] begins (bottom-up road).
+  Widget _levelBanner(String level, int i, int n) {
+    const names = {
+      'L0': ('ভিত্তি — কানা ও সংখ্যা', 'Foundation'),
+      'A1': ('প্রথম কথাবার্তা', 'Irodori Starter'),
+      'A2': ('কাজ ও জীবনের ভাষা', 'JFT-Basic'),
+      'N4': ('ব্যাকরণে গভীরে', 'JLPT N4'),
+      'N3': ('স্বাধীন ব্যবহারকারী', 'JLPT N3'),
+      'N2': ('প্রায় native', 'JLPT N2'),
+      'N1': ('পূর্ণ দক্ষতা', 'JLPT N1'),
+    };
+    final meta = names[level];
+    final y = (n - 1 - i) * 96.0 + 90 - 34; // just above the section's first node
+    return Positioned(
+      top: y, left: 12, right: 12,
+      child: Row(children: [
+        Expanded(child: Container(height: 1, color: const Color(0xFF2A2A2A))),
+        Flexible(
+          flex: 0,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+            constraints: const BoxConstraints(maxWidth: 240),
+            decoration: BoxDecoration(
+              color: const Color(0xFF161616),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: const Color(0xFF3A3A3A)),
+            ),
+            child: Text(
+              '$level · ${meta?.$1 ?? level}${meta != null ? ' (${meta.$2})' : ''}',
+              maxLines: 1, overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontSize: 10.5, fontWeight: FontWeight.w800,
+                  color: BhasagoTheme.muted),
+            ),
+          ),
+        ),
+        Expanded(child: Container(height: 1, color: const Color(0xFF2A2A2A))),
+      ]),
+    );
   }
 
   /// Node i sits on the winding road, bottom (i=0) → top.

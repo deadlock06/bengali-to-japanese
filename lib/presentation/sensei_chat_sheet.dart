@@ -710,9 +710,39 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
       );
 
   Widget _chips(bool seeded) {
-    final labels = seeded
-        ? const ['আরেকটা উদাহরণ', 'উচ্চারণ ভেঙে দাও', 'কোথায় ব্যবহার হয়', 'সহজ করে বলো']
-        : const ['আবার বুঝিয়ে দাও', 'একটা উদাহরণ', 'উচ্চারণ'];
+    // Interactive suggestions (D-044): localized; talk mode opens with a
+    // Duolingo-style "what do you want to learn?" menu — each chip sends a
+    // real request the sensei's thinking-method flow picks up.
+    final lang = _uiLang;
+    final List<String> labels;
+    if (widget.openConversation) {
+      labels = switch (lang) {
+        'en' => const [
+            'Start from hiragana', 'Teach me a new word', 'Build a word with me',
+            'Practice conversation', 'Quiz me a little', 'বাংলায় বলো',
+          ],
+        'ja' => const [
+            'ひらがなから始めて', '新しい単語を教えて', '一緒に単語を作ろう',
+            '会話の練習をしよう', '少しテストして', 'English please',
+          ],
+        _ => const [
+            'হিরাগানা থেকে শুরু করো', 'নতুন একটা শব্দ শেখাও', 'অক্ষর জুড়ে শব্দ বানাই',
+            'কথা বলার অনুশীলন', 'আমাকে একটু টেস্ট করো', 'English এ বুঝিয়ে দাও',
+          ],
+      };
+    } else if (seeded) {
+      labels = switch (lang) {
+        'en' => const ['Another example', 'Break down the reading', 'Where is it used', 'Say it simpler'],
+        'ja' => const ['もう一つ例を', '読みを分解して', 'どこで使う？', 'もっとやさしく'],
+        _ => const ['আরেকটা উদাহরণ', 'উচ্চারণ ভেঙে দাও', 'কোথায় ব্যবহার হয়', 'সহজ করে বলো'],
+      };
+    } else {
+      labels = switch (lang) {
+        'en' => const ['Explain again', 'An example', 'Pronunciation'],
+        'ja' => const ['もう一度説明して', '例を一つ', '発音'],
+        _ => const ['আবার বুঝিয়ে দাও', 'একটা উদাহরণ', 'উচ্চারণ'],
+      };
+    }
     return SizedBox(
       height: 34,
       child: ListView(scrollDirection: Axis.horizontal, children: [

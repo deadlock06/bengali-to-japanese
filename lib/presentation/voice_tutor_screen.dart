@@ -219,11 +219,27 @@ class _VoiceTutorScreenState extends ConsumerState<VoiceTutorScreen>
 
   // ── TTS ────────────────────────────────────────────────────────────────────
 
+  /// True when [text] is mostly Japanese script — such replies should be
+  /// spoken by the Japanese neural voice, not the Bengali/English one (D-044:
+  /// "the voice is not good" — a bn/en voice mangling Japanese was the cause).
+  static bool _mostlyJapanese(String text) {
+    var jp = 0, other = 0;
+    for (final r in text.runes) {
+      if ((r >= 0x3040 && r <= 0x30FF) || (r >= 0x4E00 && r <= 0x9FFF)) {
+        jp++;
+      } else if (r > 0x20) {
+        other++;
+      }
+    }
+    return jp > 0 && jp >= other;
+  }
+
   Future<void> _speakOut(String text) async {
     setState(() => _vstate = _VoiceState.speaking);
     // 1. Neural voice (proxy /ai/tts — Nabanita quality)
     try {
-      final voice = _uiLang == 'ja' ? 'ja' : 'bn';
+      final voice =
+          (_uiLang == 'ja' || _mostlyJapanese(text)) ? 'ja' : 'bn';
       await _neural
           .setUrl(AiTutorService.ttsUrl(text, voice: voice))
           .timeout(const Duration(seconds: 8));
@@ -425,8 +441,41 @@ class _VoiceTutorScreenState extends ConsumerState<VoiceTutorScreen>
                   fontSize: 13,
                   color: BhasagoTheme.muted.withValues(alpha: .6),
                   fontWeight: FontWeight.w600)),
+          const SizedBox(height: 14),
+          _startChips(a),
         ]),
       );
+
+  /// Interactive learn-menu (D-044): tap → a real spoken-practice request.
+  Widget _startChips(Color a) {
+    final labels = _uiLang == 'en'
+        ? const ['Start from hiragana', 'Teach me a word', 'Build a word with me', 'Quiz me']
+        : _uiLang == 'ja'
+            ? const ['ひらがなから', '単語を教えて', '一緒に単語を作ろう', 'テストして']
+            : const ['হিরাগানা থেকে শুরু', 'একটা শব্দ শেখাও', 'অক্ষর জুড়ে শব্দ বানাই', 'আমাকে টেস্ট করো'];
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 8, runSpacing: 8,
+        children: [
+          for (final l in labels)
+            OutlinedButton(
+              onPressed: () => _sendText(l),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(0, 34),
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  side: BorderSide(color: a.withValues(alpha: .4)),
+                  shape: const StadiumBorder(),
+                  foregroundColor: a,
+                  textStyle: const TextStyle(
+                      fontSize: 11.5, fontWeight: FontWeight.w700)),
+              child: Text(l),
+            ),
+        ],
+      ),
+    );
+  }
 
   // ── Chat bubble ────────────────────────────────────────────────────────────
 

@@ -112,39 +112,49 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
                 ),
               ),
               const Divider(color: BhasagoTheme.outline, height: 16),
-              Row(children: [
-                OutlinedButton.icon(
-                  onPressed: _paste,
-                  icon: const Icon(Icons.content_paste, size: 17),
-                  label: const Text('পেস্ট'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: BhasagoTheme.text,
-                    side: const BorderSide(color: BhasagoTheme.pillOutline),
-                    shape: const StadiumBorder(),
+              // Wrap, not Row+Spacer — the two buttons overflow a 320px form
+              // (D-044 "pages overlapping"); on narrow screens the CTA wraps
+              // to its own line instead of clipping.
+              Wrap(
+                spacing: 8, runSpacing: 8,
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Row(mainAxisSize: MainAxisSize.min, children: [
+                    OutlinedButton.icon(
+                      onPressed: _paste,
+                      icon: const Icon(Icons.content_paste, size: 17),
+                      label: const Text('পেস্ট'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: BhasagoTheme.text,
+                        side: const BorderSide(color: BhasagoTheme.pillOutline),
+                        shape: const StadiumBorder(),
+                      ),
+                    ),
+                    if (_input.text.isNotEmpty)
+                      IconButton(
+                        onPressed: () => setState(_input.clear),
+                        icon: const Icon(Icons.close,
+                            size: 18, color: BhasagoTheme.muted),
+                      ),
+                  ]),
+                  FilledButton.icon(
+                    onPressed: _loading ? null : _explain,
+                    icon: _loading
+                        ? const SizedBox(
+                            width: 16, height: 16,
+                            child: CircularProgressIndicator(
+                                strokeWidth: 2, color: Color(0xFF111111)))
+                        : const Icon(Icons.auto_awesome, size: 17),
+                    label: Text(_loading ? 'দেখছি…' : 'ব্যাখ্যা করো'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: _blue,
+                      foregroundColor: const Color(0xFF111111),
+                      shape: const StadiumBorder(),
+                    ),
                   ),
-                ),
-                if (_input.text.isNotEmpty)
-                  IconButton(
-                    onPressed: () => setState(_input.clear),
-                    icon: const Icon(Icons.close, size: 18, color: BhasagoTheme.muted),
-                  ),
-                const Spacer(),
-                FilledButton.icon(
-                  onPressed: _loading ? null : _explain,
-                  icon: _loading
-                      ? const SizedBox(
-                          width: 16, height: 16,
-                          child: CircularProgressIndicator(
-                              strokeWidth: 2, color: Color(0xFF111111)))
-                      : const Icon(Icons.auto_awesome, size: 17),
-                  label: Text(_loading ? 'দেখছি…' : 'ব্যাখ্যা করো'),
-                  style: FilledButton.styleFrom(
-                    backgroundColor: _blue,
-                    foregroundColor: const Color(0xFF111111),
-                    shape: const StadiumBorder(),
-                  ),
-                ),
-              ]),
+                ],
+              ),
             ]),
           ),
           const SizedBox(height: 14),

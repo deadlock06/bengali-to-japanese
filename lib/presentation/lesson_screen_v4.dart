@@ -442,19 +442,30 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
               const SizedBox(height: 16),
               // Phase 1 Intro (present) → Phase 2 Recognition (ask).
               // Phase 1 Intro → Phase 2 Recognition → Phase 3 Writing (kana).
-              !introSeen
-                  ? _introCard()
-                  : writingPhase
-                      ? _writeCard()
-                      : sayPhase
-                          ? _sayCard()
-                          : contextPhase
-                              ? _contextCard()
-                              : _questionCard(),
-              if (introSeen && !writingPhase && !sayPhase && !contextPhase &&
-                  hintOpen) ...[
-                const SizedBox(height: 10), _hintCard()],
-              const Spacer(),
+              // Scrollable card area (D-044): on short viewports the phase card
+              // used to overflow the fixed Column by ~34px; now it scrolls while
+              // the sensei row + toolbar stay pinned below.
+              Expanded(
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        !introSeen
+                            ? _introCard()
+                            : writingPhase
+                                ? _writeCard()
+                                : sayPhase
+                                    ? _sayCard()
+                                    : contextPhase
+                                        ? _contextCard()
+                                        : _questionCard(),
+                        if (introSeen && !writingPhase && !sayPhase &&
+                            !contextPhase && hintOpen) ...[
+                          const SizedBox(height: 10), _hintCard()],
+                      ]),
+                ),
+              ),
               _teacherRow(),
               const SizedBox(height: 12),
               _toolbar(context),

@@ -3,7 +3,8 @@
 // REV-2 (2026-07-11): see HANDOFF.md "Rev-2 deltas" —
 //  - entry card on Home is now blood-red AI Classroom (#B3121B, exclusive token)
 //  - add SenseiChatSheet (showModalBottomSheet): messages, chips, text input,
-//    mic voice mode w/ waveform; demo-canned replies -> TODO wire tutor service
+//    mic voice mode w/ waveform. DONE: wired to AiTutorService (online proxy)
+//    with a verified-content offline fallback (D-025/D-042).
 //  - all lesson strings localized (bn/en/ja) incl. options, hints, mood labels
 //  - compact metrics: kanji 42, pills 44, progress 4, sprite 52x64
 //
@@ -14,7 +15,9 @@
 // - Depends on step1 theme tokens only. Two NEW mood tokens added below
 //   (orange struggle / purple boredom) — add them to theme.dart if you prefer
 //   central tokens; kept local here to avoid a second theme migration.
-// - Demo QS list is placeholder: replace with SrsLocal.nextLessonBatch() (TODO T-112).
+// - DONE (T-112): real batches come from classroomBatchProvider /
+//   practiceBatchProvider (buildClassroomBatch). The local demo QS list is only
+//   the off-device/no-content fallback so the screen never renders empty.
 // - D-001 COMPLIANCE (do not change): wrong answers only open a hint and shift
 //   ambiance color; no streak loss messaging, no locks, skip always available.
 // - Grading is answer-key only (index compare). No LLM in the answer path.

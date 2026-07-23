@@ -304,10 +304,20 @@ const _extKata = [
 /// The sensei teaches kana IN the classroom: for each character, an intro
 /// line + a "which sound is this?" recognition question with Bengali-sound
 /// options. Answer-key graded (the correct sound), D-001/00§4. Deterministic.
-ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 200}) {
+ClassroomBatch buildKanaBatch(
+    {required bool katakana, int maxItems = 200, String lang = 'bn'}) {
   final chars = katakana ? _kataChars : _hiraChars;
   final script = katakana ? 'kana_katakana' : 'kana_hiragana';
-  final label = katakana ? 'কাতাকানা' : 'হিরাগানা';
+  // Script name + section title follow the UI language (D-041/D-042) so the
+  // Home greeting stays consistent when switching to English/Japanese. (The
+  // per-kana teaching lines below use Bengali phonetics — no en/ja data yet —
+  // which is the documented kana-teaching gap, not this title.)
+  final label = katakana
+      ? (lang == 'en' ? 'Katakana' : lang == 'ja' ? 'カタカナ' : 'কাতাকানা')
+      : (lang == 'en' ? 'Hiragana' : lang == 'ja' ? 'ひらがな' : 'হিরাগানা');
+  final readRecognize = lang == 'en'
+      ? 'read & recognize'
+      : lang == 'ja' ? '読んで覚える' : 'পড়া ও চেনা';
   final n = chars.length.clamp(0, maxItems);
   final questions = <ClassroomQuestion>[];
   for (var i = 0; i < n; i++) {
@@ -387,7 +397,7 @@ ClassroomBatch buildKanaBatch({required bool katakana, int maxItems = 200}) {
 
   return ClassroomBatch(
     lessonId: script,
-    titleBn: '$label — পড়া ও চেনা',
+    titleBn: '$label — $readRecognize',
     questions: questions,
   );
 }

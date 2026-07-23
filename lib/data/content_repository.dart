@@ -132,35 +132,49 @@ class ContentRepository {
   List<PitchSet> get pitchSets => _pitchSets;
 
   /// Offline dictionary fallback: searches the local curriculum for a match.
-  String? explainOffline(String text) {
+  /// [lang] localizes the field labels + prose (D-041) so an English/Japanese
+  /// learner's offline sensei answer matches their UI language; the meaning
+  /// itself comes from the trilingual `Tri`.
+  String? explainOffline(String text, {String lang = 'bn'}) {
     final q = text.trim();
     if (q.isEmpty) return null;
+    // Localized field labels for the offline card.
+    String L(String bn, String en, String ja) =>
+        lang == 'en' ? en : lang == 'ja' ? ja : bn;
+    final lType = L('ধরন', 'Type', '種類');
+    final lMean = L('অর্থ', 'Meaning', '意味');
+    final lRead = L('পড়া', 'Reading', '読み');
+    final lBreak = L('ভাঙা', 'Breakdown', '分解');
+    final lTip = L('টিপ', 'Tip', 'ヒント');
+    final letter = L('বর্ণ', 'letter', '文字');
+    final single = L('এটি একটি মূল বর্ণ।', 'A base letter.', '基本の文字。');
 
     for (final k in _hiragana) {
-      if (k.char == q) return '• ধরন: বর্ণ (Alphabet)\n• অর্থ: জাপানি অক্ষর (হিরাগানা)\n• পড়া: ${k.char} (${k.romaji})\n• ভাঙা: এটি একটি মূল বর্ণ।';
+      if (k.char == q) return '• $lType: $letter (${L('হিরাগানা', 'Hiragana', 'ひらがな')})\n• $lRead: ${k.char} (${k.romaji})\n• $lBreak: $single';
     }
     for (final k in _katakana) {
-      if (k.char == q) return '• ধরন: বর্ণ (Alphabet)\n• অর্থ: জাপানি অক্ষর (কাতাকানা)\n• পড়া: ${k.char} (${k.romaji})\n• ভাঙা: এটি একটি মূল বর্ণ।';
+      if (k.char == q) return '• $lType: $letter (${L('কাতাকানা', 'Katakana', 'カタカナ')})\n• $lRead: ${k.char} (${k.romaji})\n• $lBreak: $single';
     }
 
+    final word = L('শব্দ', 'Word', '単語');
     for (final p in _pitchSets) {
       for (final item in p.items) {
         if (item.word == q || item.kanji == q) {
-          return '• ধরন: শব্দ (Word)\n• অর্থ: ${item.meaning.bn}\n• পড়া: ${item.word} (${item.romaji})\n• ভাঙা: এটি একটি একক শব্দ।';
+          return '• $lType: $word\n• $lMean: ${item.meaning.of(lang)}\n• $lRead: ${item.word} (${item.romaji})\n• $lBreak: ${L('একটি একক শব্দ।', 'A single word.', '一つの単語。')}';
         }
       }
     }
 
+    final sentence = L('বাক্য/শব্দ', 'Sentence/Word', '文/単語');
+    final noData = L('(তথ্য নেই)', '(no data)', '(データなし)');
     for (final lesson in _lessons.values) {
       for (final item in lesson.items) {
         if (item.jp == q || item.kana == q || item.romaji == q) {
-          String s = '• ধরন: বাক্য/শব্দ (Sentence/Word)\n• অর্থ: ${item.meaning.bn}\n• পড়া: ${item.kana} (${item.romaji})';
-          if (item.srsWords.isNotEmpty) {
-             s += '\n• ভাঙা: ${item.srsWords.join(' + ')}';
-          } else {
-             s += '\n• ভাঙা: (তথ্য নেই)';
-          }
-          if (item.note.bn.isNotEmpty) s += '\n\nটিপ: ${item.note.bn}';
+          String s = '• $lType: $sentence\n• $lMean: ${item.meaning.of(lang)}\n• $lRead: ${item.kana} (${item.romaji})';
+          s += item.srsWords.isNotEmpty
+              ? '\n• $lBreak: ${item.srsWords.join(' + ')}'
+              : '\n• $lBreak: $noData';
+          if (item.note.of(lang).isNotEmpty) s += '\n\n$lTip: ${item.note.of(lang)}';
           return s;
         }
       }
@@ -169,10 +183,11 @@ class ContentRepository {
     for (final lesson in _lessons.values) {
       for (final item in lesson.items) {
         if (item.jp.contains(q) || item.kana.contains(q) || item.meaning.bn.contains(q)) {
-          String s = 'অফলাইনে হুবহু "$q" পাইনি, তবে কাছাকাছি একটি বাক্য আছে:\n\n• ধরন: বাক্য (Sentence)\n• অর্থ: ${item.meaning.bn}\n• পড়া: ${item.kana} (${item.romaji})';
-          if (item.srsWords.isNotEmpty) {
-             s += '\n• ভাঙা: ${item.srsWords.join(' + ')}';
-          }
+          final near = L('অফলাইনে হুবহু "$q" পাইনি, তবে কাছাকাছি একটি বাক্য আছে:',
+              'No exact offline match for "$q", but here\'s a close one:',
+              'オフラインで「$q」の完全一致はないけど、近いものがあるよ:');
+          String s = '$near\n\n• $lType: ${L('বাক্য', 'Sentence', '文')}\n• $lMean: ${item.meaning.of(lang)}\n• $lRead: ${item.kana} (${item.romaji})';
+          if (item.srsWords.isNotEmpty) s += '\n• $lBreak: ${item.srsWords.join(' + ')}';
           return s;
         }
       }

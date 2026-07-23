@@ -19,7 +19,6 @@ import 'package:sensei_app/data/content_repository.dart';
 import 'package:sensei_app/data/lesson_batch.dart';
 import 'package:sensei_app/data/mock_exam.dart';
 import 'package:sensei_app/data/ai_tutor_service.dart';
-import 'package:sensei_app/domain/models.dart';
 import 'package:sensei_app/presentation/lesson_screen_v4.dart';
 
 /// Validates one MC question against the answer-key contract (00 §4 / D-001):

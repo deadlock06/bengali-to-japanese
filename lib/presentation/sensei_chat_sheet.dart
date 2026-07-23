@@ -302,7 +302,7 @@ class _SenseiChatSheetState extends ConsumerState<SenseiChatSheet>
         curriculumHint: _hint, level: _level, uiLang: _uiLang);
     if (!mounted) return;
     
-    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText);
+    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(widget.seedText, lang: _uiLang);
 
     setState(() {
       _msgs.insert(

@@ -752,7 +752,9 @@ class _VoiceTutorCardState extends State<_VoiceTutorCard>
 }
 
 /// Design "AI sensei" outline pill: pulsing green dot + greeting typed out
-/// (30ms/2-char cadence). Tap re-types. Reduced-motion shows full text/no pulse.
+/// (30ms/2-char cadence). Tap opens live "Talk with Sensei" (D-042). The
+/// greeting re-types automatically on batch-resolve and language switch;
+/// reduced-motion shows full text / no pulse.
 class _SenseiPill extends ConsumerStatefulWidget {
   @override
   ConsumerState<_SenseiPill> createState() => _SenseiPillState();

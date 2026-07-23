@@ -5,7 +5,9 @@
 
 ## Environment (verified 2026-07-17)
 - **Flutter 3.44.5 installed** at `~/flutter` → `export PATH="$HOME/flutter/bin:$PATH"` before any flutter cmd.
-- `flutter analyze` → **No issues found**. Pure-Dart tests (scenario/gap_fill/mock_exam) **10/10**. Content validator → **PASS**. All 8 node proofs green.
+- `flutter analyze` → **No issues found**. Widget + pure-Dart tests **80** green (incl. `test/lesson_executability_test.dart` — all 90 lessons proven executable in bn+en). Content validator → **PASS**. All 13 node proofs green.
+- **UI language (D-041):** the picker switches teaching CONTENT + AI, not just chrome — `langProvider` / `Tri.of(lang)` thread bn/en/ja through curriculum, classroom, mock exams, vocab, and the sensei (`reply`/`explain`/`voiceReply`/`explainOffline` take `uiLang`). Persisted across restarts. Deferred: ~797 hardcoded UI-chrome strings + kana/roleplay/review still Bengali (translation program).
+- **Talk with Sensei (D-042):** Home card → `VoiceTutorScreen` (`voiceReply` → `/ai/chat` proxy) + Home sensei pill → text talk sheet (`showTalkSheet`); guided sentence-building, opens by teaching, offline-safe.
 - ⚠️ **`flutter test` (full suite) TIMES OUT in this sandbox** — not a code failure; concurrent Claude sessions on the same box starve the test runner (verified via `ps aux`). Run the full suite from a normal machine as the authoritative gate. Isolated files pass fine.
 - **Web build works** with supabase_flutter (`flutter build web --pwa-strategy=none`) — served at `localhost:5601`.
 - **Android SDK INSTALLED on this machine** (2026-07-18, `tools/build_apk.sh`: ~/jdk21 + ~/android-sdk) → APKs build HERE (~3 min warm). iOS not targeted.

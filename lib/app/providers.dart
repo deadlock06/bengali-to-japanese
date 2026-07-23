@@ -150,7 +150,8 @@ final classroomBatchProvider = FutureProvider<ClassroomBatch?>((ref) async {
     for (final u in units) {
       if (u.state == UnitProgress.current) {
         if (u.isKana) {
-          return buildKanaBatch(katakana: u.kanaLessonId.contains('katakana'));
+          return buildKanaBatch(
+              katakana: u.kanaLessonId.contains('katakana'), lang: lang);
         }
         break;
       }

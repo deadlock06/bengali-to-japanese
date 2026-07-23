@@ -1,8 +1,9 @@
 // CurriculumScreenV4 — JLPT-N5 path the AI tutor follows (rev-3 §1).
 // Part of the AI Classroom red section (#B3121B — exclusive to this section).
-// Entry: map icon in the lesson header. Demo data until the curriculum
-// service exists (TODO T-120); the AI tutor MUST select lesson batches from
-// the current curriculum unit once wired.
+// Entry: map icon in the lesson header. DONE (T-120): units come live from
+// curriculumProvider (CurriculumService) rendered .of(lang); the demo list is
+// only the off-device fallback. The classroom selects batches from the current
+// unit (classroomBatchProvider).
 // D-001: no locks — upcoming units are visible and neutral, never gated.
 
 import 'package:flutter/material.dart';

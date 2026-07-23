@@ -62,7 +62,7 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
         .explain(text, uiLang: ref.read(langProvider));
     if (!mounted) return;
 
-    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(text);
+    final offlineMatch = ref.read(contentProvider).valueOrNull?.explainOffline(text, lang: ref.read(langProvider));
 
     setState(() {
       _loading = false;

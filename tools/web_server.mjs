@@ -26,8 +26,25 @@ const root = path.join(here, '..', 'build', 'web');
       if (eq < 1) continue;
       const key = line.slice(0, eq).trim();
       let val = line.slice(eq + 1).trim();
-      if ((val.startsWith('"') && val.endsWith('"')) ||
-          (val.startsWith("'") && val.endsWith("'"))) val = val.slice(1, -1);
+      const quoted = (val.startsWith('"') && val.endsWith('"')) ||
+          (val.startsWith("'") && val.endsWith("'"));
+      if (quoted) {
+        val = val.slice(1, -1);
+      } else {
+        // Strip an inline comment: an API key never contains '#', so anything
+        // from the first '#' on is the template's descriptive comment (this is
+        // what turned `KEY=  # deepseek — https://…` into a bogus key that
+        // crashed the Authorization header). Comment-only value → empty.
+        const h = val.indexOf('#');
+        if (h !== -1) val = val.slice(0, h).trim();
+      }
+      // A real key is a single printable-ASCII token — reject anything with a
+      // space or non-ASCII char (em-dash, smart-quote) so a malformed paste is
+      // treated as "no key" (provider skipped) instead of a fatal header.
+      if (val && !/^[\x21-\x7e]+$/.test(val)) {
+        console.warn(`.env: ${key} looks malformed (spaces/odd chars) — ignoring it`);
+        val = '';
+      }
       if (process.env[key] === undefined) process.env[key] = val;
     }
     console.log('loaded .env');
@@ -174,11 +191,17 @@ function aiProxy(req, res) {
       }
       const out = Buffer.from(JSON.stringify({ ...payload, model: p.model }));
       const lib = p.insecure ? http : https; // local llama-server is plain http
-      const up = lib.request({
-        host: p.host, port: p.port, path: p.path, method: 'POST',
-        headers: { 'Content-Type': 'application/json',
-          'Authorization': `Bearer ${p.key}`, 'Content-Length': out.length },
-      }, (r) => {
+      // A malformed key (stray space / em-dash from a bad paste) makes
+      // lib.request() THROW synchronously on the Authorization header; that
+      // used to crash the whole proxy. Catch it and fail over to the next
+      // provider instead — one bad key never takes the server down.
+      let up;
+      try {
+        up = lib.request({
+          host: p.host, port: p.port, path: p.path, method: 'POST',
+          headers: { 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${p.key}`, 'Content-Length': out.length },
+        }, (r) => {
         if ((r.statusCode || 500) >= 500) { r.resume(); return tryProvider(i + 1); }
         console.log(`ai[${tier}]: ${p.name} → ${r.statusCode}`);
         if (!p.insecure) {
@@ -201,8 +224,12 @@ function aiProxy(req, res) {
           res.end(buf);
         });
       });
-      up.on('error', () => tryProvider(i + 1));
-      up.end(out);
+        up.on('error', () => tryProvider(i + 1));
+        up.end(out);
+      } catch (e) {
+        console.warn(`ai[${tier}]: ${p.name} skipped (${e.code || 'bad request'})`);
+        return tryProvider(i + 1);
+      }
     };
     tryProvider(0);
   });

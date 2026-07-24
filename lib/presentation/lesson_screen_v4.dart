@@ -353,10 +353,18 @@ class _LessonScreenV4State extends ConsumerState<LessonScreenV4> {
       _recorded = false;
       _recording = false;
       _myTakeUrl = '';
-      idx = (idx + 1).clamp(0, qs.length - 1);
-      picked = -1; hintOpen = false; mood = LessonMood.neutral;
-      teacherNote = null;
-      _nextQuestion();
+      // Skipping the LAST item finishes the lesson — previously idx was clamped
+      // to the last index, so a final-item skip re-showed it forever instead of
+      // completing (D-044 playthrough bug). Mirror _advance's terminal branch.
+      if (idx >= qs.length - 1) {
+        done = true;
+        _saveCompletion();
+      } else {
+        idx += 1;
+        picked = -1; hintOpen = false; mood = LessonMood.neutral;
+        teacherNote = null;
+        _nextQuestion();
+      }
     });
   }
 
